@@ -50,11 +50,13 @@ public class Board : MonoBehaviour
             }
             if(hit.transform.tag == "Chess Board" && storedPiece)
             {
-                storedPiece.transform.position = hit.transform.position + new Vector3(0,1,0);
+                storedPiece.transform.position = hit.transform.position + new Vector3(0,0,0);
 
             }
         }
         }
+
+
 
     }
 
@@ -65,20 +67,40 @@ public class Board : MonoBehaviour
             for(int j=0;j<boardSize;j++)
             {
                 GameObject instance = Instantiate(boardSquare,(transform.position + new Vector3(i,0,j)), Quaternion.identity);
-                instance.gameObject.name = i + "_" + j; 
+                instance.gameObject.name = i + "_" + j;
+                chessBoard[i, j] = instance;
             }
         }
 
-            GameObject pieceInstance = Instantiate(chessPiece,(transform.position + new Vector3(0,1,3)), Quaternion.identity);
+            GameObject pieceInstance = Instantiate(chessPiece,(transform.position + new Vector3(0,0,3)), Quaternion.identity);
             pieceInstance.gameObject.name = "chessPiece"; 
         
     }
 
+    public void BoardState()
+    {
+        //track where each piece in the board
+
+        //update board after each move
+
+    }
+
     public void MovePiece(int pieceStartPos, int pieceEndPos, GameObject chessPiece)
     {
+        //take original position
+
+        //place gameobject at new position
+
+        //update board state
 
 
+    }
 
+    public void UndoMove()
+    {
+        //sva eeach board state during each move
+
+        //when undo is called, move back in the list of board states
     }
 
 }
