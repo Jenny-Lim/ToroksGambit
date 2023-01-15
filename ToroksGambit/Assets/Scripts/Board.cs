@@ -183,7 +183,11 @@ public class Board : MonoBehaviour
     //repeatedly calling will undo moves until beggining
     public void UndoMove()
     { 
-
+        if (undoStorageList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
+        {
+            Debug.Log("List is emtpy, no undo occurred");
+            return;
+        }
 
         pieceBoard[undoStorageList[undoCounter-1].startX,undoStorageList[undoCounter-1].startY] = undoStorageList[undoCounter-1].startObject;
         pieceBoard[undoStorageList[undoCounter-1].endX,undoStorageList[undoCounter-1].endY] = undoStorageList[undoCounter-1].endObject;
