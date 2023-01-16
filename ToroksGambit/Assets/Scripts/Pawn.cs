@@ -16,7 +16,7 @@ public class Pawn : Piece
     }
 
     // Update is called once per frame
-    void Update()
+    void UpdateMove()
     {
         //validMoves[pieceX, pieceY + 1] = true;
         moves.Add(new Move(pieceX, pieceY + 1));
