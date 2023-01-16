@@ -16,7 +16,7 @@ public class CameraHeadMovements : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1"))// just for testing purposes
+        if (Input.GetButtonDown("Jump"))// just for testing purposes
         {
             LookAtTorok(2);
         }
