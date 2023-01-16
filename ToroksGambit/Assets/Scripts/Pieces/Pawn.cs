@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Pawn : Piece
 {
-    private bool isFirstMove;
+    private bool moved;
     private bool capturing;
 
     // Start is called before the first frame update
     void Start()
     {
         type = "pawn";
-        isFirstMove = true;
+        moved = false;
         capturing = false; // capturing == true if theres an enemy piece
     }
 
@@ -25,12 +25,12 @@ public class Pawn : Piece
             //validMoves[pieceX + 1, pieceY + 1] = true;
             moves.Add(new Move(pieceX + 1, pieceY + 1));
         }
-        if (isFirstMove)
+        if (moved)
         {
             //validMoves[pieceX, pieceY + 2] = true;
             moves.Add(new Move(pieceX, pieceY + 2));
 
-            // somewhere we have to say isFirstMove = false;
+            // somewhere we have to say moved = true/false;
         }
     }
 }

@@ -61,8 +61,9 @@ public class Board : MonoBehaviour
 
     private int undoCounter = 0;
 
-    private int pieceX;
-    private int pieceY;
+    // made static -- jenny
+    private static int pieceX;
+    private static int pieceY;
 
     void Start()
     {   camera = Camera.main;
@@ -227,5 +228,17 @@ public class Board : MonoBehaviour
 
     }
 
+
+    // added by jenny to retrieve piece positions
+    public static int getX()
+    {
+        return pieceX;
+    }
+
+    public static int getY()
+    {
+        return pieceY;
+    }
+    
 }
 

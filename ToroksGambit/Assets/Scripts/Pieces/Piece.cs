@@ -25,31 +25,20 @@ public class Piece : MonoBehaviour
     public string type;
     //public bool isTorok; // does this mean we need team variants of the same piece
 
+    private GameObject board;
+    private Board b;
+
     void Awake()
     {
         isTaken = false;
-
+        board = GameObject.FindWithTag("Chess Board");
+        b = board.GetComponent<Board>();
         moves = new List<Move>();
 
-        pieceX = getX();
-        //pieceX = Board.getX();
-        pieceY = getY();
-        //pieceY = Board.getY();
+        //pieceX = getX();
+        pieceX = Board.getX();
+        //pieceY = getY();
+        pieceY = Board.getY();
     }
 
-
-    // won't need these later -- need fxn to return vals from board
-    int getX()
-    {
-        // get current location of piece -- ask patrick
-        return 0;
-        // 0 for now
-    }
-
-    int getY()
-    {
-        // get current location of piece
-        return 0;
-        // 0 for now
-    }
 }

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 61773101}
   m_Layer: 0
   m_Name: board
-  m_TagString: Untagged
+  m_TagString: Chess Board
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,7 +155,6 @@ MonoBehaviour:
   boardSize: 8
   boardSquare: {fileID: 1524613713}
   chessPiece: {fileID: 1494962305}
-  camera: {fileID: 963194227}
 --- !u!4 &61773102
 Transform:
   m_ObjectHideFlags: 0
