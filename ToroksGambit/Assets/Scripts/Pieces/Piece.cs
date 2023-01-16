@@ -25,14 +25,14 @@ public class Piece : MonoBehaviour
     public string type;
     //public bool isTorok; // does this mean we need team variants of the same piece
 
-    private GameObject board;
-    private Board b;
+    //private GameObject board;
+    //private Board b;
 
     void Awake()
     {
         isTaken = false;
-        board = GameObject.FindWithTag("Chess Board");
-        b = board.GetComponent<Board>();
+        //board = GameObject.FindWithTag("Chess Board");
+        //b = board.GetComponent<Board>();
         moves = new List<Move>();
 
         //pieceX = getX();
