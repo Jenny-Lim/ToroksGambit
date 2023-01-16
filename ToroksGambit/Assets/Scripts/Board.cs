@@ -26,7 +26,19 @@ public class Board : MonoBehaviour
         }
 
     }
+    //take out undostorage - make own class
+    //make it possible for board to create a list if possible moves
+    //change undostorage to move
+    //change undostorage to list of possible moves
+    //clean board class to work with undo being own class
+    //fix busg with moving pieces
 
+    //click on piece, board stores selected piece
+    //click location to move piece
+    //make function "movebiecevalidotor"
+    //function checks if piece CAN move to spot
+    //checks location and cross references with possible moves and check sif location is in list
+    //board function to give Piece its own location
 
     [SerializeField]
     private int boardSize = 8;//size of 2D array
@@ -166,6 +178,8 @@ public class Board : MonoBehaviour
     }
 
     //input the X and Y of the piece being moved(startX and Y) and the X and Y of the spot being moved to(end X Y)
+    //if click impossible move then clear storedmove
+    //if click off bord then clear stored item
     public void MovePiece(int startX, int startY, int endX, int endY)//take 2 positions to move a piece
     {
         GameObject tempPiece = pieceBoard[startX, startY];
