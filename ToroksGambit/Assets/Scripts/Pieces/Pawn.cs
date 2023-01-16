@@ -12,11 +12,10 @@ public class Pawn : Piece
     {
         type = "pawn";
         isFirstMove = true;
-        capturing = false;
+        capturing = false; // capturing == true if theres an enemy piece
     }
 
-    // Update is called once per frame
-    void UpdateMove()
+    void UpdateMove() // wont need this with undostorage -> move presumably
     {
         //validMoves[pieceX, pieceY + 1] = true;
         moves.Add(new Move(pieceX, pieceY + 1));
