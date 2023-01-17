@@ -38,11 +38,29 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Vector3 hideLocation;
 
     [SerializeField] private GameObject[] PiecePrefabs;
+    private Camera cam = Camera.main;
+
+    private string storedPiece = "";
 
     public void Start()
     {
         rectTrans = GetComponent<RectTransform>();
-        Debug.Log(rectTrans.anchoredPosition3D);
+        //Debug.Log(rectTrans.anchoredPosition3D);
+    }
+
+    private void Update()
+    {
+        //if in deploy mode
+        RaycastHit hit;
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.transform.gameObject.CompareTag("Chess Board"))
+            {
+                
+            }
+        }
     }
 
     //changes the designated number of held pieces by amount
@@ -65,6 +83,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    //returns how many pieces the player has of a designated type
     public int GetNumberOfPieces(InventoryPieces type)
     {
         return heldPieces[(int)type];
@@ -72,27 +91,32 @@ public class Inventory : MonoBehaviour
 
     public void PawnButtonClicked()
     {
-        Debug.Log("hawejheSFhbuwefijhefshiseferbi");
+        storedPiece = "Pawn";
     }
 
     public void KnightButtonClicked()
     {
-
+        storedPiece = "Knight";
     }
 
     public void BishopButtonClicked()
     {
-
+        storedPiece = "Bishop";
     }
 
     public void RookButtonClicked()
     {
-
+        storedPiece = "Rook";
     }
 
     public void QueenButtonClicked()
     {
+        storedPiece = "Queen";
+    }
 
+    public void RemoveButtonClicked()
+    {
+        storedPiece = "Remove";
     }
 
     public void HideShowButtonClicked()
