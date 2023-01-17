@@ -44,12 +44,76 @@ public class Piece : MonoBehaviour
         return inBounds;
     }
 
-    public bool ClearCheck()
+    public bool ClearCheck(int pieceX, int pieceY, int endX, int endY)
     {
         bool isClear = true;
 
         // cont
+        if (pieceY < endY) {
+
+            for (int i = pieceY; i > endY; i++) {
+ 
+                if (pieceBoard[pieceX, i]!=null)
+                {
+
+                    isClear = false;
+
+                }
+            }
+        }
+
+
+        if (pieceY > endY)
+        {
+            for (int i = endY; i > pieceY; i++)
+            {
+
+                if (pieceBoard[pieceX, i] != null)
+                {
+
+                    isClear = false;
+
+                }
+            }
+        }
+
+
+        if (pieceX < endX)
+        {
+            for (int i = pieceX; i > endX; i++)
+            {
+
+                if (pieceBoard[i, pieceY] != null)
+                {
+
+                    isClear = false;
+
+                }
+            }
+        }
+
+
+        if (pieceX > endX)
+        {
+            for (int i = endX; i > pieceX; i++)
+            {
+
+                if (pieceBoard[i, pieceY] != null)
+                {
+
+                    isClear = false;
+
+                }
+            }
+        }
+
 
         return isClear;
     }
+
+    private void Update()
+    {
+        
+    }
+
 }
