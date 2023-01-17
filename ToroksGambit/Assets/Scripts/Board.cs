@@ -64,12 +64,16 @@ public class Board : MonoBehaviour
 
     private int undoCounter = 0;
 
+    private Vector3 boardPosition;
+
     // made static -- jenny
     private static int pieceX;
     private static int pieceY;
 
     void Start()
-    {   camera = Camera.main;
+    {
+        boardPosition = transform.position;
+        camera = Camera.main;
         hitBoxBoard = new GameObject[boardSize,boardSize];
         pieceBoard = new GameObject[boardSize, boardSize];
 
@@ -89,7 +93,7 @@ public class Board : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
                 if (hit.transform.tag == "Chess Piece")//if mouse is clicked on chess piece
-            {
+                {
                 storedPiece = hit.transform.gameObject;//store piece
 
                 for(int i=0;i<boardSize;i++)
@@ -103,6 +107,8 @@ public class Board : MonoBehaviour
                         }
                     }
                 }
+                    //signifier that piece is chosen
+                    storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
 
             }
             if(hit.transform.tag == "Chess Board" && storedPiece)//if a piece is stored and another spot is chosen
@@ -122,6 +128,8 @@ public class Board : MonoBehaviour
                     }
                 }
 
+                    //pieceBoard[clickedX, clickedY] = null;
+
                 MovePiece(pieceX, pieceY, clickedX, clickedY);
                 storedPiece.transform.position = hit.transform.position + new Vector3(0,0,0);
 
@@ -131,8 +139,8 @@ public class Board : MonoBehaviour
         }
         else 
         {
-                storedPiece = null;
-                Debug.Log("didnt hit anything");    
+                storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position - new Vector3(0, 5, 0), 10f * Time.deltaTime);
+                storedPiece = null; 
         }
         }
         if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
@@ -145,16 +153,17 @@ public class Board : MonoBehaviour
 
     private void BuildBoard()//generates hitbox for chess board
     {
+        float boardOffset = ((float)boardSize)/2;
         for(int i=0;i<boardSize;i++)
         {
             for(int j=0;j<boardSize;j++)
             {
-                GameObject instance = Instantiate(boardSquare,(transform.position + new Vector3(i,0,j)), Quaternion.identity, gameObject.transform);
+                GameObject instance = Instantiate(boardSquare,(boardPosition + new Vector3(i - boardOffset, 0,j - boardOffset)), Quaternion.identity, gameObject.transform);
                 instance.gameObject.name = i + "_" + j;
                 hitBoxBoard[i, j] = instance;
             }
 
-            GameObject pieceInstance = Instantiate(chessPiece,(transform.position + new Vector3(i,0,0)), Quaternion.identity, gameObject.transform);
+            GameObject pieceInstance = Instantiate(chessPiece,(boardPosition + new Vector3(i - boardOffset,0,-boardOffset)), Quaternion.identity, gameObject.transform);
             pieceInstance.gameObject.name = "chessPiece"; 
             pieceBoard[i,0] = pieceInstance; 
 
@@ -236,6 +245,11 @@ public class Board : MonoBehaviour
 
         UndoMove();
 
+    }
+
+    IEnumerator movePiece()
+    {
+        yield return new WaitForSeconds(1);
     }
 
 
