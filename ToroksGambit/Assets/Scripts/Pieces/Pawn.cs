@@ -15,7 +15,7 @@ public class Pawn : Piece
         capturing = false; // capturing == true if theres an enemy piece
     }
 
-    void UpdateMoves()
+    void UpdateMoves() // have different moves for black and white
     {
         moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY+1]));
 
