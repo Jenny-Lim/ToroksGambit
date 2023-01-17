@@ -11,12 +11,13 @@ public class Piece : MonoBehaviour
     public int pieceX;
     public int pieceY;
     public string type;
-    //public bool isTorok; // does this mean we need team variants of the same piece
+    public bool isTorok; // does this mean we need team variants of the same piece
 
     //private GameObject board;
     //private Board b;
 
     public GameObject[,] pieceBoard;
+    private int boardSize;
 
     void Awake()
     {
@@ -30,6 +31,16 @@ public class Piece : MonoBehaviour
         pieceX = Board.GetX();
         //pieceY = getY();
         pieceY = Board.GetY();
+        boardSize = Board.GetSize();
     }
 
+    public bool InBoundsCheck(int endX, int endY)
+    {
+        bool inBounds = true;
+        if (endX > boardSize || endY > boardSize || endX < 0 || endY < 0)
+        {
+            inBounds = false;
+        }
+        return inBounds;
+    }
 }

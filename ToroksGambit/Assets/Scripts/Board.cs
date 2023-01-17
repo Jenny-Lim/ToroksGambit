@@ -44,7 +44,7 @@ public class Board : MonoBehaviour
     //board function to give Piece its own location
 
     [SerializeField]
-    private int boardSize = 8;//size of 2D array
+    private static int boardSize = 8;//size of 2D array
 
     private GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
@@ -247,6 +247,11 @@ public class Board : MonoBehaviour
     public static GameObject[,] GetPieceBoard()
     {
         return pieceBoard;
+    }
+
+    public static int GetSize()
+    {
+        return boardSize;
     }
 }
 

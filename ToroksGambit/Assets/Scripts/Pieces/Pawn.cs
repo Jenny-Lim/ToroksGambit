@@ -17,16 +17,33 @@ public class Pawn : Piece
 
     void UpdateMoves() // have different moves for black and white
     {
-        moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY+1]));
+        if (isTorok)
+        {
+            moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - 1]));
 
-        if (capturing)
-        {
-            moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX+1, pieceY+1]));
+            if (capturing)
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY - 1]));
+            }
+            if (moved)
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - 2]));
+                // somewhere we have to say moved = true/false;
+            }
         }
-        if (moved)
-        {
-            moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY+2]));
-            // somewhere we have to say moved = true/false;
+
+        else {
+            moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + 1]));
+
+            if (capturing)
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + 1]));
+            }
+            if (moved)
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + 2]));
+                // somewhere we have to say moved = true/false;
+            }
         }
     }
 }
