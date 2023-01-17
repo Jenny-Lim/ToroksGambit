@@ -37,10 +37,12 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Vector3 showLocation;
     [SerializeField] private Vector3 hideLocation;
 
+    [SerializeField] private GameObject[] PiecePrefabs;
+
     public void Start()
     {
         rectTrans = GetComponent<RectTransform>();
-        //Debug.Log(rectTrans.anchoredPosition3D);
+        Debug.Log(rectTrans.anchoredPosition3D);
     }
 
     //changes the designated number of held pieces by amount
@@ -70,7 +72,7 @@ public class Inventory : MonoBehaviour
 
     public void PawnButtonClicked()
     {
-
+        Debug.Log("hawejheSFhbuwefijhefshiseferbi");
     }
 
     public void KnightButtonClicked()
@@ -139,4 +141,5 @@ public class Inventory : MonoBehaviour
         isMoving = false;
     }
 
+    
 }
