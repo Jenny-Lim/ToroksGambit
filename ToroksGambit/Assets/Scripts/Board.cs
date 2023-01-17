@@ -131,11 +131,12 @@ public class Board : MonoBehaviour
                     //pieceBoard[clickedX, clickedY] = null;
 
                 MovePiece(pieceX, pieceY, clickedX, clickedY);
-                storedPiece.transform.position = hit.transform.position + new Vector3(0,0,0);
+                StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, storedPiece));
+                //storedPiece.transform.position = hit.transform.position + new Vector3(0,0,0);
 
                 storedPiece = null;
 
-               }
+            }
         }
         else 
         {
@@ -247,9 +248,13 @@ public class Board : MonoBehaviour
 
     }
 
-    IEnumerator movePiece(int startX, int startY, int endX, int endY)
+    IEnumerator VisualMovePiece(int startX, int startY, int endX, int endY, GameObject piece)
     {
-        yield return new WaitForSeconds(1);
+        while (piece.transform.position != hitBoxBoard[endX, endY].transform.position)
+        {
+            piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position, 35f*Time.deltaTime);
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 
 
