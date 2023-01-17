@@ -235,7 +235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c236bd5007f739e4ca9bb4f91446ad49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardSize: 8
   boardSquare: {fileID: 1524613713}
   chessPiece: {fileID: 1494962305}
 --- !u!4 &61773102

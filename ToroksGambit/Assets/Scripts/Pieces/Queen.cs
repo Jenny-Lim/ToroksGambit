@@ -10,4 +10,42 @@ public class Queen : Piece
         type = "queen";
     }
 
+    void UpdateBoard()
+    {
+        for (int i = 0; i < 0; i++)
+        {
+            // does what bishop does
+            if (InBoundsCheck(pieceX + i, pieceY + i))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX + i, pieceY + i, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + i, pieceY + i]));
+            }
+            if (InBoundsCheck(pieceX - i, pieceY - i))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX - i, pieceY - i, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - i, pieceY - i]));
+            }
+
+
+            // does what rook does
+            if (InBoundsCheck(pieceX + i, pieceY))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX + i, pieceY, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + i, pieceY]));
+            }
+
+            if (InBoundsCheck(pieceX, pieceY + i))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + i, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + i]));
+            }
+
+            if (InBoundsCheck(pieceX - i, pieceY))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX - i, pieceY, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - i, pieceY]));
+            }
+
+            if (InBoundsCheck(pieceX, pieceY - i))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - i, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - i]));
+            }
+        }
+    }
+
 }

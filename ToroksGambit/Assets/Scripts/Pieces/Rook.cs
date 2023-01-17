@@ -10,4 +10,31 @@ public class Rook : Piece
         type = "rook";
     }
 
+    void UpdateMoves()
+    {
+        for (int i = 0; i < 0; i++)
+        {
+
+            if (InBoundsCheck(pieceX + i, pieceY))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX + i, pieceY, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + i, pieceY]));
+            }
+
+            if (InBoundsCheck(pieceX, pieceY + i))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + i, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + i]));
+            }
+
+            if (InBoundsCheck(pieceX - i, pieceY))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX - i, pieceY, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - i, pieceY]));
+            }
+
+            if (InBoundsCheck(pieceX, pieceY - i))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - i, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - i]));
+            }
+        }
+    }
+
 }

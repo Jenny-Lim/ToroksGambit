@@ -44,7 +44,7 @@ public class Board : MonoBehaviour
     //board function to give Piece its own location
 
     [SerializeField]
-    private int boardSize = 8;//size of 2D array
+    private static int boardSize = 8;//size of 2D array
 
     private GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
@@ -88,7 +88,7 @@ public class Board : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            if(hit.transform.tag == "Chess Piece")//if mouse is clicked on chess piece
+                if (hit.transform.tag == "Chess Piece")//if mouse is clicked on chess piece
             {
                 storedPiece = hit.transform.gameObject;//store piece
 
@@ -125,7 +125,14 @@ public class Board : MonoBehaviour
                 MovePiece(pieceX, pieceY, clickedX, clickedY);
                 storedPiece.transform.position = hit.transform.position + new Vector3(0,0,0);
 
-            }
+                storedPiece = null;
+
+               }
+        }
+        else 
+        {
+                storedPiece = null;
+                Debug.Log("didnt hit anything");    
         }
         }
         if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
@@ -247,6 +254,11 @@ public class Board : MonoBehaviour
     public static GameObject[,] GetPieceBoard()
     {
         return pieceBoard;
+    }
+
+    public static int GetSize()
+    {
+        return boardSize;
     }
 }
 

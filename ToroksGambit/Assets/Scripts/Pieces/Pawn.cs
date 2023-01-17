@@ -15,18 +15,53 @@ public class Pawn : Piece
         capturing = false; // capturing == true if theres an enemy piece
     }
 
-    void UpdateMoves()
+    void UpdateMoves() // have different moves for black and white
     {
-        moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY+1]));
+        if (isTorok)
+        {
+            if (InBoundsCheck(pieceX, pieceY - 1))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - 1]));
+            }
 
-        if (capturing)
-        {
-            moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX+1, pieceY+1]));
+            if (capturing)
+            {
+                if (InBoundsCheck(pieceX - 1, pieceY - 1))
+                {
+                    moves.Add(new Move(pieceX, pieceY, pieceX - 1, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY - 1]));
+                }
+            }
+            if (moved)
+            {
+                if (InBoundsCheck(pieceX, pieceY - 2))
+                {
+                    moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - 2]));
+                    // somewhere we have to say moved = true/false;
+                }
+            }
         }
-        if (moved)
-        {
-            moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY+2]));
-            // somewhere we have to say moved = true/false;
+
+        else {
+            if (InBoundsCheck(pieceX, pieceY + 1))
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + 1]));
+            }
+
+            if (capturing)
+            {
+                if (InBoundsCheck(pieceX + 1, pieceY + 1))
+                {
+                    moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + 1]));
+                }
+            }
+            if (moved)
+            {
+                if (InBoundsCheck(pieceX, pieceY + 2))
+                {
+                    moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + 2]));
+                // somewhere we have to say moved = true/false;
+            }
+            }
         }
     }
 }
