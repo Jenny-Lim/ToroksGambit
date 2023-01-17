@@ -48,6 +48,7 @@ public class King : Piece
     {
         if (isTaken)
         {
+            this.gameObject.SetActive(false);
             // match over if there's a king
         }
     }

@@ -10,7 +10,7 @@ public class Queen : Piece
         type = "queen";
     }
 
-    void UpdateBoard()
+    void UpdateMoves()
     {
         for (int i = 0; i < 0; i++)
         {

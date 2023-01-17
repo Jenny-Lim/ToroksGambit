@@ -44,43 +44,25 @@ public class Piece : MonoBehaviour
         return inBounds;
     }
 
-    public bool ClearCheck(int pieceX, int pieceY, int endX, int endY)
+    public bool ClearCheck(int pieceX, int pieceY, int endX, int endY) // not called on yet so it won't fuck with other things if its wack
     {
         bool isClear = true;
 
-        // cont
-        if (pieceY < endY) {
-
-            for (int i = pieceY; i > endY; i++) {
- 
-                if (pieceBoard[pieceX, i]!=null)
-                {
-
-                    isClear = false;
-
-                }
-            }
-        }
-
-
-        if (pieceY > endY)
-        {
-            for (int i = endY; i > pieceY; i++)
-            {
-
-                if (pieceBoard[pieceX, i] != null)
-                {
-
-                    isClear = false;
-
-                }
-            }
-        }
-
+        int start = pieceX;
+        int end = endX;
 
         if (pieceX < endX)
         {
-            for (int i = pieceX; i > endX; i++)
+            start = pieceX;
+            end = endX;
+        }
+        if (pieceX > endX)
+        {
+            start = endX;
+            end = pieceX;
+        }
+
+            for (int i = start; i > end; i++)
             {
 
                 if (pieceBoard[i, pieceY] != null)
@@ -90,25 +72,43 @@ public class Piece : MonoBehaviour
 
                 }
             }
+
+
+        int startY = pieceY;
+        int enddY = endY;
+
+        if (pieceY < enddY)
+        {
+            startY = pieceY;
+            enddY = endY;
+        }
+        if (pieceY > enddY)
+        {
+            startY = endY;
+            enddY = pieceY;
         }
 
-
-        if (pieceX > endX)
+        for (int i = startY; i > enddY; i++)
         {
-            for (int i = endX; i > pieceX; i++)
+
+            if (pieceBoard[pieceX, i] != null)
             {
 
-                if (pieceBoard[i, pieceY] != null)
-                {
+                isClear = false;
 
-                    isClear = false;
-
-                }
             }
         }
 
 
         return isClear;
+    }
+
+    void Update()
+    {
+       if (isTaken)
+        {
+            this.gameObject.SetActive(false);
+        } 
     }
 
 }
