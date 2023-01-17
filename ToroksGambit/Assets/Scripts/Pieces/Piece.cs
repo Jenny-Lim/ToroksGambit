@@ -4,20 +4,8 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
-    // wont need this with undostorage -> move
-    public class Move
-    {
-        public int newX;
-        public int newY;
 
-        public Move(int newX, int newY)
-        {
-            this.newX = newX;
-            this.newY = newY;
-        }
-    }
-
-    public List<Move> moves; // wont need this with undostorage -> move
+    public List<Move> moves;
 
     public bool isTaken;
     public int pieceX;
@@ -28,17 +16,20 @@ public class Piece : MonoBehaviour
     //private GameObject board;
     //private Board b;
 
+    public GameObject[,] pieceBoard;
+
     void Awake()
     {
         isTaken = false;
         //board = GameObject.FindWithTag("Chess Board");
         //b = board.GetComponent<Board>();
+        pieceBoard = Board.GetPieceBoard();
         moves = new List<Move>();
 
         //pieceX = getX();
-        pieceX = Board.getX();
+        pieceX = Board.GetX();
         //pieceY = getY();
-        pieceY = Board.getY();
+        pieceY = Board.GetY();
     }
 
 }

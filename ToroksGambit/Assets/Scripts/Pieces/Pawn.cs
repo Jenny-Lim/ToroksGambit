@@ -15,21 +15,17 @@ public class Pawn : Piece
         capturing = false; // capturing == true if theres an enemy piece
     }
 
-    void UpdateMove() // wont need this with undostorage -> move presumably
+    void UpdateMoves()
     {
-        //validMoves[pieceX, pieceY + 1] = true;
-        moves.Add(new Move(pieceX, pieceY + 1));
+        moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY+1]));
 
         if (capturing)
         {
-            //validMoves[pieceX + 1, pieceY + 1] = true;
-            moves.Add(new Move(pieceX + 1, pieceY + 1));
+            moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX+1, pieceY+1]));
         }
         if (moved)
         {
-            //validMoves[pieceX, pieceY + 2] = true;
-            moves.Add(new Move(pieceX, pieceY + 2));
-
+            moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY+2]));
             // somewhere we have to say moved = true/false;
         }
     }

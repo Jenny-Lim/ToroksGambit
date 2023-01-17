@@ -48,7 +48,7 @@ public class Board : MonoBehaviour
 
     private GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
-    private GameObject[,] pieceBoard;//array for storing pieces and piece location
+    private static GameObject[,] pieceBoard;//array for storing pieces and piece location -- made static (jenny)
 
     [SerializeField]
     private GameObject boardSquare;
@@ -233,15 +233,20 @@ public class Board : MonoBehaviour
 
 
     // added by jenny to retrieve piece positions
-    public static int getX()
+    public static int GetX()
     {
         return pieceX;
     }
 
-    public static int getY()
+    public static int GetY()
     {
         return pieceY;
     }
-    
+
+    // added by jenny to retrieve pieceBoard
+    public static GameObject[,] GetPieceBoard()
+    {
+        return pieceBoard;
+    }
 }
 
