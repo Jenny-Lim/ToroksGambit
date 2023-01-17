@@ -38,14 +38,14 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Vector3 hideLocation;
 
     [SerializeField] private GameObject[] PiecePrefabs;
-    private Camera cam = Camera.main;
+    private Camera cam;
 
-    private string storedPiece = "";
+    private int storedPiece = 1;//pawn - 1, knight - 2, bishop - 3, rook - 4, queen - 5, remove - -1
 
     public void Start()
     {
         rectTrans = GetComponent<RectTransform>();
-        //Debug.Log(rectTrans.anchoredPosition3D);
+        cam = Camera.main;
     }
 
     private void Update()
@@ -56,9 +56,24 @@ public class Inventory : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
+
             if (hit.transform.gameObject.CompareTag("Chess Board"))
             {
                 
+                //show visual piece
+                foreach (GameObject obj in PiecePrefabs)
+                {
+                    obj.transform.position = new Vector3(-200, 0 , 0);
+                }
+
+                if (storedPiece >= 0)
+                {
+                    PiecePrefabs[storedPiece].transform.position = hit.transform.position;
+                }
+
+                Debug.Log(hit.transform.position);
+
+                //if button press, place piece if can
             }
         }
     }
@@ -91,32 +106,32 @@ public class Inventory : MonoBehaviour
 
     public void PawnButtonClicked()
     {
-        storedPiece = "Pawn";
+        storedPiece = 1;
     }
 
     public void KnightButtonClicked()
     {
-        storedPiece = "Knight";
+        storedPiece = 2;
     }
 
     public void BishopButtonClicked()
     {
-        storedPiece = "Bishop";
+        storedPiece = 3;
     }
 
     public void RookButtonClicked()
     {
-        storedPiece = "Rook";
+        storedPiece = 4;
     }
 
     public void QueenButtonClicked()
     {
-        storedPiece = "Queen";
+        storedPiece = 5;
     }
 
     public void RemoveButtonClicked()
     {
-        storedPiece = "Remove";
+        storedPiece = -1;
     }
 
     public void HideShowButtonClicked()
