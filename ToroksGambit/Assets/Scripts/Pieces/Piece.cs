@@ -111,9 +111,4 @@ public class Piece : MonoBehaviour
         return isClear;
     }
 
-    private void Update()
-    {
-        
-    }
-
 }
