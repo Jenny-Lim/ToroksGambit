@@ -247,7 +247,8 @@ public class Board : MonoBehaviour
         UndoMove();
 
     }
-
+    //if click when movign it breaks
+    //fix this later
     IEnumerator VisualMovePiece(int startX, int startY, int endX, int endY, GameObject piece)
     {
         while (piece.transform.position != hitBoxBoard[endX, endY].transform.position)
