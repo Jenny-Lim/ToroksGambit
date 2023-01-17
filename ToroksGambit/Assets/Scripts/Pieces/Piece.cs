@@ -43,4 +43,13 @@ public class Piece : MonoBehaviour
         }
         return inBounds;
     }
+
+    public bool ClearCheck()
+    {
+        bool isClear = true;
+
+        // cont
+
+        return isClear;
+    }
 }

@@ -10,19 +10,37 @@ public class King : Piece
         type = "king";
     }
 
-    void UpdateMove()
+    void UpdateMoves()
     {
-        moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY]));
+        if (InBoundsCheck(pieceX + 1, pieceY + 1))
+        {
+            moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + 1]));
+        }
 
-        moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + 1]));
+        if (InBoundsCheck(pieceX - 1, pieceY - 1))
+        {
+            moves.Add(new Move(pieceX, pieceY, pieceX - 1, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY - 1]));
+        }
 
-        moves.Add(new Move(pieceX, pieceY, pieceX - 1, pieceY, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY]));
+        if (InBoundsCheck(pieceX + 1, pieceY))
+        {
+            moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY]));
+        }
 
-        moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - 1]));
+        if (InBoundsCheck(pieceX, pieceY + 1))
+        {
+            moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + 1]));
+        }
 
-        moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + 1, pieceBoard[pieceX,pieceY], pieceBoard[pieceX + 1, pieceY + 1]));
+        if (InBoundsCheck(pieceX - 1, pieceY))
+        {
+            moves.Add(new Move(pieceX, pieceY, pieceX - 1, pieceY, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY]));
+        }
 
-        moves.Add(new Move(pieceX, pieceY, pieceX - 1, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY - 1]));
+        if (InBoundsCheck(pieceX, pieceY - 1))
+        {
+            moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - 1]));
+        }
     }
 
     // Update is called once per frame
@@ -30,7 +48,7 @@ public class King : Piece
     {
         if (isTaken)
         {
-            // match over
+            // match over if there's a king
         }
     }
 }
