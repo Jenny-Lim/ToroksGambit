@@ -108,7 +108,7 @@ public class Board : MonoBehaviour
                     }
                 }
                     //signifier that piece is chosen
-                    storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
+                    //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
 
             }
             if(hit.transform.tag == "Chess Board" && storedPiece)//if a piece is stored and another spot is chosen
@@ -139,7 +139,7 @@ public class Board : MonoBehaviour
         }
         else 
         {
-                storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position - new Vector3(0, 5, 0), 10f * Time.deltaTime);
+                //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position - new Vector3(0, 5, 0), 10f * Time.deltaTime);
                 storedPiece = null; 
         }
         }
@@ -247,7 +247,7 @@ public class Board : MonoBehaviour
 
     }
 
-    IEnumerator movePiece()
+    IEnumerator movePiece(int startX, int startY, int endX, int endY)
     {
         yield return new WaitForSeconds(1);
     }
