@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
+    /*
     public class UndoStorage
     {
         public int startX;
@@ -26,6 +27,8 @@ public class Board : MonoBehaviour
         }
 
     }
+    */
+
     //take out undostorage - make own class
     //make it possible for board to create a list if possible moves
     //change undostorage to move
@@ -57,7 +60,7 @@ public class Board : MonoBehaviour
 
     private GameObject storedPiece; 
 
-    private List<UndoStorage> undoStorageList = new List<UndoStorage>();
+    private List<Move> moveList = new List<Move>();
 
     private int undoCounter = 0;
 
@@ -186,7 +189,7 @@ public class Board : MonoBehaviour
         GameObject tempPiece = pieceBoard[startX, startY];
         GameObject tempEndPiece = pieceBoard[endX, endY];
         //stores move in a list so can be undone at any point
-        undoStorageList.Add(new UndoStorage(startX, startY, endX, endY, tempPiece, tempEndPiece));
+        moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece));
         undoCounter++;
 
         pieceBoard[endX,endY] = tempPiece;
@@ -198,31 +201,31 @@ public class Board : MonoBehaviour
     //repeatedly calling will undo moves until beggining
     public void UndoMove()
     { 
-        if (undoStorageList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
+        if (moveList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
         {
             Debug.Log("List is empty, no undo occurred");
             return;
         }
 
-        pieceBoard[undoStorageList[undoCounter-1].startX,undoStorageList[undoCounter-1].startY] = undoStorageList[undoCounter-1].startObject;
-        pieceBoard[undoStorageList[undoCounter-1].endX,undoStorageList[undoCounter-1].endY] = undoStorageList[undoCounter-1].endObject;
+        pieceBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY] = moveList[undoCounter-1].startObject;
+        pieceBoard[moveList[undoCounter-1].endX,moveList[undoCounter-1].endY] = moveList[undoCounter-1].endObject;
 
-        undoStorageList.RemoveAt(undoCounter-1);
-        Debug.Log("list legnth "+undoStorageList.Count);
+        moveList.RemoveAt(undoCounter-1);
+        //Debug.Log("list legnth "+moveList.Count);
 
         undoCounter--;
     }
 
     public void UndoMoveVisual()//visually show undo moves
     {
-        if (undoStorageList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
+        if (moveList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
         {
             return;
         }
 
-        undoStorageList[undoCounter-1].startObject.transform.position = hitBoxBoard[undoStorageList[undoCounter-1].startX,undoStorageList[undoCounter-1].startY].transform.position;
-        if(undoStorageList[undoCounter-1].endObject)
-        undoStorageList[undoCounter-1].endObject.transform.position = hitBoxBoard[undoStorageList[undoCounter-1].endX,undoStorageList[undoCounter-1].endY].transform.position;
+        moveList[undoCounter-1].startObject.transform.position = hitBoxBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY].transform.position;
+        if(moveList[undoCounter-1].endObject)
+        moveList[undoCounter-1].endObject.transform.position = hitBoxBoard[moveList[undoCounter-1].endX,moveList[undoCounter-1].endY].transform.position;
 
         UndoMove();
 
