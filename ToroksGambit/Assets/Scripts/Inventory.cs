@@ -40,7 +40,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject[] PiecePrefabs;
     private Camera cam;
 
-    private int storedPiece = 1;//pawn - 1, knight - 2, bishop - 3, rook - 4, queen - 5, remove - -1
+    [SerializeField] private int storedPiece = 1;//pawn - 0, knight - 1, bishop - 2, rook - 3, queen - 4, remove - -1
 
     public void Start()
     {
@@ -67,9 +67,9 @@ public class Inventory : MonoBehaviour
                 }
                 
                 //show desired visual
-                if (storedPiece >= 0)
+                if (storedPiece > 0)
                 {
-                    PiecePrefabs[storedPiece-1].transform.localPosition = hit.transform.position;
+                    PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position;
                 }
 
                 
@@ -123,27 +123,27 @@ public class Inventory : MonoBehaviour
 
     public void PawnButtonClicked()
     {
-        storedPiece = 1;
+        storedPiece = 0;
     }
 
     public void KnightButtonClicked()
     {
-        storedPiece = 2;
+        storedPiece = 1;
     }
 
     public void BishopButtonClicked()
     {
-        storedPiece = 3;
+        storedPiece = 2;
     }
 
     public void RookButtonClicked()
     {
-        storedPiece = 4;
+        storedPiece = 3;
     }
 
     public void QueenButtonClicked()
     {
-        storedPiece = 5;
+        storedPiece = 4;
     }
 
     public void RemoveButtonClicked()

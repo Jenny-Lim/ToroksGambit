@@ -1503,7 +1503,7 @@ RectTransform:
   m_Children:
   - {fileID: 1477407503}
   m_Father: {fileID: 2078189507}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.067}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1847,11 +1847,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1141239969410152742, guid: 158d9d3cc26221649b68653101162a69, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -38.46
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1141239969410152742, guid: 158d9d3cc26221649b68653101162a69, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.39
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3705521629466309695, guid: 158d9d3cc26221649b68653101162a69, type: 3}
       propertyPath: m_RootOrder
@@ -1859,7 +1859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3705521629466309695, guid: 158d9d3cc26221649b68653101162a69, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 91.92
+      value: 53.3
       objectReference: {fileID: 0}
     - target: {fileID: 3705521629466309695, guid: 158d9d3cc26221649b68653101162a69, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1867,7 +1867,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3705521629466309695, guid: 158d9d3cc26221649b68653101162a69, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.16
+      value: 4.2
       objectReference: {fileID: 0}
     - target: {fileID: 3705521629466309695, guid: 158d9d3cc26221649b68653101162a69, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2494,6 +2494,7 @@ GameObject:
   - component: {fileID: 1524613716}
   - component: {fileID: 1524613715}
   - component: {fileID: 1524613714}
+  - component: {fileID: 1524613718}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Chess Board
@@ -2510,7 +2511,7 @@ SphereCollider:
   m_GameObject: {fileID: 1524613713}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -2579,6 +2580,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1524613718
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524613713}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1525912934
 GameObject:
   m_ObjectHideFlags: 0
@@ -3289,8 +3303,8 @@ RectTransform:
   - {fileID: 1740436084}
   - {fileID: 382170786}
   - {fileID: 1127543143}
-  - {fileID: 882856026}
   - {fileID: 2146730919}
+  - {fileID: 882856026}
   m_Father: {fileID: 1981679071}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3360,6 +3374,7 @@ MonoBehaviour:
   - {fileID: 1983023144}
   - {fileID: 221475523}
   - {fileID: 1383658259}
+  storedPiece: 1
 --- !u!1 &2146730918
 GameObject:
   m_ObjectHideFlags: 0
@@ -3393,7 +3408,7 @@ RectTransform:
   m_Children:
   - {fileID: 880507553}
   m_Father: {fileID: 2078189507}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3444,9 +3459,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2078189510}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
-        m_MethodName: QueenButtonClicked
+        m_MethodName: RemoveButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
