@@ -51,30 +51,41 @@ public class Inventory : MonoBehaviour
     private void Update()
     {
         //if in deploy mode
-        RaycastHit hit;
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
-
-        if (Physics.Raycast(ray, out hit))
+        if (isShowingPanel)
         {
+            RaycastHit hit;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
 
-            if (hit.transform.gameObject.CompareTag("Chess Board"))//if you hit a board tile
+            if (Physics.Raycast(ray, out hit))
             {
 
-                //remove other visuals
-                foreach (GameObject obj in PiecePrefabs)
+                if (hit.transform.gameObject.CompareTag("Chess Board"))//if you hit a board tile
                 {
-                    obj.transform.position = new Vector3(-200, 0, 0);
+
+                    //remove other visuals
+                    foreach (GameObject obj in PiecePrefabs)
+                    {
+                        obj.transform.position = new Vector3(-200, 0, 0);
+                    }
+
+                    //show desired visual
+                    if (storedPiece >= 0)
+                    {
+                        PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position;
+                    }
+
+
+
+                    //if button press, place piece if can
                 }
-                
-                //show desired visual
-                if (storedPiece > 0)
+                else
                 {
-                    PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position;
+                    //remove other visuals
+                    foreach (GameObject obj in PiecePrefabs)
+                    {
+                        obj.transform.position = new Vector3(-200, 0, 0);
+                    }
                 }
-
-                
-
-                //if button press, place piece if can
             }
             else
             {
@@ -85,14 +96,7 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            //remove other visuals
-            foreach (GameObject obj in PiecePrefabs)
-            {
-                obj.transform.position = new Vector3(-200, 0, 0);
-            }
-        }
+        
     }
 
     //changes the designated number of held pieces by amount
