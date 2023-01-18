@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657892, g: 0.4964128, b: 0.5748173, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -681,7 +681,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2078189510}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: KnightButtonClicked
         m_Mode: 1
@@ -815,7 +815,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2078189510}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: RookButtonClicked
         m_Mode: 1
@@ -1847,11 +1847,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1141239969410152742, guid: 158d9d3cc26221649b68653101162a69, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -38.72
+      value: -38.46
       objectReference: {fileID: 0}
     - target: {fileID: 1141239969410152742, guid: 158d9d3cc26221649b68653101162a69, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -14.11
+      value: -17.39
       objectReference: {fileID: 0}
     - target: {fileID: 3705521629466309695, guid: 158d9d3cc26221649b68653101162a69, type: 3}
       propertyPath: m_RootOrder
@@ -1992,7 +1992,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2078189510}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: QueenButtonClicked
         m_Mode: 1
@@ -2473,7 +2473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6757931416778611452, guid: 61b0841a26d513049a8be8633df68ee1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.149
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61b0841a26d513049a8be8633df68ee1, type: 3}
@@ -2895,7 +2895,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2078189510}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: BishopButtonClicked
         m_Mode: 1

@@ -57,23 +57,40 @@ public class Inventory : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
 
-            if (hit.transform.gameObject.CompareTag("Chess Board"))
+            if (hit.transform.gameObject.CompareTag("Chess Board"))//if you hit a board tile
             {
-                
-                //show visual piece
+
+                //remove other visuals
                 foreach (GameObject obj in PiecePrefabs)
                 {
-                    obj.transform.position = new Vector3(-200, 0 , 0);
+                    obj.transform.position = new Vector3(-200, 0, 0);
                 }
-
+                
+                //show desired visual
                 if (storedPiece >= 0)
                 {
-                    PiecePrefabs[storedPiece].transform.position = hit.transform.position;
+                    PiecePrefabs[storedPiece-1].transform.localPosition = hit.transform.position;
                 }
 
-                Debug.Log(hit.transform.position);
+                
 
                 //if button press, place piece if can
+            }
+            else
+            {
+                //remove other visuals
+                foreach (GameObject obj in PiecePrefabs)
+                {
+                    obj.transform.position = new Vector3(-200, 0, 0);
+                }
+            }
+        }
+        else
+        {
+            //remove other visuals
+            foreach (GameObject obj in PiecePrefabs)
+            {
+                obj.transform.position = new Vector3(-200, 0, 0);
             }
         }
     }
