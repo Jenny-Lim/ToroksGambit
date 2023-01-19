@@ -57,9 +57,23 @@ public class Piece : MonoBehaviour
         return inBounds;
     }
 
-    public bool ClearCheck(int pieceX, int pieceY, int endX, int endY) // not called on yet so it won't fuck with other things if its wack
+    public bool ClearCheck(int pieceX, int pieceY, int endX, int endY)
     {
         bool isClear = true;
+
+        // handling this in here for now
+
+        if (pieceBoard[endX, endY].GetComponent<Piece>().type == "wall")
+        {
+            isClear = false;
+            return isClear;
+        }
+
+        if (pieceBoard[endX, endY].GetComponent<Piece>().type == "hole")
+        {
+            isClear = false;
+            return isClear;
+        }
 
         // horizontally
         int start = pieceX; // to start
@@ -84,6 +98,7 @@ public class Piece : MonoBehaviour
                     if (pieceBoard[i, pieceY].GetComponent<Piece>().type != "hole")
                     {
                         isClear = false;
+                    return isClear;
                     }
 
                 }
@@ -113,11 +128,11 @@ public class Piece : MonoBehaviour
                 if (pieceBoard[pieceX, i].GetComponent<Piece>().type != "hole")
                 {
                     isClear = false;
+                    return isClear;
                 }
 
             }
         }
-
 
         return isClear;
     }
