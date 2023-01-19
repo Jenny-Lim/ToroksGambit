@@ -16,11 +16,11 @@ public class Bishop : Piece
 
         for (int i = 0; i < 0; i++)
         {
-            if (InBoundsCheck(pieceX + i, pieceY + i))
+            if (InBoundsCheck(pieceX + i, pieceY + i) && ClearCheck(pieceX, pieceY, pieceX + i, pieceY + i))
             {
                 moves.Add(new Move(pieceX, pieceY, pieceX + i, pieceY + i, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + i, pieceY + i]));
             }
-            if (InBoundsCheck(pieceX - i, pieceY - i))
+            if (InBoundsCheck(pieceX - i, pieceY - i) && ClearCheck(pieceX, pieceY, pieceX - i, pieceY - i))
             {
                 moves.Add(new Move(pieceX, pieceY, pieceX - i, pieceY - i, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - i, pieceY - i]));
             }

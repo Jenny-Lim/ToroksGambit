@@ -14,25 +14,25 @@ public class Rook : Piece
     {
         moves.Clear();
 
-        for (int i = 0; i < 0; i++)
+        for (int i = 0; i < boardSize; i++)
         {
 
-            if (InBoundsCheck(pieceX + i, pieceY))
+            if (InBoundsCheck(pieceX + i, pieceY) && ClearCheck(pieceX, pieceY, pieceX + i, pieceY))
             {
                 moves.Add(new Move(pieceX, pieceY, pieceX + i, pieceY, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + i, pieceY]));
             }
 
-            if (InBoundsCheck(pieceX, pieceY + i))
+            if (InBoundsCheck(pieceX, pieceY + i) && ClearCheck(pieceX, pieceY, pieceX, pieceY + i))
             {
                 moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + i, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + i]));
             }
 
-            if (InBoundsCheck(pieceX - i, pieceY))
+            if (InBoundsCheck(pieceX - i, pieceY) && ClearCheck(pieceX, pieceY, pieceX-i, pieceY))
             {
                 moves.Add(new Move(pieceX, pieceY, pieceX - i, pieceY, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - i, pieceY]));
             }
 
-            if (InBoundsCheck(pieceX, pieceY - i))
+            if (InBoundsCheck(pieceX, pieceY - i) && ClearCheck(pieceX, pieceY, pieceX, pieceY-i))
             {
                 moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - i, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - i]));
             }

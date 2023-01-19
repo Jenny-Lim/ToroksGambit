@@ -21,21 +21,21 @@ public class Pawn : Piece
 
         if (isTorok)
         {
-            if (InBoundsCheck(pieceX, pieceY - 1))
+            if (InBoundsCheck(pieceX, pieceY - 1) && ClearCheck(pieceX, pieceY, pieceX, pieceY-1))
             {
                 moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - 1]));
             }
 
             if (capturing)
             {
-                if (InBoundsCheck(pieceX - 1, pieceY - 1))
+                if (InBoundsCheck(pieceX - 1, pieceY - 1) && ClearCheck(pieceX, pieceY, pieceX - 1, pieceY - 1))
                 {
                     moves.Add(new Move(pieceX, pieceY, pieceX - 1, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY - 1]));
                 }
             }
-            if (moved)
+            if (!moved)
             {
-                if (InBoundsCheck(pieceX, pieceY - 2))
+                if (InBoundsCheck(pieceX, pieceY - 2) && ClearCheck(pieceX, pieceY, pieceX, pieceY - 2))
                 {
                     moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - 2]));
                     // somewhere we have to say moved = true/false;
@@ -44,21 +44,21 @@ public class Pawn : Piece
         }
 
         else {
-            if (InBoundsCheck(pieceX, pieceY + 1))
+            if (InBoundsCheck(pieceX, pieceY + 1) && ClearCheck(pieceX, pieceY, pieceX, pieceY + 1))
             {
                 moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + 1]));
             }
 
             if (capturing)
             {
-                if (InBoundsCheck(pieceX + 1, pieceY + 1))
+                if (InBoundsCheck(pieceX + 1, pieceY + 1) && ClearCheck(pieceX, pieceY, pieceX + 1, pieceY + 1))
                 {
                     moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + 1]));
                 }
             }
-            if (moved)
+            if (!moved)
             {
-                if (InBoundsCheck(pieceX, pieceY + 2))
+                if (InBoundsCheck(pieceX, pieceY + 2) && ClearCheck(pieceX, pieceY, pieceX, pieceY + 2))
                 {
                     moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + 2]));
                 // somewhere we have to say moved = true/false;

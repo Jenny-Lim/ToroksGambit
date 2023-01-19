@@ -18,7 +18,7 @@ public class Piece : MonoBehaviour
     //private Board b;
 
     public GameObject[,] pieceBoard;
-    private int boardSize;
+    public int boardSize;
 
     void Awake()
     {
@@ -56,7 +56,8 @@ public class Piece : MonoBehaviour
     {
         bool isClear = true;
 
-        int start = pieceX;
+        // horizontally
+        int start = pieceX; // to start
         int end = endX;
 
         if (pieceX < endX)
@@ -72,17 +73,20 @@ public class Piece : MonoBehaviour
 
             for (int i = start; i > end; i++)
             {
-
                 if (pieceBoard[i, pieceY] != null)
                 {
 
-                    isClear = false;
+                    if (pieceBoard[i, pieceY].GetComponent<Piece>().type != "hole")
+                    {
+                        isClear = false;
+                    }
 
                 }
             }
+            
 
-
-        int startY = pieceY;
+        // vertically
+        int startY = pieceY; // to start
         int enddY = endY;
 
         if (pieceY < enddY)
@@ -98,11 +102,13 @@ public class Piece : MonoBehaviour
 
         for (int i = startY; i > enddY; i++)
         {
-
             if (pieceBoard[pieceX, i] != null)
             {
 
-                isClear = false;
+                if (pieceBoard[pieceX, i].GetComponent<Piece>().type != "hole")
+                {
+                    isClear = false;
+                }
 
             }
         }
