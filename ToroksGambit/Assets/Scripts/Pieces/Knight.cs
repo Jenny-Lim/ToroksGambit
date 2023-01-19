@@ -10,7 +10,7 @@ public class Knight : Piece
         type = "knight";
     }
 
-    public override void UpdateMoves()
+    public override void UpdateMoves() // knights can jump over pieces
     {
         moves.Clear();
 

@@ -10,4 +10,9 @@ public class Wall : Piece // dummy piece, pieces can't capture or jump over this
         type = "wall";
     }
 
-}
+    public override void UpdateMoves()
+    {
+        //empty
+    }
+
+    }

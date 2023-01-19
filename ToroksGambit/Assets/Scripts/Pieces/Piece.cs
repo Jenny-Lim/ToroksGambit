@@ -32,6 +32,11 @@ public class Piece : MonoBehaviour
         moves = new List<Move>();
     }
 
+    void Start()
+    {
+        type = "piece";
+    }
+
     public virtual void UpdateMoves()
     {
         // empty to be overwritten -- maybe it can hold default functionality (see pats movePiece)

@@ -143,6 +143,12 @@ public class Board : MonoBehaviour
                 StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, storedPiece));
                 //storedPiece.transform.position = hit.transform.position + new Vector3(0,0,0);
 
+                    // added by jenny
+                //if (storedPiece.GetComponent<Piece>().type == "pawn")
+                    //{
+                        //storedPiece.GetComponent<Piece>().moved == true;
+                    //}
+
                 storedPiece = null;
 
             }

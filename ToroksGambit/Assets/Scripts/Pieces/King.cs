@@ -44,14 +44,4 @@ public class King : Piece
             moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - 1]));
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (isTaken)
-        {
-            this.gameObject.SetActive(false);
-            // match over if there's a king
-        }
-    }
 }

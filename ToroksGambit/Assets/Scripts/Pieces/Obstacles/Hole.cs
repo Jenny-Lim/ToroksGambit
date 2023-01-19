@@ -10,4 +10,9 @@ public class Hole : Piece // pieces can jump over these, just cannot capture
         type = "hole";
     }
 
+    public override void UpdateMoves()
+    {
+        //empty
+    }
+
 }
