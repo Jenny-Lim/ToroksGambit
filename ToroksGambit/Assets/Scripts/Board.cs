@@ -72,6 +72,10 @@ public class Board : MonoBehaviour
     private static int pieceX;
     private static int pieceY;
 
+    // brought them up here
+    //private static int clickedX;
+    //private static int clickedY;
+
     void Start()
     {
         boardPosition = transform.position;
@@ -115,8 +119,11 @@ public class Board : MonoBehaviour
             }
             if(hit.transform.tag == "Chess Board" && storedPiece)//if a piece is stored and another spot is chosen
             {
-                int clickedX = 0;//position for second click
+                int clickedX = 0;
                 int clickedY = 0;
+
+                //clickedX = 0;//position for second click
+                //clickedY = 0;
 
                 for(int i=0;i<boardSize;i++)
                 {
@@ -208,7 +215,13 @@ public class Board : MonoBehaviour
         GameObject tempPiece = pieceBoard[startX, startY];
         GameObject tempEndPiece = pieceBoard[endX, endY];
         //stores move in a list so can be undone at any point
-        moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece));
+        moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece)); // moveList is a list of the moves done
+
+        // jenny added -- breaks undo atm
+        //Piece script = tempPiece.GetComponent<Piece>();
+        //script.UpdateMoves();
+        //moveList.Add(script.moves[0]);
+
         undoCounter++;
 
         pieceBoard[endX,endY] = tempPiece;
@@ -261,7 +274,7 @@ public class Board : MonoBehaviour
     }
 
 
-    // added by jenny to retrieve piece positions
+    // added by jenny
     public static int GetX()
     {
         return pieceX;
@@ -272,7 +285,6 @@ public class Board : MonoBehaviour
         return pieceY;
     }
 
-    // added by jenny to retrieve pieceBoard
     public static GameObject[,] GetPieceBoard()
     {
         return pieceBoard;
@@ -282,5 +294,15 @@ public class Board : MonoBehaviour
     {
         return boardSize;
     }
+
+    //public static int GetClickedX()
+    //{
+    //    return clickedX;
+    //}
+
+    //public static int GetClickedY()
+    //{
+    //    return clickedY;
+    //}
 }
 

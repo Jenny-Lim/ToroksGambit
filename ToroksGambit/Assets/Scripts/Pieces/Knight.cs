@@ -10,7 +10,7 @@ public class Knight : Piece
         type = "knight";
     }
 
-    void UpdateMoves()
+    public override void UpdateMoves()
     {
         if (InBoundsCheck(pieceX + 1, pieceY + 2))
         {

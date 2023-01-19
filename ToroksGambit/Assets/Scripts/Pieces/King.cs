@@ -10,7 +10,7 @@ public class King : Piece
         type = "king";
     }
 
-    void UpdateMoves()
+    public override void UpdateMoves()
     {
         if (InBoundsCheck(pieceX + 1, pieceY + 1))
         {

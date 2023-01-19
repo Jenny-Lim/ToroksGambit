@@ -10,7 +10,7 @@ public class Rook : Piece
         type = "rook";
     }
 
-    void UpdateMoves()
+    public override void UpdateMoves()
     {
         for (int i = 0; i < 0; i++)
         {
