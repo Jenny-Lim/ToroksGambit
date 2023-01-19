@@ -12,6 +12,8 @@ public class King : Piece
 
     public override void UpdateMoves()
     {
+        moves.Clear();
+
         if (InBoundsCheck(pieceX + 1, pieceY + 1))
         {
             moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + 1]));

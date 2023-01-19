@@ -35,6 +35,7 @@ public class Piece : MonoBehaviour
     public virtual void UpdateMoves()
     {
         // empty to be overwritten -- maybe it can hold default functionality (see pats movePiece)
+        //moves.Clear();
         //int endX = Board.GetClickedX();
         //int endY = Board.GetClickedY();
 

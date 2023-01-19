@@ -12,6 +12,8 @@ public class Bishop : Piece
 
     public override void UpdateMoves()
     {
+        moves.Clear();
+
         for (int i = 0; i < 0; i++)
         {
             if (InBoundsCheck(pieceX + i, pieceY + i))

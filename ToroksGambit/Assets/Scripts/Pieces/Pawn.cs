@@ -17,6 +17,8 @@ public class Pawn : Piece
 
     public override void UpdateMoves()
     {
+        moves.Clear();
+
         if (isTorok)
         {
             if (InBoundsCheck(pieceX, pieceY - 1))

@@ -12,6 +12,8 @@ public class Queen : Piece
 
     public override void UpdateMoves()
     {
+        moves.Clear();
+
         for (int i = 0; i < 0; i++)
         {
             // does what bishop does
