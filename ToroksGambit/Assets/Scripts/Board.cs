@@ -66,6 +66,8 @@ public class Board : MonoBehaviour
 
     private Vector3 boardPosition;
 
+    [SerializeField] private float pieceMoveSpeed = 35f;//made by jordan, can change piece move speed easier
+
     // made static -- jenny
     private static int pieceX;
     private static int pieceY;
@@ -253,7 +255,7 @@ public class Board : MonoBehaviour
     {
         while (piece.transform.position != hitBoxBoard[endX, endY].transform.position)
         {
-            piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position, 35f*Time.deltaTime);
+            piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position, pieceMoveSpeed * Time.deltaTime);
             yield return new WaitForSeconds(0.01f);
         }
     }
