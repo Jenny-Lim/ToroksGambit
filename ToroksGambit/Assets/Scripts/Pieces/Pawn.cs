@@ -15,7 +15,7 @@ public class Pawn : Piece
         capturing = false; // capturing == true if theres an enemy piece
     }
 
-    void UpdateMoves() // have different moves for black and white
+    public override void UpdateMoves()
     {
         if (isTorok)
         {

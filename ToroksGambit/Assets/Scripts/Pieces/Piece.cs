@@ -5,13 +5,14 @@ using UnityEngine;
 public class Piece : MonoBehaviour
 {
 
+    // list of possible moves--validation is going through the list and seeing if the attempted is in the list. moveList in board is the actual move that is going to be performed
     public List<Move> moves;
 
     public bool isTaken;
     public int pieceX;
     public int pieceY;
     public string type;
-    public bool isTorok; // does this mean we need team variants of the same piece
+    public bool isTorok;
 
     //private GameObject board;
     //private Board b;
@@ -25,13 +26,19 @@ public class Piece : MonoBehaviour
         //board = GameObject.FindWithTag("Chess Board");
         //b = board.GetComponent<Board>();
         pieceBoard = Board.GetPieceBoard();
-        moves = new List<Move>();
-
-        //pieceX = getX();
         pieceX = Board.GetX();
-        //pieceY = getY();
         pieceY = Board.GetY();
         boardSize = Board.GetSize();
+        moves = new List<Move>();
+    }
+
+    public virtual void UpdateMoves()
+    {
+        // empty to be overwritten -- maybe it can hold default functionality (see pats movePiece)
+        //int endX = Board.GetClickedX();
+        //int endY = Board.GetClickedY();
+
+        //moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY]));
     }
 
     public bool InBoundsCheck(int endX, int endY)
