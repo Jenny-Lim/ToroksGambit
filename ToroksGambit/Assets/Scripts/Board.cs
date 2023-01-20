@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 //create higher object for game. game manager
+//create add piee function for inventory to place  piece on board
 
 public class Board : MonoBehaviour
 {
