@@ -63,16 +63,19 @@ public class Piece : MonoBehaviour
 
         // handling this in here for now
 
-        if (pieceBoard[endX, endY].GetComponent<Piece>().type == "wall")
+        if (pieceBoard[endX, endY] != null)
         {
-            isClear = false;
-            return isClear;
-        }
+            if (pieceBoard[endX, endY].GetComponent<Piece>().type == "wall" || pieceBoard[endX, endY].GetComponent<Piece>().isTorok == this.isTorok)
+            {
+                isClear = false;
+                return isClear;
+            }
 
-        if (pieceBoard[endX, endY].GetComponent<Piece>().type == "hole")
-        {
-            isClear = false;
-            return isClear;
+            if (pieceBoard[endX, endY].GetComponent<Piece>().type == "hole")
+            {
+                isClear = false;
+                return isClear;
+            }
         }
 
         // horizontally
