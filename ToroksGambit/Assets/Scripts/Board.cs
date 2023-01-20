@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+//create higher object for game. game manager
+
 public class Board : MonoBehaviour
 {
     /*
@@ -142,7 +144,7 @@ public class Board : MonoBehaviour
                 }
 
                     //pieceBoard[clickedX, clickedY] = null;
-
+                    DisablePiece(clickedX, clickedY);
                 MovePiece(pieceX, pieceY, clickedX, clickedY);
                 StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, storedPiece));
                 //storedPiece.transform.position = hit.transform.position + new Vector3(0,0,0);
@@ -239,6 +241,14 @@ public class Board : MonoBehaviour
 
     }
 
+    public void DisablePiece(int endX, int endY)
+    {
+        if (pieceBoard[endX, endY])
+        {
+            pieceBoard[endX, endY].SetActive(false);
+        }
+    }
+
     //undoes most recent move
     //repeatedly calling will undo moves until beggining
     public void UndoMove()
@@ -264,7 +274,14 @@ public class Board : MonoBehaviour
         {
             return;
         }
-
+        if (moveList[undoCounter - 1].startObject)
+        {
+            moveList[undoCounter - 1].startObject.SetActive(true);
+        }
+        if(moveList[undoCounter - 1].endObject)
+        {
+            moveList[undoCounter - 1].endObject.SetActive(true);
+        }
         moveList[undoCounter-1].startObject.transform.position = hitBoxBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY].transform.position;
         if(moveList[undoCounter-1].endObject)
         moveList[undoCounter-1].endObject.transform.position = hitBoxBoard[moveList[undoCounter-1].endX,moveList[undoCounter-1].endY].transform.position;
@@ -276,6 +293,7 @@ public class Board : MonoBehaviour
     //fix this later
     IEnumerator VisualMovePiece(int startX, int startY, int endX, int endY, GameObject piece)
     {
+
         while (piece.transform.position != hitBoxBoard[endX, endY].transform.position)
         {
             piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position, pieceMoveSpeed * Time.deltaTime);
