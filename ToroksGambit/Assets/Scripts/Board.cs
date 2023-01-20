@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 //create higher object for game. game manager
 //create add piee function for inventory to place  piece on board
 //add move validator
+//cant move to spot you start in
 
 public class Board : MonoBehaviour
 {
