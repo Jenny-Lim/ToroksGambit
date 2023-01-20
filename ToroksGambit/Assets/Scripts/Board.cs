@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Board : MonoBehaviour
 {
@@ -72,12 +73,15 @@ public class Board : MonoBehaviour
     private static int pieceX;
     private static int pieceY;
 
+    public static Board instance;
+
     // brought them up here
     //private static int clickedX;
     //private static int clickedY;
 
     void Start()
     {
+        if (instance == null) { instance = this; }//added by jordan for static reference to board for minmax
         boardPosition = transform.position;
         camera = Camera.main;
         hitBoxBoard = new GameObject[boardSize,boardSize];
@@ -300,6 +304,36 @@ public class Board : MonoBehaviour
     {
         return boardSize;
     }
+
+    //added by jordan to get all moves on the board of a certain player
+    public List<Move> GetAllMoves(bool toroksPieces)
+    {
+        List<Move> returnArray = new List<Move>();
+
+        for (int i = 0; i < boardSize; i++)//go through board array
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (pieceBoard[i,j] == null) continue;//if piece doesnt exist skip
+
+                Piece piece = pieceBoard[i,j].GetComponent<Piece>();
+
+                if (toroksPieces && piece.isTorok)//looking for toroks pieces and is toroks piece
+                {
+                    piece.UpdateMoves();
+                    returnArray.AddRange(piece.moves);
+                }
+                else if (!toroksPieces && !piece.isTorok)//looking for players pieces and is players piece
+                {
+                    piece.UpdateMoves();
+                    returnArray.AddRange(piece.moves);
+                }
+                
+            }
+        }
+
+        return returnArray;
+    } 
 
     //public static int GetClickedX()
     //{

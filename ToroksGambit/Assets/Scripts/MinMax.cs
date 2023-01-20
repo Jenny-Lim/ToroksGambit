@@ -5,59 +5,99 @@ using UnityEngine;
 public class MinMax : MonoBehaviour
 {
 
+    private class ScoredMove {
+        public Move move;
+        public float score;
+
+        public ScoredMove(Move newMove, float newScore)
+        {
+            move = newMove;
+            score = newScore;
+        }
+    }
+
+
     public enum playerToMove
     {
         player, torok
     }
 
     //the recursive wrapper for the minmax call
-    public void GetMinMaxMove(int maxDepth, playerToMove toMove)
+    public Move GetMinMaxMove(int maxDepth, playerToMove toMove)
     {
-        int move = MinMaxRecursive(maxDepth, toMove, float.MaxValue, float.MinValue);   
+        ScoredMove resultMove = MinMaxRecursive(maxDepth, toMove, float.MaxValue, float.MinValue);
+        return resultMove.move;
     }
 
     //the recursive functionality of the minmax call
-    private int MinMaxRecursive(int depth, playerToMove whosMoving, float alpha, float beta)
+    private ScoredMove MinMaxRecursive(int depth, playerToMove whosMoving, float alpha, float beta)
     {
         //recursive termination
         if (depth == 0)
         {
-            return 0;
+
+            return new ScoredMove(null, /*board analyzer*/0f);
         }
 
+
+        ScoredMove bestMove = new ScoredMove(null, 0);//holder for the best/most likely move to make
 
         if (whosMoving == playerToMove.player)//max
         {
-            //best move value = negative infinity
-            //get moves for all player pieces
+            bestMove.score = float.NegativeInfinity;//set best move score to be as low as possible
+            List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
+            
+            foreach (Move move in allAvailableMoves)
+            {
+                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+                ScoredMove recursiveResult = MinMaxRecursive(depth-1, playerToMove.torok, alpha , beta);//recursive call
+                Board.instance.UndoMove();//undo previous move
 
-            //for each move in available move list
-            //make move 
-            //recursive call
-            //undo move
+                if (recursiveResult.score > bestMove.score)//if subtree result is better make best move equal to that
+                {
+                    bestMove.move = recursiveResult.move;
+                    bestMove.score = recursiveResult.score;
+                }
 
-            //result equal to max of alpha and result
-            //if recursive result is greater or equal to beta
-            //break
+                alpha = Mathf.Max(alpha, bestMove.score);//update alpha value if needed
+
+                if (beta <= alpha)//prune tree if applicable
+                {
+                    break;
+                }
+
+            }
         }
         else//min
         {
-            //best move value = positive infinity
-            //get moves for all torok pieces
+            bestMove.score = float.PositiveInfinity;//set best move score to be as high as possible
+            List<Move> allAvailableMoves = Board.instance.GetAllMoves(true);// get list of all possible moves
 
-            //for each move in available move list
-            //make move 
-            //recursive call
-            //undo move
+            foreach (Move move in allAvailableMoves)
+            {
+                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+                ScoredMove recursiveResult = MinMaxRecursive(depth - 1, playerToMove.torok, alpha, beta);//recursive call
+                Board.instance.UndoMove();//undo previous move
 
-            //result equal to min of beta and result
-            //if recursive result is less or equal to alpha
-            //break
+                if (recursiveResult.score < bestMove.score)// if subtree is better make best move equal to that
+                {
+                    bestMove.move = recursiveResult.move;
+                    bestMove.score = recursiveResult.score;
+                }
+
+                beta = Mathf.Min(beta, bestMove.score);//update beta if needed
+
+                if (beta <= alpha)//prune tree if applicable
+                {
+                    break;
+                }
+
+            }
         }
 
 
         //return resulting move
-        return 0;
+        return bestMove;
 
     }
 }
