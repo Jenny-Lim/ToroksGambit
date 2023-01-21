@@ -78,7 +78,8 @@ public class Board : MonoBehaviour
     private static int pieceX;
     private static int pieceY;
 
-    public static Board instance;
+    public static Board instance;//jordan, static ref to board
+    public List<Vector2> deploymentZoneList;//jordan, list of positions on the board that can be deployed on
 
     // brought them up here
     //private static int clickedX;
@@ -87,6 +88,7 @@ public class Board : MonoBehaviour
     void Start()
     {
         if (instance == null) { instance = this; }//added by jordan for static reference to board for minmax
+        deploymentZoneList = new List<Vector2>();
         boardPosition = transform.position;
         camera = Camera.main;
         hitBoxBoard = new GameObject[boardSize,boardSize];
