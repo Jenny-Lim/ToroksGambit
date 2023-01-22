@@ -23,4 +23,9 @@ using UnityEngine;
             endObject = object2;
         }
 
+        public string DisplayMove()
+        {
+        return "From: (" + startX + "," + startY + ") To: (" + endX + "," + endY + ")";
+        }
+
     }

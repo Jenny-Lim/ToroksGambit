@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MinMax : MonoBehaviour
 {
+    public static MinMax instance;//static instance of this
 
     private class ScoredMove {
         public Move move;
@@ -22,10 +23,20 @@ public class MinMax : MonoBehaviour
         player, torok
     }
 
+    public void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     //the recursive wrapper for the minmax call
     public Move GetMinMaxMove(int maxDepth, playerToMove toMove)
     {
+        Debug.Log("AI: Looking for move...");
         ScoredMove resultMove = MinMaxRecursive(maxDepth, toMove, float.MaxValue, float.MinValue);
+        Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
         return resultMove.move;
     }
 
