@@ -42,8 +42,14 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private int storedPiece = 1;//pawn - 0, knight - 1, bishop - 2, rook - 3, queen - 4, remove - -1
 
+    public static Inventory instance;
+
     public void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         rectTrans = GetComponent<RectTransform>();
         cam = Camera.main;
     }
