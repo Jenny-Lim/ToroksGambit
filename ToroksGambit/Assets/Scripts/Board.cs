@@ -81,8 +81,10 @@ public class Board : MonoBehaviour
         
     }
 
-    void Update()
+    public void BoardUpdate()
     {
+        print("in bvoard update");
+
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
 
@@ -193,31 +195,31 @@ public class Board : MonoBehaviour
 
         if(pieceId == 0)//pawn
         {
-            GameObject pieceInstance = Instantiate(pawn,boardSpot.position, Quaternion.identity, gameObject.transform);
+            GameObject pieceInstance = Instantiate(pawn,boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);
             pieceInstance.gameObject.name = "Pawn"; 
             pieceBoard[placeX,placeY] = pieceInstance; 
         }
         if(pieceId == 1)//knight
         {
-            GameObject pieceInstance = Instantiate(knight,boardSpot.position, Quaternion.identity, gameObject.transform);
+            GameObject pieceInstance = Instantiate(knight,boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);
             pieceInstance.gameObject.name = "Knight"; 
             pieceBoard[placeX,placeY] = pieceInstance; 
         }
         if(pieceId == 2)//bishop
         {
-            GameObject pieceInstance = Instantiate(bishop,boardSpot.position, Quaternion.identity, gameObject.transform);
+            GameObject pieceInstance = Instantiate(bishop,boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);
             pieceInstance.gameObject.name = "Bishop"; 
             pieceBoard[placeX,placeY] = pieceInstance; 
         }
         if(pieceId == 3)//rook
         {
-            GameObject pieceInstance = Instantiate(rook,boardSpot.position, Quaternion.identity, gameObject.transform);
+            GameObject pieceInstance = Instantiate(rook,boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);
             pieceInstance.gameObject.name = "Rook"; 
             pieceBoard[placeX,placeY] = pieceInstance; 
         }
         if(pieceId == 4)//queen
         {
-            GameObject pieceInstance = Instantiate(queen,boardSpot.position, Quaternion.identity, gameObject.transform);
+            GameObject pieceInstance = Instantiate(queen,boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);
             pieceInstance.gameObject.name = "Queen"; 
             pieceBoard[placeX,placeY] = pieceInstance; 
         }
@@ -383,7 +385,7 @@ public class Board : MonoBehaviour
 
         while (piece.transform.position != hitBoxBoard[endX, endY].transform.position)
         {
-            piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position, pieceMoveSpeed * Time.deltaTime);
+            piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + Vector3.up, pieceMoveSpeed * Time.deltaTime);
             yield return new WaitForSeconds(0.01f);
         }
     }

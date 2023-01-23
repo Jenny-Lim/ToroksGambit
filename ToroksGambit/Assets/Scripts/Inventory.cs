@@ -54,8 +54,9 @@ public class Inventory : MonoBehaviour
         cam = Camera.main;
     }
 
-    private void Update()
+    public void InventoryUpdate()
     {
+        print("in invenotry update");
         //if in deploy mode
         if (isShowingPanel)
         {
