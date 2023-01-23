@@ -26,8 +26,8 @@ public class Piece : MonoBehaviour
         //board = GameObject.FindWithTag("Chess Board");
         //b = board.GetComponent<Board>();
         pieceBoard = Board.GetPieceBoard();
-        pieceX = Board.GetX();
-        pieceY = Board.GetY();
+        //pieceX = Board.GetX(); // Took these out cuz it doesnt make sense to do this - jordan, if there is then uncomment but i dont see why, this should (and is) set when placing a piece on the board by the placepiece function in board
+        //pieceY = Board.GetY();
         boardSize = Board.GetSize();
         moves = new List<Move>();
     }

@@ -83,7 +83,9 @@ public class Board : MonoBehaviour
 
         BuildBoard();
 
-        
+
+        print("pieceX of board :" + pieceX);
+        print("pieceY of board :" + pieceY);
     }
 
     public void BoardUpdate()
@@ -99,17 +101,17 @@ public class Board : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-                if (hit.transform.tag == "Chess Piece")//if mouse is clicked on chess piece
-                {
-                    Debug.Log("PIECE HIT");
+            if (hit.transform.tag == "Chess Piece")//if mouse is clicked on chess piece
+            {
+                Debug.Log("PIECE HIT");
 
-                   // Debug.Log("Piece");
+                // Debug.Log("Piece");
 
                 clickedPiece = hit.transform.parent.gameObject;//store piece
 
-               // Debug.Log(hit.transform.parent.gameObject);
+                    // Debug.Log(hit.transform.parent.gameObject);
 
-                for(int i=0;i<boardSize;i++)
+                for(int i=0;i<boardSize;i++)//doesnt appear to work, always returns as 0
                 {
                     for(int j=0;j<boardSize;j++)
                     {
@@ -117,11 +119,14 @@ public class Board : MonoBehaviour
                         {
                             pieceX = i;//store locations
                             pieceY = j;
+                                
                         }
                     }
                 }
-                    //signifier that piece is chosen
-                    //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
+
+
+                //signifier that piece is chosen
+                //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
 
             }
             if(hit.transform.tag == "Chess Board" && clickedPiece)//if a piece is stored and another spot is chosen
@@ -140,12 +145,15 @@ public class Board : MonoBehaviour
                         {
                             clickedX = i;//get position of second spot
                             clickedY = j;
+                            
                         }
                     }
                 }
 
                     //pieceBoard[clickedX, clickedY] = null;
                 DisablePiece(clickedX, clickedY);
+                print("pieceX of board :" + pieceX);
+                print("pieceY of board :" + pieceY);
                 MoveValidator(pieceX, pieceY, clickedX, clickedY);
                 if(canMove)
                 {
@@ -202,13 +210,17 @@ public class Board : MonoBehaviour
                 {
                     placeX = i;//store locations
                     placeY = j;
+                    
                 }
             }
         }
 
         if (pieceId >= 0)
         {
-            pieceBoard[pieceX, pieceY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            GameObject newPiece = pieceBoard[pieceX, pieceY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            Piece piece = newPiece.GetComponent<Piece>();
+            piece.pieceX = placeX; 
+            piece.pieceY = placeY;
         }else
         {
             //remove piece functionality
@@ -312,17 +324,21 @@ public class Board : MonoBehaviour
 
         int moveAmount = pieceScript.moves.Count;
 
-        
-
-        for(int i = 0;i<moveAmount;i++)
+        foreach (Move move in pieceScript.moves)
         {
-                if((pieceScript.moves[i].endX == endX) && (pieceScript.moves[i].endY == endY))
-                {
-                    print("found move");
-                    canMove = true;
-                    MovePiece(pieceX, pieceY, endX, endY);
-                    break;
-                }
+            print(move.DisplayMove());
+        }
+
+        for (int i = 0;i<moveAmount;i++)
+        {
+            
+            if((pieceScript.moves[i].endX == endX) && (pieceScript.moves[i].endY == endY))
+            {
+                print("found move");
+                canMove = true;
+                MovePiece(pieceX, pieceY, endX, endY);
+                break;
+            }
 
         }
 
@@ -339,6 +355,8 @@ public class Board : MonoBehaviour
     //if click off bord then clear stored item
     public void MovePiece(int startX, int startY, int endX, int endY)//take 2 positions to move a piece
     {
+        
+
         GameObject tempPiece = pieceBoard[startX, startY];
         GameObject tempEndPiece = pieceBoard[endX, endY];
         //stores move in a list so can be undone at any point
@@ -355,6 +373,8 @@ public class Board : MonoBehaviour
 
         pieceBoard[endX,endY] = tempPiece;
         pieceBoard[startX, startY] = tempEndPiece;
+
+        print("moved piece");
 
     }
 
@@ -478,6 +498,26 @@ public class Board : MonoBehaviour
 
         return returnArray;
     } 
+
+    //returns the location of a gameobject inside the pieceboard if it exists, or -1,-1 if it doesnt
+    public Vector2Int GetPieceLocation(GameObject piece)
+    {
+        if (piece == null) { return new Vector2Int(-1, -1); }//guard clause
+
+        for (int i = 0; i < boardSize; i ++)//find piece in matrix
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (pieceBoard[i,j] == null) { continue; }//if no piece in spot move on
+
+                if (piece == pieceBoard[i,j])//return piece if ref match
+                {
+                    return new Vector2Int(i, j);
+                }
+            }
+        }
+        return new Vector2Int(-1, -1);
+    }
 
     //public static int GetClickedX()
     //{
