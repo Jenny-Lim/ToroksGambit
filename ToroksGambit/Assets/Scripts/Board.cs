@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements.Experimental;
 
 //create higher object for game. game manager
 //cant move to spot you start in
@@ -66,11 +68,29 @@ public class Board : MonoBehaviour
     public List<Vector2> deploymentZoneList;//jordan, list of positions on the board that can be deployed on
 
     [SerializeField] private GameObject selectionIndicator;// testing gameobject that floats above the selected piece for indication purposes 
-    
+
 
     // brought them up here
     //private static int clickedX;
     //private static int clickedY;
+
+    /*private class myClass testing something for making moveValidator cleaner ** i think it works -jordan
+    {
+        public string name;
+
+        public virtual void ClassName()
+        {
+            print("Base Class Name");
+        }
+    }
+
+    private class myChildClass: myClass{
+
+        public override void ClassName()
+        {
+            print("Child Class Name");
+        }
+    }*/
 
     void Start()
     {
@@ -80,8 +100,12 @@ public class Board : MonoBehaviour
         camera = Camera.main;
         hitBoxBoard = new GameObject[boardSize,boardSize];
         pieceBoard = new GameObject[boardSize, boardSize];
-
         BuildBoard();
+
+        /*testing something for making moveValidator cleaner** i think it works -jordan
+        myChildClass class1 = new myChildClass();
+        myClass test = class1;
+        test.ClassName();*/
 
 
         print("pieceX of board :" + pieceX);
