@@ -383,11 +383,19 @@ public class Board : MonoBehaviour
     IEnumerator VisualMovePiece(int startX, int startY, int endX, int endY, GameObject piece)
     {
 
-        while (piece.transform.position != hitBoxBoard[endX, endY].transform.position)
+        /*while (piece.transform.position != hitBoxBoard[endX, endY].transform.position)
         {
             piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + Vector3.up, pieceMoveSpeed * Time.deltaTime);
             yield return new WaitForSeconds(0.01f);
+        }*/
+
+        while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + Vector3.up) > 0.1f)
+        {
+            piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + Vector3.up, pieceMoveSpeed * Time.deltaTime);
+            yield return null;
         }
+        piece.transform.position = hitBoxBoard[endX, endY].transform.position + Vector3.up;
+        print("visual move has ended");
     }
 
 
