@@ -56,7 +56,7 @@ public class Inventory : MonoBehaviour
 
     public void InventoryUpdate()
     {
-        print("in invenotry update");
+        //print("in invenotry update");
         //if in deploy mode
         if (isShowingPanel)
         {
@@ -78,7 +78,8 @@ public class Inventory : MonoBehaviour
                     //show desired visual
                     if (storedPiece >= 0)
                     {
-                        PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position;
+                        print("changing pos of visual");
+                        PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + Vector3.up;
                     }
 
                     if(Input.GetMouseButtonDown(0))//Patrick - mouse input to place piece

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Knight
+  m_Name: GhostQueen
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
@@ -77,6 +77,6 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.6294193, g: 0, b: 1, a: 1}
-    - _EmissionColor: {r: 0.025943398, g: 0, b: 0.103773594, a: 1}
+    - _Color: {r: 1, g: 0.45881805, b: 0, a: 0.3254902}
+    - _EmissionColor: {r: 1, g: 0.24339318, b: 0.07075471, a: 1}
   m_BuildTextureStacks: []

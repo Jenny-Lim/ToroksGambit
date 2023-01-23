@@ -44,7 +44,8 @@ public class Board : MonoBehaviour
     private static int pieceX;
     private static int pieceY;
 
-    [SerializeField]
+    //see piecePrefabs list 
+    /*[SerializeField]
     private GameObject pawn;
 
     [SerializeField]
@@ -57,10 +58,14 @@ public class Board : MonoBehaviour
     private GameObject bishop;
 
     [SerializeField]
-    private GameObject queen;
+    private GameObject queen;*/
+
+    [SerializeField] private GameObject[] piecePrefabs;//list of prefabs corresponding to indices in inventory storedPiece format (0 - pawn, 1 - knight, 2 - bishop, etc)
 
     public static Board instance;//jordan, static ref to board
     public List<Vector2> deploymentZoneList;//jordan, list of positions on the board that can be deployed on
+
+    [SerializeField] private GameObject selectionIndicator;// testing gameobject that floats above the selected piece for indication purposes 
     
 
     // brought them up here
@@ -83,7 +88,7 @@ public class Board : MonoBehaviour
 
     public void BoardUpdate()
     {
-        print("in bvoard update");
+       // print("in bvoard update");
 
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
@@ -172,6 +177,14 @@ public class Board : MonoBehaviour
             UndoMoveVisual();
         }
 
+        if (clickedPiece != null)//added by jordan to indicate what piece is clicked
+        {
+            selectionIndicator.transform.position = clickedPiece.transform.position + new Vector3(0.5f,0.5f,0f);
+        }
+        else
+        {
+            selectionIndicator.transform.position = new Vector3(-200f,0f,0f);
+        }
 
     }
 
@@ -181,19 +194,27 @@ public class Board : MonoBehaviour
 
         int placeX = 0;
         int placeY = 0;
-                for(int i=0;i<boardSize;i++)
+        for(int i=0;i<boardSize;i++)
+        {
+            for(int j=0;j<boardSize;j++)
+            {
+                if(boardSpot.gameObject == hitBoxBoard[i,j])//get position of piece in array
                 {
-                    for(int j=0;j<boardSize;j++)
-                    {
-                        if(boardSpot.gameObject == hitBoxBoard[i,j])//get position of piece in array
-                        {
-                            placeX = i;//store locations
-                            placeY = j;
-                        }
-                    }
+                    placeX = i;//store locations
+                    placeY = j;
                 }
+            }
+        }
 
-        if(pieceId == 0)//pawn
+        if (pieceId >= 0)
+        {
+            pieceBoard[pieceX, pieceY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+        }else
+        {
+            //remove piece functionality
+        }
+
+        /*if(pieceId == 0)//pawn
         {
             GameObject pieceInstance = Instantiate(pawn,boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);
             pieceInstance.gameObject.name = "Pawn"; 
@@ -226,7 +247,7 @@ public class Board : MonoBehaviour
         if(pieceId == -1)//remove
         {
 
-        }
+        }*/
 
     }
 
@@ -248,10 +269,14 @@ public class Board : MonoBehaviour
 
     public void MoveValidator(int pieceX, int pieceY, int endX, int endY)
     {
+        
+
         if (pieceBoard[pieceX, pieceY] == null)//guard clause if piece given is null
         {
             return;
         }
+
+        print("validating move");
 
         //find type of piece
         GameObject piece = pieceBoard[pieceX, pieceY];
