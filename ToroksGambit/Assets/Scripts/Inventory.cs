@@ -76,7 +76,7 @@ public class Inventory : MonoBehaviour
 
                     if(Input.GetMouseButtonDown(0))//Patrick - mouse input to place piece
                     {
-                        Board.instance.PlacePiece(hit.transform);
+                        Board.instance.PlacePiece(hit.transform, storedPiece);
                     }
 
 

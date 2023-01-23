@@ -173,9 +173,9 @@ public class Board : MonoBehaviour
 
     }
 
-    public void PlacePiece(Transform boardSpot)
+    public void PlacePiece(Transform boardSpot, int pieceId)
     {
-        int pieceId = inventoryScript.GetStoredPiece();
+        //int pieceId = inventoryScript.GetStoredPiece();
 
         int placeX = 0;
         int placeY = 0;
@@ -246,6 +246,11 @@ public class Board : MonoBehaviour
 
     public void MoveValidator(int pieceX, int pieceY, int endX, int endY)
     {
+        if (pieceBoard[pieceX, pieceY] == null)//guard clause if piece given is null
+        {
+            return;
+        }
+
         //find type of piece
         GameObject piece = pieceBoard[pieceX, pieceY];
         Piece pieceScript = piece.GetComponent<Piece>();
