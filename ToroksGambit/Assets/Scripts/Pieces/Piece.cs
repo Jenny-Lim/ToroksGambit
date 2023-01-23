@@ -50,7 +50,7 @@ public class Piece : MonoBehaviour
     public bool InBoundsCheck(int endX, int endY)
     {
         bool inBounds = true;
-        if (endX > boardSize || endY > boardSize || endX < 0 || endY < 0)
+        if (endX >= boardSize || endY >= boardSize || endX < 0 || endY < 0)
         {
             inBounds = false;
         }
@@ -62,7 +62,6 @@ public class Piece : MonoBehaviour
         bool isClear = true;
 
         // handling this in here for now
-
         if (pieceBoard[endX, endY] != null)
         {
             if (pieceBoard[endX, endY].GetComponent<Piece>().type == "wall" || pieceBoard[endX, endY].GetComponent<Piece>().isTorok == this.isTorok)

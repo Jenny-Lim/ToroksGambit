@@ -4,57 +4,18 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 //create higher object for game. game manager
-//create add piee function for inventory to place  piece on board
-//add move validator
 //cant move to spot you start in
+//fix bug where it wont move after capturinig or when it cant capture
 
 public class Board : MonoBehaviour
 {
-    /*
-    public class UndoStorage
-    {
-        public int startX;
-        public int startY;
-
-        public int endX;
-        public int endY;
-
-        public GameObject startObject;
-        public GameObject endObject;
-
-        public UndoStorage(int x1, int y1, int x2, int y2, GameObject object1, GameObject object2)
-        {
-            startX = x1;
-            startY = y1;
-            endX = x2;
-            endY = y2;
-            startObject = object1;
-            endObject = object2;
-        }
-
-    }
-    */
-
-    //take out undostorage - make own class
-    //make it possible for board to create a list if possible moves
-    //change undostorage to move
-    //change undostorage to list of possible moves
-    //clean board class to work with undo being own class
-    //fix busg with moving pieces
-
-    //click on piece, board stores selected piece
-    //click location to move piece
-    //make function "movebiecevalidotor"
-    //function checks if piece CAN move to spot
-    //checks location and cross references with possible moves and check sif location is in list
-    //board function to give Piece its own location
 
     [SerializeField]
     private static int boardSize = 8;//size of 2D array
 
     private GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
-    private static GameObject[,] pieceBoard;//array for storing pieces and piece location -- made static (jenny)
+    public static GameObject[,] pieceBoard;//array for storing pieces and piece location -- made static (jenny)
 
     [SerializeField]
     private GameObject boardSquare;
@@ -64,7 +25,7 @@ public class Board : MonoBehaviour
 
     private Camera camera;
 
-    private GameObject storedPiece; 
+    private GameObject clickedPiece; 
 
     private List<Move> moveList = new List<Move>();
 
@@ -72,14 +33,35 @@ public class Board : MonoBehaviour
 
     private Vector3 boardPosition;
 
+    private bool canMove = false;
+
+    [SerializeField]
+    private Inventory inventoryScript;
+
     [SerializeField] private float pieceMoveSpeed = 35f;//made by jordan, can change piece move speed easier
 
     // made static -- jenny
     private static int pieceX;
     private static int pieceY;
 
+    [SerializeField]
+    private GameObject pawn;
+
+    [SerializeField]
+    private GameObject knight;
+
+    [SerializeField]
+    private GameObject rook;
+
+    [SerializeField]
+    private GameObject bishop;
+
+    [SerializeField]
+    private GameObject queen;
+
     public static Board instance;//jordan, static ref to board
     public List<Vector2> deploymentZoneList;//jordan, list of positions on the board that can be deployed on
+    
 
     // brought them up here
     //private static int clickedX;
@@ -106,18 +88,25 @@ public class Board : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))//left click mouse to move pieces
         {
+            int piecePlace = inventoryScript.GetStoredPiece();
 
         if (Physics.Raycast(ray, out hit))
         {
                 if (hit.transform.tag == "Chess Piece")//if mouse is clicked on chess piece
                 {
-                storedPiece = hit.transform.gameObject;//store piece
+                    Debug.Log("PIECE HIT");
+
+                   // Debug.Log("Piece");
+
+                clickedPiece = hit.transform.parent.gameObject;//store piece
+
+               // Debug.Log(hit.transform.parent.gameObject);
 
                 for(int i=0;i<boardSize;i++)
                 {
                     for(int j=0;j<boardSize;j++)
                     {
-                        if(hit.transform.gameObject == pieceBoard[i,j])//get position of piece in array
+                        if(hit.transform.parent.gameObject == pieceBoard[i,j])//get position of piece in array
                         {
                             pieceX = i;//store locations
                             pieceY = j;
@@ -128,7 +117,7 @@ public class Board : MonoBehaviour
                     //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
 
             }
-            if(hit.transform.tag == "Chess Board" && storedPiece)//if a piece is stored and another spot is chosen
+            if(hit.transform.tag == "Chess Board" && clickedPiece)//if a piece is stored and another spot is chosen
             {
                 int clickedX = 0;
                 int clickedY = 0;
@@ -149,9 +138,15 @@ public class Board : MonoBehaviour
                 }
 
                     //pieceBoard[clickedX, clickedY] = null;
-                    DisablePiece(clickedX, clickedY);
-                MovePiece(pieceX, pieceY, clickedX, clickedY);
-                StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, storedPiece));
+                DisablePiece(clickedX, clickedY);
+                MoveValidator(pieceX, pieceY, clickedX, clickedY);
+                if(canMove)
+                {
+                StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece));
+                }
+                canMove = false;
+
+
                 //storedPiece.transform.position = hit.transform.position + new Vector3(0,0,0);
 
                     // added by jenny
@@ -160,14 +155,14 @@ public class Board : MonoBehaviour
                         //storedPiece.GetComponent<Piece>().moved == true;
                     //}
 
-                storedPiece = null;
+                clickedPiece = null;
 
             }
         }
         else 
         {
                 //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position - new Vector3(0, 5, 0), 10f * Time.deltaTime);
-                storedPiece = null; 
+                clickedPiece = null; 
         }
         }
         if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
@@ -175,6 +170,61 @@ public class Board : MonoBehaviour
             UndoMoveVisual();
         }
 
+
+    }
+
+    public void PlacePiece(Transform boardSpot)
+    {
+        int pieceId = inventoryScript.GetStoredPiece();
+
+        int placeX = 0;
+        int placeY = 0;
+                for(int i=0;i<boardSize;i++)
+                {
+                    for(int j=0;j<boardSize;j++)
+                    {
+                        if(boardSpot.gameObject == hitBoxBoard[i,j])//get position of piece in array
+                        {
+                            placeX = i;//store locations
+                            placeY = j;
+                        }
+                    }
+                }
+
+        if(pieceId == 0)//pawn
+        {
+            GameObject pieceInstance = Instantiate(pawn,boardSpot.position, Quaternion.identity, gameObject.transform);
+            pieceInstance.gameObject.name = "Pawn"; 
+            pieceBoard[placeX,placeY] = pieceInstance; 
+        }
+        if(pieceId == 1)//knight
+        {
+            GameObject pieceInstance = Instantiate(knight,boardSpot.position, Quaternion.identity, gameObject.transform);
+            pieceInstance.gameObject.name = "Knight"; 
+            pieceBoard[placeX,placeY] = pieceInstance; 
+        }
+        if(pieceId == 2)//bishop
+        {
+            GameObject pieceInstance = Instantiate(bishop,boardSpot.position, Quaternion.identity, gameObject.transform);
+            pieceInstance.gameObject.name = "Bishop"; 
+            pieceBoard[placeX,placeY] = pieceInstance; 
+        }
+        if(pieceId == 3)//rook
+        {
+            GameObject pieceInstance = Instantiate(rook,boardSpot.position, Quaternion.identity, gameObject.transform);
+            pieceInstance.gameObject.name = "Rook"; 
+            pieceBoard[placeX,placeY] = pieceInstance; 
+        }
+        if(pieceId == 4)//queen
+        {
+            GameObject pieceInstance = Instantiate(queen,boardSpot.position, Quaternion.identity, gameObject.transform);
+            pieceInstance.gameObject.name = "Queen"; 
+            pieceBoard[placeX,placeY] = pieceInstance; 
+        }
+        if(pieceId == -1)//remove
+        {
+
+        }
 
     }
 
@@ -190,37 +240,62 @@ public class Board : MonoBehaviour
                 hitBoxBoard[i, j] = instance;
             }
 
-            GameObject pieceInstance = Instantiate(chessPiece,(boardPosition + new Vector3(i - boardOffset,0,-boardOffset)), Quaternion.identity, gameObject.transform);
-            pieceInstance.gameObject.name = "chessPiece"; 
-            pieceBoard[i,0] = pieceInstance; 
-
         }
         
     }
 
-    public void RefreshVisualBoard()//not used in current layout
+    public void MoveValidator(int pieceX, int pieceY, int endX, int endY)
     {
-        GameObject[] pieces;
-        pieces = GameObject.FindGameObjectsWithTag("Chess Piece");
-
-        foreach (GameObject piece in pieces)
+        //find type of piece
+        GameObject piece = pieceBoard[pieceX, pieceY];
+        Piece pieceScript = piece.GetComponent<Piece>();
+       // Debug.Log(pieceScript.type);
+        //grabd correct script
+        if(pieceScript.type == "queen")
         {
-            Destroy(piece);
+            pieceScript = piece.GetComponent<Queen>();
         }
-
-        for(int i = 0;i<boardSize;i++)
+        else if(pieceScript.type == "pawn")
         {
-            for(int j = 0;j<boardSize;j++)
-            {
-                if(pieceBoard[i,j])
+            pieceScript = piece.GetComponent<Pawn>();
+        }
+        else if(pieceScript.type == "knight")
+        {
+            pieceScript = piece.GetComponent<Knight>();
+        }
+        else if(pieceScript.type == "bishop")
+        {
+            pieceScript = piece.GetComponent<Bishop>();
+        }
+        else if(pieceScript.type == "rook")
+        {
+            pieceScript = piece.GetComponent<Rook>();
+        }
+        pieceScript.pieceX = pieceX;
+        pieceScript.pieceY = pieceY;
+
+        //Debug.Log("list legnth"+pieceScript.moves.Count);
+        pieceScript.UpdateMoves();
+       // Debug.Log("LISTUPADET"+pieceScript.moves.Count);
+
+        int moveAmount = pieceScript.moves.Count;
+
+        for(int i = 0;i<moveAmount;i++)
+        {
+                if((pieceScript.moves[i].endX == endX) && (pieceScript.moves[i].endY == endY))
                 {
-
-                    GameObject pieceInstance = Instantiate(pieceBoard[i,j], hitBoxBoard[i,j].transform.position, Quaternion.identity, gameObject.transform);
-                    pieceInstance.gameObject.name = "chessPiece";
-                    pieceBoard[i,j] = pieceInstance;
+                    canMove = true;
+                    MovePiece(pieceX, pieceY, endX, endY);
+                    break;
                 }
-            }
+
         }
+
+       // Debug.Log(pieceScript.moves[4].endY);
+
+
+        //MovePiece(pieceX, pieceY, endX, endY);
+
 
     }
 
@@ -233,6 +308,8 @@ public class Board : MonoBehaviour
         GameObject tempEndPiece = pieceBoard[endX, endY];
         //stores move in a list so can be undone at any point
         moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece)); // moveList is a list of the moves done
+
+      //  Debug.Log("start: "+startX+ " end: " +endX);
 
         // jenny added -- breaks undo atm
         //Piece script = tempPiece.GetComponent<Piece>();

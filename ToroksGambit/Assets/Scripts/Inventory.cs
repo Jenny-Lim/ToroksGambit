@@ -74,6 +74,11 @@ public class Inventory : MonoBehaviour
                         PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position;
                     }
 
+                    if(Input.GetMouseButtonDown(0))//Patrick - mouse input to place piece
+                    {
+                        Board.instance.PlacePiece(hit.transform);
+                    }
+
 
 
                     //if button press, place piece if can
@@ -162,6 +167,11 @@ public class Inventory : MonoBehaviour
             StopAllCoroutines();
         }
         StartCoroutine(ShowHideInventoryPanel());
+    }
+
+    public int GetStoredPiece()
+    {
+        return storedPiece;
     }
 
     private IEnumerator ShowHideInventoryPanel()

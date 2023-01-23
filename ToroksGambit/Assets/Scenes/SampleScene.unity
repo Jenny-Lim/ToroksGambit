@@ -236,8 +236,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardSquare: {fileID: 1524613713}
-  chessPiece: {fileID: 1494962305}
+  chessPiece: {fileID: 7919663814949119795, guid: 62d5eb6fcc71b4b48a7fc93fe84d661a, type: 3}
+  inventoryScript: {fileID: 2078189510}
   pieceMoveSpeed: 35
+  pawn: {fileID: 8310640034951653734, guid: 51879a188a24d99439e757f03eb47c19, type: 3}
+  knight: {fileID: 5957427424637607141, guid: 158d9d3cc26221649b68653101162a69, type: 3}
+  rook: {fileID: 6048779306605727795, guid: fca44e18c6c01ca48bce27e596f43c11, type: 3}
+  bishop: {fileID: 3669933133715020309, guid: 61b0841a26d513049a8be8633df68ee1, type: 3}
+  queen: {fileID: 7919663814949119795, guid: 62d5eb6fcc71b4b48a7fc93fe84d661a, type: 3}
   deploymentZoneList: []
 --- !u!4 &61773102
 Transform:
@@ -2514,7 +2520,6 @@ GameObject:
   - component: {fileID: 1524613717}
   - component: {fileID: 1524613716}
   - component: {fileID: 1524613715}
-  - component: {fileID: 1524613714}
   - component: {fileID: 1524613718}
   m_Layer: 0
   m_Name: Sphere
@@ -2523,19 +2528,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!135 &1524613714
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1524613713}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1524613715
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2556,7 +2548,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 54df9c408eee30b4ba2acfc589523665, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2585,7 +2577,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524613713}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1524613717
 Transform:
   m_ObjectHideFlags: 0
@@ -2595,7 +2587,7 @@ Transform:
   m_GameObject: {fileID: 1524613713}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 18.09, y: 0, z: -11.67}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 1, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2612,8 +2604,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.74372417, z: 1}
+  m_Center: {x: 0, y: -0.12813792, z: 0}
 --- !u!1 &1525912934
 GameObject:
   m_ObjectHideFlags: 0
