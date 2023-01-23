@@ -5,7 +5,7 @@ using UnityEngine;
 public class Piece : MonoBehaviour
 {
 
-    // list of possible moves--validation is going through the list and seeing if the attempted is in the list. moveList in board is the actual move that is going to be performed
+    // list of possible moves
     public List<Move> moves;
 
     public bool isTaken;
@@ -34,16 +34,18 @@ public class Piece : MonoBehaviour
 
     void Start()
     {
-        type = "piece";
+        type = null;
     }
 
     public virtual void UpdateMoves()
     {
         // empty to be overwritten -- maybe it can hold default functionality (see pats movePiece)
         //moves.Clear();
+
         //int endX = Board.GetClickedX();
         //int endY = Board.GetClickedY();
 
+        //checks would go here
         //moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY]));
     }
 
@@ -61,21 +63,29 @@ public class Piece : MonoBehaviour
     {
         bool isClear = true;
 
-        // handling this in here for now
+        // handling this in here for now, how expensive is getcomponent
         if (pieceBoard[endX, endY] != null)
         {
-            if (pieceBoard[endX, endY].GetComponent<Piece>().type == "wall" || pieceBoard[endX, endY].GetComponent<Piece>().isTorok == this.isTorok)
+            if (pieceBoard[endX, endY].GetComponent<Piece>().type == "wall" || pieceBoard[endX, endY].GetComponent<Piece>().type == "hole" || pieceBoard[endX, endY].GetComponent<Piece>().isTorok == this.isTorok) // if its your own piece, can't capture
             {
                 isClear = false;
                 return isClear;
             }
 
-            if (pieceBoard[endX, endY].GetComponent<Piece>().type == "hole")
-            {
-                isClear = false;
-                return isClear;
-            }
+            //if (pieceBoard[endX, endY].GetComponent<Piece>().type == "hole")
+            //{
+            //    isClear = false;
+            //    return isClear;
+            //}
         }
+
+        if (pieceBoard[pieceX, pieceY].GetComponent<Piece>().type == "knight") // knights can jump over pieces -- is this stable, i think about this
+        {
+            //isClear = true;
+            return isClear;
+        }
+
+        // below is if the piece isnt a knight
 
         // horizontally
         int start = pieceX; // to start
