@@ -335,6 +335,7 @@ public class Board : MonoBehaviour
         if (pieceBoard[endX, endY])
         {
             pieceBoard[endX, endY].SetActive(false);
+            print("disabled piece");
         }
     }
 

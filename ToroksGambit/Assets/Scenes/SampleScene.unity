@@ -238,7 +238,7 @@ MonoBehaviour:
   boardSquare: {fileID: 1524613713}
   chessPiece: {fileID: 7919663814949119795, guid: 62d5eb6fcc71b4b48a7fc93fe84d661a, type: 3}
   inventoryScript: {fileID: 2078189510}
-  pieceMoveSpeed: 35
+  pieceMoveSpeed: 8
   pawn: {fileID: 8310640034951653734, guid: 51879a188a24d99439e757f03eb47c19, type: 3}
   knight: {fileID: 5957427424637607141, guid: 158d9d3cc26221649b68653101162a69, type: 3}
   rook: {fileID: 6048779306605727795, guid: fca44e18c6c01ca48bce27e596f43c11, type: 3}
