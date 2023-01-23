@@ -160,12 +160,23 @@ public class Piece : MonoBehaviour
         // below is if the piece isnt a rook
 
 
-        //diagonally -- along the diagonal movement, blockers would be +1+1, -1-1, +1-1, -1+1 -- WIP
+        //diagonally -- along the diagonal movement, blockers would be along that movement, and +1+1, -1-1, +1-1, -1+1 -- WIP
 
         for (int i = start; i > end; i++)
         {
             for (int j = startY; j > enddY; j++)
             {
+
+                // along movement path diagonal
+                if (pieceBoard[i, j] != null)
+                {
+                    if (pieceBoard[i, j].GetComponent<Piece>().type != "hole")
+                    {
+                        isClear = false;
+                    }
+                }
+
+
                 if (endX > pieceX && endY > pieceY) {
                     if (pieceBoard[i + 1, j + 1] != null)
                     {
