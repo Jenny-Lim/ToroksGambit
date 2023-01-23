@@ -312,10 +312,13 @@ public class Board : MonoBehaviour
 
         int moveAmount = pieceScript.moves.Count;
 
+        
+
         for(int i = 0;i<moveAmount;i++)
         {
                 if((pieceScript.moves[i].endX == endX) && (pieceScript.moves[i].endY == endY))
                 {
+                    print("found move");
                     canMove = true;
                     MovePiece(pieceX, pieceY, endX, endY);
                     break;
