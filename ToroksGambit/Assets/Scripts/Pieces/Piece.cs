@@ -62,11 +62,14 @@ public class Piece : MonoBehaviour
     public bool ClearCheck(int pieceX, int pieceY, int endX, int endY)
     {
         bool isClear = true;
+        Piece thePiece = pieceBoard[pieceX, pieceY].GetComponent<Piece>();
 
         // handling this in here for now, how expensive is getcomponent
         if (pieceBoard[endX, endY] != null)
         {
-            if (pieceBoard[endX, endY].GetComponent<Piece>().type == "wall" || pieceBoard[endX, endY].GetComponent<Piece>().type == "hole" || pieceBoard[endX, endY].GetComponent<Piece>().isTorok == this.isTorok) // if its your own piece, can't capture
+            Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
+
+            if (p.type == "wall" || p.type == "hole" || p.isTorok == this.isTorok) // if its your own piece, can't capture
             {
                 isClear = false;
                 return isClear;
@@ -79,13 +82,15 @@ public class Piece : MonoBehaviour
             //}
         }
 
-        if (pieceBoard[pieceX, pieceY].GetComponent<Piece>().type == "knight") // knights can jump over pieces -- is this stable, i think about this
+        // did the below for knight and rook, but bishop only moves diagonally (maybe i make this virtual and override for bishop and rook)
+
+        if (thePiece.type == "knight") // knights can jump over pieces
         {
             //isClear = true;
             return isClear;
         }
-
         // below is if the piece isnt a knight
+
 
         // horizontally
         int start = pieceX; // to start
@@ -145,6 +150,67 @@ public class Piece : MonoBehaviour
 
             }
         }
+
+
+        if (thePiece.type == "rook") // rook is the only piece to not move diagonally
+        {
+            //isClear = true;
+            return isClear;
+        }
+        // below is if the piece isnt a rook
+
+
+        //diagonally -- along the diagonal movement, blockers would be +1+1, -1-1, +1-1, -1+1 -- WIP
+
+        for (int i = start; i > end; i++)
+        {
+            for (int j = startY; j > enddY; j++)
+            {
+                if (endX > pieceX && endY > pieceY) {
+                    if (pieceBoard[i + 1, j + 1] != null)
+                    {
+                        if (pieceBoard[i + 1, j + 1].GetComponent<Piece>().type != "hole")
+                        {
+                            isClear = false;
+                        }
+                    }
+                }
+
+                if (endX > pieceX && endY < pieceY) {
+                    if (pieceBoard[i + 1, j - 1] != null)
+                    {
+                        if (pieceBoard[i + 1, j - 1].GetComponent<Piece>().type != "hole")
+                        {
+                            isClear = false;
+                        }
+                    }
+                }
+
+                if (endX < pieceX && endY > pieceY)
+                {
+                    if (pieceBoard[i - 1, j + 1] != null)
+                    {
+                        if (pieceBoard[i - 1, j + 1].GetComponent<Piece>().type != "hole")
+                        {
+                            isClear = false;
+                        }
+                    }
+                }
+
+                if (endX < pieceX && endY < pieceY)
+                {
+                    if (pieceBoard[i - 1, j - 1] != null)
+                    {
+                        if (pieceBoard[i - 1, j - 1].GetComponent<Piece>().type != "hole")
+                        {
+                            isClear = false;
+                        }
+                    }
+                }
+
+            }
+        }
+
 
         return isClear;
     }
