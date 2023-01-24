@@ -61,6 +61,26 @@ public class Piece : MonoBehaviour
 
     public virtual bool ClearCheck(int pieceX, int pieceY, int endX, int endY)
     {
+        /*if (pieceBoard[endX, endY] != null)
+        {
+            Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
+
+            if (p.type == "wall" || p.type == "hole") // if its your own piece, can't capture
+            {
+                return false;
+            }
+            else if (p.isTorok != this.isTorok)//is an enemy
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }*/
+
+
+
         bool isClear = true;
         Piece thePiece = pieceBoard[pieceX, pieceY].GetComponent<Piece>();
 
