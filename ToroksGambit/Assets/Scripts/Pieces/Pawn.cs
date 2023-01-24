@@ -26,9 +26,9 @@ public class Pawn : Piece
                 moves.Add(new Move(pieceX, pieceY, pieceX, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY - 1]));
             }
 
-            if (pieceBoard[pieceX - 1, pieceY - 1]!=null && !pieceBoard[pieceX-1, pieceY-1].GetComponent<Piece>().isTorok) // if can capture another piece
+            if (InBoundsCheck(pieceX - 1, pieceY - 1) && pieceBoard[pieceX - 1, pieceY - 1]!=null && !pieceBoard[pieceX-1, pieceY-1].GetComponent<Piece>().isTorok) // if can capture another piece
             {
-                if (InBoundsCheck(pieceX - 1, pieceY - 1) && ClearCheck(pieceX, pieceY, pieceX - 1, pieceY - 1))
+                if (ClearCheck(pieceX, pieceY, pieceX - 1, pieceY - 1))
                 {
                     moves.Add(new Move(pieceX, pieceY, pieceX - 1, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY - 1]));
                 }
@@ -49,11 +49,11 @@ public class Pawn : Piece
                 moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + 1]));
             }
 
-            if (pieceBoard[pieceX + 1, pieceY + 1] != null && pieceBoard[pieceX + 1, pieceY + 1].GetComponent<Piece>().isTorok) // if can capture another piece
+            if (InBoundsCheck(pieceX + 1, pieceY + 1) && pieceBoard[pieceX + 1, pieceY + 1] != null && pieceBoard[pieceX + 1, pieceY + 1].GetComponent<Piece>().isTorok) // if can capture another piece
             {
-                if (InBoundsCheck(pieceX + 1, pieceY + 1) && ClearCheck(pieceX, pieceY, pieceX + 1, pieceY + 1))
+                if (ClearCheck(pieceX, pieceY, pieceX + 1, pieceY + 1))
                 {
-                    moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + 1]));
+                    moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + 1]));
                 }
             }
             if (!moved)
