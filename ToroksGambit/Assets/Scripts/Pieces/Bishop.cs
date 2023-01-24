@@ -100,53 +100,53 @@ public class Bishop : Piece
                 }
 
 
-                if (endX > pieceX && endY > pieceY)
-                {
-                    if (pieceBoard[i + 1, j + 1] != null)
-                    {
-                        if (pieceBoard[i + 1, j + 1].GetComponent<Piece>().type != "hole")
-                        {
-                            isClear = false;
-                            return isClear;
-                        }
-                    }
-                }
+            //    if (endX > pieceX && endY > pieceY)
+            //    {
+            //        if (pieceBoard[i + 1, j + 1] != null)
+            //        {
+            //            if (pieceBoard[i + 1, j + 1].GetComponent<Piece>().type != "hole")
+            //            {
+            //                isClear = false;
+            //                return isClear;
+            //            }
+            //        }
+            //    }
 
-                if (endX > pieceX && endY < pieceY)
-                {
-                    if (pieceBoard[i + 1, j - 1] != null)
-                    {
-                        if (pieceBoard[i + 1, j - 1].GetComponent<Piece>().type != "hole")
-                        {
-                            isClear = false;
-                            return isClear;
-                        }
-                    }
-                }
+            //    if (endX > pieceX && endY < pieceY)
+            //    {
+            //        if (pieceBoard[i + 1, j - 1] != null)
+            //        {
+            //            if (pieceBoard[i + 1, j - 1].GetComponent<Piece>().type != "hole")
+            //            {
+            //                isClear = false;
+            //                return isClear;
+            //            }
+            //        }
+            //    }
 
-                if (endX < pieceX && endY > pieceY)
-                {
-                    if (pieceBoard[i - 1, j + 1] != null)
-                    {
-                        if (pieceBoard[i - 1, j + 1].GetComponent<Piece>().type != "hole")
-                        {
-                            isClear = false;
-                            return isClear;
-                        }
-                    }
-                }
+            //    if (endX < pieceX && endY > pieceY)
+            //    {
+            //        if (pieceBoard[i - 1, j + 1] != null)
+            //        {
+            //            if (pieceBoard[i - 1, j + 1].GetComponent<Piece>().type != "hole")
+            //            {
+            //                isClear = false;
+            //                return isClear;
+            //            }
+            //        }
+            //    }
 
-                if (endX < pieceX && endY < pieceY)
-                {
-                    if (pieceBoard[i - 1, j - 1] != null)
-                    {
-                        if (pieceBoard[i - 1, j - 1].GetComponent<Piece>().type != "hole")
-                        {
-                            isClear = false;
-                            return isClear;
-                        }
-                    }
-                }
+            //    if (endX < pieceX && endY < pieceY)
+            //    {
+            //        if (pieceBoard[i - 1, j - 1] != null)
+            //        {
+            //            if (pieceBoard[i - 1, j - 1].GetComponent<Piece>().type != "hole")
+            //            {
+            //                isClear = false;
+            //                return isClear;
+            //            }
+            //        }
+            //    }
 
             }
         }

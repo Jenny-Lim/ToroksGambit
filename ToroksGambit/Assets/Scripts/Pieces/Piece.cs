@@ -162,7 +162,7 @@ public class Piece : MonoBehaviour
         //// below is if the piece isnt a rook
 
 
-        //diagonally -- along the diagonal movement, blockers would be along that movement, and +1+1, -1-1, +1-1, -1+1 -- WIP
+        //diagonally -- along the diagonal movement, blockers would be along that movement, and NOT +1+1, -1-1, +1-1, -1+1 -- WIP
 
         for (int i = start; i > end; i++)
         {
@@ -180,51 +180,51 @@ public class Piece : MonoBehaviour
                 }
 
 
-                if (endX > pieceX && endY > pieceY) {
-                    if (pieceBoard[i + 1, j + 1] != null)
-                    {
-                        if (pieceBoard[i + 1, j + 1].GetComponent<Piece>().type != "hole")
-                        {
-                            isClear = false;
-                            return isClear;
-                        }
-                    }
-                }
+                //if (endX > pieceX && endY > pieceY) {
+                //    if (pieceBoard[i + 1, j + 1] != null)
+                //    {
+                //        if (pieceBoard[i + 1, j + 1].GetComponent<Piece>().type != "hole")
+                //        {
+                //            isClear = false;
+                //            return isClear;
+                //        }
+                //    }
+                //}
 
-                if (endX > pieceX && endY < pieceY) {
-                    if (pieceBoard[i + 1, j - 1] != null)
-                    {
-                        if (pieceBoard[i + 1, j - 1].GetComponent<Piece>().type != "hole")
-                        {
-                            isClear = false;
-                            return isClear;
-                        }
-                    }
-                }
+                //if (endX > pieceX && endY < pieceY) {
+                //    if (pieceBoard[i + 1, j - 1] != null)
+                //    {
+                //        if (pieceBoard[i + 1, j - 1].GetComponent<Piece>().type != "hole")
+                //        {
+                //            isClear = false;
+                //            return isClear;
+                //        }
+                //    }
+                //}
 
-                if (endX < pieceX && endY > pieceY)
-                {
-                    if (pieceBoard[i - 1, j + 1] != null)
-                    {
-                        if (pieceBoard[i - 1, j + 1].GetComponent<Piece>().type != "hole")
-                        {
-                            isClear = false;
-                            return isClear;
-                        }
-                    }
-                }
+                //if (endX < pieceX && endY > pieceY)
+                //{
+                //    if (pieceBoard[i - 1, j + 1] != null)
+                //    {
+                //        if (pieceBoard[i - 1, j + 1].GetComponent<Piece>().type != "hole")
+                //        {
+                //            isClear = false;
+                //            return isClear;
+                //        }
+                //    }
+                //}
 
-                if (endX < pieceX && endY < pieceY)
-                {
-                    if (pieceBoard[i - 1, j - 1] != null)
-                    {
-                        if (pieceBoard[i - 1, j - 1].GetComponent<Piece>().type != "hole")
-                        {
-                            isClear = false;
-                            return isClear;
-                        }
-                    }
-                }
+                //if (endX < pieceX && endY < pieceY)
+                //{
+                //    if (pieceBoard[i - 1, j - 1] != null)
+                //    {
+                //        if (pieceBoard[i - 1, j - 1].GetComponent<Piece>().type != "hole")
+                //        {
+                //            isClear = false;
+                //            return isClear;
+                //        }
+                //    }
+                //}
 
             }
         }
