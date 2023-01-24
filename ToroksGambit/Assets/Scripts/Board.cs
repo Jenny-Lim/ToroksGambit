@@ -241,7 +241,7 @@ public class Board : MonoBehaviour
 
         if (pieceId >= 0)
         {
-            GameObject newPiece = pieceBoard[pieceX, pieceY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
             Piece piece = newPiece.GetComponent<Piece>();
             piece.pieceX = placeX; 
             piece.pieceY = placeY;
