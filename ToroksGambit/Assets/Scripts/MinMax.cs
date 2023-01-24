@@ -49,7 +49,6 @@ public class MinMax : MonoBehaviour
             return new ScoredMove(null, /*board analyzer*/0f);
         }
 
-
         ScoredMove bestMove = new ScoredMove(null, 0);//holder for the best/most likely move to make
 
         if (whosMoving == playerToMove.player)//max

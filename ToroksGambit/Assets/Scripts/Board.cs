@@ -13,7 +13,7 @@ public class Board : MonoBehaviour
 {
 
     [SerializeField]
-    private static int boardSize = 8;//size of 2D array
+    public static int boardSize = 8;//size of 2D array
 
     private GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
@@ -223,41 +223,6 @@ public class Board : MonoBehaviour
             //remove piece functionality
         }
 
-        /*if(pieceId == 0)//pawn
-        {
-            GameObject pieceInstance = Instantiate(pawn,boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);
-            pieceInstance.gameObject.name = "Pawn"; 
-            pieceBoard[placeX,placeY] = pieceInstance; 
-        }
-        if(pieceId == 1)//knight
-        {
-            GameObject pieceInstance = Instantiate(knight,boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);
-            pieceInstance.gameObject.name = "Knight"; 
-            pieceBoard[placeX,placeY] = pieceInstance; 
-        }
-        if(pieceId == 2)//bishop
-        {
-            GameObject pieceInstance = Instantiate(bishop,boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);
-            pieceInstance.gameObject.name = "Bishop"; 
-            pieceBoard[placeX,placeY] = pieceInstance; 
-        }
-        if(pieceId == 3)//rook
-        {
-            GameObject pieceInstance = Instantiate(rook,boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);
-            pieceInstance.gameObject.name = "Rook"; 
-            pieceBoard[placeX,placeY] = pieceInstance; 
-        }
-        if(pieceId == 4)//queen
-        {
-            GameObject pieceInstance = Instantiate(queen,boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);
-            pieceInstance.gameObject.name = "Queen"; 
-            pieceBoard[placeX,placeY] = pieceInstance; 
-        }
-        if(pieceId == -1)//remove
-        {
-
-        }*/
-
     }
 
     private void BuildBoard()//generates hitbox for chess board
@@ -345,7 +310,11 @@ public class Board : MonoBehaviour
         pieceBoard[endX,endY] = tempPiece;
         pieceBoard[startX, startY] = tempEndPiece;
 
-        pieceBoard[endX, endY].GetComponent<Piece>().moved = true;// changes piece to say has moved
+        Piece endPiece = pieceBoard[endX, endY].GetComponent<Piece>();//get piece script of object that moved
+
+        endPiece.moved = true;// changes piece to say has moved
+        endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
+        endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
         print("moved piece");
 
     }

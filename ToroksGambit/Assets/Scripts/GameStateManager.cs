@@ -33,7 +33,7 @@ public class GameStateManager : MonoBehaviour
 
         if (Input.GetKeyDown("q"))
         {
-            Move resultMove = MinMax.instance.GetMinMaxMove(1, MinMax.playerToMove.torok);
+            Move resultMove = MinMax.instance.GetMinMaxMove(2, MinMax.playerToMove.torok);
             
             //if (Board.instance.canMove)
             //{

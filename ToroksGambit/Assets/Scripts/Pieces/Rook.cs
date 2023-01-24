@@ -40,7 +40,7 @@ public class Rook : Piece
     }
 
 
-    public override bool ClearCheck(int pieceX, int pieceY, int endX, int endY) // rook only moves updownleftright -- WIP
+    public override bool ClearCheck(int pieceX, int pieceY, int endX, int endY) // rook only moves updownleftright -- WIP, **why for loops in here? - jordan
     {
         bool isClear = true;
         Piece thePiece = pieceBoard[pieceX, pieceY].GetComponent<Piece>();

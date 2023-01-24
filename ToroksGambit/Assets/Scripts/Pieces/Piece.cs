@@ -5,6 +5,8 @@ using UnityEngine;
 public class Piece : MonoBehaviour
 {
 
+    //probably want an is same piece function
+
     public bool moved = false;
     // list of possible moves
     public List<Move> moves;
