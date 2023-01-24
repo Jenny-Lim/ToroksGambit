@@ -236,12 +236,12 @@ public class Piece : MonoBehaviour
         return isClear;
     }
 
-    void Update()
-    {
-       if (isTaken)
-        {
-            this.gameObject.SetActive(false);
-        } 
-    }
+    //void Update()
+    //{
+    //   if (isTaken)
+    //    {
+    //        this.gameObject.SetActive(false);
+    //    } 
+    //}
 
 }

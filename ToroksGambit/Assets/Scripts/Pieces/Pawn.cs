@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pawn : Piece
 {
     //private bool moved;
-    private bool capturing;
+    //private bool capturing;
 
     // Start is called before the first frame update
     void Start()
