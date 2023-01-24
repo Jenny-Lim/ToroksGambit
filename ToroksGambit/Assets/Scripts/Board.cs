@@ -35,7 +35,7 @@ public class Board : MonoBehaviour
 
     private Vector3 boardPosition;
 
-    private bool canMove = false;
+    public bool canMove = false;
 
     [SerializeField]
     private Inventory inventoryScript;
@@ -290,34 +290,13 @@ public class Board : MonoBehaviour
         //find type of piece
         GameObject piece = pieceBoard[pieceX, pieceY];
         Piece pieceScript = piece.GetComponent<Piece>();
-       // Debug.Log(pieceScript.type);
-        //grabd correct script
-        /*if(pieceScript.type == "queen")
-        {
-            pieceScript = piece.GetComponent<Queen>();
-        }
-        else if(pieceScript.type == "pawn")
-        {
-            pieceScript = piece.GetComponent<Pawn>();
-        }
-        else if(pieceScript.type == "knight")
-        {
-            pieceScript = piece.GetComponent<Knight>();
-        }
-        else if(pieceScript.type == "bishop")
-        {
-            pieceScript = piece.GetComponent<Bishop>();
-        }
-        else if(pieceScript.type == "rook")
-        {
-            pieceScript = piece.GetComponent<Rook>();
-        }*/
+       
         pieceScript.pieceX = pieceX;
         pieceScript.pieceY = pieceY;
 
-        //Debug.Log("list legnth"+pieceScript.moves.Count);
+        
         pieceScript.UpdateMoves();
-       // Debug.Log("LISTUPADET"+pieceScript.moves.Count);
+       
 
         int moveAmount = pieceScript.moves.Count;
 
@@ -339,14 +318,9 @@ public class Board : MonoBehaviour
 
         }
 
-       // Debug.Log(pieceScript.moves[4].endY);
-
-
-        //MovePiece(pieceX, pieceY, endX, endY);
-
-
     }
 
+    
     //input the X and Y of the piece being moved(startX and Y) and the X and Y of the spot being moved to(end X Y)
     //if click impossible move then clear storedmove
     //if click off bord then clear stored item
@@ -374,6 +348,11 @@ public class Board : MonoBehaviour
         pieceBoard[endX, endY].GetComponent<Piece>().moved = true;// changes piece to say has moved
         print("moved piece");
 
+    }
+
+    public void MovePieceVisual(int startX, int startY, int endX, int endY, GameObject piece)
+    {
+        StartCoroutine(VisualMovePiece(startX, startY,endX,endY, piece));
     }
 
     public void DisablePiece(int endX, int endY)
@@ -429,12 +408,12 @@ public class Board : MonoBehaviour
     //fix this later
     IEnumerator VisualMovePiece(int startX, int startY, int endX, int endY, GameObject piece)
     {
-
         /*while (piece.transform.position != hitBoxBoard[endX, endY].transform.position)
         {
             piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + Vector3.up, pieceMoveSpeed * Time.deltaTime);
             yield return new WaitForSeconds(0.01f);
         }*/
+        print("inside visualMove");
 
         while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + Vector3.up) > 0.1f)
         {

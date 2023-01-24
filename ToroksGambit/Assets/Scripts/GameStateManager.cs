@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
@@ -32,7 +33,16 @@ public class GameStateManager : MonoBehaviour
 
         if (Input.GetKeyDown("q"))
         {
-            //do ai
+            Move resultMove = MinMax.instance.GetMinMaxMove(1, MinMax.playerToMove.torok);
+            
+            //if (Board.instance.canMove)
+            //{
+                print("call visual move");
+                Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY]);
+            //}
+            Board.instance.canMove = false;
+            print("call move Validate");
+            Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
         }
     }
 }

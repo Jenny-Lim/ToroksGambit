@@ -17,7 +17,6 @@ public class MinMax : MonoBehaviour
         }
     }
 
-
     public enum playerToMove
     {
         player, torok
@@ -66,7 +65,7 @@ public class MinMax : MonoBehaviour
 
                 if (recursiveResult.score > bestMove.score)//if subtree result is better make best move equal to that
                 {
-                    bestMove.move = recursiveResult.move;
+                    bestMove.move = move;
                     bestMove.score = recursiveResult.score;
                 }
 
@@ -92,7 +91,7 @@ public class MinMax : MonoBehaviour
 
                 if (recursiveResult.score < bestMove.score)// if subtree is better make best move equal to that
                 {
-                    bestMove.move = recursiveResult.move;
+                    bestMove.move = move;
                     bestMove.score = recursiveResult.score;
                 }
 
