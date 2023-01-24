@@ -444,9 +444,9 @@ public class Board : MonoBehaviour
         {
             moveList[undoCounter - 1].endObject.SetActive(true);
         }
-        moveList[undoCounter-1].startObject.transform.position = hitBoxBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY].transform.position;
+        moveList[undoCounter-1].startObject.transform.position = hitBoxBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY].transform.position+Vector3.up;
         if(moveList[undoCounter-1].endObject)
-        moveList[undoCounter-1].endObject.transform.position = hitBoxBoard[moveList[undoCounter-1].endX,moveList[undoCounter-1].endY].transform.position;
+        moveList[undoCounter-1].endObject.transform.position = hitBoxBoard[moveList[undoCounter-1].endX,moveList[undoCounter-1].endY].transform.position+Vector3.up;
 
         UndoMove();
 
