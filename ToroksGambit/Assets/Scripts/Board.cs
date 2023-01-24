@@ -74,24 +74,6 @@ public class Board : MonoBehaviour
     //private static int clickedX;
     //private static int clickedY;
 
-    /*private class myClass testing something for making moveValidator cleaner ** i think it works -jordan
-    {
-        public string name;
-
-        public virtual void ClassName()
-        {
-            print("Base Class Name");
-        }
-    }
-
-    private class myChildClass: myClass{
-
-        public override void ClassName()
-        {
-            print("Child Class Name");
-        }
-    }*/
-
     void Start()
     {
         if (instance == null) { instance = this; }//added by jordan for static reference to board for minmax
@@ -101,15 +83,6 @@ public class Board : MonoBehaviour
         hitBoxBoard = new GameObject[boardSize,boardSize];
         pieceBoard = new GameObject[boardSize, boardSize];
         BuildBoard();
-
-        /*testing something for making moveValidator cleaner** i think it works -jordan
-        myChildClass class1 = new myChildClass();
-        myClass test = class1;
-        test.ClassName();*/
-
-
-        print("pieceX of board :" + pieceX);
-        print("pieceY of board :" + pieceY);
     }
 
     public void BoardUpdate()
@@ -153,7 +126,7 @@ public class Board : MonoBehaviour
                 //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
 
             }
-            if(hit.transform.tag == "Chess Board" && clickedPiece)//if a piece is stored and another spot is chosen
+            else if(hit.transform.tag == "Chess Board" && clickedPiece)//if a piece is stored and another spot is chosen
             {
                 int clickedX = 0;
                 int clickedY = 0;
@@ -174,7 +147,7 @@ public class Board : MonoBehaviour
                     }
                 }
 
-                    //pieceBoard[clickedX, clickedY] = null;
+                //pieceBoard[clickedX, clickedY] = null;
                 DisablePiece(clickedX, clickedY);
                 print("pieceX of board :" + pieceX);
                 print("pieceY of board :" + pieceY);
@@ -319,7 +292,7 @@ public class Board : MonoBehaviour
         Piece pieceScript = piece.GetComponent<Piece>();
        // Debug.Log(pieceScript.type);
         //grabd correct script
-        if(pieceScript.type == "queen")
+        /*if(pieceScript.type == "queen")
         {
             pieceScript = piece.GetComponent<Queen>();
         }
@@ -338,7 +311,7 @@ public class Board : MonoBehaviour
         else if(pieceScript.type == "rook")
         {
             pieceScript = piece.GetComponent<Rook>();
-        }
+        }*/
         pieceScript.pieceX = pieceX;
         pieceScript.pieceY = pieceY;
 
@@ -398,6 +371,7 @@ public class Board : MonoBehaviour
         pieceBoard[endX,endY] = tempPiece;
         pieceBoard[startX, startY] = tempEndPiece;
 
+        pieceBoard[endX, endY].GetComponent<Piece>().moved = true;// changes piece to say has moved
         print("moved piece");
 
     }

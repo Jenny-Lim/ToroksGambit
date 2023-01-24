@@ -29,5 +29,10 @@ public class GameStateManager : MonoBehaviour
                 //ShopUpdate();
                 break;
         }
+
+        if (Input.GetKeyDown("q"))
+        {
+            //do ai
+        }
     }
 }

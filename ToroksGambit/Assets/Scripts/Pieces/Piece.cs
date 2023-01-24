@@ -5,6 +5,7 @@ using UnityEngine;
 public class Piece : MonoBehaviour
 {
 
+    public bool moved = false;
     // list of possible moves
     public List<Move> moves;
 
