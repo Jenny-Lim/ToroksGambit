@@ -12,6 +12,8 @@ public class Piece : MonoBehaviour
     public int pieceX;
     public int pieceY;
     public string type;
+
+    [SerializeField]
     public bool isTorok;
 
     //private GameObject board;
