@@ -59,7 +59,7 @@ public class Piece : MonoBehaviour
         return inBounds;
     }
 
-    public bool ClearCheck(int pieceX, int pieceY, int endX, int endY)
+    public virtual bool ClearCheck(int pieceX, int pieceY, int endX, int endY)
     {
         bool isClear = true;
         Piece thePiece = pieceBoard[pieceX, pieceY].GetComponent<Piece>();
@@ -91,6 +91,8 @@ public class Piece : MonoBehaviour
         }
         // below is if the piece isnt a knight
 
+
+        // maybe i can make these seperate fxns that i call on from clearchecks-- WIP
 
         // horizontally
         int start = pieceX; // to start
@@ -152,12 +154,12 @@ public class Piece : MonoBehaviour
         }
 
 
-        if (thePiece.type == "rook") // rook is the only piece to not move diagonally
-        {
-            //isClear = true;
-            return isClear;
-        }
-        // below is if the piece isnt a rook
+        //if (thePiece.type == "rook") // rook is the only piece to not move diagonally
+        //{
+        //    //isClear = true;
+        //    return isClear;
+        //}
+        //// below is if the piece isnt a rook
 
 
         //diagonally -- along the diagonal movement, blockers would be along that movement, and +1+1, -1-1, +1-1, -1+1 -- WIP
@@ -173,6 +175,7 @@ public class Piece : MonoBehaviour
                     if (pieceBoard[i, j].GetComponent<Piece>().type != "hole")
                     {
                         isClear = false;
+                        return isClear;
                     }
                 }
 
@@ -183,6 +186,7 @@ public class Piece : MonoBehaviour
                         if (pieceBoard[i + 1, j + 1].GetComponent<Piece>().type != "hole")
                         {
                             isClear = false;
+                            return isClear;
                         }
                     }
                 }
@@ -193,6 +197,7 @@ public class Piece : MonoBehaviour
                         if (pieceBoard[i + 1, j - 1].GetComponent<Piece>().type != "hole")
                         {
                             isClear = false;
+                            return isClear;
                         }
                     }
                 }
@@ -204,6 +209,7 @@ public class Piece : MonoBehaviour
                         if (pieceBoard[i - 1, j + 1].GetComponent<Piece>().type != "hole")
                         {
                             isClear = false;
+                            return isClear;
                         }
                     }
                 }
@@ -215,6 +221,7 @@ public class Piece : MonoBehaviour
                         if (pieceBoard[i - 1, j - 1].GetComponent<Piece>().type != "hole")
                         {
                             isClear = false;
+                            return isClear;
                         }
                     }
                 }
