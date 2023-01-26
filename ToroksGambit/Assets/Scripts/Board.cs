@@ -14,6 +14,7 @@ public class Board : MonoBehaviour
 
     [SerializeField]
     public static int boardSize = 8;//size of 2D array
+    [SerializeField] float boardVerticalOffset = 0.1f;
 
     private GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
@@ -21,6 +22,8 @@ public class Board : MonoBehaviour
 
     [SerializeField]
     private GameObject boardSquare;
+
+    [SerializeField] private GameObject[] boardTiles = new GameObject[2];
 
     [SerializeField]
     private GameObject chessPiece;
@@ -232,9 +235,18 @@ public class Board : MonoBehaviour
         {
             for(int j=0;j<boardSize;j++)
             {
-                GameObject instance = Instantiate(boardSquare,(boardPosition + new Vector3(i - boardOffset, 0,j - boardOffset)), Quaternion.identity, gameObject.transform);
-                instance.gameObject.name = i + "_" + j;
-                hitBoxBoard[i, j] = instance;
+                GameObject newTile = null;
+                if ( (i+j) % 2 == 0)
+                {
+                    newTile = Instantiate(boardTiles[0], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset) , Quaternion.Euler(new Vector3(90f,0f,0f)), gameObject.transform);
+                }
+                else
+                {
+                    newTile = Instantiate(boardTiles[1], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                }
+
+                newTile.gameObject.name = i + "_" + j;
+                hitBoxBoard[i, j] = newTile;
             }
 
         }
