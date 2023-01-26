@@ -14,7 +14,8 @@ public class Board : MonoBehaviour
 
     [SerializeField]
     public static int boardSize = 8;//size of 2D array
-    [SerializeField] float boardVerticalOffset = 0.1f;
+    [SerializeField] float boardVerticalOffset = 0.5f;//offset for board tiles vertically
+    [SerializeField] float verticalPlaceOffset = 0.5f;
 
     private GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
@@ -217,7 +218,7 @@ public class Board : MonoBehaviour
 
         if (pieceId >= 0)
         {
-            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + Vector3.up, Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
             Piece piece = newPiece.GetComponent<Piece>();
             piece.pieceX = placeX; 
             piece.pieceY = placeY;

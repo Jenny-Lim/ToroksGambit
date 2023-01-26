@@ -19,6 +19,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hideShowText;
     [SerializeField] private int[] maxHeldPieces = new int[5];//the maximum number of each piece the player can have
     private int[] heldPieces = new int[5];//the amount of each piece the player has
+    [SerializeField] private float ghostPieceVertOffset = 0.1f;
 
     public void ShowInventoryPanel()
     {
@@ -79,7 +80,7 @@ public class Inventory : MonoBehaviour
                     if (storedPiece >= 0)
                     {
                         print("changing pos of visual");
-                        PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + Vector3.up;
+                        PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
                     }
 
                     if(Input.GetMouseButtonDown(0))//Patrick - mouse input to place piece
