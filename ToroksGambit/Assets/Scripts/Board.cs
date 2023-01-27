@@ -397,12 +397,12 @@ public class Board : MonoBehaviour
         }*/
         print("inside visualMove");
 
-        while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + Vector3.up) > 0.1f)
+        while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset)) > 0.1f)
         {
-            piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + Vector3.up, pieceMoveSpeed * Time.deltaTime);
+            piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset), pieceMoveSpeed * Time.deltaTime);
             yield return null;
         }
-        piece.transform.position = hitBoxBoard[endX, endY].transform.position + Vector3.up;
+        piece.transform.position = hitBoxBoard[endX, endY].transform.position+ (Vector3.up * verticalPlaceOffset);
         print("visual move has ended");
     }
 
