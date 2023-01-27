@@ -27,12 +27,8 @@ public class Piece : MonoBehaviour
 
     void Awake()
     {
-        isTaken = false;
-        //board = GameObject.FindWithTag("Chess Board");
-        //b = board.GetComponent<Board>();
+        //isTaken = false;
         pieceBoard = Board.GetPieceBoard();
-        //pieceX = Board.GetX(); // Took these out cuz it doesnt make sense to do this - jordan, if there is then uncomment but i dont see why, this should (and is) set when placing a piece on the board by the placepiece function in board
-        //pieceY = Board.GetY();
         boardSize = Board.GetSize();
         moves = new List<Move>();
     }
@@ -51,12 +47,11 @@ public class Piece : MonoBehaviour
 
     public bool InBoundsCheck(int endX, int endY)
     {
-        bool inBounds = true;
         if (endX >= boardSize || endY >= boardSize || endX < 0 || endY < 0)
         {
-            inBounds = false;
+            return false;
         }
-        return inBounds;
+        return true;
     }
 
     public virtual bool ClearCheck(int pieceX, int pieceY, int endX, int endY)
@@ -73,11 +68,10 @@ public class Piece : MonoBehaviour
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
-        }*/
+        }
+        
+         return false;
+         */
 
 
 
@@ -129,19 +123,19 @@ public class Piece : MonoBehaviour
             end = pieceX;
         }
 
-            for (int i = start; i > end; i++)
+        for (int i = start; i > end; i++)
+        {
+            if (pieceBoard[i, pieceY] != null)
             {
-                if (pieceBoard[i, pieceY] != null)
+
+                if (pieceBoard[i, pieceY].GetComponent<Piece>().type != "hole")
                 {
-
-                    if (pieceBoard[i, pieceY].GetComponent<Piece>().type != "hole")
-                    {
-                        isClear = false;
-                    return isClear;
-                    }
-
+                    isClear = false;
+                return isClear;
                 }
+
             }
+        }
             
 
         // vertically
