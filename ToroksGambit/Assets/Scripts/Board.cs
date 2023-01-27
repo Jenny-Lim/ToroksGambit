@@ -9,6 +9,9 @@ using UnityEngine.UIElements.Experimental;
 //cant move to spot you start in
 //fix bug where it wont move after capturinig or when it cant capture
 
+//inventory - text in corner of boxes for counter - ticker to set to torok pieces being set down
+//piece trait system
+
 public class Board : MonoBehaviour
 {
 
@@ -476,6 +479,12 @@ public class Board : MonoBehaviour
             }
         }
         return new Vector2Int(-1, -1);
+    }
+
+    public static bool isSameteam(GameObject chessPiece)
+    {
+
+        return false;
     }
 
     //public static int GetClickedX()
