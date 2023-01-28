@@ -12,6 +12,10 @@ public class GameStateManager : MonoBehaviour
         game,
         shop
     }
+
+
+    [SerializeField] private bool isPlayersTurn = true;
+    [SerializeField] private static int turnCount = 1;//the amount of moves/turns that have happened in the current game
     [SerializeField] private GameState currentState;
 
     // Update is called once per frame
@@ -44,5 +48,34 @@ public class GameStateManager : MonoBehaviour
             print("call move Validate");
             Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
         }
+
+    }
+
+    public void ChangeGameState(GameState newState)
+    {
+        currentState = newState;
+    }
+
+    public void EndTurn()
+    {
+        turnCount++;
+        isPlayersTurn = !isPlayersTurn;
+    }
+
+    private void EnactTurn()
+    {
+        if (isPlayersTurn)// do players action
+        {
+
+        }
+        else// do torok action
+        {
+
+        }
+    }
+
+    public static int GetTurnCount()
+    {
+        return turnCount;
     }
 }

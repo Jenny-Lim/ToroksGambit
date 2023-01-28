@@ -232,6 +232,24 @@ public class Board : MonoBehaviour
 
     }
 
+    public void PlacePiece(int xPos, int yPos, int pieceId)
+    {
+        //int pieceId = inventoryScript.GetStoredPiece();
+
+        if (pieceId >= 0)
+        {
+            GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos,yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            Piece piece = newPiece.GetComponent<Piece>();
+            piece.pieceX = xPos;
+            piece.pieceY = yPos;
+        }
+        else
+        {
+            //remove piece functionality
+        }
+
+    }
+
     private void BuildBoard()//generates hitbox for chess board
     {
         float boardOffset = ((float)boardSize)/2;

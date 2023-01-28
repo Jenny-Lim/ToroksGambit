@@ -2,8 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Interrupt", menuName = "ScriptableObjects/Interrupt", order = 1)]
-public class InterruptManager : ScriptableObject
+public class InterruptManager : MonoBehaviour
 {
-    
+    [SerializeField] private List<BaseInterrupt> levelInterrupts;
+    public static InterruptManager instance;
+    public enum InterruptTrigger
+    {
+        GameStart,
+        AfterTurn,
+        AfterPlayerTurn,
+        AfterTorokTurn,
+    }
+
+    private void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }   
+    }
+
+    public void FixedUpdate()
+    {
+        if (Input.GetKey("p"))
+        {
+            EnactInterrupts(InterruptTrigger.GameStart);
+        }
+    }
+
+    public void EnactInterrupts(InterruptTrigger type)
+    {
+        if (levelInterrupts.Count < 1) { return; }
+
+        foreach (BaseInterrupt interrupt in levelInterrupts)
+        {
+            if (interrupt == null)//gaurd clause
+            {
+                continue;
+            }
+
+            if ( interrupt.triggerType == type && interrupt.ShouldTrigger() )//if the trigger type is met and it should trigger then enact the interrupt
+            {
+                interrupt.Enact();
+            }
+        }
+    }
 }
