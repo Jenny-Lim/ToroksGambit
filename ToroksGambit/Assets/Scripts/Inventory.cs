@@ -79,7 +79,6 @@ public class Inventory : MonoBehaviour
                     //show desired visual
                     if (storedPiece >= 0)
                     {
-                        print("changing pos of visual");
                         PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
                     }
 

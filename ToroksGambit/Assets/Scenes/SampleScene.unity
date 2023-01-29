@@ -251,6 +251,9 @@ MonoBehaviour:
   - {fileID: 3669933133715020309, guid: 61b0841a26d513049a8be8633df68ee1, type: 3}
   - {fileID: 6048779306605727795, guid: fca44e18c6c01ca48bce27e596f43c11, type: 3}
   - {fileID: 7919663814949119795, guid: 62d5eb6fcc71b4b48a7fc93fe84d661a, type: 3}
+  obstaclePrefabs:
+  - {fileID: 4071128574824181778, guid: 1e48206c8ecc159428a015a51392c68e, type: 3}
+  - {fileID: 3725665634022756668, guid: 3dba22731d1a7ff4dbeb32d3bdd0f430, type: 3}
   deploymentZoneList: []
   selectionIndicator: {fileID: 384240674}
 --- !u!4 &61773102
@@ -2258,7 +2261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelInterrupts:
-  - {fileID: 11400000, guid: 08a69f902a3228a4b8ce52082377bcc6, type: 2}
+  - {fileID: 11400000, guid: e917ef3e443e65a46b3a629ff3e1c318, type: 2}
 --- !u!1 &1477407502
 GameObject:
   m_ObjectHideFlags: 0

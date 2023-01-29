@@ -31,7 +31,7 @@ public class AddPieceInterrupt : BaseInterrupt
         }
         else
         {
-            Debug.Log("Didn't place Piece at " + placeAt + "because space was taken.");
+            Debug.Log("InterruptError| Didn't place Piece at " + placeAt + "because space was taken.");
         }
 
     }

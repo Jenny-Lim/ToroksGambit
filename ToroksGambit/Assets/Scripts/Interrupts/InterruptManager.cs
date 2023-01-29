@@ -9,9 +9,7 @@ public class InterruptManager : MonoBehaviour
     public enum InterruptTrigger
     {
         GameStart,
-        AfterTurn,
-        AfterPlayerTurn,
-        AfterTorokTurn,
+        AfterTurn
     }
 
     private void Start()
@@ -25,7 +23,7 @@ public class InterruptManager : MonoBehaviour
 
     public void Update()//for testing purposes
     {
-        if (Input.GetKey("p"))
+        if (Input.GetKeyDown("p"))
         {
             EnactInterrupts(InterruptTrigger.GameStart);
         }
@@ -37,15 +35,21 @@ public class InterruptManager : MonoBehaviour
 
         foreach (BaseInterrupt interrupt in levelInterrupts)
         {
-            if (interrupt == null)//gaurd clause
+            if (interrupt == null)//null gaurd clause
             {
                 continue;
             }
 
-            if ( interrupt.triggerType == type && interrupt.ShouldTrigger() )//if the trigger type is met and it should trigger then enact the interrupt
+            if (interrupt.triggerType == type && type == InterruptTrigger.GameStart && !interrupt.hasTriggered)//if given trigger is gamestart and interrupt's type is gamestart, just enact
             {
                 interrupt.Enact();
             }
+            else if(interrupt.triggerType == type && interrupt.ShouldTrigger())//if the type is correct and interrupt's conditions are met, enact
+            {
+                interrupt.Enact();
+            }
+
+
         }
     }
 

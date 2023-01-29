@@ -6,8 +6,7 @@ using UnityEngine;
 
 public abstract class BaseInterrupt : ScriptableObject
 {
-
-    protected bool hasTriggered = false;
+    public bool hasTriggered { get;  protected set; } = false;
     public InterruptManager.InterruptTrigger triggerType;
     public abstract void Enact();
 

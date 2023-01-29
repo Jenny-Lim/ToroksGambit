@@ -70,6 +70,7 @@ public class Board : MonoBehaviour
     private GameObject queen;*/
 
     [SerializeField] private GameObject[] piecePrefabs;//list of prefabs corresponding to indices in inventory storedPiece format (0 - pawn, 1 - knight, 2 - bishop, etc)
+    [SerializeField] private GameObject[] obstaclePrefabs;//list of obstacles, 0 -> wall, 1 -> hole
 
     public static Board instance;//jordan, static ref to board
     public List<Vector2> deploymentZoneList;//jordan, list of positions on the board that can be deployed on
@@ -263,6 +264,21 @@ public class Board : MonoBehaviour
         else
         {
             Debug.Log("Couldn't place piece: unrecognized pieceId");
+        }
+    }
+
+    public void PlaceObstacle(int xPos, int yPos, int obstacleId)
+    {
+        if (obstacleId >= 0 && obstacleId < obstaclePrefabs.Length)
+        {
+            GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(obstaclePrefabs[obstacleId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate obstacle and place in pieceBoard location
+            Piece piece = newPiece.GetComponent<Piece>();
+            piece.pieceX = xPos;
+            piece.pieceY = yPos;
+        }
+        else
+        {
+            Debug.Log("Place Error| Could not place obstacle: obstacle ID not recognized");
         }
     }
 
