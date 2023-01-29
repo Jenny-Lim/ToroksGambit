@@ -4,10 +4,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements.Experimental;
+using UnityEngine.UI;
+using TMPro;
 
 //create higher object for game. game manager
 //cant move to spot you start in
 //fix bug where it wont move after capturinig or when it cant capture
+
+//place piece on enemy piece
+//fix bug where it deletes friendly after clicking
 
 //inventory - text in corner of boxes for counter - ticker to set to torok pieces being set down
 //piece trait system
@@ -60,6 +65,12 @@ public class Board : MonoBehaviour
     [SerializeField] private GameObject selectionIndicator;// testing gameobject that floats above the selected piece for indication purposes 
 
 
+    public bool torokPiece = false;
+
+    [SerializeField]
+    public TextMeshProUGUI text;
+
+
     // brought them up here
     //private static int clickedX;
     //private static int clickedY;
@@ -90,23 +101,28 @@ public class Board : MonoBehaviour
         {
             if (hit.transform.tag == "Chess Piece")//if mouse is clicked on chess piece
             {
-                Debug.Log("PIECE HIT");
 
                 // Debug.Log("Piece");
+                GameObject tempPiece = hit.transform.parent.gameObject;
 
-                clickedPiece = hit.transform.parent.gameObject;//store piece
+                Piece piece = tempPiece.GetComponent<Piece>(); 
+
+                if(!piece.isTorok)
+                {
+                    clickedPiece = hit.transform.parent.gameObject;//store piece
 
                     // Debug.Log(hit.transform.parent.gameObject);
 
-                for(int i=0;i<boardSize;i++)//doesnt appear to work, always returns as 0
-                {
-                    for(int j=0;j<boardSize;j++)
+                    for(int i=0;i<boardSize;i++)//doesnt appear to work, always returns as 0
                     {
-                        if(hit.transform.parent.gameObject == pieceBoard[i,j])//get position of piece in array
+                        for(int j=0;j<boardSize;j++)
                         {
-                            pieceX = i;//store locations
-                            pieceY = j;
-                                
+                            if(hit.transform.parent.gameObject == pieceBoard[i,j])//get position of piece in array
+                            {
+                                pieceX = i;//store locations
+                                pieceY = j;
+                                    
+                            }
                         }
                     }
                 }
@@ -116,8 +132,9 @@ public class Board : MonoBehaviour
                 //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
 
             }
-            else if(hit.transform.tag == "Chess Board" && clickedPiece)//if a piece is stored and another spot is chosen
+            else if((hit.transform.tag == "Chess Board" || hit.transform.tag == "Chess Piece") && clickedPiece)//if a piece is stored and another spot is chosen
             {
+                Debug.Log("TEST");
                 int clickedX = 0;
                 int clickedY = 0;
 
@@ -206,6 +223,12 @@ public class Board : MonoBehaviour
         {
             GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
             Piece piece = newPiece.GetComponent<Piece>();
+
+            if(torokPiece)
+            {
+                piece.isTorok = true;
+            }
+
             piece.pieceX = placeX; 
             piece.pieceY = placeY;
         }else
@@ -287,6 +310,21 @@ public class Board : MonoBehaviour
 
         }
         
+    }
+
+    public void TorokPlacement()
+    {
+        if(torokPiece)
+        {
+            torokPiece = false;
+            text.text = "Placing Player";
+        }
+        else if(!torokPiece)
+        {
+            torokPiece = true;
+            text.text = "Placing Torok";
+        }
+        Debug.Log(torokPiece);
     }
 
     public void MoveValidator(int pieceX, int pieceY, int endX, int endY)
