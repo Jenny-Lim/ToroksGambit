@@ -91,4 +91,11 @@ public class GameStateManager : MonoBehaviour
     {
         return turnCount;
     }
+
+    public void ResetGame()
+    {
+        ChangeGameState(GameState.deployment);
+        turnCount = 1;
+        isPlayersTurn = true;
+    }
 }
