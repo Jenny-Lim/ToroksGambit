@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681b365a594b3c94cb9b81373444611d, type: 3}
   m_Name: AddPieceInterrupt
   m_EditorClassIdentifier: 
-  triggerType: 0
-  piece: 1
-  placeAt: {x: 2, y: 0}
+  triggerType: 1
+  piece: 0
+  placeAt: {x: 3, y: 3}
   placeAfterTurn: 1

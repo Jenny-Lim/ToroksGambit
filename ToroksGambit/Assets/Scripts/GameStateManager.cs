@@ -69,8 +69,10 @@ public class GameStateManager : MonoBehaviour
 
     public static void EndTurn()
     {
+        InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.AfterTurn);
         turnCount++;
         isPlayersTurn = !isPlayersTurn;
+        
     }
 
     private void EnactTurn()
