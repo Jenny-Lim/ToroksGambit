@@ -443,11 +443,6 @@ public class Board : MonoBehaviour
     //fix this later
     IEnumerator VisualMovePiece(int startX, int startY, int endX, int endY, GameObject piece)
     {
-        /*while (piece.transform.position != hitBoxBoard[endX, endY].transform.position)
-        {
-            piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + Vector3.up, pieceMoveSpeed * Time.deltaTime);
-            yield return new WaitForSeconds(0.01f);
-        }*/
         print("inside visualMove");
 
         while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset)) > 0.1f)
@@ -456,6 +451,9 @@ public class Board : MonoBehaviour
             yield return null;
         }
         piece.transform.position = hitBoxBoard[endX, endY].transform.position+ (Vector3.up * verticalPlaceOffset);
+
+        GameStateManager.EndTurn();//so that who ever's turn it is ends when the piece has finished moving
+
         print("visual move has ended");
     }
 
@@ -491,6 +489,7 @@ public class Board : MonoBehaviour
             for (int j = 0; j < boardSize; j++)
             {
                 if (pieceBoard[i,j] == null) continue;//if piece doesnt exist skip
+                if (!pieceBoard[i,j].activeInHierarchy) { continue; }// might be able to remove this once the deactivate captured piece thing is resolved, depending on how that is done
 
                 Piece piece = pieceBoard[i,j].GetComponent<Piece>();
 

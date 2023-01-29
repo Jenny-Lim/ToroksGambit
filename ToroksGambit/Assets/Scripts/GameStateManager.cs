@@ -14,9 +14,20 @@ public class GameStateManager : MonoBehaviour
     }
 
 
-    [SerializeField] private bool isPlayersTurn = true;
+    private static bool isPlayersTurn = true;
     [SerializeField] private static int turnCount = 1;//the amount of moves/turns that have happened in the current game
     [SerializeField] private GameState currentState;
+    private bool TorokIsMoving;
+
+    public static GameStateManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -28,27 +39,27 @@ public class GameStateManager : MonoBehaviour
                 break;
 
             case GameState.game:
-                Board.instance.BoardUpdate();
+                if (isPlayersTurn)
+                {
+                    TorokIsMoving = false;
+                    Board.instance.BoardUpdate();
+                }
+                else
+                {
+                    if (!TorokIsMoving)
+                    {
+                        TorokIsMoving = true;
+                        Move resultMove = MinMax.instance.GetMinMaxMove(2, MinMax.playerToMove.torok);
+                        Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY]);
+                        Board.instance.canMove = false;
+                        Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
+                    }
+                }
                 break;
             case GameState.shop:
                 //ShopUpdate();
                 break;
         }
-
-        if (Input.GetKeyDown("q"))
-        {
-            Move resultMove = MinMax.instance.GetMinMaxMove(2, MinMax.playerToMove.torok);
-            
-            //if (Board.instance.canMove)
-            //{
-                print("call visual move");
-                Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY]);
-            //}
-            Board.instance.canMove = false;
-            print("call move Validate");
-            Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
-        }
-
     }
 
     public void ChangeGameState(GameState newState)
@@ -56,7 +67,7 @@ public class GameStateManager : MonoBehaviour
         currentState = newState;
     }
 
-    public void EndTurn()
+    public static void EndTurn()
     {
         turnCount++;
         isPlayersTurn = !isPlayersTurn;
