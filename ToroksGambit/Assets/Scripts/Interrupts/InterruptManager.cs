@@ -23,7 +23,7 @@ public class InterruptManager : MonoBehaviour
         ResetInterruptListTriggers();
     }
 
-    public void Update()
+    public void Update()//for testing purposes
     {
         if (Input.GetKey("p"))
         {
