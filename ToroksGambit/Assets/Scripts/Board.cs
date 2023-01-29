@@ -250,6 +250,22 @@ public class Board : MonoBehaviour
 
     }
 
+    public void PlacePieceTorok(int xPos, int yPos, int pieceId)
+    {
+        if (pieceId >= 0)
+        {
+            GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            Piece piece = newPiece.GetComponent<Piece>();
+            piece.pieceX = xPos;
+            piece.pieceY = yPos;
+            piece.isTorok = true;
+        }
+        else
+        {
+            Debug.Log("Couldn't place piece: unrecognized pieceId");
+        }
+    }
+
     private void BuildBoard()//generates hitbox for chess board
     {
         float boardOffset = ((float)boardSize)/2;

@@ -19,10 +19,11 @@ public class InterruptManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-        }   
+        } 
+        ResetInterruptListTriggers();
     }
 
-    public void FixedUpdate()
+    public void Update()
     {
         if (Input.GetKey("p"))
         {
@@ -45,6 +46,14 @@ public class InterruptManager : MonoBehaviour
             {
                 interrupt.Enact();
             }
+        }
+    }
+
+    public void ResetInterruptListTriggers()
+    {
+        foreach (BaseInterrupt interrupt in levelInterrupts)
+        {
+            interrupt.ResetHasTrigger();
         }
     }
 }

@@ -2341,7 +2341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelInterrupts:
-  - {fileID: 11400000, guid: b640d076b608c8549861d3d75d0678d0, type: 2}
+  - {fileID: 11400000, guid: 08a69f902a3228a4b8ce52082377bcc6, type: 2}
 --- !u!1 &1477407502
 GameObject:
   m_ObjectHideFlags: 0

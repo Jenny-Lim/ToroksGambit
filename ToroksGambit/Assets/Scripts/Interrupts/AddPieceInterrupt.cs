@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "AddPieceInterrupt", menuName = "ScriptableObjects/AddPieceInterrupt", order = 1)]
@@ -23,8 +24,16 @@ public class AddPieceInterrupt : BaseInterrupt
 
     public override void Enact()
     {
-        Board.instance.PlacePiece((int)piece, placeAt.x, placeAt.y);
-        hasTriggered = true;
+        if (Board.GetPieceBoard()[placeAt.x,placeAt.y] == null)
+        {
+            Board.instance.PlacePiece((int)piece, placeAt.x, placeAt.y);
+            hasTriggered = true;
+        }
+        else
+        {
+            Debug.Log("Didn't place Piece at " + placeAt + "because space was taken.");
+        }
+
     }
 
     public override bool ShouldTrigger()
