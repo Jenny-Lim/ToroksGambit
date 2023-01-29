@@ -36,7 +36,7 @@ public class BoardLoader : MonoBehaviour
 
     public void LoadBoard(string boardName)
     {
-
+        Board.instance.ClearBoard();
     }
 
     public void WriteCurrentBoard(string givenName)

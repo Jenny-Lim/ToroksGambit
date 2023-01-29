@@ -518,14 +518,18 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    //public static int GetClickedX()
-    //{
-    //    return clickedX;
-    //}
+    public void ClearBoard()
+    {
+        for (int i = 0; i < boardSize; i++)
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (pieceBoard[i,j] == null) { continue; }
 
-    //public static int GetClickedY()
-    //{
-    //    return clickedY;
-    //}
+                Destroy(pieceBoard[i,j]);
+                pieceBoard[i,j] = null;
+            }
+        }
+    }
 }
 
