@@ -44,7 +44,7 @@ public class BoardLoader : MonoBehaviour
         Debug.Log("Attempting board write.");
         try
         {
-            StreamWriter writer = new StreamWriter(Application.streamingAssetsPath + "/" + fileName);
+            StreamWriter writer = new StreamWriter(Application.streamingAssetsPath + "/" + fileName, append: true);
 
             writer.WriteLine(boardStartText);
             writer.WriteLine(givenName);

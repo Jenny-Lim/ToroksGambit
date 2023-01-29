@@ -1,0 +1,13 @@
+boardstart
+Test Board
+2,1,2,False
+2,5,3,False
+boardend
+boardstart
+Test Board
+1,0,6,False
+2,1,2,False
+3,3,5,False
+1,5,1,False
+2,5,3,False
+boardend
