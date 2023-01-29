@@ -16,20 +16,15 @@ public class Piece : MonoBehaviour
     public int pieceY;
     public string type;
 
-    [SerializeField]
     public bool isTorok;
 
-    //private GameObject board;
-    //private Board b;
 
     public GameObject[,] pieceBoard;
-    public int boardSize;
 
     void Awake()
     {
         //isTaken = false;
         pieceBoard = Board.GetPieceBoard();
-        boardSize = Board.GetSize();
         moves = new List<Move>();
     }
 
@@ -47,7 +42,7 @@ public class Piece : MonoBehaviour
 
     public bool InBoundsCheck(int endX, int endY)
     {
-        if (endX >= boardSize || endY >= boardSize || endX < 0 || endY < 0)
+        if (endX >= Board.boardSize || endY >= Board.boardSize || endX < 0 || endY < 0)
         {
             return false;
         }

@@ -14,8 +14,6 @@ using UnityEngine.UIElements.Experimental;
 
 public class Board : MonoBehaviour
 {
-
-    [SerializeField]
     public static int boardSize = 8;//size of 2D array
     [SerializeField] float boardVerticalOffset = 0.5f;//offset for board tiles vertically
     [SerializeField] float verticalPlaceOffset = 0.5f;
@@ -52,22 +50,6 @@ public class Board : MonoBehaviour
     // made static -- jenny
     private static int pieceX;
     private static int pieceY;
-
-    //see piecePrefabs list 
-    /*[SerializeField]
-    private GameObject pawn;
-
-    [SerializeField]
-    private GameObject knight;
-
-    [SerializeField]
-    private GameObject rook;
-
-    [SerializeField]
-    private GameObject bishop;
-
-    [SerializeField]
-    private GameObject queen;*/
 
     [SerializeField] private GameObject[] piecePrefabs;//list of prefabs corresponding to indices in inventory storedPiece format (0 - pawn, 1 - knight, 2 - bishop, etc)
     [SerializeField] private GameObject[] obstaclePrefabs;//list of obstacles, 0 -> wall, 1 -> hole
