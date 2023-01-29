@@ -37,6 +37,10 @@ public class BoardLoader : MonoBehaviour
     public void LoadBoard(string boardName)
     {
         Board.instance.ClearBoard();
+
+        //find first line with boardName
+        //load all piece until endboard
+        //reset game
     }
 
     public void WriteCurrentBoard(string givenName)
