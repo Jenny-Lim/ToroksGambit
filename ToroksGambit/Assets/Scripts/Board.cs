@@ -32,7 +32,7 @@ public class Board : MonoBehaviour
     [SerializeField]
     private GameObject chessPiece;
 
-    private Camera camera;
+    private Camera cam;
 
     private GameObject clickedPiece; 
 
@@ -86,7 +86,7 @@ public class Board : MonoBehaviour
         if (instance == null) { instance = this; }//added by jordan for static reference to board for minmax
         deploymentZoneList = new List<Vector2>();
         boardPosition = transform.position;
-        camera = Camera.main;
+        cam = Camera.main;
         hitBoxBoard = new GameObject[boardSize,boardSize];
         pieceBoard = new GameObject[boardSize, boardSize];
         BuildBoard();
@@ -97,7 +97,7 @@ public class Board : MonoBehaviour
        // print("in bvoard update");
 
         RaycastHit hit;
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
 
         if (Input.GetMouseButtonDown(0))//left click mouse to move pieces
         {
