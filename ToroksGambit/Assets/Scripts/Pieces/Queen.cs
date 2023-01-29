@@ -14,7 +14,7 @@ public class Queen : Piece
     {
         moves.Clear();
 
-        for (int i = 0; i < boardSize; i++)
+        for (int i = 0; i < Board.boardSize; i++)
         {
             // does what bishop does
             if (InBoundsCheck(pieceX + i, pieceY + i) && ClearCheck(pieceX, pieceY, pieceX + i, pieceY + i))

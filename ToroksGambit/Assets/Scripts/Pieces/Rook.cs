@@ -14,7 +14,7 @@ public class Rook : Piece
     {
         moves.Clear();
 
-        for (int i = 0; i < boardSize; i++)
+        for (int i = 0; i < Board.boardSize; i++)
         {
 
             if (InBoundsCheck(pieceX + i, pieceY) && ClearCheck(pieceX, pieceY, pieceX + i, pieceY))
