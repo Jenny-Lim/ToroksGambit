@@ -5,6 +5,7 @@ using UnityEngine;
 public class MinMax : MonoBehaviour
 {
     public static MinMax instance;//static instance of this
+    private BoardAnalyzer analyzer = new BoardAnalyzer();
 
     private class ScoredMove {
         public Move move;
@@ -46,8 +47,7 @@ public class MinMax : MonoBehaviour
         //recursive termination
         if (depth == 0)
         {
-
-            return new ScoredMove(null, /*board analyzer*/0f);
+            return new ScoredMove(null, analyzer.Analyze(Board.pieceBoard));
         }
 
         ScoredMove bestMove = new ScoredMove(null, 0);//holder for the best/most likely move to make

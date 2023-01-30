@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardAnalyzer: MonoBehaviour
+public class BoardAnalyzer
 {
 
     //***__  Negative values means better for Torok, Positive better for Player  __***
@@ -13,14 +13,17 @@ public class BoardAnalyzer: MonoBehaviour
     public float defendWeight { get; private set; } = 1.0f;
     public float positionWeight { get; private set; } = 1.0f;
 
-    private void Awake()
+    public BoardAnalyzer()
     {
-        if (instance == null) { instance = this; }
+
     }
 
     public float Analyze(GameObject[,] board)
     {
-        return MaterialCount(board);
+        float result = MaterialCount(board);
+        Debug.Log("Analyzing Board got: " + result);
+        return result;
+        
     }
 
     public float MaterialCount(GameObject[,] board)
@@ -35,9 +38,9 @@ public class BoardAnalyzer: MonoBehaviour
                 {
                     Piece targetPiece = board[i, j].GetComponent<Piece>();
                     if (targetPiece.type == "hole" || targetPiece.type == "wall") { continue; }
-                    //float value = targetPiece.value;
-                    //if (!targetPiece.isTorok) { value *= -1; }
-                    //result += value;
+                    float value = targetPiece.value;
+                    if (targetPiece.isTorok) { value *= -1; }
+                    result += value;
                 }
                 
             }

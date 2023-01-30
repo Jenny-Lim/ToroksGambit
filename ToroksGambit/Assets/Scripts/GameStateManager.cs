@@ -54,6 +54,7 @@ public class GameStateManager : MonoBehaviour
                         {
                             Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY]);
                             Board.instance.canMove = false;
+                            Board.instance.DisablePiece(Board.pieceBoard[resultMove.endX, resultMove.endY]);
                             Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
                         }
                         else

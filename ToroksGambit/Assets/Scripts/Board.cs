@@ -384,19 +384,13 @@ public class Board : MonoBehaviour
 
         GameObject tempPiece = pieceBoard[startX, startY];
         GameObject tempEndPiece = pieceBoard[endX, endY];
+
         //stores move in a list so can be undone at any point
         moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece)); // moveList is a list of the moves done
 
-      //  Debug.Log("start: "+startX+ " end: " +endX);
-
-        // jenny added -- breaks undo atm
-        //Piece script = tempPiece.GetComponent<Piece>();
-        //script.UpdateMoves();
-        //moveList.Add(script.moves[0]);
-
         undoCounter++;
 
-        pieceBoard[endX,endY] = tempPiece;
+        pieceBoard[endX,endY] = tempPiece;//**why is it setting the end to the start
         pieceBoard[startX, startY] = tempEndPiece;
 
         Piece endPiece = pieceBoard[endX, endY].GetComponent<Piece>();//get piece script of object that moved
