@@ -568,6 +568,8 @@ public class Board : MonoBehaviour
                 pieceBoard[i,j] = null;
             }
         }
+
+        InterruptManager.instance.ResetInterruptListTriggers();// reset interrupts
     }
 }
 
