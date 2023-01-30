@@ -50,9 +50,19 @@ public class GameStateManager : MonoBehaviour
                     {
                         TorokIsMoving = true;
                         Move resultMove = MinMax.instance.GetMinMaxMove(2, MinMax.playerToMove.torok);
-                        Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY]);
-                        Board.instance.canMove = false;
-                        Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
+                        if (resultMove != null)
+                        {
+                            Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY]);
+                            Board.instance.canMove = false;
+                            Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
+                        }
+                        else
+                        {
+                            Debug.Log("MinMax was not able to find a move. Either the game has ended, or it has no pieces on the board");
+                            Debug.Log("Switching back to player's turn for convenience");
+                            EndTurn();
+                        }
+                       
                     }
                 }
                 break;

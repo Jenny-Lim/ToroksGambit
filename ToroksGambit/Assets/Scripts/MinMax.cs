@@ -33,10 +33,10 @@ public class MinMax : MonoBehaviour
     //the recursive wrapper for the minmax call
     public Move GetMinMaxMove(int maxDepth, playerToMove toMove)
     {
-        Debug.Log("AI: Looking for move...");
+        //Debug.Log("AI: Looking for move...");
         ScoredMove resultMove = MinMaxRecursive(maxDepth, toMove, float.MaxValue, float.MinValue);
-        print(resultMove.move == null);
-        Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
+        //print(resultMove.move == null);
+        //Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
         return resultMove.move;
     }
 
