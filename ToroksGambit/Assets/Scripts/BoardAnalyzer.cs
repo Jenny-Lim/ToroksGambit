@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BoardAnalyzer: MonoBehaviour
 {
+
+    //***__  Negative values means better for Torok, Positive better for Player  __***
+
     public static BoardAnalyzer instance;
 
     public float attackWeight { get; private set; } = 1.0f;
