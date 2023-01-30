@@ -47,6 +47,7 @@ public class MinMax : MonoBehaviour
         //recursive termination
         if (depth == 0)
         {
+            print("reached depth 0");
             return new ScoredMove(null, analyzer.Analyze(Board.pieceBoard));
         }
 
@@ -84,10 +85,11 @@ public class MinMax : MonoBehaviour
 
                 alpha = Mathf.Max(alpha, bestMove.score);//update alpha value if needed
 
-                if (beta <= alpha)//prune tree if applicable
+                /*if (beta <= alpha)//prune tree if applicable
                 {
+                    print("got into break");
                     break;
-                }
+                }*/
 
             }
         }
@@ -110,10 +112,11 @@ public class MinMax : MonoBehaviour
 
                 beta = Mathf.Min(beta, bestMove.score);//update beta if needed
 
-                if (beta <= alpha)//prune tree if applicable
+                /*if (beta <= alpha)//prune tree if applicable
                 {
+                    print("got into break");
                     break;
-                }
+                }*/
 
             }
         }
