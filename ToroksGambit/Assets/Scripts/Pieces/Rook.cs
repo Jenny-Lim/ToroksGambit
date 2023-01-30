@@ -8,6 +8,7 @@ public class Rook : Piece
     void Start()
     {
         type = "rook";
+        value = 5;
     }
 
     public override void UpdateMoves()

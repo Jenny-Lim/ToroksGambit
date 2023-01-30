@@ -8,6 +8,7 @@ public class Knight : Piece
     void Start()
     {
         type = "knight";
+        value = 3;
     }
 
     public override void UpdateMoves() // knights can jump over pieces

@@ -8,6 +8,7 @@ public class Queen : Piece
     void Start()
     {
         type = "queen";
+        value = 8;
     }
 
     public override void UpdateMoves()

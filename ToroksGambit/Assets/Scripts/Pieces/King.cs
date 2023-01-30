@@ -8,6 +8,7 @@ public class King : Piece
     void Start()
     {
         type = "king";
+        value = 1000;
     }
 
     public override void UpdateMoves()

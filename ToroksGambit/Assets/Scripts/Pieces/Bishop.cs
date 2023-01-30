@@ -8,6 +8,7 @@ public class Bishop : Piece
     void Start()
     {
         type = "bishop";
+        value = 3f;
     }
 
     public override void UpdateMoves()
