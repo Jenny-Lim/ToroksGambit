@@ -165,8 +165,8 @@ public class Board : MonoBehaviour
                 //DisablePiece(tempPiece);
                 //print("pieceX of board :" + pieceX);
                 //print("pieceY of board :" + pieceY);
-                MoveValidator(pieceX, pieceY, clickedX, clickedY);
-                if(canMove)
+                bool isValid = MoveValidator(pieceX, pieceY, clickedX, clickedY);
+                if(canMove & isValid)
                 {
                     DisablePiece(tempPiece);
                     StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece));
@@ -192,6 +192,14 @@ public class Board : MonoBehaviour
                 clickedPiece = null; 
         }
         }
+
+        if (Input.GetKeyDown("b") && clickedPiece != null)//***Testing move generating
+        {
+            foreach (Move move in clickedPiece.GetComponent<Piece>().moves) {
+                print(move.DisplayMove());
+            }
+        }
+
         if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
         {
             UndoMoveVisual();
@@ -335,43 +343,35 @@ public class Board : MonoBehaviour
         //Debug.Log(torokPiece);
     }
 
-    public void MoveValidator(int pieceX, int pieceY, int endX, int endY)
+    public bool MoveValidator(int pieceX, int pieceY, int endX, int endY)
     {
-        
-
         if (pieceBoard[pieceX, pieceY] == null)//guard clause if piece given is null
         {
-            return;
+            return false;
         }
 
-        //print("validating move");
 
         //find type of piece
-        GameObject piece = pieceBoard[pieceX, pieceY];
-        Piece pieceScript = piece.GetComponent<Piece>();
+        Piece pieceScript = pieceBoard[pieceX, pieceY].GetComponent<Piece>();
        
         pieceScript.pieceX = pieceX;
         pieceScript.pieceY = pieceY;
 
         
         pieceScript.UpdateMoves();
-       
 
-        int moveAmount = pieceScript.moves.Count;
-
-        for (int i = 0;i<moveAmount;i++)
+        foreach (Move move in pieceScript.moves)
         {
-            
-            if((pieceScript.moves[i].endX == endX) && (pieceScript.moves[i].endY == endY) && pieceX == pieceScript.moves[i].startX && pieceY == pieceScript.moves[i].startY)
+            if ((move.endX == endX) && (move.endY == endY))
             {
-                print(pieceScript.moves[i].DisplayMove());
+                //print("endX :" + endX + "endY: " + endY + " " + move.DisplayMove());
                 canMove = true;
                 MovePiece(pieceX, pieceY, endX, endY);
-                break;
+                return true;
             }
-
         }
 
+        return false;
     }
 
     
