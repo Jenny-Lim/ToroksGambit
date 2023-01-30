@@ -19,7 +19,7 @@ public class Pawn : Piece
     {
         moves.Clear();
 
-        if (isTorok)
+        if (isTorok)//can make this smaller if you use a variable as the +- 1 instead 
         {
             if (InBoundsCheck(pieceX, pieceY - 1) && ClearCheck(pieceX, pieceY, pieceX, pieceY-1))
             {

@@ -139,7 +139,7 @@ public class Board : MonoBehaviour
             }
             else if((hit.transform.tag == "Chess Board" || hit.transform.tag == "Chess Piece") && clickedPiece)//if a piece is stored and another spot is chosen
             {
-                Debug.Log("TEST");
+                //Debug.Log("TEST");
                 int clickedX = 0;
                 int clickedY = 0;
 
@@ -163,13 +163,13 @@ public class Board : MonoBehaviour
 
                 //pieceBoard[clickedX, clickedY] = null;
                 //DisablePiece(tempPiece);
-                print("pieceX of board :" + pieceX);
-                print("pieceY of board :" + pieceY);
+                //print("pieceX of board :" + pieceX);
+                //print("pieceY of board :" + pieceY);
                 MoveValidator(pieceX, pieceY, clickedX, clickedY);
                 if(canMove)
                 {
-                DisablePiece(tempPiece);
-                StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece));
+                    DisablePiece(tempPiece);
+                    StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece));
                 }
                 canMove = false;
 
@@ -332,7 +332,7 @@ public class Board : MonoBehaviour
             torokPiece = true;
             text.text = "Placing Torok";
         }
-        Debug.Log(torokPiece);
+        //Debug.Log(torokPiece);
     }
 
     public void MoveValidator(int pieceX, int pieceY, int endX, int endY)
@@ -344,7 +344,7 @@ public class Board : MonoBehaviour
             return;
         }
 
-        print("validating move");
+        //print("validating move");
 
         //find type of piece
         GameObject piece = pieceBoard[pieceX, pieceY];
@@ -359,17 +359,12 @@ public class Board : MonoBehaviour
 
         int moveAmount = pieceScript.moves.Count;
 
-        foreach (Move move in pieceScript.moves)
-        {
-            print(move.DisplayMove());
-        }
-
         for (int i = 0;i<moveAmount;i++)
         {
             
-            if((pieceScript.moves[i].endX == endX) && (pieceScript.moves[i].endY == endY))
+            if((pieceScript.moves[i].endX == endX) && (pieceScript.moves[i].endY == endY) && pieceX == pieceScript.moves[i].startX && pieceY == pieceScript.moves[i].startY)
             {
-                print("found move");
+                print(pieceScript.moves[i].DisplayMove());
                 canMove = true;
                 MovePiece(pieceX, pieceY, endX, endY);
                 break;
@@ -409,7 +404,7 @@ public class Board : MonoBehaviour
         endPiece.moved = true;// changes piece to say has moved
         endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
         endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
-        print("moved piece");
+        //print("moved piece");
 
     }
 
@@ -423,7 +418,7 @@ public class Board : MonoBehaviour
         if (piece)
         {
             piece.SetActive(false);
-            print("disabled piece");
+            //print("disabled piece");
         }
     }
 
@@ -471,7 +466,7 @@ public class Board : MonoBehaviour
     //fix this later
     IEnumerator VisualMovePiece(int startX, int startY, int endX, int endY, GameObject piece)
     {
-        print("inside visualMove");
+        //print("inside visualMove");
 
         while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset)) > 0.1f)
         {
@@ -482,7 +477,7 @@ public class Board : MonoBehaviour
 
         GameStateManager.EndTurn();//so that who ever's turn it is ends when the piece has finished moving
 
-        print("visual move has ended");
+        //print("visual move has ended");
     }
 
 
