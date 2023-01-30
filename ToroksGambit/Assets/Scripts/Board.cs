@@ -17,6 +17,11 @@ using TMPro;
 //inventory - text in corner of boxes for counter - ticker to set to torok pieces being set down
 //piece trait system
 
+//traits
+//Tough - cannot be captured by a pawn
+//Promote - when captured it is instead upgraded to a higher piece
+//last chance - if captured by equal or lower value then that piece is captured as well
+
 public class Board : MonoBehaviour
 {
     public static int boardSize = 8;//size of 2D array
@@ -154,13 +159,16 @@ public class Board : MonoBehaviour
                     }
                 }
 
+                GameObject tempPiece = pieceBoard[clickedX, clickedY];
+
                 //pieceBoard[clickedX, clickedY] = null;
-                DisablePiece(clickedX, clickedY);
+                //DisablePiece(tempPiece);
                 print("pieceX of board :" + pieceX);
                 print("pieceY of board :" + pieceY);
                 MoveValidator(pieceX, pieceY, clickedX, clickedY);
                 if(canMove)
                 {
+                DisablePiece(tempPiece);
                 StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece));
                 }
                 canMove = false;
@@ -410,11 +418,11 @@ public class Board : MonoBehaviour
         StartCoroutine(VisualMovePiece(startX, startY,endX,endY, piece));
     }
 
-    public void DisablePiece(int endX, int endY)
+    public void DisablePiece(GameObject piece)
     {
-        if (pieceBoard[endX, endY])
+        if (piece)
         {
-            pieceBoard[endX, endY].SetActive(false);
+            piece.SetActive(false);
             print("disabled piece");
         }
     }

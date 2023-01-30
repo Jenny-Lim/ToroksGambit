@@ -18,6 +18,10 @@ public class Piece : MonoBehaviour
 
     public bool isTorok;
 
+    public bool isTough;
+    public bool lastChance;
+    //promote - not starting
+
 
     public GameObject[,] pieceBoard;
 
@@ -73,10 +77,26 @@ public class Piece : MonoBehaviour
         bool isClear = true;
         Piece thePiece = pieceBoard[pieceX, pieceY].GetComponent<Piece>();
 
+        //Patrick - check for tough pieces
+        if(type == "pawn" && thePiece.isTough)
+        {
+            Debug.Log("TOUGHPROTECT");
+            isClear = false;
+            return isClear;
+        }
+
         // handling this in here for now, how expensive is getcomponent
         if (pieceBoard[endX, endY] != null)
         {
             Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
+            
+            if(type == "pawn" && p.isTough)
+            {
+                Debug.Log("TOUGHPROTECT");
+                isClear = false;
+                return isClear;
+            }
+            
 
             if (p.type == "wall" || p.type == "hole" || p.isTorok == this.isTorok) // if its your own piece, can't capture
             {
