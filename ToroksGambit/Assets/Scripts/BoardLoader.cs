@@ -36,11 +36,51 @@ public class BoardLoader : MonoBehaviour
 
     public void LoadBoard(string boardName)
     {
+        Debug.Log("Attempt loading board with name " + boardName);
+
         Board.instance.ClearBoard();
 
-        //find first line with boardName
-        //load all piece until endboard
-        //reset game
+        try
+        {
+            StreamReader reader = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
+            string line = "";
+
+            while (line != boardName)
+            {
+                line = reader.ReadLine();
+            }
+
+            if (reader.EndOfStream && line.CompareTo(boardName) != 0)// if at the end of the file meaning no name was found
+            {
+                Debug.LogError("File Error| Could not find board " + boardName + " inside file " + Application.streamingAssetsPath + "/" + fileName);
+            }
+
+            line = reader.ReadLine();
+
+            while (line != boardEndText)
+            {
+                string[] lines = line.Split(char.Parse(","));// will seperate line into mutliple strings, [0] = pieceId, [1] = xPos, [2] = yPos, [3] = isTorok
+                if (Convert.ToBoolean(lines[3]))//if is torok piece
+                {
+                    Board.instance.PlacePieceTorok(int.Parse(lines[1]), int.Parse(lines[2]), int.Parse(lines[0]));
+                }
+                else//else player piece
+                {
+                    Board.instance.PlacePiece(int.Parse(lines[1]), int.Parse(lines[2]), int.Parse(lines[0]));
+                }
+                line = reader.ReadLine();
+            }
+
+
+        }
+        catch (Exception)
+        {
+            Debug.LogError("File Error | Couldn't open file path " + Application.streamingAssetsPath + "/" + fileName);
+            return;
+        }
+
+        Debug.Log("Finished loading board with name " + boardName);
+
     }
 
     public void WriteCurrentBoard(string givenName)
