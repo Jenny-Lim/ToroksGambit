@@ -43,6 +43,8 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private int storedPiece = 1;//pawn - 0, knight - 1, bishop - 2, rook - 3, queen - 4, remove - -1
 
+    [SerializeField] private GameObject startButton;
+
     public static Inventory instance;
 
     public void Start()
@@ -123,7 +125,7 @@ public class Inventory : MonoBehaviour
     }
 
     //sets the designated held amount of pieces to amount
-    public void SetPiece(InventoryPieces type, int amount)
+    public void SetPieceAmount(InventoryPieces type, int amount)
     {
         heldPieces[(int)type] = amount;
         if (heldPieces[(int)type] > maxHeldPieces[(int)type])
@@ -219,5 +221,14 @@ public class Inventory : MonoBehaviour
         isMoving = false;
     }
 
-    
+    public void OnStartChessGameButtonPressed()
+    {
+        GameStateManager.instance.ChangeGameState(GameStateManager.GameState.game);
+        startButton.SetActive(false);
+    }
+
+    public void ResetStartButton()
+    {
+        startButton.SetActive(true);
+    }
 }

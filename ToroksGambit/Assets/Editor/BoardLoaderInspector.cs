@@ -35,5 +35,19 @@ public class BoardLoaderInspector : Editor
 
         GUILayout.EndHorizontal();
 
+        GUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("Reset Game To Deploy State"))
+        {
+            GameStateManager.instance.ResetGameDeploy();
+        }
+
+        if (GUILayout.Button("Reset Game To Game State"))
+        {
+            GameStateManager.instance.ResetGame();
+        }
+
+        GUILayout.EndHorizontal();
+
     }
 }

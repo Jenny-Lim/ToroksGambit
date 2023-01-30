@@ -92,10 +92,20 @@ public class GameStateManager : MonoBehaviour
         return turnCount;
     }
 
-    public void ResetGame()
+    public void ResetGameDeploy()
     {
         ChangeGameState(GameState.deployment);
         turnCount = 1;
         isPlayersTurn = true;
+        InterruptManager.instance.ResetInterruptListTriggers();
+        Inventory.instance.ResetStartButton();
+    }
+
+    public void ResetGame()
+    {
+        ChangeGameState(GameState.game);
+        turnCount = 1;
+        isPlayersTurn = true;
+        InterruptManager.instance.ResetInterruptListTriggers();
     }
 }

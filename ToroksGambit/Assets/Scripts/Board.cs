@@ -569,7 +569,6 @@ public class Board : MonoBehaviour
             }
         }
 
-        InterruptManager.instance.ResetInterruptListTriggers();// reset interrupts
     }
 }
 
