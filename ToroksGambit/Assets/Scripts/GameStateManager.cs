@@ -86,18 +86,6 @@ public class GameStateManager : MonoBehaviour
         
     }
 
-    private void EnactTurn()
-    {
-        if (isPlayersTurn)// do players action
-        {
-
-        }
-        else// do torok action
-        {
-
-        }
-    }
-
     public static int GetTurnCount()
     {
         return turnCount;
