@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hideShowText;
     [SerializeField] private int[] maxHeldPieces = new int[5];//the maximum number of each piece the player can have
     private int[] heldPieces = new int[5];//the amount of each piece the player has
-    [SerializeField] private float ghostPieceVertOffset = 0.1f;
+    [SerializeField] private float ghostPieceVertOffset = -0.05f;
 
     public void ShowInventoryPanel()
     {
