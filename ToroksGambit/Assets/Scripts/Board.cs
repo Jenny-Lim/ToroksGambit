@@ -548,9 +548,18 @@ public class Board : MonoBehaviour
             return;
         }
 
-        Piece piece = tempPiece.GetComponent<Piece>(); 
+        Piece piece = tempPiece.GetComponent<Piece>();
 
-        
+        int pieceIdTaken = 0;
+        if (pieceBoard[endX, endY] != null)
+        {
+            Piece pieceForCaptureId = pieceBoard[endX, endY].GetComponent<Piece>();
+            pieceIdTaken = (int)(pieceForCaptureId.type) + 1;
+            if (pieceForCaptureId.isTorok)
+            {
+                pieceIdTaken *= -1;
+            }
+        }
 
         if (tempEndPiece != null)
         {
@@ -569,8 +578,10 @@ public class Board : MonoBehaviour
             pieceBoard[endX, endY] = null;
         }
 
+
+
         //stores move in a list so can be undone at any point
-        moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece)); // moveList is a list of the moves done
+        moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdTaken)); // moveList is a list of the moves done
 
         undoCounter++;
 
@@ -612,6 +623,18 @@ public class Board : MonoBehaviour
 
         pieceBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY] = moveList[undoCounter-1].startObject;
         pieceBoard[moveList[undoCounter-1].endX,moveList[undoCounter-1].endY] = moveList[undoCounter-1].endObject;
+
+        if (moveList[undoCounter-1].pieceTaken != 0)
+        {
+            if (moveList[undoCounter - 1].pieceTaken > 0)
+            {
+                PlacePiece(moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken - 1);
+            }
+            else
+            {
+                PlacePiece(moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken + 1);
+            }
+        }
 
         moveList.RemoveAt(undoCounter-1);
         //Debug.Log("list legnth "+moveList.Count);

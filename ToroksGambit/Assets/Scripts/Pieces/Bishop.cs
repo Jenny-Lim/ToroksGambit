@@ -7,7 +7,7 @@ public class Bishop : Piece
     // Start is called before the first frame update
     void Start()
     {
-        type = "bishop";
+        type = PieceType.bishop;
         value = 3f;
     }
 

@@ -58,7 +58,7 @@ public class MinMax : MonoBehaviour
             bestMove.score = float.NegativeInfinity;//set best move score to be as low as possible
             List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
             
-            if (allAvailableMoves.Count <= 0)
+            /*if (allAvailableMoves.Count <= 0)
             {
                 if (whosMoving == playerToMove.player)
                 {
@@ -68,7 +68,7 @@ public class MinMax : MonoBehaviour
                 {
                     return new ScoredMove(null, float.PositiveInfinity);
                 }
-            }
+            }*/
 
 
             foreach (Move move in allAvailableMoves)

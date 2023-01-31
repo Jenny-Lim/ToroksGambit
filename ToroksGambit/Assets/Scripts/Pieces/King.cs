@@ -8,7 +8,7 @@ public class King : Piece
     // Start is called before the first frame update
     void Start()
     {
-        type = "king";
+        type = PieceType.king;
         value = 1000;
     }
 
