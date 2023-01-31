@@ -66,7 +66,7 @@ public class Pawn : Piece
             if (InBoundsCheck(pieceX, pieceY + dir * 2))
             {
                 clearResult = ClearCheck(pieceX, pieceY + dir * 2);
-                if (clearResult == 0 && pieceBoard[pieceX + dir, pieceY + dir] != null) // checks if the spot before is empty as well
+                if (clearResult == 0 && pieceBoard[pieceX, pieceY + dir] != null) // checks if the spot before is empty as well **changed pieceX + dir -> pieceX**
                 {
                     moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + dir * 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + dir * 2]));
                 }

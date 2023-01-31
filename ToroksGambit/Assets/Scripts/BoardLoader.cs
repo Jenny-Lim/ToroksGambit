@@ -48,6 +48,11 @@ public class BoardLoader : MonoBehaviour
             while (line != boardName)
             {
                 line = reader.ReadLine();
+                if (reader.EndOfStream)
+                {
+                    Debug.LogError("Did not find saved board with given name " + boardName);
+                    return;
+                }
             }
 
             if (reader.EndOfStream && line.CompareTo(boardName) != 0)// if at the end of the file meaning no name was found

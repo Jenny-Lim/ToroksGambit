@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   piece: 0
-  placeAt: {x: 0, y: 0}
+  placeAt: {x: 0, y: 4}
   placeAfterTurn: 1

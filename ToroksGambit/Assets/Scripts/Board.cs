@@ -431,11 +431,16 @@ public class Board : MonoBehaviour
     //if click off bord then clear stored item
     public void MovePiece(int startX, int startY, int endX, int endY)//take 2 positions to move a piece
     {
-        
-
+      
         GameObject tempPiece = pieceBoard[startX, startY];
         GameObject tempEndPiece = pieceBoard[endX, endY];
         
+        if (tempPiece == null)
+        {
+            Debug.LogError("Given start piece position did not direct to an active piece.");
+            return;
+        }
+
         Piece piece = tempPiece.GetComponent<Piece>(); 
 
         
