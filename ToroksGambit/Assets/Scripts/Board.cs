@@ -72,6 +72,8 @@ public class Board : MonoBehaviour
 
     public bool torokPiece = false;
 
+    private bool isLastchance;
+
     [SerializeField]
     public TextMeshProUGUI text;
 
@@ -161,16 +163,44 @@ public class Board : MonoBehaviour
 
                 GameObject tempPiece = pieceBoard[clickedX, clickedY];
 
+
+                    
+                Piece endPieceScript = tempPiece.GetComponent<Piece>();
+
+                if(endPieceScript.lastChance)
+                {
+                        isLastchance = true;
+                }
+
+                
+
                 //pieceBoard[clickedX, clickedY] = null;
                 //DisablePiece(tempPiece);
                 //print("pieceX of board :" + pieceX);
                 //print("pieceY of board :" + pieceY);
                 bool isValid = MoveValidator(pieceX, pieceY, clickedX, clickedY);
+
+                if(isLastchance)
+                    {
+                        clickedPiece = null;
+                    }
+
                 if(canMove & isValid)
                 {
-                    DisablePiece(tempPiece);
-                    StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece));
-                }
+                        //DisablePiece(tempPiece);
+                        if(clickedPiece)
+                        {
+                            Debug.Log(clickedPiece);
+                            StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece));
+                        }
+                        else
+                        {
+                            GameStateManager.EndTurn();
+                            isLastchance = false;
+
+                        }
+
+                    }
                 canMove = false;
 
 
@@ -403,9 +433,24 @@ public class Board : MonoBehaviour
 
         GameObject tempPiece = pieceBoard[startX, startY];
         GameObject tempEndPiece = pieceBoard[endX, endY];
+        
+        Piece piece = tempPiece.GetComponent<Piece>(); 
+
+        
 
         if (tempEndPiece != null)
         {
+            Piece oldPiece = tempEndPiece.GetComponent<Piece>();
+
+            if (oldPiece.lastChance)
+            {
+                if (piece.value <= oldPiece.value)
+                {
+                    Destroy(tempPiece);
+                    pieceBoard[startX, startY] = null;
+                }
+            }
+
             Destroy(tempEndPiece);
             pieceBoard[endX, endY] = null;
         }
@@ -487,12 +532,12 @@ public class Board : MonoBehaviour
     {
         //print("inside visualMove");
 
-        while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset)) > 0.1f)
-        {
-            piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset), pieceMoveSpeed * Time.deltaTime);
-            yield return null;
-        }
-        piece.transform.position = hitBoxBoard[endX, endY].transform.position+ (Vector3.up * verticalPlaceOffset);
+            while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset)) > 0.1f)
+            {
+                piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset), pieceMoveSpeed * Time.deltaTime);
+                yield return null;
+            }
+            piece.transform.position = hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset);
 
         GameStateManager.EndTurn();//so that who ever's turn it is ends when the piece has finished moving
 

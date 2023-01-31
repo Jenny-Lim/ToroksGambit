@@ -21,7 +21,7 @@ public class Piece : MonoBehaviour
     public bool isTough;
     public bool lastChance;
     public float value;
-    //promote - not starting
+    public bool promote;
 
 
     public GameObject[,] pieceBoard;
