@@ -7,7 +7,6 @@ public class ShopButton : MonoBehaviour // started smth, got sleepy bruh
 {
 
     private string[] pieceTypes = { "pawn", "knight", "bishop", "rook", "queen", "king" };
-    private Button b;
     private int price;
     private int quantity;
     private int type;
@@ -19,11 +18,11 @@ public class ShopButton : MonoBehaviour // started smth, got sleepy bruh
     void Start()
     {
         type = 1;
-        b.GetComponentInChildren<Text>().text = pieceTypes[type];
+        gameObject.GetComponentInChildren<Text>().text = pieceTypes[type];
         price = 0;
         
 
-        priceText.text = this.price.ToString();
+        //priceText.text = this.price.ToString();
     }
 
     // Update is called once per frame
@@ -32,8 +31,9 @@ public class ShopButton : MonoBehaviour // started smth, got sleepy bruh
 
     }
 
-    void BuyPiece() // on click
+    public void BuyPiece() // on click
     {
+        print("ayo");
         //Inventory.AlterPiece(type, quantity);
     }
 }
