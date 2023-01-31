@@ -223,8 +223,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: rook_piece
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3235e7eb176ed004388f0f5d92aaaab9, type: 3}
+      propertyPath: m_TagString
+      value: Chess Piece
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3235e7eb176ed004388f0f5d92aaaab9, type: 3}
+--- !u!1 &2702931688250701308 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3235e7eb176ed004388f0f5d92aaaab9, type: 3}
+  m_PrefabInstance: {fileID: 2973457524765313197}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &8557570421882612556
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2702931688250701308}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.38021415, y: 0.3744379, z: 0.6712534}
+  m_Center: {x: 0.000000022351742, y: -0.000000007450582, z: 0.38904378}
 --- !u!4 &3371347430089174854 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3235e7eb176ed004388f0f5d92aaaab9, type: 3}
