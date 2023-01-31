@@ -74,8 +74,33 @@ public class Board : MonoBehaviour
 
     private bool isLastchance;
 
+    //traits
+
+    public bool toughPlacer;
+    public bool lastChancePlacer;
+    public bool promotePlacer;
+
     [SerializeField]
     public TextMeshProUGUI text;
+
+    [SerializeField]
+    public TextMeshProUGUI toughText;
+
+    [SerializeField]
+    public TextMeshProUGUI lastChanceText;
+
+    [SerializeField]
+    public TextMeshProUGUI promoteText;
+
+    [SerializeField]
+    private GameObject toughButton;
+
+    [SerializeField]
+    private GameObject lastChanceButton;
+
+    [SerializeField]
+    private GameObject promoteButton;
+
 
 
     // brought them up here
@@ -286,6 +311,19 @@ public class Board : MonoBehaviour
                 piece.isTorok = true;
             }
 
+            if (toughPlacer)
+            {
+                piece.isTough = true;
+            }
+            if (lastChancePlacer)
+            {
+                piece.lastChance = true;
+            }
+            if (promotePlacer)
+            {
+                piece.promote = true;
+            }
+
             piece.pieceX = placeX; 
             piece.pieceY = placeY;
         }else
@@ -311,12 +349,56 @@ public class Board : MonoBehaviour
             Piece piece = newPiece.GetComponent<Piece>();
             piece.pieceX = xPos;
             piece.pieceY = yPos;
+
+            
         }
         else
         {
             //remove piece functionality
         }
 
+    }
+
+    public void ToughButtonSet()
+    {
+        if(toughPlacer)
+        {
+            toughText.text = "Tough Deactivated";
+            toughPlacer = false;
+        }
+        else
+        {
+            toughText.text = "Tough Activated";
+            toughPlacer = true;
+        }
+    }
+
+    public void LastChanceButtonSet()
+    {
+        if(lastChancePlacer)
+        {
+            lastChanceText.text = "Last Chance Deactivated";
+            lastChancePlacer = false;
+        }
+        else
+        {
+            lastChanceText.text = "Last Chance Activated";
+            lastChancePlacer = true;
+        }
+    }
+
+    public void PromoteButtonSet()
+    {
+        if (promotePlacer)
+        {
+            promoteText.text = "Promote Deactivated";
+            promotePlacer = false;
+        }
+        else
+        {
+            promoteText.text = "Promote Activated";
+            promotePlacer = true;
+        }
     }
 
     public void PlacePieceTorok(int xPos, int yPos, int pieceId)
@@ -332,6 +414,7 @@ public class Board : MonoBehaviour
         {
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
             Piece piece = newPiece.GetComponent<Piece>();
+
             piece.pieceX = xPos;
             piece.pieceY = yPos;
             piece.isTorok = true;
@@ -388,13 +471,35 @@ public class Board : MonoBehaviour
         {
             torokPiece = false;
             text.text = "Placing Player";
+
+            if(toughPlacer)
+            {
+                ToughButtonSet();
+            }
+            if(lastChancePlacer)
+            {
+                LastChanceButtonSet();
+            }
+            if(promotePlacer)
+            {
+                PromoteButtonSet();
+            }
+
+            toughButton.SetActive(false);
+            lastChanceButton.SetActive(false);
+            promoteButton.SetActive(false);
+
+
         }
         else if(!torokPiece)
         {
             torokPiece = true;
             text.text = "Placing Torok";
+
+            toughButton.SetActive(true);
+            lastChanceButton.SetActive(true);
+            promoteButton.SetActive(true);
         }
-        //Debug.Log(torokPiece);
     }
 
     public bool MoveValidator(int pieceX, int pieceY, int endX, int endY)
