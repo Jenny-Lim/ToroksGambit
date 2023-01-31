@@ -213,27 +213,26 @@ public class Piece : MonoBehaviour
     //            if (InBoundsCheck(pieceX + (i * directionX), pieceY + (j * directionY)))
     //            {
     //                int clearResult = ClearCheck(pieceX + (i * directionX), pieceY + (j * directionY));
-
-    //                if (clearResult == 1) // if spot is wall / same color
+    //
+    //                if (clearResult == 0) // if spot is empty
+    //                {
+    //                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (j * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (j * directionY)]));
+    //                }  
+    //                else if (clearResult == 1) // if spot is wall / same color
     //                {
     //                    return;
     //                }
-
+    //
     //                else if (clearResult == 3) // if spot is capturable
     //                {
     //                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (j * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (j * directionY)]));
     //                    return;
     //                }
-
+    //
     //                else if (clearResult == 2) // if spot is a hole
     //                {
     //                    continue;
-    //                }
-
-    //                else if (clearResult == 0) // if spot is empty
-    //                {
-    //                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (j * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (j * directionY)]));
-    //                }         
+    //                }       
     //            }
     //        }
     //    }
