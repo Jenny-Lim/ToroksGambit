@@ -220,8 +220,8 @@ public class Board : MonoBehaviour
     {
         //int pieceId = inventoryScript.GetStoredPiece();
 
-        int placeX = 0;
-        int placeY = 0;
+        int placeX = -1;
+        int placeY = -1;
         for(int i=0;i<boardSize;i++)
         {
             for(int j=0;j<boardSize;j++)
@@ -234,6 +234,13 @@ public class Board : MonoBehaviour
                 }
             }
         }
+
+        if (placeX == -1 && placeY == -1)
+        {
+            Debug.LogError("Error trying to place piece where piece already is.");
+            return;
+        }
+
 
         if (pieceId >= 0)
         {
@@ -258,6 +265,12 @@ public class Board : MonoBehaviour
     {
         //int pieceId = inventoryScript.GetStoredPiece();
 
+        if (pieceBoard[xPos, yPos] != null)
+        {
+            Debug.LogError("Error trying to place piece where piece already is.");
+            return;
+        }
+
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos,yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
@@ -274,6 +287,12 @@ public class Board : MonoBehaviour
 
     public void PlacePieceTorok(int xPos, int yPos, int pieceId)
     {
+        if (pieceBoard[xPos, yPos] != null)
+        {
+            Debug.LogError("Error trying to place piece where piece already is.");
+            return;
+        }
+
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
