@@ -15,6 +15,11 @@ public class Rook : Piece
     {
         moves.Clear();
 
+        //MovesAdd(1, 0);
+        //MovesAdd(-1, 0);
+        //MovesAdd(0, 1);
+        //MovesAdd(0, -1);
+
         for (int i = 0; i < Board.boardSize; i++)
         {
 

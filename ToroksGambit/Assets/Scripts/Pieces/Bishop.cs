@@ -15,6 +15,11 @@ public class Bishop : Piece
     {
         moves.Clear();
 
+        //MovesAdd(1,1);
+        //MovesAdd(-1,-1);
+        //MovesAdd(1,-1);
+        //MovesAdd(-1,1);
+
         for (int i = 0; i < Board.boardSize; i++)
         {
             if (InBoundsCheck(pieceX + i, pieceY + i) && ClearCheck(pieceX, pieceY, pieceX + i, pieceY + i))

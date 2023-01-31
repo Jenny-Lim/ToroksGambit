@@ -54,24 +54,28 @@ public class Piece : MonoBehaviour
         return true;
     }
 
-    public virtual bool ClearCheck(int pieceX, int pieceY, int endX, int endY)
+    public virtual bool ClearCheck(int pieceX, int pieceY, int endX, int endY) // for new vers, only need the end params and it should return int
     {
-        /*if (pieceBoard[endX, endY] != null)
-        {
-            Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
+        //if (pieceBoard[endX, endY] != null)
+        //{
+        //    Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
 
-            if (p.type == "wall" || p.type == "hole") // if its your own piece, can't capture
-            {
-                return false;
-            }
-            else if (p.isTorok != this.isTorok)//is an enemy
-            {
-                return true;
-            }
-        }
-        
-         return false;
-         */
+        //    if (p.type == "wall" || p.isTorok == this.isTorok) // if its your own piece / is a wall, can't capture
+        //    {
+        //        return 1;
+        //    }
+        //    else if (p.type == "hole")
+        //    {
+        //        return 2;
+        //    }
+        //    else if (p.isTorok != this.isTorok)//is an enemy -- move there and sop moving
+        //    {
+        //        return 3;
+        //    }
+
+        //}
+
+        //return 0; // keep going + add move
 
 
 
@@ -79,7 +83,7 @@ public class Piece : MonoBehaviour
         Piece thePiece = pieceBoard[pieceX, pieceY].GetComponent<Piece>();
 
         //Patrick - check for tough pieces
-        if(type == "pawn" && thePiece.isTough)
+        if (type == "pawn" && thePiece.isTough)
         {
             Debug.Log("TOUGHPROTECT");
             isClear = false;
@@ -90,14 +94,14 @@ public class Piece : MonoBehaviour
         if (pieceBoard[endX, endY] != null)
         {
             Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
-            
-            if(type == "pawn" && p.isTough)
+
+            if (type == "pawn" && p.isTough)
             {
                 Debug.Log("TOUGHPROTECT");
                 isClear = false;
                 return isClear;
             }
-            
+
 
             if (p.type == "wall" || p.type == "hole" || p.isTorok == this.isTorok) // if its your own piece, can't capture
             {
@@ -105,14 +109,7 @@ public class Piece : MonoBehaviour
                 return isClear;
             }
 
-            //if (pieceBoard[endX, endY].GetComponent<Piece>().type == "hole")
-            //{
-            //    isClear = false;
-            //    return isClear;
-            //}
         }
-
-        // did the below for knight and rook, but bishop only moves diagonally (maybe i make this virtual and override for bishop and rook)
 
         if (thePiece.type == "knight") // knights can jump over pieces
         {
@@ -121,8 +118,6 @@ public class Piece : MonoBehaviour
         }
         // below is if the piece isnt a knight
 
-
-        // maybe i can make these seperate fxns that i call on from clearchecks-- WIP
 
         // horizontally
         int start = pieceX; // to start
@@ -147,12 +142,12 @@ public class Piece : MonoBehaviour
                 if (pieceBoard[i, pieceY].GetComponent<Piece>().type != "hole")
                 {
                     isClear = false;
-                return isClear;
+                    return isClear;
                 }
 
             }
         }
-            
+
 
         // vertically
         int startY = pieceY; // to start
@@ -184,15 +179,7 @@ public class Piece : MonoBehaviour
         }
 
 
-        //if (thePiece.type == "rook") // rook is the only piece to not move diagonally
-        //{
-        //    //isClear = true;
-        //    return isClear;
-        //}
-        //// below is if the piece isnt a rook
-
-
-        //diagonally -- along the diagonal movement, blockers would be along that movement, and NOT +1+1, -1-1, +1-1, -1+1 -- WIP
+        //diagonally
 
         for (int i = start; i > end; i++)
         {
@@ -214,14 +201,42 @@ public class Piece : MonoBehaviour
 
 
         return isClear;
-    }
+    } // ClearCheck
 
-    //void Update()
+
+    //public void MovesAdd(int directionX, int directionY)
     //{
-    //   if (isTaken)
+    //    for (int i = 0; i < Board.boardSize; i++)
     //    {
-    //        this.gameObject.SetActive(false);
-    //    } 
-    //}
+    //        for (int j = 0; j < Board.boardSize; j++)
+    //        {
+    //            if (InBoundsCheck(pieceX + (i * directionX), pieceY + (j * directionY)))
+    //            {
+    //                int clearResult = ClearCheck(pieceX + (i * directionX), pieceY + (j * directionY));
+
+    //                if (clearResult == 1) // if spot is wall / same color
+    //                {
+    //                    return;
+    //                }
+
+    //                else if (clearResult == 3) // if spot is capturable
+    //                {
+    //                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (j * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (j * directionY)]));
+    //                    return;
+    //                }
+
+    //                else if (clearResult == 2) // if spot is a hole
+    //                {
+    //                    continue;
+    //                }
+
+    //                else if (clearResult == 0) // if spot is empty
+    //                {
+    //                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (j * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (j * directionY)]));
+    //                }         
+    //            }
+    //        }
+    //    }
+    //} // MovesAdd
 
 }
