@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public class ShopButton : MonoBehaviour // started smth, got sleepy bruh
+public class ShopButton : MonoBehaviour // started
 {
 
     private string[] pieceTypes = { "pawn", "knight", "bishop", "rook", "queen", "king" };
@@ -11,18 +12,16 @@ public class ShopButton : MonoBehaviour // started smth, got sleepy bruh
     private int quantity;
     private int type;
 
-    private Text priceText;
+    private TextMeshProUGUI priceText;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        type = 1;
-        gameObject.GetComponentInChildren<Text>().text = pieceTypes[type];
+        type = 0;
         price = 0;
-        
-
-        //priceText.text = this.price.ToString();
+        priceText = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        priceText.text = price.ToString();
     }
 
     // Update is called once per frame
@@ -33,7 +32,8 @@ public class ShopButton : MonoBehaviour // started smth, got sleepy bruh
 
     public void BuyPiece() // on click
     {
-        print("ayo");
-        //Inventory.AlterPiece(type, quantity);
+        priceText.text = "SOLD OUT";
+        gameObject.GetComponent<Button>().enabled = false;
+        //Inventory.AlterPiece((Inventory.InventoryPieces)type, quantity);
     }
 }
