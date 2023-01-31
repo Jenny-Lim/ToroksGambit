@@ -20,7 +20,7 @@ public class MovePieceInterrupt : BaseInterrupt
 
             Piece toPiece = Board.pieceBoard[moveTo.x, moveTo.y].GetComponent<Piece>();
 
-            if (toPiece.type == "wall" || toPiece.type == "hole")//return if end location is an obstacle (can change this if want to replace walls or something like that)
+            if (toPiece.type == Piece.PieceType.wall || toPiece.type == Piece.PieceType.hole)//return if end location is an obstacle (can change this if want to replace walls or something like that)
             {
                 Debug.Log("InterruptError| Did not move piece: Location to move to was blocked by obstacle");
                 return;

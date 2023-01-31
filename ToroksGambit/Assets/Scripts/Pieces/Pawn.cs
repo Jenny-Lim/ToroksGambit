@@ -8,7 +8,7 @@ public class Pawn : Piece
     // Start is called before the first frame update
     void Start()
     {
-        type = "pawn";
+        type = PieceType.pawn;
         value = 1;
     }
 

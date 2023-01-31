@@ -7,7 +7,7 @@ public class Knight : Piece
     // Start is called before the first frame update
     void Start()
     {
-        type = "knight";
+        type = PieceType.knight;
         value = 3;
     }
 

@@ -37,7 +37,7 @@ public class BoardAnalyzer
                 if (board[i,j] != null)
                 {
                     Piece targetPiece = board[i, j].GetComponent<Piece>();
-                    if (targetPiece.type == "hole" || targetPiece.type == "wall") { continue; }
+                    if (targetPiece.type == Piece.PieceType.hole || targetPiece.type == Piece.PieceType.wall) { continue; }
                     float value = targetPiece.value;
                     if (targetPiece.isTorok) { value *= -1; }
                     result += value;

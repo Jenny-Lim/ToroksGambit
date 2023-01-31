@@ -7,7 +7,7 @@ public class Wall : Piece // dummy piece, pieces can't capture or jump over this
     // Start is called before the first frame update
     void Start()
     {
-        type = "wall";
+        type = PieceType.wall;
     }
 
     public override void UpdateMoves()

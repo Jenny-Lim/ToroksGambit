@@ -6,6 +6,18 @@ using UnityEngine;
 public class Piece : MonoBehaviour
 {
 
+    public enum PieceType
+    {
+        pawn,
+        knight,
+        bishop,
+        rook,
+        queen,
+        king,
+        wall,
+        hole
+    }
+
     //probably want an is same piece function
 
     public bool moved = false;
@@ -15,7 +27,7 @@ public class Piece : MonoBehaviour
     public bool isTaken;
     public int pieceX;
     public int pieceY;
-    public string type;
+    public PieceType type;
 
     public bool isTorok;
 
@@ -61,11 +73,11 @@ public class Piece : MonoBehaviour
         {
             Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
 
-            if (p.type == "wall" || p.isTorok == this.isTorok) // if its your own piece / is a wall, can't capture
+            if (p.type == PieceType.wall || p.isTorok == this.isTorok) // if its your own piece / is a wall, can't capture
             {
                 return 1;
             }
-            else if (p.type == "hole")
+            else if (p.type == PieceType.hole)
             {
                 return 2;
             }

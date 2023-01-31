@@ -108,14 +108,14 @@ public class BoardLoader : MonoBehaviour
 
                     string pieceString = "";
 
-                    if (thisPiece.type == "pawn") { pieceString = "" + 0; }
-                    else if (thisPiece.type == "knight") { pieceString = "" + 1; }
-                    else if (thisPiece.type == "bishop") { pieceString = "" + 2; }
-                    else if (thisPiece.type == "rook") { pieceString = "" + 3; }
-                    else if (thisPiece.type == "queen") { pieceString = "" + 4; }
-                    else if (thisPiece.type == "king") { pieceString = "" + 5; }
-                    else if (thisPiece.type == "wall") { pieceString = "" + 6; }
-                    else if (thisPiece.type == "hole") { pieceString = "" + 7; }
+                    if (thisPiece.type == Piece.PieceType.pawn) { pieceString = "" + 0; }
+                    else if (thisPiece.type == Piece.PieceType.knight) { pieceString = "" + 1; }
+                    else if (thisPiece.type == Piece.PieceType.bishop) { pieceString = "" + 2; }
+                    else if (thisPiece.type == Piece.PieceType.rook) { pieceString = "" + 3; }
+                    else if (thisPiece.type == Piece.PieceType.queen) { pieceString = "" + 4; }
+                    else if (thisPiece.type == Piece.PieceType.king) { pieceString = "" + 5; }
+                    else if (thisPiece.type == Piece.PieceType.wall) { pieceString = "" + 6; }
+                    else if (thisPiece.type == Piece.PieceType.hole) { pieceString = "" + 7; }
 
 
                     pieceString += "," + thisPiece.pieceX + "," + thisPiece.pieceY + "," + thisPiece.isTorok;
