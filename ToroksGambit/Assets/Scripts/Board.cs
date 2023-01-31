@@ -323,6 +323,7 @@ public class Board : MonoBehaviour
     {
         if (pieceBoard[xPos, yPos] != null)
         {
+            Debug.Log("Trace Stack for ");
             Debug.LogError("Error trying to place piece where piece already is.");
             return;
         }
@@ -517,17 +518,21 @@ public class Board : MonoBehaviour
         }
 
         pieceBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY] = moveList[undoCounter-1].startObject;
-        pieceBoard[moveList[undoCounter-1].endX,moveList[undoCounter-1].endY] = moveList[undoCounter-1].endObject;
+        pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter-1].endY] = moveList[undoCounter-1].endObject;
 
         if (moveList[undoCounter-1].pieceTaken != 0)
         {
             if (moveList[undoCounter - 1].pieceTaken > 0)
             {
+                print("place player piece in undo");
                 PlacePiece(moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken - 1);
+                
             }
             else
             {
+                print("place torok piece in undo");
                 PlacePiece(moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken + 1);
+                
             }
         }
 
