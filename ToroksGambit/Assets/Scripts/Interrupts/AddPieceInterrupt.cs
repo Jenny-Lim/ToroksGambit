@@ -26,7 +26,7 @@ public class AddPieceInterrupt : BaseInterrupt
     {
         if (Board.GetPieceBoard()[placeAt.x,placeAt.y] == null)
         {
-            Board.instance.PlacePiece(placeAt.x, placeAt.y, (int)piece);
+            Board.instance.PlacePieceTorok(placeAt.x, placeAt.y, (int)piece);
             hasTriggered = true;
         }
         else

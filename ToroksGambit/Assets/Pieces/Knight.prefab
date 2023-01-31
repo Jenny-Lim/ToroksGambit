@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: knight_piece
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 38e63eda148ef244597d2bb1fe9cc26f, type: 3}
+      propertyPath: m_TagString
+      value: Chess Piece
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38e63eda148ef244597d2bb1fe9cc26f, type: 3}
 --- !u!4 &508627110600830384 stripped
@@ -230,3 +234,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 38e63eda148ef244597d2bb1fe9cc26f, type: 3}
   m_PrefabInstance: {fileID: 37639396681550427}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &884061246558484234 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 38e63eda148ef244597d2bb1fe9cc26f, type: 3}
+  m_PrefabInstance: {fileID: 37639396681550427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &7236217099500400915
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884061246558484234}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.35371804, y: 0.24504443, z: 0.63657075}
+  m_Center: {x: -0.052446716, y: -0.000000007450582, z: 0.30107}
