@@ -363,12 +363,12 @@ public class Board : MonoBehaviour
     {
         if(toughPlacer)
         {
-            toughText.text = "Tough Activated";
+            toughText.text = "Tough Deactivated";
             toughPlacer = false;
         }
         else
         {
-            toughText.text = "Tough Deactivated";
+            toughText.text = "Tough Activated";
             toughPlacer = true;
         }
     }
