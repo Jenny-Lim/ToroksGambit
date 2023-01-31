@@ -172,11 +172,21 @@ public class Inventory : MonoBehaviour
 
     public void HideShowButtonClicked()
     {
+        if (isShowingPanel)
+        {
+            hideShowText.text = "Show";
+        }
+        else
+        {
+            hideShowText.text = "Hide";
+        }
+
         if (isMoving)
         {
             StopAllCoroutines();
         }
         StartCoroutine(ShowHideInventoryPanel());
+
     }
 
     public int GetStoredPiece()
@@ -187,15 +197,6 @@ public class Inventory : MonoBehaviour
     private IEnumerator ShowHideInventoryPanel()
     {
         isMoving = true;
-
-        if (isShowingPanel)
-        {
-            hideShowText.text = "Hide";
-        }
-        else
-        {
-            hideShowText.text = "Show";
-        }
 
         isShowingPanel = !isShowingPanel;
 
