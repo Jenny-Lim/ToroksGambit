@@ -164,13 +164,15 @@ public class Board : MonoBehaviour
                 GameObject tempPiece = pieceBoard[clickedX, clickedY];
 
 
-                    
-                Piece endPieceScript = tempPiece.GetComponent<Piece>();
+                    if (tempPiece)
+                    {
+                        Piece endPieceScript = tempPiece.GetComponent<Piece>();
 
-                if(endPieceScript.lastChance)
-                {
-                        isLastchance = true;
-                }
+                        if (endPieceScript.lastChance)
+                        {
+                            isLastchance = true;
+                        }
+                    }
 
                 
 
