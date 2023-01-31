@@ -40,11 +40,26 @@ public class Pawn : Piece
             }
         }
 
-        Piece p = pieceBoard[pieceX + dir, pieceY + dir].GetComponent<Piece>();
-        if (InBoundsCheck(pieceX + dir, pieceY + dir) && pieceBoard[pieceX + dir, pieceY + dir] != null && !p.isTorok && p.isTough) // if can capture another piece
+        if (InBoundsCheck(pieceX + 1, pieceY + dir) && pieceBoard[pieceX + 1, pieceY + dir] != null)
         {
-            moves.Add(new Move(pieceX, pieceY, pieceX + dir, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + dir, pieceY + dir]));
+            Piece pRight = pieceBoard[pieceX + 1, pieceY + dir].GetComponent<Piece>();
+
+            if (pRight != null && InBoundsCheck(pieceX + 1, pieceY + dir) && pieceBoard[pieceX + 1, pieceY + dir] != null && !IsOnSameTeam(pieceBoard[pieceX + 1, pieceY + dir]) && !pRight.isTough) // if can capture another piece
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX + dir, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + dir, pieceY + dir]));
+            }
         }
+        
+
+        if (InBoundsCheck(pieceX - 1, pieceY + dir) && pieceBoard[pieceX - 1, pieceY + dir] != null)
+        {
+            Piece pLeft = pieceBoard[pieceX - 1, pieceY + dir].GetComponent<Piece>();
+            if (pLeft != null && InBoundsCheck(pieceX - 1, pieceY + dir) && pieceBoard[pieceX - 1, pieceY + dir] != null && !IsOnSameTeam(pieceBoard[pieceX - 1, pieceY + dir]) && !pLeft.isTough) // if can capture another piece
+            {
+                moves.Add(new Move(pieceX, pieceY, pieceX + dir, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + dir, pieceY + dir]));
+            }
+        }
+        
 
         if (!moved)
         {

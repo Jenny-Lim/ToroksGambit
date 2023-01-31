@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Piece : MonoBehaviour
@@ -237,5 +238,21 @@ public class Piece : MonoBehaviour
             }
         }
     } // MovesAdd
+
+    public bool IsOnSameTeam(GameObject compareTo)
+    {
+        Piece with = compareTo.GetComponent<Piece>();
+
+        if (!with)
+        {
+            return false;
+        }
+
+        if (isTorok && with.isTorok)
+        {
+            return true;
+        }
+        return false;
+    }
 
 }
