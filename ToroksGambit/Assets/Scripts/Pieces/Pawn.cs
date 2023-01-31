@@ -15,7 +15,7 @@ public class Pawn : Piece
     public override void UpdateMoves()
     {
 
-        int dir;
+        int dir = 1;
         int clearResult;
 
         moves.Clear();
@@ -23,10 +23,6 @@ public class Pawn : Piece
         if (isTorok)
         {
             dir = -1;
-        }
-        else
-        {
-            dir = 1;
         }
 
 
@@ -65,8 +61,9 @@ public class Pawn : Piece
         {
             if (InBoundsCheck(pieceX, pieceY + dir * 2))
             {
+                
                 clearResult = ClearCheck(pieceX, pieceY + dir * 2);
-                if (clearResult == 0 && pieceBoard[pieceX, pieceY + dir] != null) // checks if the spot before is empty as well **changed pieceX + dir -> pieceX**
+                if (clearResult == 0 && pieceBoard[pieceX, pieceY + dir] == null) // checks if the spot before is empty as well **changed pieceX + dir -> pieceX**
                 {
                     moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + dir * 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + dir * 2]));
                 }

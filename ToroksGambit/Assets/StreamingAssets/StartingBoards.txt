@@ -18,3 +18,10 @@ BoardOFPawns
 0,5,3,False
 0,5,5,False
 boardend
+boardstart
+PawnTest
+0,2,2,True
+0,3,1,False
+0,3,2,True
+0,4,2,True
+boardend

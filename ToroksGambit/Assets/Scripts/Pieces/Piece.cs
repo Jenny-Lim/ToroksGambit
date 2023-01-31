@@ -207,33 +207,30 @@ public class Piece : MonoBehaviour
 
     public void MovesAdd(int directionX, int directionY)
     {
-        for (int i = 0; i < Board.boardSize; i++)
+        for (int i = 1; i < Board.boardSize; i++)
         {
-            for (int j = 0; j < Board.boardSize; j++)
+            if (InBoundsCheck(pieceX + (i * directionX), pieceY + (i * directionY)))
             {
-                if (InBoundsCheck(pieceX + (i * directionX), pieceY + (j * directionY)))
+                int clearResult = ClearCheck(pieceX + (i * directionX), pieceY + (i * directionY));
+
+                if (clearResult == 0) // if spot is empty
                 {
-                    int clearResult = ClearCheck(pieceX + (i * directionX), pieceY + (j * directionY));
+                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)]));
+                }
+                else if (clearResult == 1) // if spot is wall / same color
+                {
+                    return;
+                }
 
-                    if (clearResult == 0) // if spot is empty
-                    {
-                        moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (j * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (j * directionY)]));
-                    }
-                    else if (clearResult == 1) // if spot is wall / same color
-                    {
-                        return;
-                    }
+                else if (clearResult == 3) // if spot is capturable
+                {
+                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)]));
+                    return;
+                }
 
-                    else if (clearResult == 3) // if spot is capturable
-                    {
-                        moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (j * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (j * directionY)]));
-                        return;
-                    }
-
-                    else if (clearResult == 2) // if spot is a hole
-                    {
-                        continue;
-                    }
+                else if (clearResult == 2) // if spot is a hole
+                {
+                    continue;
                 }
             }
         }

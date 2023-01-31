@@ -95,7 +95,15 @@ public class Board : MonoBehaviour
 
     public void BoardUpdate()
     {
-       // print("in bvoard update");
+        // print("in bvoard update");
+
+        if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
+        {
+            foreach (Move move in clickedPiece.GetComponent<Piece>().moves)
+            {
+                print(move.DisplayMove());
+            }
+        }
 
         RaycastHit hit;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
@@ -134,6 +142,7 @@ public class Board : MonoBehaviour
                     }
                 }
 
+                piece.UpdateMoves();
 
                 //signifier that piece is chosen
                 //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
@@ -223,13 +232,6 @@ public class Board : MonoBehaviour
                 //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position - new Vector3(0, 5, 0), 10f * Time.deltaTime);
                 clickedPiece = null; 
         }
-        }
-
-        if (Input.GetKeyDown("b") && clickedPiece != null)//***Testing move generating
-        {
-            foreach (Move move in clickedPiece.GetComponent<Piece>().moves) {
-                print(move.DisplayMove());
-            }
         }
 
         if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
