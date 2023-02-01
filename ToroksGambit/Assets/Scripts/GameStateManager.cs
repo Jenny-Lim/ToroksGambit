@@ -52,7 +52,7 @@ public class GameStateManager : MonoBehaviour
                         Move resultMove = MinMax.instance.GetMinMaxMove(2, MinMax.playerToMove.torok);
                         if (resultMove != null)
                         {
-                            Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY]);
+                            Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY], resultMove.promoted);
                             Board.instance.canMove = false;
                             //Board.instance.DisablePiece(Board.pieceBoard[resultMove.endX, resultMove.endY]);
                             Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);

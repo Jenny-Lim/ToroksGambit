@@ -74,6 +74,8 @@ public class Board : MonoBehaviour
 
     private bool isLastchance;
 
+    private bool isPromote;
+
     //traits
 
     public bool toughPlacer;
@@ -146,6 +148,11 @@ public class Board : MonoBehaviour
                 GameObject tempPiece = hit.transform.parent.gameObject;
 
                 Piece piece = tempPiece.GetComponent<Piece>(); 
+
+                if(piece.promote)
+                {
+
+                }
 
                 if(!piece.isTorok)
                 {
@@ -226,13 +233,14 @@ public class Board : MonoBehaviour
                         //DisablePiece(tempPiece);
                         if(clickedPiece)
                         {
-                            Debug.Log(clickedPiece);
-                            StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece));
+                            clickedPiece = pieceBoard[clickedX,clickedY];
+                            StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece,false));
                         }
                         else
                         {
                             GameStateManager.EndTurn();
                             isLastchance = false;
+                            isPromote = false;
 
                         }
 
@@ -539,6 +547,8 @@ public class Board : MonoBehaviour
     //if click off bord then clear stored item
     public void MovePiece(int startX, int startY, int endX, int endY)//take 2 positions to move a piece
     {
+        
+        bool willPromote = false;
       
         GameObject tempPiece = pieceBoard[startX, startY];
         GameObject tempEndPiece = pieceBoard[endX, endY];
@@ -560,19 +570,19 @@ public class Board : MonoBehaviour
             {
                 pieceIdTaken *= -1;
             }
-        }
+            //Piece oldPiece = tempEndPiece.GetComponent<Piece>();
 
-        if (tempEndPiece != null)
-        {
-            Piece oldPiece = tempEndPiece.GetComponent<Piece>();
-
-            if (oldPiece.lastChance)
+            if (pieceForCaptureId.lastChance)//if piece being taken has last chance trait
             {
-                if (piece.value <= oldPiece.value)
+                if (piece.value <= pieceForCaptureId.value)
                 {
                     Destroy(tempPiece);
                     pieceBoard[startX, startY] = null;
                 }
+            }
+            if(piece.promote)
+            {
+                willPromote = true;
             }
 
             Destroy(tempEndPiece);
@@ -582,25 +592,84 @@ public class Board : MonoBehaviour
 
 
         //stores move in a list so can be undone at any point
-        moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdTaken)); // moveList is a list of the moves done
+        //moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdTaken)); // moveList is a list of the moves done
 
         undoCounter++;
 
-        pieceBoard[endX,endY] = tempPiece;//**why is it setting the end to the start
-        pieceBoard[startX, startY] = null;
+        if(willPromote)//if this piece captured another piece and has promotion
+        {
+            
+            bool oldIsTorok = piece.isTorok;
+            bool oldIsTough = piece.isTough;
+            bool oldLastChance = piece.lastChance;
 
-        Piece endPiece = pieceBoard[endX, endY].GetComponent<Piece>();//get piece script of object that moved
+            if(piece.type != Piece.PieceType.queen)
+            {
+                Destroy(tempPiece);
+                pieceBoard[startX,startY] = null;
+                PlacePiece(endX,endY,((int)(piece.type) + 1));
+                //tempPiece = pieceBoard[startX,startY];
+
+                moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdTaken, willPromote)); // moveList is a list of the moves done
+
+                Debug.Log("prmoted to"+tempPiece);
+
+                Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
+                
+                endPiece.isTorok = oldIsTorok;
+                endPiece.isTough = oldIsTough;
+                endPiece.lastChance = oldLastChance;
+
+                endPiece.moved = true;// changes piece to say has moved
+                endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
+                endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
+                
+
+            }
+
+
+            //moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdTaken, willPromote)); // moveList is a list of the moves done
+
+            //pieceBoard[endX,endY] = tempPiece;
+            //Piece endPiece = pieceBoard[endX, endY].GetComponent<Piece>();//get piece script of object that moved
+
+        //endPiece.moved = true;// changes piece to say has moved
+        //endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
+        //endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
+
+        }
+        else
+        {
+
+            moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdTaken, willPromote)); // moveList is a list of the moves done
+
+            pieceBoard[endX,endY] = tempPiece;
+            Piece endPiece = pieceBoard[endX, endY].GetComponent<Piece>();//get piece script of object that moved
 
         endPiece.moved = true;// changes piece to say has moved
         endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
         endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
+        }
+
+        pieceBoard[startX, startY] = null;
+
+
+        //Piece endPiece = pieceBoard[endX, endY].GetComponent<Piece>();//get piece script of object that moved
+
+        //endPiece.moved = true;// changes piece to say has moved
+        //endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
+        //endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
         //print("moved piece");
 
     }
 
-    public void MovePieceVisual(int startX, int startY, int endX, int endY, GameObject piece)
+    public void MovePieceVisual(int startX, int startY, int endX, int endY, GameObject piece, bool promoteCheck)
     {
-        StartCoroutine(VisualMovePiece(startX, startY,endX,endY, piece));
+        Debug.Log(promoteCheck);
+        if(!promoteCheck)
+        {
+            StartCoroutine(VisualMovePiece(startX, startY,endX,endY, piece, promoteCheck));
+        }
     }
 
     public void DisablePiece(GameObject piece)
@@ -629,13 +698,17 @@ public class Board : MonoBehaviour
         {
             if (moveList[undoCounter - 1].pieceTaken > 0)
             {
+                Debug.Log( moveList[undoCounter - 1].pieceTaken - 1);
+                pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY] = null;
                 print("place player piece in undo");
                 PlacePiece(moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken - 1);
                 
             }
             else
             {
+                pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY] = null;
                 print("place torok piece in undo");
+                //moveList[undoCounter - 1].pieceTaken = moveList[undoCounter - 1].pieceTaken * -1;
                 PlacePiece(moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken + 1);
                 
             }
@@ -670,12 +743,22 @@ public class Board : MonoBehaviour
     }
     //if click when movign it breaks
     //fix this later
-    IEnumerator VisualMovePiece(int startX, int startY, int endX, int endY, GameObject piece)
+    IEnumerator VisualMovePiece(int startX, int startY, int endX, int endY, GameObject piece, bool promoted)
     {
         //print("inside visualMove");
+        if(promoted)
+        {
+            Debug.Log("was promoted");
+        }
 
             while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset)) > 0.1f)
             {
+
+            if(piece == null)
+            {
+                Debug.Log(piece);
+                piece = pieceBoard[endX,endY];
+            }
                 piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset), pieceMoveSpeed * Time.deltaTime);
                 yield return null;
             }
