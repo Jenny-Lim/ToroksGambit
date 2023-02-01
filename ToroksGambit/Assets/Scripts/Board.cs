@@ -122,6 +122,7 @@ public class Board : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
         {
+            print("printing selected piece moves...");
             foreach (Move move in clickedPiece.GetComponent<Piece>().moves)
             {
                 print(move.DisplayMove());
@@ -321,10 +322,6 @@ public class Board : MonoBehaviour
                 placeY = getPosPiece.pieceY;
             }
         }
-        
-
-        
-
 
         if (pieceId >= 0)
         {
@@ -530,11 +527,11 @@ public class Board : MonoBehaviour
 
     public bool MoveValidator(int pieceX, int pieceY, int endX, int endY)
     {
+        print("initX: " + pieceX + "initY: " + pieceY + "endX: " + endX + "endY: " + endY);
         if (pieceBoard[pieceX, pieceY] == null)//guard clause if piece given is null
         {
             return false;
         }
-
 
         //find type of piece
         Piece pieceScript = pieceBoard[pieceX, pieceY].GetComponent<Piece>();
@@ -549,13 +546,14 @@ public class Board : MonoBehaviour
         {
             if ((move.endX == endX) && (move.endY == endY))
             {
+                print("Confirmed valid move");
                 //print("endX :" + endX + "endY: " + endY + " " + move.DisplayMove());
                 canMove = true;
                 MovePiece(pieceX, pieceY, endX, endY);
                 return true;
             }
         }
-
+        print("move not valid");
         return false;
     }
 
@@ -752,9 +750,9 @@ public class Board : MonoBehaviour
         {
             moveList[undoCounter - 1].endObject.SetActive(true);
         }
-        moveList[undoCounter-1].startObject.transform.position = hitBoxBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY].transform.position+Vector3.up;
+        moveList[undoCounter-1].startObject.transform.position = hitBoxBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY].transform.position+(Vector3.up * verticalPlaceOffset);
         if(moveList[undoCounter-1].endObject)
-        moveList[undoCounter-1].endObject.transform.position = hitBoxBoard[moveList[undoCounter-1].endX,moveList[undoCounter-1].endY].transform.position+Vector3.up;
+        moveList[undoCounter-1].endObject.transform.position = hitBoxBoard[moveList[undoCounter-1].endX,moveList[undoCounter-1].endY].transform.position+ (Vector3.up * verticalPlaceOffset);
 
         UndoMove();
 
