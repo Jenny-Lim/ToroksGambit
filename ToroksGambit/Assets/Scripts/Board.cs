@@ -1,10 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements.Experimental;
-using UnityEngine.UI;
 using TMPro;
 
 //create higher object for game. game manager
@@ -145,7 +141,7 @@ public class Board : MonoBehaviour
             {
 
                 // Debug.Log("Piece");
-                GameObject tempPiece = hit.transform.parent.gameObject;
+                GameObject tempPiece = hit.transform.gameObject;//removed the ,parent cuz i changed the hitbox to be on the highest level of the piece prefabs - jordan
 
                 Piece piece = tempPiece.GetComponent<Piece>(); 
 
@@ -156,7 +152,7 @@ public class Board : MonoBehaviour
 
                 if(!piece.isTorok)
                 {
-                    clickedPiece = hit.transform.parent.gameObject;//store piece
+                    clickedPiece = hit.transform.gameObject;//store piece, same as above comment about prefabs
 
                     // Debug.Log(hit.transform.parent.gameObject);
 
@@ -164,7 +160,7 @@ public class Board : MonoBehaviour
                     {
                         for(int j=0;j<boardSize;j++)
                         {
-                            if(hit.transform.parent.gameObject == pieceBoard[i,j])//get position of piece in array
+                            if(hit.transform.gameObject == pieceBoard[i,j])//get position of piece in array, smae as the two above comments
                             {
                                 pieceX = i;//store locations
                                 pieceY = j;
@@ -285,28 +281,49 @@ public class Board : MonoBehaviour
 
     public void PlacePiece(Transform boardSpot, int pieceId)
     {
-        //int pieceId = inventoryScript.GetStoredPiece();
+        //**should reformat this function cuz im sure there is some getComponent overlapping**
+
+        if (!boardSpot)
+        {
+            Debug.Log("Trying to place piece, given piece transform was null");
+            return;
+        }
 
         int placeX = -1;
         int placeY = -1;
-        for(int i=0;i<boardSize;i++)
+        if (boardSpot.CompareTag("Chess Board"))
         {
-            for(int j=0;j<boardSize;j++)
+            for (int i = 0; i < boardSize; i++)
             {
-                if(boardSpot.gameObject == hitBoxBoard[i,j])//get position of piece in array
+                for (int j = 0; j < boardSize; j++)
                 {
-                    placeX = i;//store locations
-                    placeY = j;
-                    
+                    if (boardSpot.gameObject == hitBoxBoard[i, j])//get position of piece in array
+                    {
+                        placeX = i;//store locations
+                        placeY = j;
+
+                    }
                 }
             }
-        }
 
-        if (placeX == -1 && placeY == -1)
-        {
-            Debug.LogError("Error trying to place piece where piece already is.");
-            return;
+            if (placeX == -1 && placeY == -1)
+            {
+                Debug.LogError("Error trying to place piece where piece already is.");
+                return;
+            }
         }
+        else if (boardSpot.CompareTag("Chess Piece")) 
+        {
+            Piece getPosPiece = boardSpot.GetComponent<Piece>();
+            if (getPosPiece)
+            {
+                placeX = getPosPiece.pieceX;
+                placeY = getPosPiece.pieceY;
+            }
+        }
+        
+
+        
 
 
         if (pieceId >= 0)
@@ -334,9 +351,11 @@ public class Board : MonoBehaviour
 
             piece.pieceX = placeX; 
             piece.pieceY = placeY;
-        }else
+        } else
         {
-            //remove piece functionality
+            //do any inventory stuff here
+            Destroy(pieceBoard[placeX, placeY]);
+            pieceBoard[placeX, placeY] = null;
         }
 
     }
@@ -357,14 +376,13 @@ public class Board : MonoBehaviour
             Piece piece = newPiece.GetComponent<Piece>();
             piece.pieceX = xPos;
             piece.pieceY = yPos;
-
-            
         }
         else
         {
             //remove piece functionality
+            Destroy(pieceBoard[xPos, yPos]);
+            pieceBoard[xPos, yPos] = null;
         }
-
     }
 
     public void ToughButtonSet()
