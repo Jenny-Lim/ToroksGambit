@@ -18,6 +18,8 @@ using TMPro;
 //Promote - when captured it is instead upgraded to a higher piece
 //last chance - if captured by equal or lower value then that piece is captured as well
 
+//rebuidling movepiece
+
 public class Board : MonoBehaviour
 {
     public static int boardSize = 8;//size of 2D array
@@ -231,7 +233,8 @@ public class Board : MonoBehaviour
                         if(clickedPiece)
                         {
                             clickedPiece = pieceBoard[clickedX,clickedY];
-                            StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece,false));
+                            MovePieceVisual(pieceX, pieceY, clickedX, clickedY, clickedPiece,false);
+                           //StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece,false));
                         }
                         else
                         {
@@ -578,7 +581,7 @@ public class Board : MonoBehaviour
         Piece piece = tempPiece.GetComponent<Piece>();
 
         int pieceIdTaken = 0;
-        if (pieceBoard[endX, endY] != null)
+        if (pieceBoard[endX, endY] != null)//if a piece is captured
         {
             Piece pieceForCaptureId = pieceBoard[endX, endY].GetComponent<Piece>();
             pieceIdTaken = (int)(pieceForCaptureId.type) + 1;
@@ -596,7 +599,7 @@ public class Board : MonoBehaviour
                     pieceBoard[startX, startY] = null;
                 }
             }
-            if(piece.promote)
+            if(piece.promote)//if piece taking has promote trait
             {
                 willPromote = true;
             }
