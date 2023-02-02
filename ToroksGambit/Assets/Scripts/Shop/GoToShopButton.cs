@@ -6,45 +6,42 @@ using TMPro;
 
 public class GoToShopButton : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject shop;
-
-    [SerializeField]
-    private CameraHeadMovements c;
-
+    [SerializeField] private GameObject shop;
+    [SerializeField] private CameraHeadMovements c;
     private TextMeshProUGUI t;
     private Button b;
-
     private bool canShop;
 
     void Start()
     {
         t = gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        //t.text = "Enter Shop";
     }
 
     public void GoToShop()
     {
-        if (canShop)
+        if (!c.GetIsMoving())
         {
-            t.text = "Enter Shop";
-            canShop = false; // can't go to shop if you're already there
+            if (canShop)
+            {
+                t.text = "Enter Shop";
+                canShop = false; // can't go to shop if you're already there
+                // camera rotates to board 
+                c.LookAtBoard();
+            }
+            else
+            {
+                t.text = "Leave Shop";
+                canShop = true;
+                // camera rotates to shop
+                c.LookAtShop();
 
-            // camera rotates to board 
-            c.LookAtBoard();
+            }
 
+            shop.SetActive(canShop);
         }
         else
         {
-            t.text = "Leave Shop";
-            canShop = true;
-
-            // camera rotates to shop
-            c.LookAtShop();
-            
-
+            print("bruh");
         }
-
-        shop.SetActive(canShop);
     }
 }

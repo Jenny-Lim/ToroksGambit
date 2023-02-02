@@ -95,4 +95,8 @@ public class CameraHeadMovements : MonoBehaviour
         movementInProgress = false;
     }
 
+    public bool GetIsMoving()
+    {
+        return movementInProgress;
+    }
 }

@@ -5,20 +5,13 @@ using UnityEngine.UI;
 
 public class PieceUI : MonoBehaviour 
 {
-    private int type;
+    [SerializeField] private Color newColor;
+    [SerializeField] private Sprite[] s;
+    public int type;
+    public bool isBought;
     private int price;
-
-    private bool isBought;
     private Image img;
-
-    [SerializeField]
-    private Color newColor;
-
-    [SerializeField]
-    private Sprite[] s;
-
     private ShopButton b;
-
 
     public void Start()
     {
@@ -40,8 +33,11 @@ public class PieceUI : MonoBehaviour
             }
         }
 
-        b.SetPrice(price);
-        b.SetType(type);
+        //b.SetPrice(price);
+        //b.SetType(type);
+
+        b.price = price;
+        b.type = type;
     }
 
     void Update()
@@ -53,13 +49,13 @@ public class PieceUI : MonoBehaviour
         }
     }
 
-    public void SetType(int t)
-    {
-        type = t;
-    }
+    //public void SetType(int t)
+    //{
+    //    type = t;
+    //}
 
-    public void PieceBought()
-    {
-        isBought = true;
-    }
+    //public void PieceBought()
+    //{
+    //    isBought = true;
+    //}
 }
