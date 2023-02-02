@@ -13,6 +13,8 @@ public class Move
     public GameObject startObject;
     public GameObject endObject;
 
+    public bool promoted;
+
     public int pieceTaken = 0;// 0 is bascially null for this
     public int pieceMoving = 0;//piece type for piece MOVING
 
@@ -26,22 +28,30 @@ public class Move
     public bool takenTough;
 
     public bool movingLastChance;
-    public bool takingLastChance;
+    public bool takenLastChance;
         
 
-    public Move(int x1, int y1, int x2, int y2, GameObject object1, GameObject object2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck)
+    public Move(int x1, int y1, int x2, int y2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck, bool mPro, bool tPro, bool mTough, bool tTough, bool mLC, bool tLC)
     {
         startX = x1;
         startY = y1;
         endX = x2;
         endY = y2;
-        startObject = object1;
-        endObject = object2;
         pieceTaken = pieceIdTaken;
         pieceMoving = pieceIdMoving;
         promoted = promoteCheck;
         movingTorok = movingTorokCheck;
         takingTorok = takingTorokCheck;
+
+        movingPromote = mPro;
+        takenPromote = tPro;
+
+        movingTough = mTough;
+        takenTough = tTough;
+
+        movingLastChance = mLC;
+        takenLastChance = tLC;
+
     }
 
     public Move(int x1, int y1, int x2, int y2, GameObject object1, GameObject object2)//constructor without the need for pieceTaken data

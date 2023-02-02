@@ -56,7 +56,6 @@ public class GameStateManager : MonoBehaviour
                             Board.instance.canMove = false;
                             //Board.instance.DisablePiece(Board.pieceBoard[resultMove.endX, resultMove.endY]);
                             Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
-                            Debug.Log("TOROK DID MOVE");
                         }
                         else
                         {

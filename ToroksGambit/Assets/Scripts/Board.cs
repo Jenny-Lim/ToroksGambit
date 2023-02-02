@@ -494,6 +494,15 @@ public class Board : MonoBehaviour
         bool movingTorok = false;
         bool takingTorok = false;
 
+        bool movingPromote = false;
+        bool takenPromote = false;
+
+        bool movingTough = false;
+        bool takenTough = false;
+
+        bool movingLastChance = false;
+        bool takenLastChance = false;
+
         int pieceIdMoving = 0;
       
         GameObject tempPiece = pieceBoard[startX, startY];
@@ -507,6 +516,10 @@ public class Board : MonoBehaviour
 
         Piece piece = pieceBoard[startX, startY].GetComponent<Piece>();
 
+        movingTough = piece.isTough;
+        movingPromote = piece.promote;
+        movingLastChance = piece.lastChance;
+
         pieceIdMoving = (int)(piece.type) + 1;
         if(piece.isTorok)
         {
@@ -518,6 +531,11 @@ public class Board : MonoBehaviour
         if (pieceBoard[endX, endY] != null)//if a piece is captured
         {
             Piece pieceForCaptureId = pieceBoard[endX, endY].GetComponent<Piece>();
+
+            takenTough = pieceForCaptureId.isTough;
+            takenPromote = pieceForCaptureId.promote;
+            takenLastChance = pieceForCaptureId.lastChance;
+
             pieceIdTaken = (int)(pieceForCaptureId.type) + 1;
             if (pieceForCaptureId.isTorok)
             {
@@ -552,7 +570,7 @@ public class Board : MonoBehaviour
         bool oldIsTough = piece.isTough;
         bool oldLastChance = piece.lastChance;
 
-        moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok)); // moveList is a list of the moves done
+        moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, takenLastChance)); // moveList is a list of the moves done
 
         if(willPromote && !lastChanceCheck)//if this piece captured another piece and has promotion
         {
@@ -614,6 +632,8 @@ public class Board : MonoBehaviour
     //repeatedly calling will undo moves until beggining
     public void UndoMove()
     { 
+        GameObject startingPiece = null;
+        GameObject endPiece = null;
 
         if (moveList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
         {
@@ -642,6 +662,15 @@ public class Board : MonoBehaviour
             PlacePieceTorok(moveList[undoCounter-1].startX,moveList[undoCounter-1].startY, moveList[undoCounter-1].pieceMoving - 1);
         }
 
+        if(moveList[undoCounter-1].pieceMoving > 0)
+        {
+            startingPiece = pieceBoard[moveList[undoCounter-1].startX, moveList[undoCounter - 1].startY];
+            Piece startScript = startingPiece.GetComponent<Piece>();
+            startScript.isTough = moveList[undoCounter-1].movingTough;
+            startScript.promote = moveList[undoCounter-1].movingPromote;
+            startScript.lastChance = moveList[undoCounter-1].movingLastChance;
+        }
+
         if(!moveList[undoCounter-1].takingTorok && moveList[undoCounter-1].pieceTaken > 0)
         {
             PlacePiece(moveList[undoCounter-1].endX, moveList[undoCounter-1].endY, moveList[undoCounter-1].pieceTaken - 1);
@@ -649,6 +678,15 @@ public class Board : MonoBehaviour
         else if(moveList[undoCounter-1].takingTorok && moveList[undoCounter-1].pieceTaken > 0)
         {
             PlacePieceTorok(moveList[undoCounter-1].endX, moveList[undoCounter-1].endY, moveList[undoCounter-1].pieceTaken - 1);
+        }
+
+        if(moveList[undoCounter-1].pieceTaken > 0)
+        {
+            endPiece = pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter-1].endY];
+            Piece endScript = endPiece.GetComponent<Piece>();
+            endScript.isTough = moveList[undoCounter-1].takenTough;
+            endScript.promote = moveList[undoCounter-1].takenPromote;
+            endScript.lastChance = moveList[undoCounter-1].takenLastChance;
         }
         //place new pieces at locations
         //MovingpieceId -> start
