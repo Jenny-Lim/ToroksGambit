@@ -326,7 +326,7 @@ public class Board : MonoBehaviour
             }
         }
 
-        if (pieceBoard[placeX, placeY] != null)
+        if (pieceBoard[placeX, placeY] != null && pieceId != -1)
         {
             Debug.LogError("Did not place piece because piece was already there");
             return;
@@ -370,7 +370,7 @@ public class Board : MonoBehaviour
     {
         //int pieceId = inventoryScript.GetStoredPiece();
 
-        if (pieceBoard[xPos, yPos] != null)
+        if (pieceBoard[xPos, yPos] != null && pieceId != -1)
         {
             Debug.LogError("Error trying to place piece where piece already is.");
             return;

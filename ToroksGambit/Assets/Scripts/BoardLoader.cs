@@ -7,6 +7,7 @@ using System;
 using UnityEditor.PackageManager;
 using UnityEditor.UIElements;
 using Unity.VisualScripting;
+using UnityEngine.Analytics;
 
 public class BoardLoader : MonoBehaviour
 {
@@ -76,7 +77,7 @@ public class BoardLoader : MonoBehaviour
                 line = reader.ReadLine();
             }
 
-
+            reader.Close();
         }
         catch (Exception)
         {
@@ -93,10 +94,14 @@ public class BoardLoader : MonoBehaviour
         Debug.Log("Attempting board write.");
         try
         {
+            DeleteSavedBoard(boardName);
+
             StreamWriter writer = new StreamWriter(Application.streamingAssetsPath + "/" + fileName, append: true);
 
             writer.WriteLine(boardStartText);
             writer.WriteLine(givenName);
+
+            
 
             for (int i = 0; i < Board.boardSize; i++)
             {
@@ -126,10 +131,104 @@ public class BoardLoader : MonoBehaviour
 
             writer.Close();
         }
-        catch (Exception) {
+        catch (Exception e) {
+            Debug.Log(e.Message);
             Debug.LogError("File Error | Couldn't open file path " + Application.streamingAssetsPath + "/" + fileName);
+            return;
         }
 
         Debug.Log("Board write completed to " + Application.streamingAssetsPath + fileName + ".");
     }
+
+    private void DeleteSavedBoard(string name)
+    {
+        try {
+            StreamReader reader = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
+
+            if (reader.BaseStream.Length <= 0)
+            {
+                //file is empty
+                return;
+            }
+
+
+            int lineNumber = -1;
+            int startLine = -1;
+            int endLine = -1;
+            string line = "";
+
+
+            //****FIND WHAT LINES HAVE THE DATA DO BE REPLACED****
+            while (line.CompareTo(name) != 0)//find where board name starts
+            {
+                if (reader.EndOfStream) {
+                    Debug.Log("found EOF will searching for board start");
+                    reader.Close();
+                    return; 
+                }
+                lineNumber++;
+                line = reader.ReadLine();
+            }
+            startLine = lineNumber - 1;
+
+            while (line.CompareTo(boardEndText) != 0)//find where board name ends
+            {
+                if (reader.EndOfStream)
+                {
+                    Debug.Log("found EOF will searching for board end");
+                    reader.Close();
+                    return;
+                }
+                lineNumber++;
+                line = reader.ReadLine();
+            }
+            endLine = lineNumber + 1;
+
+            if (endLine < 0 || startLine < 0)// if either is not found, return
+            {
+                Debug.Log("did not find board start or end: results start: " + startLine + " end: " + endLine);
+                reader.Close();
+                return;
+            }
+
+            Debug.Log("Found start at line " + startLine + " and end at line " + endLine);
+            reader.Close();
+
+
+            //****CREATE A STRING THAT HAS ALL DATA BUT DATA TO BE REPALCED****
+            reader = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
+            print("getting whole file");
+            string wholeFile = reader.ReadToEnd();
+
+            string[] fileByLine = wholeFile.Split("\n");
+
+            string resultString = "";
+
+            for (int i = 0; i < fileByLine.Length; i++)
+            {
+                if (i < startLine || i > endLine)
+                {
+                    resultString += fileByLine[i];
+                }
+            }
+
+            reader.Close();
+
+            //****WRITE RESULTING STRING INTO FILE****
+            StreamWriter writer = new StreamWriter(Application.streamingAssetsPath + "/" + fileName);
+
+            writer.WriteLine(resultString);
+
+            writer.Close();
+
+        }
+        catch (Exception e) {
+            Debug.Log(e.Message);
+            Debug.LogError("Error opening file to delete saved board");
+        }
+
+        
+    }
+
+    
 }
