@@ -26,12 +26,17 @@ public class GoToShopButton : MonoBehaviour
         {
             t.text = "Enter Shop";
             canShop = false; // can't go to shop if you're already there
+
+            // camera rotates to shop -- set rotation and then tell camera after
             
         }
         else
         {
             t.text = "Leave Shop";
             canShop = true;
+
+            // camera rotates back
+
         }
 
         shop.SetActive(canShop);
