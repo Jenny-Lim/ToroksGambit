@@ -33,7 +33,7 @@ public class MovePieceInterrupt : BaseInterrupt
         }
 
         //move piece
-        Board.instance.MovePieceVisual(moveFrom.x, moveFrom.y, moveTo.x, moveTo.y, Board.pieceBoard[moveFrom.x, moveFrom.y]);
+        Board.instance.MovePieceVisual(moveFrom.x, moveFrom.y, moveTo.x, moveTo.y, Board.pieceBoard[moveFrom.x, moveFrom.y], false);
         Board.instance.MovePiece(moveFrom.x, moveFrom.y, moveTo.x, moveTo.y);
 
         hasTriggered = true;

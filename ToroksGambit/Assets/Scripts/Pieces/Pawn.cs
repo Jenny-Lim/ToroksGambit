@@ -42,7 +42,7 @@ public class Pawn : Piece
 
             if (pRight != null && InBoundsCheck(pieceX + 1, pieceY + dir) && pieceBoard[pieceX + 1, pieceY + dir] != null && !IsOnSameTeam(pieceBoard[pieceX + 1, pieceY + dir]) && !pRight.isTough) // if can capture another piece
             {
-                moves.Add(new Move(pieceX, pieceY, pieceX + dir, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + dir, pieceY + dir]));
+                moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + dir, pieceY + dir]));
             }
         }
         
@@ -52,7 +52,7 @@ public class Pawn : Piece
             Piece pLeft = pieceBoard[pieceX - 1, pieceY + dir].GetComponent<Piece>();
             if (pLeft != null && InBoundsCheck(pieceX - 1, pieceY + dir) && pieceBoard[pieceX - 1, pieceY + dir] != null && !IsOnSameTeam(pieceBoard[pieceX - 1, pieceY + dir]) && !pLeft.isTough) // if can capture another piece
             {
-                moves.Add(new Move(pieceX, pieceY, pieceX + dir, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + dir, pieceY + dir]));
+                moves.Add(new Move(pieceX, pieceY, pieceX -1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + dir, pieceY + dir]));
             }
         }
         

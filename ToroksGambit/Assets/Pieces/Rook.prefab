@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5017698188244204045}
   - component: {fileID: 856168229501896560}
+  - component: {fileID: 8799918690244763893}
   m_Layer: 0
   m_Name: Rook
   m_TagString: Chess Piece
@@ -147,11 +148,25 @@ MonoBehaviour:
   isTaken: 0
   pieceX: 0
   pieceY: 0
-  type: 
+  type: 0
   isTorok: 0
   isTough: 0
   lastChance: 0
   value: 0
+  promote: 0
+--- !u!65 &8799918690244763893
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6048779306605727795}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.37975878, y: 0.6689195, z: 0.3709442}
+  m_Center: {x: 0.0008575618, y: 0.3903127, z: -0.00090807676}
 --- !u!1001 &2973457524765313197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -229,24 +244,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3235e7eb176ed004388f0f5d92aaaab9, type: 3}
---- !u!1 &2702931688250701308 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3235e7eb176ed004388f0f5d92aaaab9, type: 3}
-  m_PrefabInstance: {fileID: 2973457524765313197}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &8557570421882612556
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2702931688250701308}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.38021415, y: 0.3744379, z: 0.6712534}
-  m_Center: {x: 0.000000022351742, y: -0.000000007450582, z: 0.38904378}
 --- !u!4 &3371347430089174854 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3235e7eb176ed004388f0f5d92aaaab9, type: 3}

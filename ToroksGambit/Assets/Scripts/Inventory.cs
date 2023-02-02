@@ -88,10 +88,15 @@ public class Inventory : MonoBehaviour
                     {
                         Board.instance.PlacePiece(hit.transform, storedPiece);
                     }
-
-
-
-                    //if button press, place piece if can
+                }
+                else if (hit.transform.gameObject.CompareTag("Chess Piece") && storedPiece == -1)//if trying to remove player piece
+                {
+                    Piece hitPiece = hit.transform.GetComponent<Piece>();
+                    if (Input.GetMouseButtonDown(0) && hitPiece && !hitPiece.isTorok)
+                    {
+                        print("inside removePLayer");
+                        Board.instance.PlacePiece(hit.transform, storedPiece);
+                    }
                 }
                 else
                 {
