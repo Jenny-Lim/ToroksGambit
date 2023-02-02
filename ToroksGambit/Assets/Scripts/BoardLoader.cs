@@ -1,13 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.IO;
 using System.IO;
 using System;
-using UnityEditor.PackageManager;
-using UnityEditor.UIElements;
-using Unity.VisualScripting;
-using UnityEngine.Analytics;
+
 
 public class BoardLoader : MonoBehaviour
 {
@@ -15,6 +11,7 @@ public class BoardLoader : MonoBehaviour
     private const string boardEndText = "boardend";
     private string fileName = "StartingBoards.txt";
     public string boardName = "";
+    public List<string> savedBoardNames;
 
     /* this class stores boards in a text file for later use
      * it stores them in the following configuration
@@ -140,7 +137,7 @@ public class BoardLoader : MonoBehaviour
         Debug.Log("Board write completed to " + Application.streamingAssetsPath + fileName + ".");
     }
 
-    private void DeleteSavedBoard(string name)
+    public void DeleteSavedBoard(string name)
     {
         try {
             StreamReader reader = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
@@ -162,7 +159,7 @@ public class BoardLoader : MonoBehaviour
             while (line.CompareTo(name) != 0)//find where board name starts
             {
                 if (reader.EndOfStream) {
-                    Debug.Log("found EOF will searching for board start");
+                    Debug.Log("found EOF will searching for board name");
                     reader.Close();
                     return; 
                 }
@@ -230,5 +227,33 @@ public class BoardLoader : MonoBehaviour
         
     }
 
-    
+    public List<string> GetAllSavedBoardNames()
+    {
+        List<string> returnList = new List<string>();
+
+        try
+        {
+            StreamReader reader = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
+
+            string line = "";
+
+            while (!reader.EndOfStream)
+            {
+                line = reader.ReadLine();
+                if (line.CompareTo(boardStartText) == 0)
+                {
+                    returnList.Add(reader.ReadLine());
+                }
+            }
+            reader.Close();
+
+        }
+        catch(Exception e)
+        {
+            Debug.Log(e.Message);
+            Debug.LogError("Could not open file " + Application.streamingAssetsPath + "/" + fileName);
+        }
+
+        return returnList;
+    }
 }
