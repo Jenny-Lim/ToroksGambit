@@ -42,7 +42,7 @@ public class Board : MonoBehaviour
 
     private GameObject clickedPiece; 
 
-    private List<Move> moveList = new List<Move>();
+    public List<Move> moveList = new List<Move>();
 
     private int undoCounter = 0;
 
@@ -385,48 +385,6 @@ public class Board : MonoBehaviour
         }
     }
 
-    public void ToughButtonSet()
-    {
-        if(toughPlacer)
-        {
-            toughText.text = "Tough Deactivated";
-            toughPlacer = false;
-        }
-        else
-        {
-            toughText.text = "Tough Activated";
-            toughPlacer = true;
-        }
-    }
-
-    public void LastChanceButtonSet()
-    {
-        if(lastChancePlacer)
-        {
-            lastChanceText.text = "Last Chance Deactivated";
-            lastChancePlacer = false;
-        }
-        else
-        {
-            lastChanceText.text = "Last Chance Activated";
-            lastChancePlacer = true;
-        }
-    }
-
-    public void PromoteButtonSet()
-    {
-        if (promotePlacer)
-        {
-            promoteText.text = "Promote Deactivated";
-            promotePlacer = false;
-        }
-        else
-        {
-            promoteText.text = "Promote Activated";
-            promotePlacer = true;
-        }
-    }
-
     public void PlacePieceTorok(int xPos, int yPos, int pieceId)
     {
         if (pieceBoard[xPos, yPos] != null)
@@ -491,43 +449,6 @@ public class Board : MonoBehaviour
         
     }
 
-    public void TorokPlacement()
-    {
-        if(torokPiece)
-        {
-            torokPiece = false;
-            text.text = "Placing Player";
-
-            if(toughPlacer)
-            {
-                ToughButtonSet();
-            }
-            if(lastChancePlacer)
-            {
-                LastChanceButtonSet();
-            }
-            if(promotePlacer)
-            {
-                PromoteButtonSet();
-            }
-
-            toughButton.SetActive(false);
-            lastChanceButton.SetActive(false);
-            promoteButton.SetActive(false);
-
-
-        }
-        else if(!torokPiece)
-        {
-            torokPiece = true;
-            text.text = "Placing Torok";
-
-            toughButton.SetActive(true);
-            lastChanceButton.SetActive(true);
-            promoteButton.SetActive(true);
-        }
-    }
-
     public bool MoveValidator(int pieceX, int pieceY, int endX, int endY)
     {
         print("initX: " + pieceX + "initY: " + pieceY + "endX: " + endX + "endY: " + endY);
@@ -568,6 +489,12 @@ public class Board : MonoBehaviour
     {
         
         bool willPromote = false;
+        bool lastChanceCheck = false;
+
+        bool movingTorok = false;
+        bool takingTorok = false;
+
+        int pieceIdMoving = 0;
       
         GameObject tempPiece = pieceBoard[startX, startY];
         GameObject tempEndPiece = pieceBoard[endX, endY];
@@ -578,7 +505,14 @@ public class Board : MonoBehaviour
             return;
         }
 
-        Piece piece = tempPiece.GetComponent<Piece>();
+        Piece piece = pieceBoard[startX, startY].GetComponent<Piece>();
+
+        pieceIdMoving = (int)(piece.type) + 1;
+        if(piece.isTorok)
+        {
+            movingTorok = true;
+        }
+
 
         int pieceIdTaken = 0;
         if (pieceBoard[endX, endY] != null)//if a piece is captured
@@ -587,7 +521,7 @@ public class Board : MonoBehaviour
             pieceIdTaken = (int)(pieceForCaptureId.type) + 1;
             if (pieceForCaptureId.isTorok)
             {
-                pieceIdTaken *= -1;
+                takingTorok = true;
             }
             //Piece oldPiece = tempEndPiece.GetComponent<Piece>();
 
@@ -595,8 +529,7 @@ public class Board : MonoBehaviour
             {
                 if (piece.value <= pieceForCaptureId.value)
                 {
-                    Destroy(tempPiece);
-                    pieceBoard[startX, startY] = null;
+                    lastChanceCheck = true;
                 }
             }
             if(piece.promote)//if piece taking has promote trait
@@ -615,83 +548,60 @@ public class Board : MonoBehaviour
 
         undoCounter++;
 
-        if(willPromote)//if this piece captured another piece and has promotion
-        {
-            
-            bool oldIsTorok = piece.isTorok;
-            bool oldIsTough = piece.isTough;
-            bool oldLastChance = piece.lastChance;
+        bool oldIsTorok = piece.isTorok;
+        bool oldIsTough = piece.isTough;
+        bool oldLastChance = piece.lastChance;
 
+        moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok)); // moveList is a list of the moves done
+
+        if(willPromote && !lastChanceCheck)//if this piece captured another piece and has promotion
+        {
             if(piece.type != Piece.PieceType.queen)
             {
-                Destroy(tempPiece);
-                pieceBoard[startX,startY] = null;
+                Debug.Log("PROMTOION");
                 PlacePiece(endX,endY,((int)(piece.type) + 1));
-                //tempPiece = pieceBoard[startX,startY];
-
-                moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdTaken, willPromote)); // moveList is a list of the moves done
-
-                Debug.Log("prmoted to"+tempPiece);
-
-                Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
-                
-                endPiece.isTorok = oldIsTorok;
-                endPiece.isTough = oldIsTough;
-                endPiece.lastChance = oldLastChance;
-
-                endPiece.moved = true;// changes piece to say has moved
-                endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
-                endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
-                
-
             }
-
-
-            //moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdTaken, willPromote)); // moveList is a list of the moves done
-
-            //pieceBoard[endX,endY] = tempPiece;
-            //Piece endPiece = pieceBoard[endX, endY].GetComponent<Piece>();//get piece script of object that moved
-
-        //endPiece.moved = true;// changes piece to say has moved
-        //endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
-        //endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
-
         }
-        else
+        else if(!lastChanceCheck)//if it doesnt have that, that being which was written above, this not being that, that wouldnt make sense cause this isnt that. This is this.
         {
+            Debug.Log("regular move");
+            PlacePiece(endX,endY,((int)(piece.type)));
 
-            moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdTaken, willPromote)); // moveList is a list of the moves done
+            Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
+                
+            endPiece.promote = willPromote;
+            endPiece.isTorok = oldIsTorok;
+            endPiece.isTough = oldIsTough;
+            endPiece.lastChance = oldLastChance;
 
-            pieceBoard[endX,endY] = tempPiece;
-            Piece endPiece = pieceBoard[endX, endY].GetComponent<Piece>();//get piece script of object that moved
-
-        endPiece.moved = true;// changes piece to say has moved
-        endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
-        endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
+            endPiece.moved = true;// changes piece to say has moved
+            endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
+            endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
         }
 
+        Destroy(pieceBoard[startX,startY]);
         pieceBoard[startX, startY] = null;
-
-
-        //Piece endPiece = pieceBoard[endX, endY].GetComponent<Piece>();//get piece script of object that moved
-
-        //endPiece.moved = true;// changes piece to say has moved
-        //endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
-        //endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
-        //print("moved piece");
 
     }
 
     public void MovePieceVisual(int startX, int startY, int endX, int endY, GameObject piece, bool promoteCheck)
     {
-        Debug.Log(promoteCheck);
+        //just moves in move now, but very fast
+
+        //have future plan for this
+
+        /*
+        Debug.Log("WILL THE VISUAL MOVE BE DONE: "+promoteCheck);
         if(!promoteCheck)
         {
             StartCoroutine(VisualMovePiece(startX, startY,endX,endY, piece, promoteCheck));
         }
+        */
+        GameStateManager.EndTurn();//so that who ever's turn it is ends when the piece has finished moving
+        
     }
 
-    public void DisablePiece(GameObject piece)
+    public void DisablePiece(GameObject piece)//is this even used anymore?
     {
         if (piece)
         {
@@ -704,14 +614,50 @@ public class Board : MonoBehaviour
     //repeatedly calling will undo moves until beggining
     public void UndoMove()
     { 
+
         if (moveList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
         {
             Debug.Log("List is empty, no undo occurred");
             return;
         }
 
-        pieceBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY] = moveList[undoCounter-1].startObject;
-        pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter-1].endY] = moveList[undoCounter-1].endObject;
+        //pieceBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY] = moveList[undoCounter-1].startObject;
+        //pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter-1].endY] = moveList[undoCounter-1].endObject;
+
+        //delete whats at positions now
+        Destroy(pieceBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY]);
+        Destroy(pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter-1].endY]);
+
+        //clear old pieces from array
+        pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY] = null;
+        pieceBoard[moveList[undoCounter-1].startX, moveList[undoCounter - 1].startY] = null;
+
+        //take piece ids for both pieces
+        if(!moveList[undoCounter-1].movingTorok && moveList[undoCounter-1].pieceMoving > 0)
+        {
+            PlacePiece(moveList[undoCounter-1].startX,moveList[undoCounter-1].startY, moveList[undoCounter-1].pieceMoving - 1);
+        }
+        else if(moveList[undoCounter-1].movingTorok && moveList[undoCounter-1].pieceMoving > 0)
+        {
+            PlacePieceTorok(moveList[undoCounter-1].startX,moveList[undoCounter-1].startY, moveList[undoCounter-1].pieceMoving - 1);
+        }
+
+        if(!moveList[undoCounter-1].takingTorok && moveList[undoCounter-1].pieceTaken > 0)
+        {
+            PlacePiece(moveList[undoCounter-1].endX, moveList[undoCounter-1].endY, moveList[undoCounter-1].pieceTaken - 1);
+        }
+        else if(moveList[undoCounter-1].takingTorok && moveList[undoCounter-1].pieceTaken > 0)
+        {
+            PlacePieceTorok(moveList[undoCounter-1].endX, moveList[undoCounter-1].endY, moveList[undoCounter-1].pieceTaken - 1);
+        }
+        //place new pieces at locations
+        //MovingpieceId -> start
+        //piecetakenId -> end
+/*
+        if(moveList[undoCounter-1].promoted)
+        {
+
+        }
 
         if (moveList[undoCounter-1].pieceTaken != 0)
         {
@@ -732,6 +678,7 @@ public class Board : MonoBehaviour
                 
             }
         }
+        */
 
         moveList.RemoveAt(undoCounter-1);
         //Debug.Log("list legnth "+moveList.Count);
@@ -741,6 +688,7 @@ public class Board : MonoBehaviour
 
     public void UndoMoveVisual()//visually show undo moves
     {
+        /*
         if (moveList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
         {
             return;
@@ -756,7 +704,7 @@ public class Board : MonoBehaviour
         moveList[undoCounter-1].startObject.transform.position = hitBoxBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY].transform.position+(Vector3.up * verticalPlaceOffset);
         if(moveList[undoCounter-1].endObject)
         moveList[undoCounter-1].endObject.transform.position = hitBoxBoard[moveList[undoCounter-1].endX,moveList[undoCounter-1].endY].transform.position+ (Vector3.up * verticalPlaceOffset);
-
+        */
         UndoMove();
 
     }
@@ -769,21 +717,15 @@ public class Board : MonoBehaviour
         {
             Debug.Log("was promoted");
         }
+        piece = pieceBoard[endX,endY];
 
             while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset)) > 0.1f)
             {
-
-            if(piece == null)
-            {
-                Debug.Log(piece);
-                piece = pieceBoard[endX,endY];
-            }
+                Debug.Log("running");
                 piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset), pieceMoveSpeed * Time.deltaTime);
                 yield return null;
             }
             piece.transform.position = hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset);
-
-        GameStateManager.EndTurn();//so that who ever's turn it is ends when the piece has finished moving
 
         //print("visual move has ended");
     }
@@ -880,6 +822,85 @@ public class Board : MonoBehaviour
             }
         }
 
+    }
+
+        public void TorokPlacementButton()
+    {
+        if(torokPiece)
+        {
+            torokPiece = false;
+            text.text = "Placing Player";
+
+            if(toughPlacer)
+            {
+                ToughButtonSet();
+            }
+            if(lastChancePlacer)
+            {
+                LastChanceButtonSet();
+            }
+            if(promotePlacer)
+            {
+                PromoteButtonSet();
+            }
+
+            toughButton.SetActive(false);
+            lastChanceButton.SetActive(false);
+            promoteButton.SetActive(false);
+
+
+        }
+        else if(!torokPiece)
+        {
+            torokPiece = true;
+            text.text = "Placing Torok";
+
+            toughButton.SetActive(true);
+            lastChanceButton.SetActive(true);
+            promoteButton.SetActive(true);
+        }
+    }
+
+        public void ToughButtonSet()
+    {
+        if(toughPlacer)
+        {
+            toughText.text = "Tough Deactivated";
+            toughPlacer = false;
+        }
+        else
+        {
+            toughText.text = "Tough Activated";
+            toughPlacer = true;
+        }
+    }
+
+    public void LastChanceButtonSet()
+    {
+        if(lastChancePlacer)
+        {
+            lastChanceText.text = "Last Chance Deactivated";
+            lastChancePlacer = false;
+        }
+        else
+        {
+            lastChanceText.text = "Last Chance Activated";
+            lastChancePlacer = true;
+        }
+    }
+
+    public void PromoteButtonSet()
+    {
+        if (promotePlacer)
+        {
+            promoteText.text = "Promote Deactivated";
+            promotePlacer = false;
+        }
+        else
+        {
+            promoteText.text = "Promote Activated";
+            promotePlacer = true;
+        }
     }
 }
 
