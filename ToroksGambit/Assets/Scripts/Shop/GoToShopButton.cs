@@ -12,28 +12,28 @@ public class GoToShopButton : MonoBehaviour
     private TextMeshProUGUI t;
     private Button b;
 
-    private bool inShop;
+    private bool canShop;
 
     void Start()
     {
         t = gameObject.GetComponentInChildren<TextMeshProUGUI>();
-        t.text = "Go To Shop";
+        //t.text = "Enter Shop";
     }
 
     public void GoToShop()
     {
-        if (inShop)
+        if (canShop)
         {
             t.text = "Enter Shop";
-            inShop = false;
+            canShop = false; // can't go to shop if you're already there
             
         }
         else
         {
             t.text = "Leave Shop";
-            inShop = true;
+            canShop = true;
         }
 
-        shop.SetActive(inShop);
+        shop.SetActive(canShop);
     }
 }
