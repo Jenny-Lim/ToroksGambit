@@ -8,6 +8,7 @@ public class CameraHeadMovements : MonoBehaviour
     private Vector3 initialRotation;
     [SerializeField] private Vector3 LookAtTorokRotation;
     [SerializeField] private float speed = 1.0f;
+    [SerializeField] private Vector2 LookAtShopRotation;
 
     private void Start()
     {
@@ -51,6 +52,46 @@ public class CameraHeadMovements : MonoBehaviour
             yield return null;
         }
 
+        movementInProgress = false;
+    }
+
+
+    // below -- jenny added
+    public void LookAtShop()
+    {
+        if (!movementInProgress)
+        {
+            StartCoroutine(LookAtShopCoRo());
+        }
+    }
+
+    public void LookAtBoard()
+    {
+        if (!movementInProgress)
+        {
+            StartCoroutine(LookAtBoardCoRo());
+        }
+    }
+
+    private IEnumerator LookAtShopCoRo()
+    {
+        movementInProgress = true;
+        while (Vector3.Distance(transform.eulerAngles, LookAtShopRotation) > 0.1f)// move to look at shop
+        {
+            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, LookAtShopRotation, speed * Time.deltaTime);
+            yield return null;
+        }
+        movementInProgress = false;
+    }
+
+    private IEnumerator LookAtBoardCoRo()
+    {
+        movementInProgress = true;
+        while (Vector3.Distance(transform.eulerAngles, initialRotation) > 0.1f)// move to look at initial position
+        {
+            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, initialRotation, speed * Time.deltaTime);
+            yield return null;
+        }
         movementInProgress = false;
     }
 
