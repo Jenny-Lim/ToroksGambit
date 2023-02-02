@@ -326,6 +326,12 @@ public class Board : MonoBehaviour
             }
         }
 
+        if (pieceBoard[placeX, placeY] != null)
+        {
+            Debug.LogError("Did not place piece because piece was already there");
+            return;
+        }
+
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
