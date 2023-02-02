@@ -890,6 +890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shop: {fileID: 316929509}
+  c: {fileID: 963194229}
 --- !u!114 &149789423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2861,6 +2862,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LookAtTorokRotation: {x: 25.511, y: 0, z: 0}
   speed: 4
+  LookAtShopRotation: {x: 10, y: 90}
 --- !u!1 &1048380922
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,9 @@ public class GoToShopButton : MonoBehaviour
     [SerializeField]
     private GameObject shop;
 
+    [SerializeField]
+    private CameraHeadMovements c;
+
     private TextMeshProUGUI t;
     private Button b;
 
@@ -27,15 +30,18 @@ public class GoToShopButton : MonoBehaviour
             t.text = "Enter Shop";
             canShop = false; // can't go to shop if you're already there
 
-            // camera rotates to shop -- set rotation and then tell camera after
-            
+            // camera rotates to board 
+            c.LookAtBoard();
+
         }
         else
         {
             t.text = "Leave Shop";
             canShop = true;
 
-            // camera rotates back
+            // camera rotates to shop
+            c.LookAtShop();
+            
 
         }
 
