@@ -530,6 +530,7 @@ public class Board : MonoBehaviour
         pieceIdMoving = (int)(piece.type) + 1;
         if(piece.isTorok)
         {
+            Debug.Log("torok moving piece ID: " + pieceIdMoving);
             movingTorok = true;
         }
 
@@ -583,7 +584,6 @@ public class Board : MonoBehaviour
         {
             if(piece.type != Piece.PieceType.queen)
             {
-                Debug.Log("PROMTOION");
                 PlacePiece(endX,endY,pieceIdMoving);
 
                 Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
@@ -597,12 +597,18 @@ public class Board : MonoBehaviour
                 endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
                 endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
 
+                Destroy(pieceBoard[startX, startY]);
+                pieceBoard[startX, startY] = null;
+
             }
         }
         else if(!lastChanceCheck)//if it doesnt have that, that being which was written above, this not being that, that wouldnt make sense cause this isnt that. This is this.
         {
             Debug.Log("regular move");
-            PlacePieceTorok(endX,endY, pieceIdMoving-1);
+            //PlacePiece(endX,endY, pieceIdMoving-1);
+            pieceBoard[startX, startY].transform.position = hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset);
+            pieceBoard[endX, endY] = pieceBoard[startX, startY];
+            pieceBoard[startX, startY] = null;
 
             Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
                 
@@ -615,9 +621,6 @@ public class Board : MonoBehaviour
             endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
             endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
         }
-
-        Destroy(pieceBoard[startX,startY]);
-        pieceBoard[startX, startY] = null;
 
     }
 
@@ -664,15 +667,18 @@ public class Board : MonoBehaviour
         //pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter-1].endY] = moveList[undoCounter-1].endObject;
 
         //delete whats at positions now
-        Destroy(pieceBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY]);
-        Destroy(pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter-1].endY]);
+        //Destroy(pieceBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY]);
+        //Destroy(pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter-1].endY]);
 
         //clear old pieces from array
-        pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY] = null;
-        pieceBoard[moveList[undoCounter-1].startX, moveList[undoCounter - 1].startY] = null;
+        //pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY] = null;
+        //pieceBoard[moveList[undoCounter-1].startX, moveList[undoCounter - 1].startY] = null;
+
+        pieceBoard[moveList[undoCounter - 1].startX, moveList[undoCounter - 1].startY] = pieceBoard[moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY];
+        pieceBoard[moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY] = null;
 
         //take piece ids for both pieces
-        if(!moveList[undoCounter-1].movingTorok && moveList[undoCounter-1].pieceMoving > 0)
+        if (!moveList[undoCounter-1].movingTorok && moveList[undoCounter-1].pieceMoving > 0)
         {
             PlacePiece(moveList[undoCounter-1].startX,moveList[undoCounter-1].startY, moveList[undoCounter-1].pieceMoving - 1);
         }
