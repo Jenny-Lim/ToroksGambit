@@ -7,6 +7,9 @@ public class MinMax : MonoBehaviour
     public static MinMax instance;//static instance of this
     private BoardAnalyzer analyzer = new BoardAnalyzer();
 
+    int numOfUndoCalled = 0;
+    int numOfMovesCalled = 0;
+
     private class ScoredMove {
         public Move move;
         public float score;
@@ -38,6 +41,8 @@ public class MinMax : MonoBehaviour
         ScoredMove resultMove = MinMaxRecursive(maxDepth, toMove, float.MaxValue, float.MinValue);
         //print(resultMove.move == null);
         //Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
+        print("Moves " + numOfMovesCalled);
+        print("Undos " + numOfUndoCalled);
         return resultMove.move;
     }
 
@@ -74,8 +79,10 @@ public class MinMax : MonoBehaviour
             foreach (Move move in allAvailableMoves)
             {
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+                numOfMovesCalled++;
                 ScoredMove recursiveResult = MinMaxRecursive(depth-1, playerToMove.torok, alpha , beta);//recursive call
                 Board.instance.UndoMove();//undo previous move
+                numOfUndoCalled++;
 
                 if (recursiveResult.score > bestMove.score)//if subtree result is better make best move equal to that
                 {
@@ -101,8 +108,10 @@ public class MinMax : MonoBehaviour
             foreach (Move move in allAvailableMoves)
             {
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+                numOfMovesCalled++;
                 ScoredMove recursiveResult = MinMaxRecursive(depth - 1, playerToMove.torok, alpha, beta);//recursive call
                 Board.instance.UndoMove();//undo previous move
+                numOfUndoCalled++;
 
                 if (recursiveResult.score < bestMove.score)// if subtree is better make best move equal to that
                 {

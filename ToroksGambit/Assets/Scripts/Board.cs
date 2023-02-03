@@ -131,6 +131,13 @@ public class Board : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            print("Printing internal board...");
+            PrintInternalPieceBoard();
+
+        }
+
         RaycastHit hit;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
 
@@ -665,9 +672,9 @@ public class Board : MonoBehaviour
     //repeatedly calling will undo moves until beggining
     public void UndoMove()
     {
-        Debug.Log("Unod called");
+        Debug.Log("Undo called");
 
-        GameObject startingPiece = null;
+        //GameObject startingPiece = null;
         GameObject endPiece = null;
 
         if (moveList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
@@ -676,53 +683,24 @@ public class Board : MonoBehaviour
             return;
         }
 
-        //pieceBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY] = moveList[undoCounter-1].startObject;
-        //pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter-1].endY] = moveList[undoCounter-1].endObject;
-
-        //delete whats at positions now
-        //Destroy(pieceBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY]);
-        //Destroy(pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter-1].endY]);
-
-        //clear old pieces from array
-        //pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY] = null;
-        //pieceBoard[moveList[undoCounter-1].startX, moveList[undoCounter - 1].startY] = null;
-
         MovePieceVisualTeleport(moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].startX, moveList[undoCounter - 1].startY);
 
         pieceBoard[moveList[undoCounter - 1].startX, moveList[undoCounter - 1].startY] = pieceBoard[moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY];
         pieceBoard[moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY] = null;
 
-        //take piece ids for both pieces
-        /*
-        if (!moveList[undoCounter-1].movingTorok && moveList[undoCounter-1].pieceMoving > 0)
+        
+        if (moveList[undoCounter - 1].pieceTaken > 0)
         {
-            PlacePiece(moveList[undoCounter-1].endX,moveList[undoCounter-1].endY, moveList[undoCounter-1].pieceMoving - 1);
+            if (!moveList[undoCounter - 1].takingTorok)
+            {
+                PlacePiece(moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken - 1);
+            }
+            else if (moveList[undoCounter - 1].takingTorok)
+            {
+                PlacePieceTorok(moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken - 1);
+            }
         }
-        else if(moveList[undoCounter-1].movingTorok && moveList[undoCounter-1].pieceMoving > 0)
-        {
-            Debug.Log("Torok move undo ID" + (moveList[undoCounter-1].pieceMoving - 1));
-            PlacePieceTorok(moveList[undoCounter-1].endX,moveList[undoCounter-1].endY,  moveList[undoCounter-1].pieceMoving - 1);
-        }
-        */
-        /*
-        if(moveList[undoCounter-1].pieceMoving > 0)
-        {
-            startingPiece = pieceBoard[moveList[undoCounter-1].startX, moveList[undoCounter - 1].startY];
-            Piece startScript = startingPiece.GetComponent<Piece>();
-            startScript.isTough = moveList[undoCounter-1].movingTough;
-            startScript.promote = moveList[undoCounter-1].movingPromote;
-            startScript.lastChance = moveList[undoCounter-1].movingLastChance;
-        }
-        */
-
-        if(!moveList[undoCounter-1].takingTorok && moveList[undoCounter-1].pieceTaken > 0)
-        {
-            PlacePiece(moveList[undoCounter-1].endX, moveList[undoCounter-1].endY, moveList[undoCounter-1].pieceTaken - 1);
-        }
-        else if(moveList[undoCounter-1].takingTorok && moveList[undoCounter-1].pieceTaken > 0)
-        {
-            PlacePieceTorok(moveList[undoCounter-1].endX, moveList[undoCounter-1].endY, moveList[undoCounter-1].pieceTaken - 1);
-        }
+        
 
         if(moveList[undoCounter-1].pieceTaken > 0)
         {
@@ -737,35 +715,6 @@ public class Board : MonoBehaviour
 
         undoCounter--;
 
-        //place new pieces at locations
-        //MovingpieceId -> start
-        //piecetakenId -> end
-/*
-        if(moveList[undoCounter-1].promoted)
-        {
-
-        }
-
-        if (moveList[undoCounter-1].pieceTaken != 0)
-        {
-            if (moveList[undoCounter - 1].pieceTaken > 0)
-            {
-                Debug.Log( moveList[undoCounter - 1].pieceTaken - 1);
-                pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY] = null;
-                print("place player piece in undo");
-                PlacePiece(moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken - 1);
-                
-            }
-            else
-            {
-                pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY] = null;
-                print("place torok piece in undo");
-                //moveList[undoCounter - 1].pieceTaken = moveList[undoCounter - 1].pieceTaken * -1;
-                PlacePiece(moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken + 1);
-                
-            }
-        }
-        */
     }
 
     public void UndoMoveVisual()//visually show undo moves
@@ -906,45 +855,45 @@ public class Board : MonoBehaviour
 
     }
 
-        public void TorokPlacementButton()
+    public void TorokPlacementButton()
+{
+    if(torokPiece)
     {
-        if(torokPiece)
+        torokPiece = false;
+        text.text = "Placing Player";
+
+        if(toughPlacer)
         {
-            torokPiece = false;
-            text.text = "Placing Player";
-
-            if(toughPlacer)
-            {
-                ToughButtonSet();
-            }
-            if(lastChancePlacer)
-            {
-                LastChanceButtonSet();
-            }
-            if(promotePlacer)
-            {
-                PromoteButtonSet();
-            }
-
-            toughButton.SetActive(false);
-            lastChanceButton.SetActive(false);
-            promoteButton.SetActive(false);
-
-
+            ToughButtonSet();
         }
-        else if(!torokPiece)
+        if(lastChancePlacer)
         {
-            torokPiece = true;
-            text.text = "Placing Torok";
-
-            toughButton.SetActive(true);
-            lastChanceButton.SetActive(true);
-            promoteButton.SetActive(true);
+            LastChanceButtonSet();
         }
+        if(promotePlacer)
+        {
+            PromoteButtonSet();
+        }
+
+        toughButton.SetActive(false);
+        lastChanceButton.SetActive(false);
+        promoteButton.SetActive(false);
+
+
     }
-
-        public void ToughButtonSet()
+    else if(!torokPiece)
     {
+        torokPiece = true;
+        text.text = "Placing Torok";
+
+        toughButton.SetActive(true);
+        lastChanceButton.SetActive(true);
+        promoteButton.SetActive(true);
+    }
+}
+
+    public void ToughButtonSet()
+    {   
         if(toughPlacer)
         {
             toughText.text = "Tough Deactivated";
@@ -955,7 +904,7 @@ public class Board : MonoBehaviour
             toughText.text = "Tough Activated";
             toughPlacer = true;
         }
-    }
+    } 
 
     public void LastChanceButtonSet()
     {
@@ -982,6 +931,27 @@ public class Board : MonoBehaviour
         {
             promoteText.text = "Promote Activated";
             promotePlacer = true;
+        }
+    }
+
+    public void PrintInternalPieceBoard()
+    {
+        string resultLine = "";
+        for (int i = 0; i < boardSize; i++)
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (pieceBoard[j,i] != null)
+                {
+                    resultLine += " " + (int)pieceBoard[j,i].GetComponent<Piece>().type;
+                }
+                else
+                {
+                    resultLine += " -";
+                }
+            }
+            print(resultLine);
+            resultLine = "";
         }
     }
 }
