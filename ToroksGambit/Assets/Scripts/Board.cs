@@ -382,6 +382,7 @@ public class Board : MonoBehaviour
             Piece piece = newPiece.GetComponent<Piece>();
             piece.pieceX = xPos;
             piece.pieceY = yPos;
+
         }
         else
         {
