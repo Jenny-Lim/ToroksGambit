@@ -583,13 +583,25 @@ public class Board : MonoBehaviour
             if(piece.type != Piece.PieceType.queen)
             {
                 Debug.Log("PROMTOION");
-                PlacePiece(endX,endY,((int)(piece.type) + 1));
+                PlacePiece(endX,endY,pieceIdMoving);
+
+                Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
+                
+                endPiece.promote = willPromote;
+                endPiece.isTorok = oldIsTorok;
+                endPiece.isTough = oldIsTough;
+                endPiece.lastChance = oldLastChance;
+
+                endPiece.moved = true;// changes piece to say has moved
+                endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
+                endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
+
             }
         }
         else if(!lastChanceCheck)//if it doesnt have that, that being which was written above, this not being that, that wouldnt make sense cause this isnt that. This is this.
         {
             Debug.Log("regular move");
-            PlacePiece(endX,endY,((int)(piece.type)));
+            PlacePieceTorok(endX,endY, pieceIdMoving-1);
 
             Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
                 
@@ -665,7 +677,8 @@ public class Board : MonoBehaviour
         }
         else if(moveList[undoCounter-1].movingTorok && moveList[undoCounter-1].pieceMoving > 0)
         {
-            PlacePieceTorok(moveList[undoCounter-1].startX,moveList[undoCounter-1].startY, moveList[undoCounter-1].pieceMoving - 1);
+            Debug.Log("Torok move undo ID" + (moveList[undoCounter-1].pieceMoving - 1));
+            PlacePieceTorok(moveList[undoCounter-1].startX,moveList[undoCounter-1].startY,  moveList[undoCounter-1].pieceMoving - 1);
         }
 
         if(moveList[undoCounter-1].pieceMoving > 0)
@@ -694,6 +707,11 @@ public class Board : MonoBehaviour
             endScript.promote = moveList[undoCounter-1].takenPromote;
             endScript.lastChance = moveList[undoCounter-1].takenLastChance;
         }
+
+        moveList.RemoveAt(undoCounter-1);
+
+        undoCounter--;
+
         //place new pieces at locations
         //MovingpieceId -> start
         //piecetakenId -> end
@@ -723,11 +741,6 @@ public class Board : MonoBehaviour
             }
         }
         */
-
-        moveList.RemoveAt(undoCounter-1);
-        //Debug.Log("list legnth "+moveList.Count);
-
-        undoCounter--;
     }
 
     public void UndoMoveVisual()//visually show undo moves
