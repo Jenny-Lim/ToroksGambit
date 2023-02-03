@@ -289,7 +289,7 @@ public class Board : MonoBehaviour
 
         if (!boardSpot)
         {
-            Debug.Log("Trying to place piece, given piece transform was null");
+            Debug.LogError("Trying to place piece, given piece transform was null");
             return;
         }
 
@@ -396,7 +396,7 @@ public class Board : MonoBehaviour
     {
         if (pieceBoard[xPos, yPos] != null)
         {
-            Debug.Log("Trace Stack for ");
+            //Debug.Log("Trace Stack for ");
             Debug.LogError("Error trying to place piece where piece already is.");
             return;
         }
@@ -412,7 +412,7 @@ public class Board : MonoBehaviour
         }
         else
         {
-            Debug.Log("Couldn't place piece: unrecognized pieceId");
+            Debug.LogError("Couldn't place piece: unrecognized pieceId");
         }
     }
 
@@ -458,7 +458,7 @@ public class Board : MonoBehaviour
 
     public bool MoveValidator(int pieceX, int pieceY, int endX, int endY)
     {
-        print("initX: " + pieceX + "initY: " + pieceY + "endX: " + endX + "endY: " + endY);
+        //print("initX: " + pieceX + "initY: " + pieceY + "endX: " + endX + "endY: " + endY);
         if (pieceBoard[pieceX, pieceY] == null)//guard clause if piece given is null
         {
             return false;
@@ -477,14 +477,14 @@ public class Board : MonoBehaviour
         {
             if ((move.endX == endX) && (move.endY == endY))
             {
-                print("Confirmed valid move");
+                //print("Confirmed valid move");
                 //print("endX :" + endX + "endY: " + endY + " " + move.DisplayMove());
                 canMove = true;
                 MovePiece(pieceX, pieceY, endX, endY);
                 return true;
             }
         }
-        print("move not valid");
+       // print("move not valid");
         return false;
     }
 
@@ -494,6 +494,8 @@ public class Board : MonoBehaviour
     //if click off bord then clear stored item
     public void MovePiece(int startX, int startY, int endX, int endY)//take 2 positions to move a piece
     {
+
+        Debug.Log("movepiece called");
         
         bool willPromote = false;
         bool lastChanceCheck = false;
@@ -530,7 +532,7 @@ public class Board : MonoBehaviour
         pieceIdMoving = (int)(piece.type) + 1;
         if(piece.isTorok)
         {
-            Debug.Log("torok moving piece ID: " + pieceIdMoving);
+            //Debug.Log("torok moving piece ID: " + pieceIdMoving);
             movingTorok = true;
         }
 
@@ -604,7 +606,7 @@ public class Board : MonoBehaviour
         }
         else if(!lastChanceCheck)//if it doesnt have that, that being which was written above, this not being that, that wouldnt make sense cause this isnt that. This is this.
         {
-            Debug.Log("regular move");
+            //Debug.Log("regular move");
             //PlacePiece(endX,endY, pieceIdMoving-1);
             pieceBoard[startX, startY].transform.position = hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset);
             pieceBoard[endX, endY] = pieceBoard[startX, startY];
@@ -641,6 +643,11 @@ public class Board : MonoBehaviour
         
     }
 
+    public void MovePieceVisualTwoItsBackBabyTheBestMethod(int startX, int startY, int endX, int endY)
+    {
+
+    }
+
     public void DisablePiece(GameObject piece)//is this even used anymore?
     {
         if (piece)
@@ -653,13 +660,15 @@ public class Board : MonoBehaviour
     //undoes most recent move
     //repeatedly calling will undo moves until beggining
     public void UndoMove()
-    { 
+    {
+        Debug.Log("Unod called");
+
         GameObject startingPiece = null;
         GameObject endPiece = null;
 
         if (moveList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
         {
-            Debug.Log("List is empty, no undo occurred");
+            Debug.LogError("List is empty, no undo occurred");
             return;
         }
 
@@ -674,20 +683,24 @@ public class Board : MonoBehaviour
         //pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY] = null;
         //pieceBoard[moveList[undoCounter-1].startX, moveList[undoCounter - 1].startY] = null;
 
+
+
         pieceBoard[moveList[undoCounter - 1].startX, moveList[undoCounter - 1].startY] = pieceBoard[moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY];
         pieceBoard[moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY] = null;
 
         //take piece ids for both pieces
+        /*
         if (!moveList[undoCounter-1].movingTorok && moveList[undoCounter-1].pieceMoving > 0)
         {
-            PlacePiece(moveList[undoCounter-1].startX,moveList[undoCounter-1].startY, moveList[undoCounter-1].pieceMoving - 1);
+            PlacePiece(moveList[undoCounter-1].endX,moveList[undoCounter-1].endY, moveList[undoCounter-1].pieceMoving - 1);
         }
         else if(moveList[undoCounter-1].movingTorok && moveList[undoCounter-1].pieceMoving > 0)
         {
             Debug.Log("Torok move undo ID" + (moveList[undoCounter-1].pieceMoving - 1));
-            PlacePieceTorok(moveList[undoCounter-1].startX,moveList[undoCounter-1].startY,  moveList[undoCounter-1].pieceMoving - 1);
+            PlacePieceTorok(moveList[undoCounter-1].endX,moveList[undoCounter-1].endY,  moveList[undoCounter-1].pieceMoving - 1);
         }
-
+        */
+        /*
         if(moveList[undoCounter-1].pieceMoving > 0)
         {
             startingPiece = pieceBoard[moveList[undoCounter-1].startX, moveList[undoCounter - 1].startY];
@@ -696,6 +709,7 @@ public class Board : MonoBehaviour
             startScript.promote = moveList[undoCounter-1].movingPromote;
             startScript.lastChance = moveList[undoCounter-1].movingLastChance;
         }
+        */
 
         if(!moveList[undoCounter-1].takingTorok && moveList[undoCounter-1].pieceTaken > 0)
         {

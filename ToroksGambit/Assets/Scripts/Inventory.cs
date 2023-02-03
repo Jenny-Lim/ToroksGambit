@@ -94,7 +94,7 @@ public class Inventory : MonoBehaviour
                     Piece hitPiece = hit.transform.GetComponent<Piece>();
                     if (Input.GetMouseButtonDown(0) && hitPiece && !hitPiece.isTorok)
                     {
-                        print("inside removePLayer");
+                        //print("inside removePLayer");
                         Board.instance.PlacePiece(hit.transform, storedPiece);
                     }
                 }
