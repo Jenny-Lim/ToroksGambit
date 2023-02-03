@@ -643,8 +643,12 @@ public class Board : MonoBehaviour
         
     }
 
-    public void MovePieceVisualTwoItsBackBabyTheBestMethod(int startX, int startY, int endX, int endY)
+    public void MovePieceVisualTeleport(int startX, int startY, int endX, int endY)
     {
+        Vector3 newPos = hitBoxBoard[endX, endY].transform.position;
+        newPos.y += verticalPlaceOffset;
+        pieceBoard[startX, startY].transform.position = newPos;
+
 
     }
 
@@ -683,7 +687,7 @@ public class Board : MonoBehaviour
         //pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter - 1].endY] = null;
         //pieceBoard[moveList[undoCounter-1].startX, moveList[undoCounter - 1].startY] = null;
 
-
+        MovePieceVisualTeleport(moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].startX, moveList[undoCounter - 1].startY);
 
         pieceBoard[moveList[undoCounter - 1].startX, moveList[undoCounter - 1].startY] = pieceBoard[moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY];
         pieceBoard[moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY] = null;

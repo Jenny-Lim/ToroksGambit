@@ -21,7 +21,7 @@ public class BoardAnalyzer
     public float Analyze(GameObject[,] board)
     {
         float result = MaterialCount(board);
-        Debug.Log("Analyzing Board got: " + result);
+        //Debug.Log("Analyzing Board got: " + result);
         return result;
         
     }
