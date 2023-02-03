@@ -237,4 +237,9 @@ public class Inventory : MonoBehaviour
     {
         startButton.SetActive(true);
     }
+
+    public int[] GetHeldPieces()
+    {
+        return heldPieces;
+    }
 }
