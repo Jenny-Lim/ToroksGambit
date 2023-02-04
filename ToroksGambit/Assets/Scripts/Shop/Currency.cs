@@ -9,7 +9,7 @@ public class Currency : MonoBehaviour
     private Text ticketsTxt;
     public static Currency instance;
     
-    void Start()
+    void Awake()
     {
         if (instance == null)
         {
@@ -20,7 +20,7 @@ public class Currency : MonoBehaviour
 
     void Update()
     {
-        ticketsTxt.text = tickets.ToString();
+        ticketsTxt.text = "Tickets Owned: " + tickets.ToString();
     }
 
     public void AddToCurrency(int amount)

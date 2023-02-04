@@ -8,6 +8,7 @@ public class GoToShopButton : MonoBehaviour
 {
     [SerializeField] private GameObject shop;
     [SerializeField] private CameraHeadMovements c;
+    [SerializeField] private GameObject wallet;
     private TextMeshProUGUI t;
     private Button b;
     private bool canShop;
@@ -38,6 +39,7 @@ public class GoToShopButton : MonoBehaviour
             }
 
             shop.SetActive(canShop);
+            wallet.SetActive(canShop);
         }
         else
         {

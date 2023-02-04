@@ -15,13 +15,11 @@ public class ShopButton : MonoBehaviour
     private TextMeshProUGUI priceText;
     private Button b;
     private PieceUI pUI;
-    //private Inventory inventory;
 
     void Start()
     {
         priceText = gameObject.GetComponentInChildren<TextMeshProUGUI>();
         priceText.text = price.ToString();
-        //inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
         b = gameObject.GetComponent<Button>();
         pUI = gameObject.GetComponentInParent(typeof(PieceUI)) as PieceUI;
         type = pUI.type;
@@ -29,20 +27,20 @@ public class ShopButton : MonoBehaviour
 
     public void BuyPiece() // on click
     {
-        //if (Currency.instance.tickets >= price) {
-            //Currency.instance.SubtractFromCurrency(price);
+        if (Currency.instance.tickets >= price) {
+            Currency.instance.SubtractFromCurrency(price);
             priceText.text = "SOLD OUT";
             b.enabled = false;
             //pUI.PieceBought();
             pUI.isBought = true;
             Inventory.instance.AlterPiece((Inventory.InventoryPieces)type, 1);
 
-            print(Inventory.instance.GetHeldPieces()[0]); // testing --boi what the hell
-        //}
-        //else
-        //{
-            //print("u broke af");
-        //}
+            print(Inventory.instance.GetNumberOfPieces(0)); // testing --boi what the hell
+        }
+        else
+        {
+            print("u broke af");
+        }
     }
 
     //public void SetPrice(int p)
