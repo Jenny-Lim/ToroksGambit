@@ -47,6 +47,8 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
+    [SerializeField] private TextMeshProUGUI[] pieceCountText;
+
     public void Start()
     {
         if (instance == null)
@@ -55,6 +57,18 @@ public class Inventory : MonoBehaviour
         }
         rectTrans = GetComponent<RectTransform>();
         cam = Camera.main;
+
+        //initialize the max number of each puece can be held in inventory
+        //placeholder values
+
+        maxHeldPieces[0] = 5; //max pawns
+        maxHeldPieces[1] = 5; //max knights
+        maxHeldPieces[2] = 5; //max bishops
+        maxHeldPieces[3] = 5; //max rooks
+        maxHeldPieces[4] = 1; //max queens
+
+        updateCountText();
+
     }
 
     public void InventoryUpdate()
@@ -86,7 +100,19 @@ public class Inventory : MonoBehaviour
 
                     if(Input.GetMouseButtonDown(0))//Patrick - mouse input to place piece
                     {
+
                         Board.instance.PlacePiece(hit.transform, storedPiece);
+                        if(!Board.instance.torokPiece && storedPiece > -1)//place peice nd remove form inevtory
+                        {
+                            AlterPiece((InventoryPieces)storedPiece, -1);
+                            updateCountText();
+                        }
+                        else//remove piece from board back into inventroy by pickng board spot - STILL DOESNT WORK
+                        {
+                            AlterPiece((InventoryPieces)storedPiece, -1);
+                            updateCountText();
+                        }
+                        //remove piece from inventory of player
                     }
                 }
                 else if (hit.transform.gameObject.CompareTag("Chess Piece") && storedPiece == -1)//if trying to remove player piece
@@ -95,7 +121,10 @@ public class Inventory : MonoBehaviour
                     if (Input.GetMouseButtonDown(0) && hitPiece && !hitPiece.isTorok)
                     {
                         //print("inside removePLayer");
+                        Debug.Log((int)storedPiece);
                         Board.instance.PlacePiece(hit.transform, storedPiece);
+                        AlterPiece((InventoryPieces)hitPiece.type, 1);
+                        updateCountText();
                     }
                 }
                 else
@@ -192,6 +221,14 @@ public class Inventory : MonoBehaviour
         }
         StartCoroutine(ShowHideInventoryPanel());
 
+    }
+
+    public void updateCountText()
+    {
+        for(int i = 0; i < pieceCountText.Length;i++)
+        {
+            pieceCountText[i].text = heldPieces[i].ToString();
+        }
     }
 
     public int GetStoredPiece()
