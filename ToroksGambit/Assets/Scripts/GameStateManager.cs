@@ -32,6 +32,11 @@ public class GameStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("g"))
+        {
+            print(isPlayersTurn);
+        }
+
         switch (currentState)
         {
             case GameState.deployment:
@@ -52,15 +57,16 @@ public class GameStateManager : MonoBehaviour
                         Move resultMove = MinMax.instance.GetMinMaxMove(2, MinMax.playerToMove.torok);
                         if (resultMove != null)
                         {
-                            Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY], resultMove.promoted);
+                            //Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY], resultMove.promoted);
                             Board.instance.canMove = false;
                             Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
+                            EndTurn();
                         }
                         else
                         {
                             Debug.Log("MinMax was not able to find a move. Either the game has ended, or it has no pieces on the board");
                             Debug.Log("Switching back to player's turn for convenience");
-                            EndTurn();
+                            EndTurn();//this will eventually be deleted
                         }
                        
                     }

@@ -230,39 +230,29 @@ public class Board : MonoBehaviour
                 bool isValid = MoveValidator(pieceX, pieceY, clickedX, clickedY);
 
                 if(isLastchance)
-                    {
-                        clickedPiece = null;
-                    }
+                {
+                    clickedPiece = null;
+                }
 
                 if(canMove & isValid)
                 {
                         //DisablePiece(tempPiece);
                         if(clickedPiece)
                         {
-                            clickedPiece = pieceBoard[clickedX,clickedY];
-                            MovePieceVisual(pieceX, pieceY, clickedX, clickedY, clickedPiece,false);
+                            clickedPiece = pieceBoard[clickedX,clickedY];// <- is this redundant because of moveValidator, shouldnt that have already moved the piece?
+                            //MovePieceVisual(pieceX, pieceY, clickedX, clickedY, clickedPiece,false);
                            //StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece,false));
                         }
                         else
                         {
-                            GameStateManager.EndTurn();
+                            //GameStateManager.EndTurn();
                             isLastchance = false;
                             isPromote = false;
 
                         }
-
+                        GameStateManager.EndTurn();
                     }
                 canMove = false;
-
-
-                //storedPiece.transform.position = hit.transform.position + new Vector3(0,0,0);
-
-                    // added by jenny
-                //if (storedPiece.GetComponent<Piece>().type == "pawn")
-                    //{
-                        //storedPiece.GetComponent<Piece>().moved == true;
-                    //}
-
                 clickedPiece = null;
 
             }
@@ -487,6 +477,7 @@ public class Board : MonoBehaviour
                 //print("Confirmed valid move");
                 //print("endX :" + endX + "endY: " + endY + " " + move.DisplayMove());
                 canMove = true;
+                MovePieceVisualTeleport(pieceX, pieceY, endX, endY);
                 MovePiece(pieceX, pieceY, endX, endY);
                 return true;
             }
@@ -646,7 +637,7 @@ public class Board : MonoBehaviour
             StartCoroutine(VisualMovePiece(startX, startY,endX,endY, piece, promoteCheck));
         }
         */
-        GameStateManager.EndTurn();//so that who ever's turn it is ends when the piece has finished moving
+        //GameStateManager.EndTurn();//so that who ever's turn it is ends when the piece has finished moving
         
     }
 
@@ -761,18 +752,6 @@ public class Board : MonoBehaviour
         //print("visual move has ended");
     }
 
-
-    // added by jenny
-    public static int GetX()
-    {
-        return pieceX;
-    }
-
-    public static int GetY()
-    {
-        return pieceY;
-    }
-
     public static GameObject[,] GetPieceBoard()
     {
         return pieceBoard;
@@ -834,10 +813,17 @@ public class Board : MonoBehaviour
         return new Vector2Int(-1, -1);
     }
 
-    public static bool isSameteam(GameObject chessPiece)
+    public static bool isSameteam(GameObject chessPiece, GameObject chessPiece2)
     {
+        if (!chessPiece || !chessPiece2) { return false; }
 
-        return false;
+        Piece piece1 = chessPiece.GetComponent<Piece>();
+        Piece piece2 = chessPiece2.GetComponent<Piece>();
+
+        if (!piece1 || !piece2) { return false; }
+
+
+        return (piece1.isTorok && piece2.isTorok) || (!piece1.isTorok && !piece2.isTorok);
     }
 
     public void ClearBoard()
@@ -937,7 +923,7 @@ public class Board : MonoBehaviour
     public void PrintInternalPieceBoard()
     {
         string resultLine = "";
-        for (int i = 0; i < boardSize; i++)
+        for (int i = boardSize-1; i > -1; i--)
         {
             for (int j = 0; j < boardSize; j++)
             {
