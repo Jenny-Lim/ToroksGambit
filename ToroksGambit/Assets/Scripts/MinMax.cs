@@ -40,7 +40,7 @@ public class MinMax : MonoBehaviour
         //Debug.Log("AI: Looking for move...");
         ScoredMove resultMove = MinMaxRecursive(maxDepth, toMove, float.MaxValue, float.MinValue);
         //print(resultMove.move == null);
-        //Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
+        Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
         print("Moves " + numOfMovesCalled);
         print("Undos " + numOfUndoCalled);
         return resultMove.move;

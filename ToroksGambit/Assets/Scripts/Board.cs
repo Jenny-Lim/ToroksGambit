@@ -276,7 +276,7 @@ public class Board : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
         {
-            UndoMoveVisual();
+            UndoMove();
         }
 
         if (clickedPiece != null)//added by jordan to indicate what piece is clicked
@@ -677,7 +677,7 @@ public class Board : MonoBehaviour
         //GameObject startingPiece = null;
         GameObject endPiece = null;
 
-        if (moveList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
+        if (moveList.Count < 1)
         {
             Debug.LogError("List is empty, no undo occurred");
             return;
