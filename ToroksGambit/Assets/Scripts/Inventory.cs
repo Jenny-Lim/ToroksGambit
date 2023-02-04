@@ -109,7 +109,7 @@ public class Inventory : MonoBehaviour
                         }
                         else//remove piece from board back into inventroy by pickng board spot - STILL DOESNT WORK
                         {
-                            AlterPiece((InventoryPieces)storedPiece, -1);
+                            //AlterPiece((InventoryPieces)storedPiece, -1);
                             updateCountText();
                         }
                         //remove piece from inventory of player
