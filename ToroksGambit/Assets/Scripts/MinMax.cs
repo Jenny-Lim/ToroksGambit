@@ -6,6 +6,7 @@ public class MinMax : MonoBehaviour
 {
     public static MinMax instance;//static instance of this
     private BoardAnalyzer analyzer = new BoardAnalyzer();
+    [SerializeField] private int maxDepth = 1;
 
     int numOfUndoCalled = 0;
     int numOfMovesCalled = 0;
@@ -35,17 +36,17 @@ public class MinMax : MonoBehaviour
     }
 
     //the recursive wrapper for the minmax call
-    public Move GetMinMaxMove(int maxDepth, playerToMove toMove)
+    public Move GetMinMaxMove(playerToMove toMove)
     {
         //Debug.Log("AI: Looking for move...");
         ScoredMove resultMove = MinMaxRecursive(maxDepth, toMove, float.MaxValue, float.MinValue);
         //print(resultMove.move == null);
         if (resultMove.move != null)
         {
-            Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
+            //Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
         }
-        print("Moves " + numOfMovesCalled);
-        print("Undos " + numOfUndoCalled);
+        //print("Moves " + numOfMovesCalled);
+        //print("Undos " + numOfUndoCalled);
         return resultMove.move;
     }
 
@@ -55,7 +56,7 @@ public class MinMax : MonoBehaviour
         //recursive termination
         if (depth == 0)
         {
-            print("reached depth 0");
+            print("Move List count: " + Board.instance.moveList.Count);
             return new ScoredMove(null, analyzer.Analyze(Board.pieceBoard));
         }
 
@@ -136,6 +137,10 @@ public class MinMax : MonoBehaviour
 
         //return resulting move
         return bestMove;
+    }
 
+    public void SetNewDepth(int newDepth)
+    {
+        maxDepth = newDepth;
     }
 }

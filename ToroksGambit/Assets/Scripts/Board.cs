@@ -147,46 +147,8 @@ public class Board : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.transform.tag == "Chess Piece")//if mouse is clicked on chess piece
-            {
-
-                // Debug.Log("Piece");
-                GameObject tempPiece = hit.transform.gameObject;//removed the ,parent cuz i changed the hitbox to be on the highest level of the piece prefabs - jordan
-
-                Piece piece = tempPiece.GetComponent<Piece>(); 
-
-                if(piece.promote)
-                {
-
-                }
-
-                if(!piece.isTorok)
-                {
-                    clickedPiece = hit.transform.gameObject;//store piece, same as above comment about prefabs
-
-                    // Debug.Log(hit.transform.parent.gameObject);
-
-                    for(int i=0;i<boardSize;i++)//doesnt appear to work, always returns as 0
-                    {
-                        for(int j=0;j<boardSize;j++)
-                        {
-                            if(hit.transform.gameObject == pieceBoard[i,j])//get position of piece in array, smae as the two above comments
-                            {
-                                pieceX = i;//store locations
-                                pieceY = j;
-                                    
-                            }
-                        }
-                    }
-                }
-
-                piece.UpdateMoves();
-
-                //signifier that piece is chosen
-                //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
-
-            }
-            else if((hit.transform.tag == "Chess Board" || hit.transform.tag == "Chess Piece") && clickedPiece)//if a piece is stored and another spot is chosen
+            
+            if((hit.transform.tag == "Chess Board" || hit.transform.tag == "Chess Piece") && clickedPiece)//if a piece is stored and another spot is chosen
             {
                 //Debug.Log("TEST");
                 int clickedX = 0;
@@ -254,6 +216,45 @@ public class Board : MonoBehaviour
                     }
                 canMove = false;
                 clickedPiece = null;
+
+            }
+            else if (hit.transform.tag == "Chess Piece")//if mouse is clicked on chess piece
+            {
+
+                // Debug.Log("Piece");
+                GameObject tempPiece = hit.transform.gameObject;//removed the ,parent cuz i changed the hitbox to be on the highest level of the piece prefabs - jordan
+
+                Piece piece = tempPiece.GetComponent<Piece>(); 
+
+                if(piece.promote)
+                {
+
+                }
+
+                if(!piece.isTorok)
+                {
+                    clickedPiece = hit.transform.gameObject;//store piece, same as above comment about prefabs
+
+                    // Debug.Log(hit.transform.parent.gameObject);
+
+                    for(int i=0;i<boardSize;i++)//doesnt appear to work, always returns as 0
+                    {
+                        for(int j=0;j<boardSize;j++)
+                        {
+                            if(hit.transform.gameObject == pieceBoard[i,j])//get position of piece in array, smae as the two above comments
+                            {
+                                pieceX = i;//store locations
+                                pieceY = j;
+                                    
+                            }
+                        }
+                    }
+                }
+
+                piece.UpdateMoves();
+
+                //signifier that piece is chosen
+                //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
 
             }
         }
