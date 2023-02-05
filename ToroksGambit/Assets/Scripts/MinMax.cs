@@ -46,7 +46,7 @@ public class MinMax : MonoBehaviour
         //print(resultMove.move == null);
         if (resultMove.move != null)
         {
-            //Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
+            Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
         }
         print("Moves " + numOfMovesCalled);
         print("Undos " + numOfUndoCalled);
@@ -66,12 +66,16 @@ public class MinMax : MonoBehaviour
             return new ScoredMove(null, analyzer.Analyze(Board.pieceBoard));
         }
 
-        ScoredMove bestMove = new ScoredMove(null, 0);//holder for the best/most likely move to make
+        ScoredMove bestMove;//holder for the best/most likely move to make
 
         if (whosMoving == playerToMove.player)//max
         {
-            bestMove.score = float.NegativeInfinity;//set best move score to be as low as possible
+           
             List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
+
+            //check if allavailableMoves has no moves
+
+            bestMove = new ScoredMove(allAvailableMoves[0],  float.NegativeInfinity);//set best move score to be as low as possible);
             print("Amount of moves player moves available: " + allAvailableMoves.Count);
             /*if (allAvailableMoves.Count <= 0)
             {
@@ -114,8 +118,12 @@ public class MinMax : MonoBehaviour
         }
         else//min
         {
-            bestMove.score = float.PositiveInfinity;//set best move score to be as high as possible
             List<Move> allAvailableMoves = Board.instance.GetAllMoves(true);// get list of all possible moves
+
+
+            //check if allavailableMoves has no moves
+
+            bestMove = new ScoredMove(allAvailableMoves[0], float.PositiveInfinity);
             print("Amount of moves torok moves available: " + allAvailableMoves.Count);
             foreach (Move move in allAvailableMoves)
             {
