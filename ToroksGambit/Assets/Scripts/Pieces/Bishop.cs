@@ -15,6 +15,10 @@ public class Bishop : Piece
     {
         moves.Clear();
 
+        Vector2Int pos = Board.instance.GetPieceLocation(this.gameObject);
+        pieceX = pos.x;
+        pieceY = pos.y;
+
         MovesAdd(1, 1);
         MovesAdd(-1, -1);
         MovesAdd(1, -1);

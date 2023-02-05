@@ -17,6 +17,9 @@ public class King : Piece
         int clearResult;
         moves.Clear();
 
+        Vector2Int pos = Board.instance.GetPieceLocation(this.gameObject);
+        pieceX = pos.x;
+        pieceY = pos.y;
 
         if (InBoundsCheck(pieceX + 1, pieceY + 1))
         {

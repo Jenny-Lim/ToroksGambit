@@ -15,6 +15,10 @@ public class Rook : Piece
     {
         moves.Clear();
 
+        Vector2Int pos = Board.instance.GetPieceLocation(this.gameObject);
+        pieceX = pos.x;
+        pieceY = pos.y;
+
         MovesAdd(1, 0);
         MovesAdd(-1, 0);
         MovesAdd(0, 1);

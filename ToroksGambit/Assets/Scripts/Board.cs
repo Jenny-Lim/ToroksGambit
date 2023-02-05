@@ -494,7 +494,7 @@ public class Board : MonoBehaviour
     public void MovePiece(int startX, int startY, int endX, int endY)//take 2 positions to move a piece
     {
 
-        Debug.Log("movepiece called");
+        //Debug.Log("movepiece called");
         
         bool willPromote = false;
         bool lastChanceCheck = false;
@@ -664,7 +664,7 @@ public class Board : MonoBehaviour
     //repeatedly calling will undo moves until beggining
     public void UndoMove()
     {
-        Debug.Log("Undo called");
+        //Debug.Log("Undo called");
 
         //GameObject startingPiece = null;
         GameObject endPiece = null;
@@ -766,7 +766,7 @@ public class Board : MonoBehaviour
     }
 
     //added by jordan to get all moves on the board of a certain player
-    public List<Move> GetAllMoves(bool toroksPieces)
+    public List<Move> GetAllMoves(bool toroksPieces)//true is torrok
     {
         List<Move> returnArray = new List<Move>();
 

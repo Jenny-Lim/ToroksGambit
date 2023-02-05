@@ -16,6 +16,10 @@ public class Knight : Piece
         moves.Clear();
         int clearResult;
 
+        Vector2Int pos = Board.instance.GetPieceLocation(this.gameObject);
+        pieceX = pos.x;
+        pieceY = pos.y;
+
         if (InBoundsCheck(pieceX + 1, pieceY + 2))
         {
             clearResult = ClearCheck(pieceX + 1, pieceY + 2);

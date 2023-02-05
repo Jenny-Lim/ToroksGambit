@@ -18,6 +18,11 @@ public class Pawn : Piece
         int dir = 1;
         int clearResult;
 
+        Vector2Int pos = Board.instance.GetPieceLocation(this.gameObject);
+
+        int pieceX = pos.x;
+        int pieceY = pos.y;
+
         moves.Clear();
 
         if (isTorok)

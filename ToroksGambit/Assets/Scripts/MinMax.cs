@@ -48,9 +48,10 @@ public class MinMax : MonoBehaviour
         {
             //Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
         }
-        //print("Moves " + numOfMovesCalled);
-        //print("Undos " + numOfUndoCalled);
+        print("Moves " + numOfMovesCalled);
+        print("Undos " + numOfUndoCalled);
         print("Total Number of Nodes Searched: " + totalNumNodesLookedAt);
+        print("Move history list count " + Board.instance.moveList.Count);
         return resultMove.move;
     }
 
@@ -71,7 +72,7 @@ public class MinMax : MonoBehaviour
         {
             bestMove.score = float.NegativeInfinity;//set best move score to be as low as possible
             List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
-            
+            print("Amount of moves player moves available: " + allAvailableMoves.Count);
             /*if (allAvailableMoves.Count <= 0)
             {
                 if (whosMoving == playerToMove.player)
@@ -88,9 +89,11 @@ public class MinMax : MonoBehaviour
             foreach (Move move in allAvailableMoves)
             {
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+                print("Move from MinMax Depth: " + (maxDepth - depth));
                 numOfMovesCalled++;
                 ScoredMove recursiveResult = MinMaxRecursive(depth-1, playerToMove.torok, alpha , beta);//recursive call
                 Board.instance.UndoMove();//undo previous move
+                print("Undo from MinMax Depth: " + (maxDepth - depth));
                 numOfUndoCalled++;
 
                 if (recursiveResult.score > bestMove.score)//if subtree result is better make best move equal to that
@@ -113,13 +116,15 @@ public class MinMax : MonoBehaviour
         {
             bestMove.score = float.PositiveInfinity;//set best move score to be as high as possible
             List<Move> allAvailableMoves = Board.instance.GetAllMoves(true);// get list of all possible moves
-
+            print("Amount of moves torok moves available: " + allAvailableMoves.Count);
             foreach (Move move in allAvailableMoves)
             {
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+                print("Move from MinMax Depth: " + (maxDepth - depth));
                 numOfMovesCalled++;
-                ScoredMove recursiveResult = MinMaxRecursive(depth - 1, playerToMove.torok, alpha, beta);//recursive call
+                ScoredMove recursiveResult = MinMaxRecursive(depth - 1, playerToMove.player, alpha, beta);//recursive call
                 Board.instance.UndoMove();//undo previous move
+                print("Undo from MinMax Depth: " + (maxDepth - depth));
                 numOfUndoCalled++;
 
                 if (recursiveResult.score < bestMove.score)// if subtree is better make best move equal to that
