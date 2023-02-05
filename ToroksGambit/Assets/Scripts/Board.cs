@@ -546,6 +546,7 @@ public class Board : MonoBehaviour
             takenLastChance = pieceForCaptureId.lastChance;
 
             pieceIdTaken = (int)(pieceForCaptureId.type) + 1;
+            print("taken ID " + pieceIdTaken);
             if (pieceForCaptureId.isTorok)
             {
                 takingTorok = true;
