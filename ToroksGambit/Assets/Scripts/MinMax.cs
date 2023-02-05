@@ -74,20 +74,13 @@ public class MinMax : MonoBehaviour
             List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
 
             //check if allavailableMoves has no moves
+            if (allAvailableMoves.Count < 1)
+            {
+                return new ScoredMove(null, float.NegativeInfinity);
+            }
 
             bestMove = new ScoredMove(allAvailableMoves[0],  float.NegativeInfinity);//set best move score to be as low as possible);
             print("Amount of moves player moves available: " + allAvailableMoves.Count);
-            /*if (allAvailableMoves.Count <= 0)
-            {
-                if (whosMoving == playerToMove.player)
-                {
-                    return new ScoredMove(null, float.NegativeInfinity);
-                }
-                else
-                {
-                    return new ScoredMove(null, float.PositiveInfinity);
-                }
-            }*/
 
 
             foreach (Move move in allAvailableMoves)
@@ -120,8 +113,11 @@ public class MinMax : MonoBehaviour
         {
             List<Move> allAvailableMoves = Board.instance.GetAllMoves(true);// get list of all possible moves
 
-
             //check if allavailableMoves has no moves
+            if (allAvailableMoves.Count < 1)
+            {
+                return new ScoredMove(null, float.PositiveInfinity);
+            }
 
             bestMove = new ScoredMove(allAvailableMoves[0], float.PositiveInfinity);
             print("Amount of moves torok moves available: " + allAvailableMoves.Count);
