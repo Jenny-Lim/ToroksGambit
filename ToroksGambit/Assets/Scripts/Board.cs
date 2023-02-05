@@ -685,11 +685,11 @@ public class Board : MonoBehaviour
         
         if (moveList[moveList.Count - 1].pieceTaken > 0)
         {
-            if (!moveList[moveList.Count - 1].takingTorok)
+            if (!moveList[moveList.Count - 1].takenTorok)
             {
                 PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceTaken - 1);
             }
-            else if (moveList[moveList.Count - 1].takingTorok)
+            else if (moveList[moveList.Count - 1].takenTorok)
             {
                 PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceTaken - 1);
             }

@@ -19,7 +19,7 @@ public class Move
     public int pieceMoving = 0;//piece type for piece MOVING
 
     public bool movingTorok;
-    public bool takingTorok;
+    public bool takenTorok;
 
     public bool movingPromote;
     public bool takenPromote;
@@ -41,7 +41,7 @@ public class Move
         pieceMoving = pieceIdMoving;
         promoted = promoteCheck;
         movingTorok = movingTorokCheck;
-        takingTorok = takingTorokCheck;
+        takenTorok = takingTorokCheck;
 
         movingPromote = mPro;
         takenPromote = tPro;
