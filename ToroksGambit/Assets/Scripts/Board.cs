@@ -675,37 +675,39 @@ public class Board : MonoBehaviour
             return;
         }
 
-        MovePieceVisualTeleport(moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].startX, moveList[undoCounter - 1].startY);
 
-        pieceBoard[moveList[undoCounter - 1].startX, moveList[undoCounter - 1].startY] = pieceBoard[moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY];
-        pieceBoard[moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY] = null;
+
+        MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
+
+        pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
+        pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count    - 1].endY] = null;
 
         
-        if (moveList[undoCounter - 1].pieceTaken > 0)
+        if (moveList[moveList.Count - 1].pieceTaken > 0)
         {
-            if (!moveList[undoCounter - 1].takingTorok)
+            if (!moveList[moveList.Count - 1].takingTorok)
             {
-                PlacePiece(moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken - 1);
+                PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceTaken - 1);
             }
-            else if (moveList[undoCounter - 1].takingTorok)
+            else if (moveList[moveList.Count - 1].takingTorok)
             {
-                PlacePieceTorok(moveList[undoCounter - 1].endX, moveList[undoCounter - 1].endY, moveList[undoCounter - 1].pieceTaken - 1);
+                PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceTaken - 1);
             }
         }
         
 
-        if(moveList[undoCounter-1].pieceTaken > 0)
+        if(moveList[moveList.Count -1].pieceTaken > 0)
         {
-            endPiece = pieceBoard[moveList[undoCounter-1].endX, moveList[undoCounter-1].endY];
+            endPiece = pieceBoard[moveList[moveList.Count -1].endX, moveList[moveList.Count -1].endY];
             Piece endScript = endPiece.GetComponent<Piece>();
-            endScript.isTough = moveList[undoCounter-1].takenTough;
-            endScript.promote = moveList[undoCounter-1].takenPromote;
-            endScript.lastChance = moveList[undoCounter-1].takenLastChance;
+            endScript.isTough = moveList[moveList.Count -1].takenTough;
+            endScript.promote = moveList[moveList.Count -1].takenPromote;
+            endScript.lastChance = moveList[moveList.Count -1].takenLastChance;
         }
 
-        moveList.RemoveAt(undoCounter-1);
+        moveList.RemoveAt(moveList.Count -1);
 
-        undoCounter--;
+        //undoCounter--;
 
     }
 

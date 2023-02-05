@@ -11,6 +11,8 @@ public class MinMax : MonoBehaviour
     int numOfUndoCalled = 0;
     int numOfMovesCalled = 0;
 
+    int totalNumNodesLookedAt = 0;
+
     private class ScoredMove {
         public Move move;
         public float score;
@@ -38,6 +40,7 @@ public class MinMax : MonoBehaviour
     //the recursive wrapper for the minmax call
     public Move GetMinMaxMove(playerToMove toMove)
     {
+        totalNumNodesLookedAt = 0;
         //Debug.Log("AI: Looking for move...");
         ScoredMove resultMove = MinMaxRecursive(maxDepth, toMove, float.MaxValue, float.MinValue);
         //print(resultMove.move == null);
@@ -47,6 +50,7 @@ public class MinMax : MonoBehaviour
         }
         //print("Moves " + numOfMovesCalled);
         //print("Undos " + numOfUndoCalled);
+        print("Total Number of Nodes Searched: " + totalNumNodesLookedAt);
         return resultMove.move;
     }
 
@@ -56,7 +60,8 @@ public class MinMax : MonoBehaviour
         //recursive termination
         if (depth == 0)
         {
-            print("Move List count: " + Board.instance.moveList.Count);
+            //print("Move List count: " + Board.instance.moveList.Count);
+            totalNumNodesLookedAt++;
             return new ScoredMove(null, analyzer.Analyze(Board.pieceBoard));
         }
 
