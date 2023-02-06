@@ -4311,7 +4311,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d34927b332bffa4c9bbb70412716e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelInterrupts: []
+  levelInterrupts:
+  - {fileID: 11400000, guid: 08a69f902a3228a4b8ce52082377bcc6, type: 2}
+  - {fileID: 11400000, guid: 058fe34c030d8824d9c6ab1feccc9528, type: 2}
+  - {fileID: 11400000, guid: f0e5f6819054a614d808de3d08f05e5d, type: 2}
 --- !u!1 &1381076410
 GameObject:
   m_ObjectHideFlags: 0

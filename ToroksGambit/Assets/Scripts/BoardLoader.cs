@@ -225,6 +225,7 @@ public class BoardLoader : MonoBehaviour
 
             writer.Close();
 
+
         }
         catch (Exception e) {
             Debug.Log(e.Message);

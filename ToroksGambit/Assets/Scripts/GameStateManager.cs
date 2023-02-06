@@ -33,7 +33,7 @@ public class GameStateManager : MonoBehaviour
 
     private void Start()
     {
-        //BoardLoader.instance.LoadBoard("Demo");
+        BoardLoader.instance.LoadBoard("Demo");
         
     }
 
@@ -89,6 +89,10 @@ public class GameStateManager : MonoBehaviour
     public void ChangeGameState(GameState newState)
     {
         currentState = newState;
+        if (turnCount == 1 && newState == GameState.game)
+        {
+            InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.GameStart);
+        }
     }
 
     public static void EndTurn()
