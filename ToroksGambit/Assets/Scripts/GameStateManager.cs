@@ -27,6 +27,14 @@ public class GameStateManager : MonoBehaviour
         {
             instance = this;
         }
+
+        
+    }
+
+    private void Start()
+    {
+        //BoardLoader.instance.LoadBoard("Demo");
+        
     }
 
     // Update is called once per frame
