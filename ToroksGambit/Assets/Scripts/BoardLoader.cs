@@ -12,6 +12,7 @@ public class BoardLoader : MonoBehaviour
     private string fileName = "StartingBoards.txt";
     public string boardName = "";
     public List<string> savedBoardNames;
+    public static BoardLoader instance;
 
     /* this class stores boards in a text file for later use
      * it stores them in the following configuration
@@ -31,6 +32,14 @@ public class BoardLoader : MonoBehaviour
      * boardend
      * etc...
      */
+
+    public void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     public void LoadBoard(string boardName)
     {
@@ -97,8 +106,6 @@ public class BoardLoader : MonoBehaviour
 
             writer.WriteLine(boardStartText);
             writer.WriteLine(givenName);
-
-            
 
             for (int i = 0; i < Board.boardSize; i++)
             {
