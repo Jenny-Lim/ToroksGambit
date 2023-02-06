@@ -226,6 +226,8 @@ public class Board : MonoBehaviour
 
                 Piece piece = tempPiece.GetComponent<Piece>(); 
 
+                Debug.Log("CHOSEN PIECE TYPE: "+piece.type);
+
                 if(piece.promote)
                 {
 
@@ -334,6 +336,8 @@ public class Board : MonoBehaviour
         {
             GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
             Piece piece = newPiece.GetComponent<Piece>();
+
+            Debug.Log("placed piece type: "+piece.type);
 
             if(torokPiece)
             {

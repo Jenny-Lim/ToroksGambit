@@ -6,8 +6,10 @@ public class Pawn : Piece
 {
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        pieceBoard = Board.GetPieceBoard();
+        moves = new List<Move>();
         type = PieceType.pawn;
         value = 1;
     }

@@ -5,8 +5,10 @@ using UnityEngine;
 public class Knight : Piece
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        pieceBoard = Board.GetPieceBoard();
+        moves = new List<Move>();
         type = PieceType.knight;
         value = 3;
     }

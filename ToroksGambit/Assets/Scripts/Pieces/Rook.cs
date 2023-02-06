@@ -5,8 +5,10 @@ using UnityEngine;
 public class Rook : Piece
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        pieceBoard = Board.GetPieceBoard();
+        moves = new List<Move>();
         type = PieceType.rook;
         value = 5;
     }

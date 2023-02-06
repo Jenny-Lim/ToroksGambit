@@ -6,8 +6,10 @@ using UnityEngine;
 public class King : Piece
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        pieceBoard = Board.GetPieceBoard();
+        moves = new List<Move>();
         type = PieceType.king;
         value = 1000;
     }

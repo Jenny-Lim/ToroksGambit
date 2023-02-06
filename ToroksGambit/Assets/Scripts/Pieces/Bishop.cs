@@ -5,8 +5,10 @@ using UnityEngine;
 public class Bishop : Piece
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        pieceBoard = Board.GetPieceBoard();
+        moves = new List<Move>();
         type = PieceType.bishop;
         value = 3f;
     }
