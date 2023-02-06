@@ -417,6 +417,10 @@ public class Board : MonoBehaviour
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
             newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[1];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
+            if (piece.type == Piece.PieceType.knight) {
+                print("get rotated nerd");
+                newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
 
             piece.pieceX = xPos;
             piece.pieceY = yPos;
@@ -482,6 +486,11 @@ public class Board : MonoBehaviour
             GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
             newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[1];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
+            if (piece.type == Piece.PieceType.knight)
+            {
+                print("get rotated nerd");
+                newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
             piece.isTorok = true;
 
             Debug.Log("placed piece type: " + piece.type);
