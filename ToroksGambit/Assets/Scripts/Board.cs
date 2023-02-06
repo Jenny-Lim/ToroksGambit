@@ -334,7 +334,7 @@ public class Board : MonoBehaviour
             return;
         }
 
-        if (pieceId >= 0)
+        if (pieceId >= 0 && pieceId < 6)
         {
             GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
             newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
@@ -362,7 +362,12 @@ public class Board : MonoBehaviour
 
             piece.pieceX = placeX; 
             piece.pieceY = placeY;
-        } else
+        }
+        else if(pieceId > 5)
+        {
+            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(obstaclePrefabs[pieceId-6], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+        }
+        else 
         {
             //do any inventory stuff here
             Destroy(pieceBoard[placeX, placeY]);

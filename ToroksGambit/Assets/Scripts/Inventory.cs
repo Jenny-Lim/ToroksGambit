@@ -93,16 +93,14 @@ public class Inventory : MonoBehaviour
                     }
 
                     //show desired visual
-                    if (storedPiece >= 0)
+                    if (storedPiece >= 0 && storedPiece < 6)
                     {
                         PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
                     }
 
                     if(Input.GetMouseButtonDown(0))//Patrick - mouse input to place piece
                     {
-
-                        
-                        if (Board.instance.torokPiece)//
+                        if (Board.instance.torokPiece && storedPiece < 6)//
                         {
                             Board.instance.PlacePieceTorok(hit.transform, storedPiece);
                         }
@@ -111,7 +109,7 @@ public class Inventory : MonoBehaviour
                             Board.instance.PlacePiece(hit.transform, storedPiece);
                         }
 
-                        if(!Board.instance.torokPiece && storedPiece > -1)//place peice nd remove form inevtory
+                        if(!Board.instance.torokPiece && storedPiece > -1 && storedPiece < 6)//place peice nd remove form inevtory
                         {
                             AlterPiece((InventoryPieces)storedPiece, -1);
                             updateCountText();
@@ -211,6 +209,16 @@ public class Inventory : MonoBehaviour
     public void RemoveButtonClicked()
     {
         storedPiece = -1;
+    }
+
+    public void WallButtonClicked()
+    {
+        storedPiece = 6;
+    }
+
+    public void HoleButtonClicked()
+    {
+        storedPiece = 7;
     }
 
     public void HideShowButtonClicked()

@@ -5,9 +5,11 @@ using UnityEngine;
 public class Hole : Piece // pieces can jump over these, just cannot capture
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         type = PieceType.hole;
+        pieceBoard = Board.GetPieceBoard();
+        moves = new List<Move>();
     }
 
     public override void UpdateMoves()
