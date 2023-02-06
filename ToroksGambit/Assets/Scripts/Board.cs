@@ -734,6 +734,10 @@ public class Board : MonoBehaviour
             endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
             endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
         }
+        else
+        {
+
+        }
 
     }
 
