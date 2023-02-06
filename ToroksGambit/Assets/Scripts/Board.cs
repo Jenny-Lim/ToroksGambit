@@ -74,6 +74,8 @@ public class Board : MonoBehaviour
 
     private bool isPromote;
 
+    [SerializeField] private Material[] pieceMats = new Material[2];// 0 -> player piece color, 1 means torok piece color
+
     //traits
 
     public bool toughPlacer;
@@ -226,7 +228,7 @@ public class Board : MonoBehaviour
 
                 Piece piece = tempPiece.GetComponent<Piece>(); 
 
-                Debug.Log("CHOSEN PIECE TYPE: "+piece.type);
+                //Debug.Log("CHOSEN PIECE TYPE: "+piece.type);
 
                 if(piece.promote)
                 {
@@ -335,6 +337,7 @@ public class Board : MonoBehaviour
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
 
             Debug.Log("placed piece type: "+piece.type);
@@ -381,6 +384,7 @@ public class Board : MonoBehaviour
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos,yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
             piece.pieceX = xPos;
             piece.pieceY = yPos;
@@ -406,6 +410,7 @@ public class Board : MonoBehaviour
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[1];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
 
             piece.pieceX = xPos;
@@ -416,6 +421,94 @@ public class Board : MonoBehaviour
         {
             Debug.LogError("Couldn't place piece: unrecognized pieceId");
         }
+    }
+
+    public void PlacePieceTorok(Transform boardSpot, int pieceId)
+    {
+        //**should reformat this function cuz im sure there is some getComponent overlapping**
+
+        if (!boardSpot)
+        {
+            Debug.LogError("Trying to place piece, given piece transform was null");
+            return;
+        }
+
+        int placeX = -1;
+        int placeY = -1;
+        if (boardSpot.CompareTag("Chess Board"))
+        {
+            for (int i = 0; i < boardSize; i++)
+            {
+                for (int j = 0; j < boardSize; j++)
+                {
+                    if (boardSpot.gameObject == hitBoxBoard[i, j])//get position of piece in array
+                    {
+                        placeX = i;//store locations
+                        placeY = j;
+
+                    }
+                }
+            }
+
+            if (placeX == -1 && placeY == -1)
+            {
+                Debug.LogError("Error trying to place piece where piece already is.");
+                return;
+            }
+        }
+        else if (boardSpot.CompareTag("Chess Piece"))
+        {
+            Piece getPosPiece = boardSpot.GetComponent<Piece>();
+            if (getPosPiece)
+            {
+                placeX = getPosPiece.pieceX;
+                placeY = getPosPiece.pieceY;
+            }
+        }
+
+        if (pieceBoard[placeX, placeY] != null && pieceId != -1)
+        {
+            Debug.LogError("Did not place piece because piece was already there");
+            return;
+        }
+
+        if (pieceId >= 0)
+        {
+            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[1];//ik this is bad but whatever
+            Piece piece = newPiece.GetComponent<Piece>();
+            piece.isTorok = true;
+
+            Debug.Log("placed piece type: " + piece.type);
+
+            if (torokPiece)
+            {
+                piece.isTorok = true;
+            }
+
+            if (toughPlacer)
+            {
+                piece.isTough = true;
+            }
+            if (lastChancePlacer)
+            {
+                piece.lastChance = true;
+            }
+            if (promotePlacer)
+            {
+                piece.promote = true;
+            }
+
+            piece.pieceX = placeX;
+            piece.pieceY = placeY;
+        }
+        else
+        {
+            //do any inventory stuff here
+            Destroy(pieceBoard[placeX, placeY]);
+            pieceBoard[placeX, placeY] = null;
+        }
+
     }
 
     public void PlaceObstacle(int xPos, int yPos, int obstacleId)
@@ -550,7 +643,7 @@ public class Board : MonoBehaviour
             takenLastChance = pieceForCaptureId.lastChance;
 
             pieceIdTaken = (int)(pieceForCaptureId.type) + 1;
-            print("taken ID " + pieceIdTaken);
+            //print("taken ID " + pieceIdTaken);
             if (pieceForCaptureId.isTorok)
             {
                 takingTorok = true;

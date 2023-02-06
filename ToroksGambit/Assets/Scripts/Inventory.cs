@@ -101,7 +101,16 @@ public class Inventory : MonoBehaviour
                     if(Input.GetMouseButtonDown(0))//Patrick - mouse input to place piece
                     {
 
-                        Board.instance.PlacePiece(hit.transform, storedPiece);
+                        
+                        if (Board.instance.torokPiece)//
+                        {
+                            Board.instance.PlacePieceTorok(hit.transform, storedPiece);
+                        }
+                        else
+                        {
+                            Board.instance.PlacePiece(hit.transform, storedPiece);
+                        }
+
                         if(!Board.instance.torokPiece && storedPiece > -1)//place peice nd remove form inevtory
                         {
                             AlterPiece((InventoryPieces)storedPiece, -1);

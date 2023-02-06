@@ -257,6 +257,9 @@ MonoBehaviour:
   deploymentZoneList: []
   selectionIndicator: {fileID: 384240674}
   torokPiece: 0
+  pieceMats:
+  - {fileID: 2100000, guid: 5a163df751cb1594f91e4be709726495, type: 2}
+  - {fileID: 2100000, guid: 68378e1411217924e99d70fe3e98bc6b, type: 2}
   toughPlacer: 0
   lastChancePlacer: 0
   promotePlacer: 0
