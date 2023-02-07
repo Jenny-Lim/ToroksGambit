@@ -4,60 +4,157 @@ using UnityEngine;
 
 public class MinMax : MonoBehaviour
 {
+    public static MinMax instance;//static instance of this
+    private BoardAnalyzer analyzer = new BoardAnalyzer();
+    [SerializeField] private int maxDepth = 1;
+
+    //int numOfUndoCalled = 0;
+    //int numOfMovesCalled = 0;
+
+    int totalNumNodesLookedAt = 0;
+
+    private class ScoredMove {
+        public Move move;
+        public float score;
+
+        public ScoredMove(Move newMove, float newScore)
+        {
+            move = newMove;
+            score = newScore;
+        }
+    }
 
     public enum playerToMove
     {
         player, torok
     }
 
-    //the recursive wrapper for the minmax call
-    public void GetMinMaxMove(int maxDepth, playerToMove toMove)
+    public void Awake()
     {
-        int move = MinMaxRecursive(maxDepth, toMove, float.MaxValue, float.MinValue);   
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    //the recursive wrapper for the minmax call
+    public Move GetMinMaxMove(playerToMove toMove)
+    {
+        totalNumNodesLookedAt = 0;
+        //Debug.Log("AI: Looking for move...");
+        ScoredMove resultMove = MinMaxRecursive(maxDepth, toMove, float.MaxValue, float.MinValue);
+        //print(resultMove.move == null);
+        if (resultMove.move != null)
+        {
+            Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
+        }
+        //print("Moves " + numOfMovesCalled);
+        //print("Undos " + numOfUndoCalled);
+        print("Total Number of Nodes Searched: " + totalNumNodesLookedAt);
+        //print("Move history list count " + Board.instance.moveList.Count);
+        return resultMove.move;
     }
 
     //the recursive functionality of the minmax call
-    private int MinMaxRecursive(int depth, playerToMove whosMoving, float alpha, float beta)
+    private ScoredMove MinMaxRecursive(int depth, playerToMove whosMoving, float alpha, float beta)
     {
         //recursive termination
         if (depth == 0)
         {
-            return 0;
+            //print("Move List count: " + Board.instance.moveList.Count);
+            totalNumNodesLookedAt++;
+            return new ScoredMove(null, analyzer.Analyze(Board.pieceBoard));
         }
 
+        ScoredMove bestMove;//holder for the best/most likely move to make
 
         if (whosMoving == playerToMove.player)//max
         {
-            //best move value = negative infinity
-            //get moves for all player pieces
+           
+            List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
 
-            //for each move in available move list
-            //make move 
-            //recursive call
-            //undo move
+            //check if allavailableMoves has no moves
+            if (allAvailableMoves.Count < 1)
+            {
+                return new ScoredMove(null, float.NegativeInfinity);
+            }
 
-            //result equal to max of alpha and result
-            //if recursive result is greater or equal to beta
-            //break
+            bestMove = new ScoredMove(allAvailableMoves[0],  float.NegativeInfinity);//set best move score to be as low as possible);
+            //print("Amount of moves player moves available: " + allAvailableMoves.Count);
+
+
+            foreach (Move move in allAvailableMoves)
+            {
+                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+                //print("Move from MinMax Depth: " + (maxDepth - depth));
+                //numOfMovesCalled++;
+                ScoredMove recursiveResult = MinMaxRecursive(depth-1, playerToMove.torok, alpha , beta);//recursive call
+                Board.instance.UndoMove();//undo previous move
+                //print("Undo from MinMax Depth: " + (maxDepth - depth));
+                //numOfUndoCalled++;
+
+                if (recursiveResult.score > bestMove.score)//if subtree result is better make best move equal to that
+                {
+                    bestMove.move = move;
+                    bestMove.score = recursiveResult.score;
+                }
+
+                alpha = Mathf.Max(alpha, bestMove.score);//update alpha value if needed
+
+                /*if (beta <= alpha)//prune tree if applicable
+                {
+                    print("got into break");
+                    break;
+                }*/
+
+            }
         }
         else//min
         {
-            //best move value = positive infinity
-            //get moves for all torok pieces
+            List<Move> allAvailableMoves = Board.instance.GetAllMoves(true);// get list of all possible moves
 
-            //for each move in available move list
-            //make move 
-            //recursive call
-            //undo move
+            //check if allavailableMoves has no moves
+            if (allAvailableMoves.Count < 1)
+            {
+                return new ScoredMove(null, float.PositiveInfinity);
+            }
 
-            //result equal to min of beta and result
-            //if recursive result is less or equal to alpha
-            //break
+            bestMove = new ScoredMove(allAvailableMoves[0], float.PositiveInfinity);
+            //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
+            foreach (Move move in allAvailableMoves)
+            {
+                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+                //print("Move from MinMax Depth: " + (maxDepth - depth));
+                //numOfMovesCalled++;
+                ScoredMove recursiveResult = MinMaxRecursive(depth - 1, playerToMove.player, alpha, beta);//recursive call
+                Board.instance.UndoMove();//undo previous move
+                //print("Undo from MinMax Depth: " + (maxDepth - depth));
+                //numOfUndoCalled++;
+
+                if (recursiveResult.score < bestMove.score)// if subtree is better make best move equal to that
+                {
+                    bestMove.move = move;
+                    bestMove.score = recursiveResult.score;
+                }
+
+                beta = Mathf.Min(beta, bestMove.score);//update beta if needed
+
+                /*if (beta <= alpha)//prune tree if applicable
+                {
+                    print("got into break");
+                    break;
+                }*/
+
+            }
         }
 
 
         //return resulting move
-        return 0;
+        return bestMove;
+    }
 
+    public void SetNewDepth(int newDepth)
+    {
+        maxDepth = newDepth;
     }
 }

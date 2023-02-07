@@ -1,120 +1,163 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
+//create higher object for game. game manager
+//cant move to spot you start in
+//fix bug where it wont move after capturinig or when it cant capture
+
+//place piece on enemy piece
+//fix bug where it deletes friendly after clicking
+
+//inventory - text in corner of boxes for counter - ticker to set to torok pieces being set down
+//piece trait system
+
+//traits
+//Tough - cannot be captured by a pawn
+//Promote - when captured it is instead upgraded to a higher piece
+//last chance - if captured by equal or lower value then that piece is captured as well
+
+//rebuidling movepiece
 
 public class Board : MonoBehaviour
 {
-    public class UndoStorage
-    {
-        public int startX;
-        public int startY;
+    public static int boardSize = 8;//size of 2D array
+    [SerializeField] float boardVerticalOffset = 0.5f;//offset for board tiles vertically
+    [SerializeField] float verticalPlaceOffset = 0.5f;
 
-        public int endX;
-        public int endY;
+    private GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
-        public GameObject startObject;
-        public GameObject endObject;
-
-        public UndoStorage(int x1, int y1, int x2, int y2, GameObject object1, GameObject object2)
-        {
-            startX = x1;
-            startY = y1;
-            endX = x2;
-            endY = y2;
-            startObject = object1;
-            endObject = object2;
-        }
-
-        public void UpdateData(int x1, int y1, int x2, int y2, GameObject object1, GameObject object2)
-        {
-            startX = x1;
-            startY = y1;
-            endX = x2;
-            endY = y2;
-            startObject = object1;
-            endObject = object2;
-        }
-    }
-
-
-    [SerializeField]
-    private int boardSize = 8;//size of 2D array
-
-    private GameObject[,] hitBoxBoard;
-
-    private GameObject[,] pieceBoard;
+    public static GameObject[,] pieceBoard;//array for storing pieces and piece location -- made static (jenny)
 
     [SerializeField]
     private GameObject boardSquare;
 
+    [SerializeField] private GameObject[] boardTiles = new GameObject[2];
+
     [SerializeField]
     private GameObject chessPiece;
 
-    [SerializeField]
-    private Camera camera;
+    private Camera cam;
 
-    private GameObject storedPiece; 
+    private GameObject clickedPiece; 
 
-    private static UndoStorage[] undoStorage;
+    public List<Move> moveList = new List<Move>();
 
     private int undoCounter = 0;
 
-    private int pieceX;
-    private int pieceY;
+    private Vector3 boardPosition;
 
-    // Start is called before the first frame update
+    public bool canMove = false;
+
+    [SerializeField]
+    private Inventory inventoryScript;
+
+    [SerializeField] private float pieceMoveSpeed = 35f;//made by jordan, can change piece move speed easier
+
+    // made static -- jenny
+    private static int pieceX;
+    private static int pieceY;
+
+    [SerializeField] private GameObject[] piecePrefabs;//list of prefabs corresponding to indices in inventory storedPiece format (0 - pawn, 1 - knight, 2 - bishop, etc)
+    [SerializeField] private GameObject[] obstaclePrefabs;//list of obstacles, 0 -> wall, 1 -> hole
+
+    public static Board instance;//jordan, static ref to board
+    public List<Vector2> deploymentZoneList;//jordan, list of positions on the board that can be deployed on
+
+    [SerializeField] private GameObject selectionIndicator;// testing gameobject that floats above the selected piece for indication purposes 
+
+
+    public bool torokPiece = false;
+
+    private bool isLastchance;
+
+    private bool isPromote;
+
+    [SerializeField] private Material[] pieceMats = new Material[2];// 0 -> player piece color, 1 means torok piece color
+
+    //traits
+
+    public bool toughPlacer;
+    public bool lastChancePlacer;
+    public bool promotePlacer;
+
+    [SerializeField]
+    public TextMeshProUGUI text;
+
+    [SerializeField]
+    public TextMeshProUGUI toughText;
+
+    [SerializeField]
+    public TextMeshProUGUI lastChanceText;
+
+    [SerializeField]
+    public TextMeshProUGUI promoteText;
+
+    [SerializeField]
+    private GameObject toughButton;
+
+    [SerializeField]
+    private GameObject lastChanceButton;
+
+    [SerializeField]
+    private GameObject promoteButton;
+
+
+
+    // brought them up here
+    //private static int clickedX;
+    //private static int clickedY;
+
     void Start()
     {
+        if (instance == null) { instance = this; }//added by jordan for static reference to board for minmax
+        deploymentZoneList = new List<Vector2>();
+        boardPosition = transform.position;
+        cam = Camera.main;
         hitBoxBoard = new GameObject[boardSize,boardSize];
         pieceBoard = new GameObject[boardSize, boardSize];
-        undoStorage = new UndoStorage[20];
-        for(int i=0;i<20;i++)
-        {
-            undoStorage[i] = new UndoStorage(0,0,0,0,null,null);
-        }
-
-        Debug.Log(transform.position);
-
         BuildBoard();
-
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public void BoardUpdate()
     {
-        RaycastHit hit;
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        // print("in bvoard update");
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
         {
-
-        if (Physics.Raycast(ray, out hit)) 
-        {
-            Debug.Log(hit.transform.gameObject.name);
-            if(hit.transform.tag == "Chess Piece")
+            print("printing selected piece moves...");
+            foreach (Move move in clickedPiece.GetComponent<Piece>().moves)
             {
-                storedPiece = hit.transform.gameObject;
-
-                for(int i=0;i<boardSize;i++)
-                {
-                    for(int j=0;j<boardSize;j++)
-                    {
-                        if(hit.transform.gameObject == pieceBoard[i,j])
-                        {
-                            pieceX = i;
-                            Debug.Log(pieceX);
-                            pieceY = j;
-                            Debug.Log(pieceY);
-                        }
-                    }
-                }
-
+                print(move.DisplayMove());
             }
-            if(hit.transform.tag == "Chess Board" && storedPiece)
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            print("Printing internal board...");
+            PrintInternalPieceBoard();
+
+        }
+
+        RaycastHit hit;
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
+
+        if (Input.GetMouseButtonDown(0))//left click mouse to move pieces
+        {
+            int piecePlace = inventoryScript.GetStoredPiece();
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            
+            if((hit.transform.tag == "Chess Board" || hit.transform.tag == "Chess Piece") && clickedPiece)//if a piece is stored and another spot is chosen
             {
+                //Debug.Log("TEST");
                 int clickedX = 0;
                 int clickedY = 0;
+
+                //clickedX = 0;//position for second click
+                //clickedY = 0;
 
                 for(int i=0;i<boardSize;i++)
                 {
@@ -122,101 +165,899 @@ public class Board : MonoBehaviour
                     {
                         if(hit.transform.gameObject == hitBoxBoard[i,j])
                         {
-                            clickedX = i;
-                            Debug.Log(clickedX);
+                            clickedX = i;//get position of second spot
                             clickedY = j;
-                            Debug.Log(clickedY);
+                            
                         }
                     }
                 }
 
-                MovePiece(pieceX, pieceY, clickedX, clickedY);
-                storedPiece.transform.position = hit.transform.position + new Vector3(0,0,0);
+                GameObject tempPiece = pieceBoard[clickedX, clickedY];
+
+
+                    if (tempPiece)
+                    {
+                        Piece endPieceScript = tempPiece.GetComponent<Piece>();
+
+                        if (endPieceScript.lastChance)
+                        {
+                            isLastchance = true;
+                        }
+                    }
+
+                
+
+                //pieceBoard[clickedX, clickedY] = null;
+                //DisablePiece(tempPiece);
+                //print("pieceX of board :" + pieceX);
+                //print("pieceY of board :" + pieceY);
+                bool isValid = MoveValidator(pieceX, pieceY, clickedX, clickedY);
+
+                if(isLastchance)
+                {
+                    clickedPiece = null;
+                }
+
+                if(canMove & isValid)
+                {
+                        //DisablePiece(tempPiece);
+                        if(clickedPiece)
+                        {
+                            clickedPiece = pieceBoard[clickedX,clickedY];// <- is this redundant because of moveValidator, shouldnt that have already moved the piece?
+                            //MovePieceVisual(pieceX, pieceY, clickedX, clickedY, clickedPiece,false);
+                           //StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece,false));
+                        }
+                        else
+                        {
+                            //GameStateManager.EndTurn();
+                            isLastchance = false;
+                            isPromote = false;
+
+                        }
+                        GameStateManager.EndTurn();
+                    }
+                canMove = false;
+                clickedPiece = null;
+
+            }
+            else if (hit.transform.tag == "Chess Piece")//if mouse is clicked on chess piece
+            {
+
+                // Debug.Log("Piece");
+                GameObject tempPiece = hit.transform.gameObject;//removed the ,parent cuz i changed the hitbox to be on the highest level of the piece prefabs - jordan
+
+                Piece piece = tempPiece.GetComponent<Piece>(); 
+
+                //Debug.Log("CHOSEN PIECE TYPE: "+piece.type);
+
+                if(piece.promote)
+                {
+
+                }
+
+                if(!piece.isTorok)
+                {
+                    clickedPiece = hit.transform.gameObject;//store piece, same as above comment about prefabs
+
+                    // Debug.Log(hit.transform.parent.gameObject);
+
+                    for(int i=0;i<boardSize;i++)//doesnt appear to work, always returns as 0
+                    {
+                        for(int j=0;j<boardSize;j++)
+                        {
+                            if(hit.transform.gameObject == pieceBoard[i,j])//get position of piece in array, smae as the two above comments
+                            {
+                                pieceX = i;//store locations
+                                pieceY = j;
+                                    
+                            }
+                        }
+                    }
+                }
+
+                piece.UpdateMoves();
+
+                //signifier that piece is chosen
+                //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
 
             }
         }
+        else 
+        {
+                //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position - new Vector3(0, 5, 0), 10f * Time.deltaTime);
+                clickedPiece = null; 
         }
-        if (Input.GetMouseButtonDown(1))
+        }
+
+        if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
         {
             UndoMove();
-            RefreshVisualBoard();
         }
 
-
+        if (clickedPiece != null)//added by jordan to indicate what piece is clicked
+        {
+            selectionIndicator.transform.position = clickedPiece.transform.position + new Vector3(0.5f,0.5f,0f);
+        }
+        else
+        {
+            selectionIndicator.transform.position = new Vector3(-200f,0f,0f);
+        }
 
     }
 
-    private void BuildBoard()
+    public void PlacePiece(Transform boardSpot, int pieceId)
     {
+        //**should reformat this function cuz im sure there is some getComponent overlapping**
+
+        if (!boardSpot)
+        {
+            Debug.LogError("Trying to place piece, given piece transform was null");
+            return;
+        }
+
+        int placeX = -1;
+        int placeY = -1;
+        if (boardSpot.CompareTag("Chess Board"))
+        {
+            for (int i = 0; i < boardSize; i++)
+            {
+                for (int j = 0; j < boardSize; j++)
+                {
+                    if (boardSpot.gameObject == hitBoxBoard[i, j])//get position of piece in array
+                    {
+                        placeX = i;//store locations
+                        placeY = j;
+
+                    }
+                }
+            }
+
+            if (placeX == -1 && placeY == -1)
+            {
+                Debug.LogError("Error trying to place piece where piece already is.");
+                return;
+            }
+        }
+        else if (boardSpot.CompareTag("Chess Piece")) 
+        {
+            Piece getPosPiece = boardSpot.GetComponent<Piece>();
+            if (getPosPiece)
+            {
+                placeX = getPosPiece.pieceX;
+                placeY = getPosPiece.pieceY;
+            }
+        }
+
+        if (pieceBoard[placeX, placeY] != null && pieceId != -1)
+        {
+            Debug.LogError("Did not place piece because piece was already there");
+            return;
+        }
+
+        if (pieceId >= 0 && pieceId < 6)
+        {
+            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
+            Piece piece = newPiece.GetComponent<Piece>();
+
+            Debug.Log("placed piece type: "+piece.type);
+
+            if(torokPiece)
+            {
+                piece.isTorok = true;
+            }
+
+            if (toughPlacer)
+            {
+                piece.isTough = true;
+            }
+            if (lastChancePlacer)
+            {
+                piece.lastChance = true;
+            }
+            if (promotePlacer)
+            {
+                piece.promote = true;
+            }
+
+            piece.pieceX = placeX; 
+            piece.pieceY = placeY;
+        }
+        else if(pieceId > 5)
+        {
+            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(obstaclePrefabs[pieceId-6], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+        }
+        else 
+        {
+            //do any inventory stuff here
+            Destroy(pieceBoard[placeX, placeY]);
+            pieceBoard[placeX, placeY] = null;
+        }
+
+    }
+
+    public void PlacePiece(int xPos, int yPos, int pieceId)
+    {
+        //int pieceId = inventoryScript.GetStoredPiece();
+
+        if (pieceBoard[xPos, yPos] != null && pieceId != -1)
+        {
+            Debug.LogError("Error trying to place piece where piece already is.");
+            return;
+        }
+
+        if (pieceId >= 0)
+        {
+            GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos,yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
+            Piece piece = newPiece.GetComponent<Piece>();
+            piece.pieceX = xPos;
+            piece.pieceY = yPos;
+
+        }
+        else
+        {
+            //remove piece functionality
+            Destroy(pieceBoard[xPos, yPos]);
+            pieceBoard[xPos, yPos] = null;
+        }
+    }
+
+    public void PlacePieceTorok(int xPos, int yPos, int pieceId)
+    {
+        if (pieceBoard[xPos, yPos] != null)
+        {
+            //Debug.Log("Trace Stack for ");
+            Debug.LogError("Error trying to place piece where piece already is.");
+            return;
+        }
+
+        if (pieceId >= 0)
+        {
+            GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[1];//ik this is bad but whatever
+            Piece piece = newPiece.GetComponent<Piece>();
+            if (piece.type == Piece.PieceType.knight) {
+                print("get rotated nerd");
+                newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+
+            piece.pieceX = xPos;
+            piece.pieceY = yPos;
+            piece.isTorok = true;
+        }
+        else
+        {
+            Debug.LogError("Couldn't place piece: unrecognized pieceId");
+        }
+    }
+
+    public void PlacePieceTorok(Transform boardSpot, int pieceId)
+    {
+        //**should reformat this function cuz im sure there is some getComponent overlapping**
+
+        if (!boardSpot)
+        {
+            Debug.LogError("Trying to place piece, given piece transform was null");
+            return;
+        }
+
+        int placeX = -1;
+        int placeY = -1;
+        if (boardSpot.CompareTag("Chess Board"))
+        {
+            for (int i = 0; i < boardSize; i++)
+            {
+                for (int j = 0; j < boardSize; j++)
+                {
+                    if (boardSpot.gameObject == hitBoxBoard[i, j])//get position of piece in array
+                    {
+                        placeX = i;//store locations
+                        placeY = j;
+
+                    }
+                }
+            }
+
+            if (placeX == -1 && placeY == -1)
+            {
+                Debug.LogError("Error trying to place piece where piece already is.");
+                return;
+            }
+        }
+        else if (boardSpot.CompareTag("Chess Piece"))
+        {
+            Piece getPosPiece = boardSpot.GetComponent<Piece>();
+            if (getPosPiece)
+            {
+                placeX = getPosPiece.pieceX;
+                placeY = getPosPiece.pieceY;
+            }
+        }
+
+        if (pieceBoard[placeX, placeY] != null && pieceId != -1)
+        {
+            Debug.LogError("Did not place piece because piece was already there");
+            return;
+        }
+
+        if (pieceId >= 0)
+        {
+            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[1];//ik this is bad but whatever
+            Piece piece = newPiece.GetComponent<Piece>();
+            if (piece.type == Piece.PieceType.knight)
+            {
+                print("get rotated nerd");
+                newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            piece.isTorok = true;
+
+            Debug.Log("placed piece type: " + piece.type);
+
+            if (torokPiece)
+            {
+                piece.isTorok = true;
+            }
+
+            if (toughPlacer)
+            {
+                piece.isTough = true;
+            }
+            if (lastChancePlacer)
+            {
+                piece.lastChance = true;
+            }
+            if (promotePlacer)
+            {
+                piece.promote = true;
+            }
+
+            piece.pieceX = placeX;
+            piece.pieceY = placeY;
+        }
+        else
+        {
+            //do any inventory stuff here
+            Destroy(pieceBoard[placeX, placeY]);
+            pieceBoard[placeX, placeY] = null;
+        }
+
+    }
+
+    public void PlaceObstacle(int xPos, int yPos, int obstacleId)
+    {
+        if (obstacleId >= 0 && obstacleId < obstaclePrefabs.Length)
+        {
+            GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(obstaclePrefabs[obstacleId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate obstacle and place in pieceBoard location
+            Piece piece = newPiece.GetComponent<Piece>();
+            piece.pieceX = xPos;
+            piece.pieceY = yPos;
+        }
+        else
+        {
+            Debug.Log("Place Error| Could not place obstacle: obstacle ID not recognized");
+        }
+    }
+
+    private void BuildBoard()//generates hitbox for chess board
+    {
+        float boardOffset = ((float)boardSize)/2;
         for(int i=0;i<boardSize;i++)
         {
             for(int j=0;j<boardSize;j++)
             {
-                GameObject instance = Instantiate(boardSquare,(transform.position + new Vector3(i,0,j)), Quaternion.identity);
-                instance.gameObject.name = i + "_" + j;
-                hitBoxBoard[i, j] = instance;
-            }
+                GameObject newTile = null;
+                if ( (i+j) % 2 == 0)
+                {
+                    newTile = Instantiate(boardTiles[0], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset) , Quaternion.Euler(new Vector3(90f,0f,0f)), gameObject.transform);
+                }
+                else
+                {
+                    newTile = Instantiate(boardTiles[1], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                }
 
-            GameObject pieceInstance = Instantiate(chessPiece,(transform.position + new Vector3(i,0,0)), Quaternion.identity);
-            pieceInstance.gameObject.name = "chessPiece"; 
-            pieceBoard[i,0] = pieceInstance; 
+                newTile.gameObject.name = i + "_" + j;
+                hitBoxBoard[i, j] = newTile;
+            }
 
         }
         
     }
 
-    public void RefreshVisualBoard()
+    public bool MoveValidator(int pieceX, int pieceY, int endX, int endY)
     {
-        GameObject[] pieces;
-        pieces = GameObject.FindGameObjectsWithTag("Chess Piece");
-
-        foreach (GameObject piece in pieces)
+        //print("initX: " + pieceX + "initY: " + pieceY + "endX: " + endX + "endY: " + endY);
+        if (pieceBoard[pieceX, pieceY] == null)//guard clause if piece given is null
         {
-            Destroy(piece);
+            return false;
         }
 
-        for(int i = 0;i<boardSize;i++)
-        {
-            for(int j = 0;j<boardSize;j++)
-            {
-                if(pieceBoard[i,j])
-                {
+        //find type of piece
+        Piece pieceScript = pieceBoard[pieceX, pieceY].GetComponent<Piece>();
+       
+        pieceScript.pieceX = pieceX;
+        pieceScript.pieceY = pieceY;
 
-                    GameObject pieceInstance = Instantiate(pieceBoard[i,j], hitBoxBoard[i,j].transform.position, Quaternion.identity);
-                    pieceInstance.gameObject.name = "chessPiece";
-                    pieceBoard[i,j] = pieceInstance;
+        
+        pieceScript.UpdateMoves();
+
+        foreach (Move move in pieceScript.moves)
+        {
+            if ((move.endX == endX) && (move.endY == endY))
+            {
+                //print("Confirmed valid move");
+                //print("endX :" + endX + "endY: " + endY + " " + move.DisplayMove());
+                canMove = true;
+                MovePieceVisualTeleport(pieceX, pieceY, endX, endY);
+                MovePiece(pieceX, pieceY, endX, endY);
+                return true;
+            }
+        }
+       // print("move not valid");
+        return false;
+    }
+
+    
+    //input the X and Y of the piece being moved(startX and Y) and the X and Y of the spot being moved to(end X Y)
+    //if click impossible move then clear storedmove
+    //if click off bord then clear stored item
+    public void MovePiece(int startX, int startY, int endX, int endY)//take 2 positions to move a piece
+    {
+
+        //Debug.Log("movepiece called");
+        
+        bool willPromote = false;
+        bool lastChanceCheck = false;
+
+        bool movingTorok = false;
+        bool takingTorok = false;
+
+        bool movingPromote = false;
+        bool takenPromote = false;
+
+        bool movingTough = false;
+        bool takenTough = false;
+
+        bool movingLastChance = false;
+        bool takenLastChance = false;
+
+        int pieceIdMoving = 0;
+      
+        GameObject tempPiece = pieceBoard[startX, startY];
+        GameObject tempEndPiece = pieceBoard[endX, endY];
+        
+        if (tempPiece == null)
+        {
+            Debug.LogError("Given start piece position did not direct to an active piece.");
+            return;
+        }
+
+        Piece piece = pieceBoard[startX, startY].GetComponent<Piece>();
+
+        movingTough = piece.isTough;
+        movingPromote = piece.promote;
+        movingLastChance = piece.lastChance;
+
+        pieceIdMoving = (int)(piece.type) + 1;
+        if(piece.isTorok)
+        {
+            //Debug.Log("torok moving piece ID: " + pieceIdMoving);
+            movingTorok = true;
+        }
+
+
+        int pieceIdTaken = 0;
+        if (pieceBoard[endX, endY] != null)//if a piece is captured
+        {
+            Piece pieceForCaptureId = pieceBoard[endX, endY].GetComponent<Piece>();
+
+            takenTough = pieceForCaptureId.isTough;
+            takenPromote = pieceForCaptureId.promote;
+            takenLastChance = pieceForCaptureId.lastChance;
+
+            pieceIdTaken = (int)(pieceForCaptureId.type) + 1;
+            //print("taken ID " + pieceIdTaken);
+            if (pieceForCaptureId.isTorok)
+            {
+                takingTorok = true;
+            }
+            //Piece oldPiece = tempEndPiece.GetComponent<Piece>();
+
+            if (pieceForCaptureId.lastChance)//if piece being taken has last chance trait
+            {
+                if (piece.value <= pieceForCaptureId.value)
+                {
+                    lastChanceCheck = true;
                 }
+            }
+            if(piece.promote)//if piece taking has promote trait
+            {
+                willPromote = true;
+            }
+
+            Destroy(tempEndPiece);
+            pieceBoard[endX, endY] = null;
+        }
+
+
+
+        //stores move in a list so can be undone at any point
+        //moveList.Add(new Move(startX, startY, endX, endY, tempPiece, tempEndPiece, pieceIdTaken)); // moveList is a list of the moves done
+
+        undoCounter++;
+
+        bool oldIsTorok = piece.isTorok;
+        bool oldIsTough = piece.isTough;
+        bool oldLastChance = piece.lastChance;
+
+        moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, takenLastChance)); // moveList is a list of the moves done
+
+        if(willPromote && !lastChanceCheck)//if this piece captured another piece and has promotion
+        {
+            if(piece.type != Piece.PieceType.queen)
+            {
+                PlacePiece(endX,endY,pieceIdMoving);
+
+                Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
+                
+                endPiece.promote = willPromote;
+                endPiece.isTorok = oldIsTorok;
+                endPiece.isTough = oldIsTough;
+                endPiece.lastChance = oldLastChance;
+
+                endPiece.moved = true;// changes piece to say has moved
+                endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
+                endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
+
+                Destroy(pieceBoard[startX, startY]);
+                pieceBoard[startX, startY] = null;
+
+            }
+        }
+        else if(!lastChanceCheck)//if it doesnt have that, that being which was written above, this not being that, that wouldnt make sense cause this isnt that. This is this.
+        {
+            //Debug.Log("regular move");
+            //PlacePiece(endX,endY, pieceIdMoving-1);
+            pieceBoard[startX, startY].transform.position = hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset);
+            pieceBoard[endX, endY] = pieceBoard[startX, startY];
+            pieceBoard[startX, startY] = null;
+
+            Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
+                
+            endPiece.promote = willPromote;
+            endPiece.isTorok = oldIsTorok;
+            endPiece.isTough = oldIsTough;
+            endPiece.lastChance = oldLastChance;
+
+            endPiece.moved = true;// changes piece to say has moved
+            endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
+            endPiece.pieceY = endY;//alter x pos to new y pos for moved piece
+        }
+        else
+        {
+
+        }
+
+    }
+
+    public void MovePieceVisual(int startX, int startY, int endX, int endY, GameObject piece, bool promoteCheck)
+    {
+        //just moves in move now, but very fast
+
+        //have future plan for this
+
+        /*
+        Debug.Log("WILL THE VISUAL MOVE BE DONE: "+promoteCheck);
+        if(!promoteCheck)
+        {
+            StartCoroutine(VisualMovePiece(startX, startY,endX,endY, piece, promoteCheck));
+        }
+        */
+        //GameStateManager.EndTurn();//so that who ever's turn it is ends when the piece has finished moving
+        
+    }
+
+    public void MovePieceVisualTeleport(int startX, int startY, int endX, int endY)
+    {
+        Vector3 newPos = hitBoxBoard[endX, endY].transform.position;
+        newPos.y += verticalPlaceOffset;
+        pieceBoard[startX, startY].transform.position = newPos;
+
+
+    }
+
+    public void DisablePiece(GameObject piece)//is this even used anymore?
+    {
+        if (piece)
+        {
+            piece.SetActive(false);
+            //print("disabled piece");
+        }
+    }
+
+    //undoes most recent move
+    //repeatedly calling will undo moves until beggining
+    public void UndoMove()
+    {
+        //Debug.Log("Undo called");
+
+        //GameObject startingPiece = null;
+        GameObject endPiece = null;
+
+        if (moveList.Count < 1)
+        {
+            Debug.LogError("List is empty, no undo occurred");
+            return;
+        }
+
+
+
+        MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
+
+        pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
+        pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count    - 1].endY] = null;
+
+        
+        if (moveList[moveList.Count - 1].pieceTaken > 0)
+        {
+            if (!moveList[moveList.Count - 1].takenTorok)
+            {
+                PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceTaken - 1);
+            }
+            else if (moveList[moveList.Count - 1].takenTorok)
+            {
+                PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceTaken - 1);
+            }
+        }
+        
+
+        if(moveList[moveList.Count -1].pieceTaken > 0)
+        {
+            endPiece = pieceBoard[moveList[moveList.Count -1].endX, moveList[moveList.Count -1].endY];
+            Piece endScript = endPiece.GetComponent<Piece>();
+            endScript.isTough = moveList[moveList.Count -1].takenTough;
+            endScript.promote = moveList[moveList.Count -1].takenPromote;
+            endScript.lastChance = moveList[moveList.Count -1].takenLastChance;
+        }
+
+        moveList.RemoveAt(moveList.Count -1);
+
+        //undoCounter--;
+
+    }
+
+    public void UndoMoveVisual()//visually show undo moves
+    {
+        /*
+        if (moveList.Count < 1)//guard clause added by jordan to handle error that occurs when undostorage is empty:: delete this when you see it if its fine
+        {
+            return;
+        }
+        if (moveList[undoCounter - 1].startObject)
+        {
+            moveList[undoCounter - 1].startObject.SetActive(true);
+        }
+        if(moveList[undoCounter - 1].endObject)
+        {
+            moveList[undoCounter - 1].endObject.SetActive(true);
+        }
+        moveList[undoCounter-1].startObject.transform.position = hitBoxBoard[moveList[undoCounter-1].startX,moveList[undoCounter-1].startY].transform.position+(Vector3.up * verticalPlaceOffset);
+        if(moveList[undoCounter-1].endObject)
+        moveList[undoCounter-1].endObject.transform.position = hitBoxBoard[moveList[undoCounter-1].endX,moveList[undoCounter-1].endY].transform.position+ (Vector3.up * verticalPlaceOffset);
+        */
+        UndoMove();
+
+    }
+    //if click when movign it breaks
+    //fix this later
+    IEnumerator VisualMovePiece(int startX, int startY, int endX, int endY, GameObject piece, bool promoted)
+    {
+        //print("inside visualMove");
+        if(promoted)
+        {
+            Debug.Log("was promoted");
+        }
+        piece = pieceBoard[endX,endY];
+
+            while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset)) > 0.1f)
+            {
+                Debug.Log("running");
+                piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset), pieceMoveSpeed * Time.deltaTime);
+                yield return null;
+            }
+            piece.transform.position = hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset);
+
+        //print("visual move has ended");
+    }
+
+    public static GameObject[,] GetPieceBoard()
+    {
+        return pieceBoard;
+    }
+
+    public static int GetSize()
+    {
+        return boardSize;
+    }
+
+    //added by jordan to get all moves on the board of a certain player
+    public List<Move> GetAllMoves(bool toroksPieces)//true is torrok
+    {
+        List<Move> returnArray = new List<Move>();
+
+        for (int i = 0; i < boardSize; i++)//go through board array
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (pieceBoard[i,j] == null) continue;//if piece doesnt exist skip
+                if (!pieceBoard[i,j].activeInHierarchy) { continue; }// might be able to remove this once the deactivate captured piece thing is resolved, depending on how that is done
+
+                Piece piece = pieceBoard[i,j].GetComponent<Piece>();
+
+                if (toroksPieces && piece.isTorok)//looking for toroks pieces and is toroks piece
+                {
+                    piece.UpdateMoves();
+                    returnArray.AddRange(piece.moves);
+                }
+                else if (!toroksPieces && !piece.isTorok)//looking for players pieces and is players piece
+                {
+                    piece.UpdateMoves();
+                    returnArray.AddRange(piece.moves);
+                }
+                
+            }
+        }
+
+        return returnArray;
+    } 
+
+    //returns the location of a gameobject inside the pieceboard if it exists, or -1,-1 if it doesnt
+    public Vector2Int GetPieceLocation(GameObject piece)
+    {
+        if (piece == null) { return new Vector2Int(-1, -1); }//guard clause
+
+        for (int i = 0; i < boardSize; i ++)//find piece in matrix
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (pieceBoard[i,j] == null) { continue; }//if no piece in spot move on
+
+                if (piece == pieceBoard[i,j])//return piece if ref match
+                {
+                    return new Vector2Int(i, j);
+                }
+            }
+        }
+        return new Vector2Int(-1, -1);
+    }
+
+    public static bool isSameteam(GameObject chessPiece, GameObject chessPiece2)
+    {
+        if (!chessPiece || !chessPiece2) { return false; }
+
+        Piece piece1 = chessPiece.GetComponent<Piece>();
+        Piece piece2 = chessPiece2.GetComponent<Piece>();
+
+        if (!piece1 || !piece2) { return false; }
+
+
+        return (piece1.isTorok && piece2.isTorok) || (!piece1.isTorok && !piece2.isTorok);
+    }
+
+    public void ClearBoard()
+    {
+        for (int i = 0; i < boardSize; i++)
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (pieceBoard[i,j] == null) { continue; }
+
+                Destroy(pieceBoard[i,j]);
+                pieceBoard[i,j] = null;
             }
         }
 
     }
 
-
-    public void MovePiece(int startX, int startY, int endX, int endY)
+    public void TorokPlacementButton()
+{
+    if(torokPiece)
     {
-        GameObject tempPiece = pieceBoard[startX, startY];
-        GameObject tempEndPiece = pieceBoard[endX, endY];
-        undoCounter++;
-        undoStorage[undoCounter].UpdateData(startX, startY, endX, endY, tempPiece, tempEndPiece);
+        torokPiece = false;
+        text.text = "Placing Player";
 
-        pieceBoard[endX,endY] = tempPiece;
-        pieceBoard[startX, startY] = tempEndPiece;
-        //take original position
+        if(toughPlacer)
+        {
+            ToughButtonSet();
+        }
+        if(lastChancePlacer)
+        {
+            LastChanceButtonSet();
+        }
+        if(promotePlacer)
+        {
+            PromoteButtonSet();
+        }
 
-        //place gameobject at new position
-
-        //update board state
+        toughButton.SetActive(false);
+        lastChanceButton.SetActive(false);
+        promoteButton.SetActive(false);
 
 
     }
+    else if(!torokPiece)
+    {
+        torokPiece = true;
+        text.text = "Placing Torok";
 
-    public void UndoMove()
-    { 
-        pieceBoard[undoStorage[undoCounter].startX,undoStorage[undoCounter].startY] = undoStorage[undoCounter].startObject;
-        pieceBoard[undoStorage[undoCounter].endX,undoStorage[undoCounter].endY] = undoStorage[undoCounter].endObject;
+        toughButton.SetActive(true);
+        lastChanceButton.SetActive(true);
+        promoteButton.SetActive(true);
+    }
+}
 
-        undoCounter--;
+    public void ToughButtonSet()
+    {   
+        if(toughPlacer)
+        {
+            toughText.text = "Tough Deactivated";
+            toughPlacer = false;
+        }
+        else
+        {
+            toughText.text = "Tough Activated";
+            toughPlacer = true;
+        }
+    } 
+
+    public void LastChanceButtonSet()
+    {
+        if(lastChancePlacer)
+        {
+            lastChanceText.text = "Last Chance Deactivated";
+            lastChancePlacer = false;
+        }
+        else
+        {
+            lastChanceText.text = "Last Chance Activated";
+            lastChancePlacer = true;
+        }
     }
 
+    public void PromoteButtonSet()
+    {
+        if (promotePlacer)
+        {
+            promoteText.text = "Promote Deactivated";
+            promotePlacer = false;
+        }
+        else
+        {
+            promoteText.text = "Promote Activated";
+            promotePlacer = true;
+        }
+    }
+
+    public void PrintInternalPieceBoard()
+    {
+        string resultLine = "";
+        for (int i = boardSize-1; i > -1; i--)
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                if (pieceBoard[j,i] != null)
+                {
+                    resultLine += " " + (int)pieceBoard[j,i].GetComponent<Piece>().type;
+                }
+                else
+                {
+                    resultLine += " -";
+                }
+            }
+            print(resultLine);
+            resultLine = "";
+        }
+    }
 }
 

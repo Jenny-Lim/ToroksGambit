@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Chess Board
   - Chess Piece
+  - StoreStock
+  - Inventory
   layers:
   - Default
   - TransparentFX
