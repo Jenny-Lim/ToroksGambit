@@ -33,10 +33,10 @@ public class GameStateManager : MonoBehaviour
     private void Start()
     {
         
-        if (BoardLoader.instance.savedBoardNames.Contains("Demo"))
-        {
+        //if (BoardLoader.instance.savedBoardNames.Contains("Demo"))
+        //{
             BoardLoader.instance.LoadBoard("Demo");
-        }
+        //}
         
         
     }
