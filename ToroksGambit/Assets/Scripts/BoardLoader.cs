@@ -43,18 +43,28 @@ public class BoardLoader : MonoBehaviour
 
     public void LoadBoard(string boardName)
     {
+        if (!File.Exists(Application.streamingAssetsPath + "/" + fileName))
+        {
+            Debug.LogError("No file found at location " + Application.streamingAssetsPath + "/" + fileName);
+            return;
+        }
+
         Debug.Log("Attempt loading board with name " + boardName);
 
         Board.instance.ClearBoard();
-
+        FileStream fs = null;
+        StreamReader reader = null;
         try
         {
-            StreamReader reader = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
+            fs = new FileStream(Application.streamingAssetsPath + "/" + fileName, FileMode.Open, FileAccess.Read);
+            reader = new StreamReader(fs);
             string line = "";
 
-            while (line != boardName)
+            //Debug.Log("find start");
+            while (line.CompareTo(boardName) != 0)
             {
                 line = reader.ReadLine();
+                print(line);
                 if (reader.EndOfStream)
                 {
                     Debug.LogError("Did not find saved board with given name " + boardName);
@@ -69,9 +79,11 @@ public class BoardLoader : MonoBehaviour
 
             line = reader.ReadLine();
 
-            while (line != boardEndText)
+            //Debug.Log("Load to end");
+            while (line.CompareTo(boardEndText) != 0)
             {
                 string[] lines = line.Split(char.Parse(","));// will seperate line into mutliple strings, [0] = pieceId, [1] = xPos, [2] = yPos, [3] = isTorok
+                print("Lines length: " + lines.Length);
                 if (Convert.ToBoolean(lines[3]))//if is torok piece
                 {
                     Board.instance.PlacePieceTorok(int.Parse(lines[1]), int.Parse(lines[2]), int.Parse(lines[0]));
@@ -82,13 +94,18 @@ public class BoardLoader : MonoBehaviour
                 }
                 line = reader.ReadLine();
             }
-
-            reader.Close();
+            //Debug.Log("reached end");
         }
-        catch (Exception)
-        {
+        catch (Exception e)
+        { 
+            Debug.Log(e.Message);
             Debug.LogError("File Error | Couldn't open file path " + Application.streamingAssetsPath + "/" + fileName);
             return;
+        }
+        finally
+        {
+            if (fs != null) { fs.Close(); }
+            if (reader != null) { reader.Close(); }
         }
 
         Debug.Log("Finished loading board with name " + boardName);
@@ -98,11 +115,21 @@ public class BoardLoader : MonoBehaviour
     public void WriteCurrentBoard(string givenName)
     {
         Debug.Log("Attempting board write.");
+        DeleteSavedBoard(boardName);
+        StreamWriter writer = null;
+        FileStream fs = null;
         try
         {
-            DeleteSavedBoard(boardName);
-
-            StreamWriter writer = new StreamWriter(Application.streamingAssetsPath + "/" + fileName, append: true);
+            if (File.Exists(Application.streamingAssetsPath + "/" + fileName))
+            {
+                fs = new FileStream(Application.streamingAssetsPath + "/" + fileName, FileMode.Append, FileAccess.Write);
+            }
+            else
+            {
+                fs = new FileStream(Application.streamingAssetsPath + "/" + fileName, FileMode.OpenOrCreate, FileAccess.Write);
+            }
+            
+            writer = new StreamWriter(fs);
 
             writer.WriteLine(boardStartText);
             writer.WriteLine(givenName);
@@ -140,14 +167,23 @@ public class BoardLoader : MonoBehaviour
             Debug.LogError("File Error | Couldn't open file path " + Application.streamingAssetsPath + "/" + fileName);
             return;
         }
+        finally
+        {
+            if (fs != null) { fs.Dispose(); }
+            if (writer != null) { writer.Close();}
+        }
 
         Debug.Log("Board write completed to " + Application.streamingAssetsPath + fileName + ".");
     }
 
     public void DeleteSavedBoard(string name)
     {
+        StreamReader reader = null;
+        StreamWriter writer = null;
+        FileStream fs = null;
         try {
-            StreamReader reader = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
+            fs = new FileStream(Application.streamingAssetsPath + "/" + fileName, FileMode.Open, FileAccess.ReadWrite);
+            reader = new StreamReader(fs);
 
             if (reader.BaseStream.Length <= 0)
             {
@@ -173,6 +209,7 @@ public class BoardLoader : MonoBehaviour
                 lineNumber++;
                 line = reader.ReadLine();
             }
+            //print("found at " + lineNumber);
             startLine = lineNumber - 1;
 
             while (line.CompareTo(boardEndText) != 0)//find where board name ends
@@ -186,7 +223,7 @@ public class BoardLoader : MonoBehaviour
                 lineNumber++;
                 line = reader.ReadLine();
             }
-            endLine = lineNumber + 1;
+            endLine = lineNumber;//+1
 
             if (endLine < 0 || startLine < 0)// if either is not found, return
             {
@@ -195,21 +232,31 @@ public class BoardLoader : MonoBehaviour
                 return;
             }
 
-            Debug.Log("Found start at line " + startLine + " and end at line " + endLine);
+            //Debug.Log("Found start at line " + startLine + " and end at line " + endLine);
             reader.Close();
 
 
             //****CREATE A STRING THAT HAS ALL DATA BUT DATA TO BE REPALCED****
             reader = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
-            print("getting whole file");
+            //print("getting whole file");
             string wholeFile = reader.ReadToEnd();
 
             string[] fileByLine = wholeFile.Split("\n");
+
+            /*for (int i = 0; i < fileByLine.Length; i++)
+            {
+                if (fileByLine[i].CompareTo("\n") == 0)
+                {
+                    print("newline at " + i);
+                }
+            }*/
 
             string resultString = "";
 
             for (int i = 0; i < fileByLine.Length; i++)
             {
+                if (fileByLine[i].CompareTo("\n") == 0) { continue;  }
+
                 if (i < startLine || i > endLine)
                 {
                     resultString += fileByLine[i];
@@ -219,26 +266,33 @@ public class BoardLoader : MonoBehaviour
             reader.Close();
 
             //****WRITE RESULTING STRING INTO FILE****
-            StreamWriter writer = new StreamWriter(Application.streamingAssetsPath + "/" + fileName);
+            writer = new StreamWriter(Application.streamingAssetsPath + "/" + fileName);
 
-            writer.WriteLine(resultString);
-
-            writer.Close();
+            writer.Write(resultString);
 
 
         }
         catch (Exception e) {
+
             Debug.Log(e.Message);
             Debug.LogError("Error opening file to delete saved board");
+            
         }
-
+        finally {
+            if (writer != null) { writer.Close(); }
+            if (reader != null) { reader.Close(); }
+        }
         
+
     }
 
     public List<string> GetAllSavedBoardNames()
     {
         List<string> returnList = new List<string>();
-
+        if (!File.Exists(Application.streamingAssetsPath + "/" + fileName))
+        {
+            return new List<string>();
+        }
         try
         {
             StreamReader reader = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
@@ -263,5 +317,10 @@ public class BoardLoader : MonoBehaviour
         }
 
         return returnList;
+    }
+
+    public string GetBoardName()
+    {
+        return boardName;
     }
 }

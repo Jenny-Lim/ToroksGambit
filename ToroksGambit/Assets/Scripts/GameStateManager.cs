@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+//using OpenCover.Framework.Model;
 using UnityEngine;
+using System.IO;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -33,7 +32,12 @@ public class GameStateManager : MonoBehaviour
 
     private void Start()
     {
-        BoardLoader.instance.LoadBoard("Demo");
+        
+        if (BoardLoader.instance.savedBoardNames.Contains("Demo"))
+        {
+            BoardLoader.instance.LoadBoard("Demo");
+        }
+        
         
     }
 
