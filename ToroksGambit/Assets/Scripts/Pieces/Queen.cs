@@ -29,6 +29,13 @@ public class Queen : Piece
         MovesAdd(0, 1);
         MovesAdd(0, -1);
 
+        //and a bishop
+
+        MovesAdd(1, 1);
+        MovesAdd(-1, -1);
+        MovesAdd(1, -1);
+        MovesAdd(-1, 1);
+
     }
 
 }
