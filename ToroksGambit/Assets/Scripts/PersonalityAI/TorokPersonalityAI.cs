@@ -13,12 +13,15 @@ public class TorokPersonalityAI : MonoBehaviour
     private SoundLibrary library;
     private AudioSource audioPlayer;
 
+    public TorokPersonalityAI instance;
+
     private void IncreaseAngerLevel() { 
         library.LoadDialogue(++currentAngerLevel);//increment anger level and reload dialogue
     }
 
     private void Start()
     {
+        if (instance == null) { instance = this; }
         audioPlayer = GetComponent<AudioSource>();
         library = new SoundLibrary();
 
