@@ -23,6 +23,7 @@ public class SoundLibrary
     private List<AudioClip>[] masterDialogueList;
     private const int maxAngerLevels = 5;
     private string[] angerLevelFilePath = new string[maxAngerLevels];
+    private string[] categoryNames;
 
     public SoundLibrary()
     {
@@ -32,7 +33,9 @@ public class SoundLibrary
     private void InitLibrary()
     {
         //create master dialogue lists
-        masterDialogueList = new List<AudioClip>[Enum.GetNames(typeof(Categories)).Length];
+        categoryNames = Enum.GetNames(typeof(Categories));
+                
+        masterDialogueList = new List<AudioClip>[categoryNames.Length];
         for (int i = 0; i < masterDialogueList.Length; i++)
         {
             masterDialogueList[i] = new List<AudioClip>();
@@ -44,16 +47,40 @@ public class SoundLibrary
             angerLevelFilePath[i] = "AngerLevel" + (i+1);
         }
 
+        
+
     }
 
     public void LoadDialogue(int angerLevel)
     {
-        
-        UnityEngine.Object[] clips = Resources.LoadAll(angerLevelFilePath[angerLevel - 1], typeof(AudioClip));
-
-        foreach (UnityEngine.Object obj in clips)
+        //clear lists
+        for (int i = 0; i < masterDialogueList.Length; i++)
         {
-            masterDialogueList[angerLevel-1].Add(obj as AudioClip);
+            masterDialogueList[i].Clear();
+        }
+
+
+        //load new sound clips into lists
+        for (int masterIndex = 0; masterIndex  < masterDialogueList.Length; masterIndex++)//index of masterDialogueList
+        {
+            for (int categoryIndex = 0; categoryIndex < categoryNames.Length; categoryIndex++)//index of category file 
+            {
+                //get all the clips from the target file
+                UnityEngine.Object[] clips = Resources.LoadAll(angerLevelFilePath[angerLevel - 1] + "/Level" + angerLevel + categoryNames[categoryIndex], typeof(AudioClip));
+
+                //add them to the list
+                foreach (UnityEngine.Object clip in clips)
+                {
+                    masterDialogueList[masterIndex].Add(clip as AudioClip);
+                }
+
+                //unload the resource
+                for (int i = 0; i < clips.Length; i++)
+                {
+                    Resources.UnloadAsset(clips[i]);
+                }
+            }
+            
         }
         
     }

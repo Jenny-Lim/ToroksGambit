@@ -22,7 +22,7 @@ public class TorokPersonalityAI : MonoBehaviour
 
         library.LoadDialogue(currentAngerLevel);
 
-        PlaySoundFromCategory(SoundLibrary.Categories.LevelIntro);
+        PlaySoundFromCategory(SoundLibrary.Categories.MiscAngry);
     }
 
     private void PlaySoundFromCategory(SoundLibrary.Categories from)
@@ -33,10 +33,10 @@ public class TorokPersonalityAI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("j"))
+        /*if (Input.GetKeyDown("j"))
         {
             PlaySoundFromCategory(SoundLibrary.Categories.LevelIntro);
-        }
+        }*/
         
     }
 }
