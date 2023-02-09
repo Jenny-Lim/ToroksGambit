@@ -39,6 +39,7 @@ public class BoardLoader : MonoBehaviour
         {
             instance = this;
         }
+        savedBoardNames = GetAllSavedBoardNames();
     }
 
     public void LoadBoard(string boardName)
