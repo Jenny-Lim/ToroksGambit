@@ -11,8 +11,8 @@ public class SoundLibrary
         LevelIntro,
         LosesPiece,
         TakesPiece,
-        MakesGoodMove,
-        MakesBadMove,
+        MakesGoodMove,//player makes good move
+        MakesBadMove,//player makes "bad" move
         Idle,
         ObjectiveQuip,
         MiscFunny,
@@ -20,25 +20,48 @@ public class SoundLibrary
         Misc
     }
 
-    private List<List<AudioClip>> masterDialogueList;
+    private List<AudioClip>[] masterDialogueList;
+    private const int maxAngerLevels = 5;
+    private string[] angerLevelFilePath = new string[maxAngerLevels];
 
-    private void Start() {
-        masterDialogueList = new List<List<AudioClip>>(Enum.GetNames(typeof(Categories)).Length);
+    public SoundLibrary()
+    {
+        InitLibrary();
+    }
 
-        for (int i = 0; i < masterDialogueList.Count; i++)
+    private void InitLibrary()
+    {
+        //create master dialogue lists
+        masterDialogueList = new List<AudioClip>[Enum.GetNames(typeof(Categories)).Length];
+        for (int i = 0; i < masterDialogueList.Length; i++)
         {
             masterDialogueList[i] = new List<AudioClip>();
         }
+
+        //create anger level string list
+        for (int i = 0; i < angerLevelFilePath.Length; i++)
+        {
+            angerLevelFilePath[i] = "AngerLevel" + (i+1);
+        }
+
     }
 
-    private void LoadDialogue(int angerLevel)
+    public void LoadDialogue(int angerLevel)
     {
+        
+        UnityEngine.Object[] clips = Resources.LoadAll(angerLevelFilePath[angerLevel - 1], typeof(AudioClip));
 
+        foreach (UnityEngine.Object obj in clips)
+        {
+            masterDialogueList[angerLevel-1].Add(obj as AudioClip);
+        }
+        
     }
 
-    //returns 
     public AudioClip GetAudioClip(Categories from)
     {
-        return null;
+        //Debug.Log("list count: " + masterDialogueList[(int)from].C);
+        int rand = (int)UnityEngine.Random.Range(0, masterDialogueList[(int)from].Count-0.01f);
+        return masterDialogueList[(int)from][rand];
     }
 }

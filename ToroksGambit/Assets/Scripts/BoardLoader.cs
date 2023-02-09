@@ -83,7 +83,7 @@ public class BoardLoader : MonoBehaviour
             while (line.CompareTo(boardEndText) != 0)
             {
                 string[] lines = line.Split(char.Parse(","));// will seperate line into mutliple strings, [0] = pieceId, [1] = xPos, [2] = yPos, [3] = isTorok
-                print("Lines length: " + lines.Length);
+                
                 if (Convert.ToBoolean(lines[3]))//if is torok piece
                 {
                     Board.instance.PlacePieceTorok(int.Parse(lines[1]), int.Parse(lines[2]), int.Parse(lines[0]));
