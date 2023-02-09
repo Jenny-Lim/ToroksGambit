@@ -2937,7 +2937,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e383233d5ca74094d8923f6edfb80a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAngerLevel: 1
+  currentAngerLevel: 3
+  dialogLikelyhoodByCategory:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
 --- !u!82 &784873684
 AudioSource:
   m_ObjectHideFlags: 0

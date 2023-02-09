@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class SoundLibrary
@@ -59,29 +60,29 @@ public class SoundLibrary
             masterDialogueList[i].Clear();
         }
 
-
-        //load new sound clips into lists
-        for (int masterIndex = 0; masterIndex  < masterDialogueList.Length; masterIndex++)//index of masterDialogueList
+        //load audio clips from resources into dialogueList
+        for (int categoryIndex = 0; categoryIndex < categoryNames.Length; categoryIndex++)
         {
-            for (int categoryIndex = 0; categoryIndex < categoryNames.Length; categoryIndex++)//index of category file 
+            //get audioClips from resources
+            string path = angerLevelFilePath[angerLevel - 1] + "/Level" + angerLevel + categoryNames[categoryIndex];
+            UnityEngine.Object[] clips = Resources.LoadAll(path , typeof(AudioClip));
+
+            //put clips into dialogueList
+            foreach (UnityEngine.Object clip in clips)
             {
-                //get all the clips from the target file
-                UnityEngine.Object[] clips = Resources.LoadAll(angerLevelFilePath[angerLevel - 1] + "/Level" + angerLevel + categoryNames[categoryIndex], typeof(AudioClip));
-
-                //add them to the list
-                foreach (UnityEngine.Object clip in clips)
-                {
-                    masterDialogueList[masterIndex].Add(clip as AudioClip);
-                }
-
-                //unload the resource
-                for (int i = 0; i < clips.Length; i++)
-                {
-                    Resources.UnloadAsset(clips[i]);
-                }
+                masterDialogueList[categoryIndex].Add(clip as AudioClip);
             }
-            
+
+            //unload resources
+            for (int i = 0; i < clips.Length; i++)
+            {
+                Resources.UnloadAsset(clips[i]);
+            }
         }
+
+
+        
+        
         
     }
 

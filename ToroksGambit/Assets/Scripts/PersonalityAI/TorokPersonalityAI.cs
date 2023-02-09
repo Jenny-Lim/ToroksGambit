@@ -7,6 +7,8 @@ using UnityEngine;
 public class TorokPersonalityAI : MonoBehaviour
 {
     [SerializeField] private int currentAngerLevel = 1;
+    [Range(0f, 1f)]
+    [SerializeField] private float[] dialogLikelyhoodByCategory = new float[10];
 
     private SoundLibrary library;
     private AudioSource audioPlayer;
@@ -17,26 +19,15 @@ public class TorokPersonalityAI : MonoBehaviour
 
     private void Start()
     {
-        audioPlayer= GetComponent<AudioSource>();
+        audioPlayer = GetComponent<AudioSource>();
         library = new SoundLibrary();
 
         library.LoadDialogue(currentAngerLevel);
-
-        PlaySoundFromCategory(SoundLibrary.Categories.MiscAngry);
     }
 
     private void PlaySoundFromCategory(SoundLibrary.Categories from)
     {
         audioPlayer.clip = library.GetAudioClip(from);
         audioPlayer.Play();
-    }
-
-    private void Update()
-    {
-        /*if (Input.GetKeyDown("j"))
-        {
-            PlaySoundFromCategory(SoundLibrary.Categories.LevelIntro);
-        }*/
-        
     }
 }
