@@ -13,7 +13,7 @@ public class TorokPersonalityAI : MonoBehaviour
     private SoundLibrary library;
     private AudioSource audioPlayer;
 
-    public TorokPersonalityAI instance;
+    public static TorokPersonalityAI instance;
 
     private void IncreaseAngerLevel() { 
         library.LoadDialogue(++currentAngerLevel);//increment anger level and reload dialogue
