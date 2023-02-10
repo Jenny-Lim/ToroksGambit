@@ -8,6 +8,8 @@ public class MinMax : MonoBehaviour
     private BoardAnalyzer analyzer = new BoardAnalyzer();
     [SerializeField] private int maxDepth = 1;
 
+    private List<ScoredMove> scoredMoves = new List<ScoredMove>();
+
     //int numOfUndoCalled = 0;
     //int numOfMovesCalled = 0;
 
@@ -36,6 +38,50 @@ public class MinMax : MonoBehaviour
             instance = this;
         }
     }
+
+
+    // jenny start -- these aren't called on rn
+    private void ScoreMoves(List<Move> allAvailableMoves) // could have score in move, could have score in scored move, could sort before, could sort during, could even sort as we put moves into their list
+    {
+        //List<ScoredMove> scoredMoves = new List<ScoredMove>();
+        float score;
+        foreach (Move m in allAvailableMoves)
+        {
+            if (m.pieceTaken == 0)
+            {
+                score = analyzer.Analyze(Board.pieceBoard);
+            }
+            else // if capturing
+            {
+                score = (m.pieceTaken - m.pieceMoving) + (m.pieceTaken / 5); // formula may have 'conflicts' idk yet--also i think toroks score would have to be negative to be better for him so *-1?
+            }
+
+            scoredMoves.Add(new ScoredMove(m, score));
+        }
+        //scoredMoves.Sort((x, y) => y.score.CompareTo(x.score));
+        //return scoredMoves;
+    }
+
+    private void PickMove(int startIndex) // have yet to thonk about it more because im very tired today.
+                                          // if we're lucky this just works (its supposed to be a sort as we go thru the tree, so we dont necessarily have to sort everything)
+    {
+        for (int i = startIndex + 1; i > scoredMoves.Count; i++)
+        {
+            if (scoredMoves[i].score > scoredMoves[startIndex].score)
+            {
+                Swap(startIndex, i);
+            }
+        }
+    }
+
+    private void Swap(int startIndex, int i)
+    {
+        ScoredMove temp = scoredMoves[startIndex];
+        scoredMoves[startIndex] = scoredMoves[i];
+        scoredMoves[i] = temp;
+    }
+    //jenny end
+
 
     //the recursive wrapper for the minmax call
     public Move GetMinMaxMove(playerToMove toMove)
@@ -73,6 +119,11 @@ public class MinMax : MonoBehaviour
            
             List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
 
+            // clear scoredMoves
+            //scoredMoves.Clear();
+            // score moves
+            //ScoreMoves(allAvailableMoves); // from here on out, would use scoredMoves if i go with this implementation
+
             //check if allavailableMoves has no moves
             if (allAvailableMoves.Count < 1)
             {
@@ -85,6 +136,9 @@ public class MinMax : MonoBehaviour
 
             foreach (Move move in allAvailableMoves)
             {
+                // pick move
+                //PickMove(i);
+
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
                 //print("Move from MinMax Depth: " + (maxDepth - depth));
                 //numOfMovesCalled++;
@@ -107,11 +161,17 @@ public class MinMax : MonoBehaviour
                     break;
                 }*/
 
+
             }
         }
         else//min
         {
             List<Move> allAvailableMoves = Board.instance.GetAllMoves(true);// get list of all possible moves
+
+            // clear scoredMoves
+            //scoredMoves.Clear();
+            // score moves
+            //ScoreMoves(allAvailableMoves); // from here on out, would use scoredMoves if i go with this implementation
 
             //check if allavailableMoves has no moves
             if (allAvailableMoves.Count < 1)
@@ -123,6 +183,9 @@ public class MinMax : MonoBehaviour
             //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
             foreach (Move move in allAvailableMoves)
             {
+                // pick move
+                //PickMove(i);
+
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
                 //print("Move from MinMax Depth: " + (maxDepth - depth));
                 //numOfMovesCalled++;
