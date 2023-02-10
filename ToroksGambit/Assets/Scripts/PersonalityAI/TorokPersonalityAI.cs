@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
 //this class handles torok dialog and anaimation selection
 public class TorokPersonalityAI : MonoBehaviour
 {

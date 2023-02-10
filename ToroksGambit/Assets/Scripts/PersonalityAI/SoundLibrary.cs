@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class SoundLibrary
@@ -47,9 +46,6 @@ public class SoundLibrary
         {
             angerLevelFilePath[i] = "AngerLevel" + (i+1);
         }
-
-        
-
     }
 
     public void LoadDialogue(int angerLevel)
