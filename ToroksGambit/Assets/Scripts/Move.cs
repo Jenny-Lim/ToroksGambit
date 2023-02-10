@@ -30,10 +30,13 @@ public class Move
     public bool movingLastChance;
     public bool takenLastChance;
 
+    public bool setFirstMove;
+    public bool takenPieceSetFirstMove;
+
     public float score = 0f;
         
 
-    public Move(int x1, int y1, int x2, int y2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck, bool mPro, bool tPro, bool mTough, bool tTough, bool mLC, bool tLC)
+    public Move(int x1, int y1, int x2, int y2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck, bool mPro, bool tPro, bool mTough, bool tTough, bool mLC, bool tLC, bool moveCheck, bool takenMoveCheck)
     {
         startX = x1;
         startY = y1;
@@ -53,6 +56,9 @@ public class Move
 
         movingLastChance = mLC;
         takenLastChance = tLC;
+
+        setFirstMove = moveCheck;
+        takenPieceSetFirstMove = takenMoveCheck;
 
         score = GetScore(pieceTaken, pieceMoving); // jenny
 

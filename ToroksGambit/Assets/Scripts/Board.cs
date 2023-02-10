@@ -622,6 +622,8 @@ public class Board : MonoBehaviour
         bool movingLastChance = false;
         bool takenLastChance = false;
 
+        bool takenPieceMoved = false;
+
         int pieceIdMoving = 0;
       
         GameObject tempPiece = pieceBoard[startX, startY];
@@ -652,9 +654,11 @@ public class Board : MonoBehaviour
         {
             Piece pieceForCaptureId = pieceBoard[endX, endY].GetComponent<Piece>();
 
+
             takenTough = pieceForCaptureId.isTough;
             takenPromote = pieceForCaptureId.promote;
             takenLastChance = pieceForCaptureId.lastChance;
+            takenPieceMoved = pieceForCaptureId.moved;
 
             pieceIdTaken = (int)(pieceForCaptureId.type) + 1;
             //print("taken ID " + pieceIdTaken);
@@ -690,8 +694,9 @@ public class Board : MonoBehaviour
         bool oldIsTorok = piece.isTorok;
         bool oldIsTough = piece.isTough;
         bool oldLastChance = piece.lastChance;
+        
 
-        moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, lastChanceCheck)); // moveList is a list of the moves done
+        moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, lastChanceCheck, piece.moved, takenPieceMoved)); // moveList is a list of the moves done
 
         if(willPromote && !lastChanceCheck)//if this piece captured another piece and has promotion
         {
@@ -701,7 +706,15 @@ public class Board : MonoBehaviour
 
                 Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
                 
-                endPiece.promote = willPromote;
+                if(piece.type == Piece.PieceType.rook)
+                {
+                    endPiece.promote = false;
+                }
+                else
+                {
+                    endPiece.promote = willPromote;
+                }
+
                 endPiece.isTorok = oldIsTorok;
                 endPiece.isTough = oldIsTough;
                 endPiece.lastChance = oldLastChance;
@@ -715,7 +728,7 @@ public class Board : MonoBehaviour
 
             }
         }
-        else if(!lastChanceCheck)//if it doesnt have that, that being which was written above, this not being that, that wouldnt make sense cause this isnt that. This is this.
+        else if(!lastChanceCheck)
         {
             //Debug.Log("regular move");
             //PlacePiece(endX,endY, pieceIdMoving-1);
@@ -725,10 +738,10 @@ public class Board : MonoBehaviour
 
             Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
                 
-            endPiece.promote = willPromote;
-            endPiece.isTorok = oldIsTorok;
-            endPiece.isTough = oldIsTough;
-            endPiece.lastChance = oldLastChance;
+            //endPiece.promote = willPromote;
+            //endPiece.isTorok = oldIsTorok;
+            //endPiece.isTough = oldIsTough;
+            //endPiece.lastChance = oldLastChance;
 
             endPiece.moved = true;// changes piece to say has moved
             endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
@@ -796,21 +809,26 @@ public class Board : MonoBehaviour
         {
             PlacePiece(moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY, moveList[moveList.Count - 1].pieceMoving - 1);
         }
-        else if (moveList[moveList.Count - 1].movingPromote)
+        else if (moveList[moveList.Count - 1].promoted)
         {
-            Debug.Log("demoted moving piece");
-
+            Destroy(pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]);
+            pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
+            PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceMoving - 1);
+            MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
+            pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
+            pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;            
         }
         else
         {
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
+            pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
+            pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
         }
 
 
 
 
-        pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
-        pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
+
 
         
         if (moveList[moveList.Count - 1].pieceTaken > 0)
@@ -833,7 +851,19 @@ public class Board : MonoBehaviour
             endScript.isTough = moveList[moveList.Count -1].takenTough;
             endScript.promote = moveList[moveList.Count -1].takenPromote;
             endScript.lastChance = moveList[moveList.Count -1].takenLastChance;
+            endScript.moved = moveList[moveList.Count -1].takenPieceSetFirstMove;
         }
+
+        Piece startPosPiece = pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY].GetComponent<Piece>();
+
+        if(moveList[moveList.Count - 1].promoted || moveList[moveList.Count - 1].takenLastChance)
+        {
+            startPosPiece.isTough = moveList[moveList.Count -1].movingTough;
+            startPosPiece.promote = moveList[moveList.Count -1].movingPromote;
+            startPosPiece.lastChance = moveList[moveList.Count -1].movingLastChance;
+        }
+
+        startPosPiece.moved = moveList[moveList.Count - 1].setFirstMove;
 
         moveList.RemoveAt(moveList.Count -1);
 
