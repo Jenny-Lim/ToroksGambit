@@ -12,6 +12,7 @@ public class GameStateManager : MonoBehaviour
         shop
     }
 
+    private BaseCondition baseCondition;
 
     private static bool isPlayersTurn = true;
     [SerializeField] private static int turnCount = 1;//the amount of moves/turns that have happened in the current game
@@ -104,7 +105,7 @@ public class GameStateManager : MonoBehaviour
         InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.AfterTurn);
         turnCount++;
         isPlayersTurn = !isPlayersTurn;
-        
+        //check win condition
     }
 
     public static int GetTurnCount()
