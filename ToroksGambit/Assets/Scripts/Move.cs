@@ -29,6 +29,8 @@ public class Move
 
     public bool movingLastChance;
     public bool takenLastChance;
+
+    public float score = 0f;
         
 
     public Move(int x1, int y1, int x2, int y2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck, bool mPro, bool tPro, bool mTough, bool tTough, bool mLC, bool tLC)
@@ -52,6 +54,8 @@ public class Move
         movingLastChance = mLC;
         takenLastChance = tLC;
 
+        score = GetScore(pieceTaken, pieceMoving); // jenny
+
     }
 
     public Move(int x1, int y1, int x2, int y2, GameObject object1, GameObject object2)//constructor without the need for pieceTaken data
@@ -64,6 +68,10 @@ public class Move
         endObject = object2;
     }
 
+    private float GetScore(int pieceTaken, int pieceMoving)
+    {
+        return (pieceTaken - pieceMoving) + (pieceTaken * 0.2f); // jenny
+    }
 
     public string DisplayMove()
     {
