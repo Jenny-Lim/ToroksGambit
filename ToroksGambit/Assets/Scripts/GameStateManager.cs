@@ -105,7 +105,7 @@ public class GameStateManager : MonoBehaviour
         InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.AfterTurn);
         turnCount++;
         isPlayersTurn = !isPlayersTurn;
-        
+        //check win condition
     }
 
     public static int GetTurnCount()

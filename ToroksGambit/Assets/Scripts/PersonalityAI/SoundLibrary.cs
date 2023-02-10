@@ -80,7 +80,6 @@ public class SoundLibrary
 
     public AudioClip GetAudioClip(Categories from)
     {
-        //Debug.Log("list count: " + masterDialogueList[(int)from].C);
         int rand = (int)UnityEngine.Random.Range(0, masterDialogueList[(int)from].Count-0.01f);
         return masterDialogueList[(int)from][rand];
     }
