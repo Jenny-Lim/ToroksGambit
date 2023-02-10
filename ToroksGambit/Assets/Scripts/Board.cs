@@ -691,7 +691,7 @@ public class Board : MonoBehaviour
         bool oldIsTough = piece.isTough;
         bool oldLastChance = piece.lastChance;
 
-        moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, takenLastChance)); // moveList is a list of the moves done
+        moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, lastChanceCheck)); // moveList is a list of the moves done
 
         if(willPromote && !lastChanceCheck)//if this piece captured another piece and has promotion
         {
@@ -736,7 +736,8 @@ public class Board : MonoBehaviour
         }
         else
         {
-
+            Destroy(pieceBoard[startX, startY]);
+            pieceBoard[startX, startY] = null;
         }
 
     }
@@ -791,12 +792,25 @@ public class Board : MonoBehaviour
             return;
         }
 
+        if (moveList[moveList.Count - 1].takenLastChance)
+        {
+            PlacePiece(moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY, moveList[moveList.Count - 1].pieceMoving - 1);
+        }
+        else if (moveList[moveList.Count - 1].movingPromote)
+        {
+            Debug.Log("demoted moving piece");
+
+        }
+        else
+        {
+            MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
+        }
 
 
-        MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
+
 
         pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
-        pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count    - 1].endY] = null;
+        pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
 
         
         if (moveList[moveList.Count - 1].pieceTaken > 0)
