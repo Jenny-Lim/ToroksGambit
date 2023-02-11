@@ -954,7 +954,22 @@ public class Board : MonoBehaviour
         }
 
         return returnArray;
-    } 
+    }
+
+    public List<Move> GetCapturingMoves(List<Move> moves) // wait i need to rewrite this sort of
+    {
+        List<Move> capturingMoves = new List<Move>();
+
+        foreach (Move m in moves)
+        {
+            if (m.capturedPiece != -1)
+            {
+                capturingMoves.Add(m);
+            }
+        }
+
+        return capturingMoves;
+    }
 
     //returns the location of a gameobject inside the pieceboard if it exists, or -1,-1 if it doesnt
     public Vector2Int GetPieceLocation(GameObject piece)

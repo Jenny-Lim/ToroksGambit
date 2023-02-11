@@ -38,22 +38,7 @@ public class MinMax : MonoBehaviour
     }
 
 
-    // jenny start -- these aren't called on rn, still doing
-
-    private List<Move> GetCapturingMoves(List<Move> allAvailableMoves) // wait i need to rewrite this sort of
-    {
-        List<Move> capturingMoves = new List<Move>();
-
-        foreach (Move m in allAvailableMoves)
-        {
-            if (m.pieceTaken != 0)
-            {
-                capturingMoves.Add(m);
-            }
-        }
-
-        return capturingMoves;
-    }
+    // jenny start -- this isnt called on rn, still doing
 
     private void PickMove(ref List<Move> allAvailableMoves, int startIndex) // supposed to sort as we go through the moves in minmax, so we dont sort unnescessarily?? - need to test
     {

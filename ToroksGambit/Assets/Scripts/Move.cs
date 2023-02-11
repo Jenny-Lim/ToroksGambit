@@ -34,6 +34,8 @@ public class Move
     public bool takenPieceSetFirstMove;
 
     public float score = 0f;
+    public int capturedPiece = -1; // this is null
+    public int capturingPiece = -1;
         
 
     public Move(int x1, int y1, int x2, int y2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck, bool mPro, bool tPro, bool mTough, bool tTough, bool mLC, bool tLC, bool moveCheck, bool takenMoveCheck)
@@ -62,7 +64,7 @@ public class Move
 
     }
 
-    public Move(int x1, int y1, int x2, int y2, GameObject object1, GameObject object2)//constructor without the need for pieceTaken data
+    public Move(int x1, int y1, int x2, int y2, GameObject object1, GameObject object2, int capturedPiece, int capturingPiece)//constructor without the need for pieceTaken data
     {
         startX = x1;
         startY = y1;
@@ -70,19 +72,21 @@ public class Move
         endY = y2;
         startObject = object1;
         endObject = object2;
+        this.capturedPiece = capturedPiece;
+        this.capturingPiece = capturingPiece;
     }
 
     void Awake()
     {
-        if (pieceTaken != 0) // i need to see if the move is a taking move actually
+        if (capturedPiece != -1) // i need to see if the move is a taking move actually
         {
-            score = GetScore(pieceTaken, pieceMoving);
+            score = GetScore(capturedPiece, capturingPiece);
         }
     }
 
-    private float GetScore(int pieceTaken, int pieceMoving)
+    private float GetScore(int capturedPiece, int capturingPiece)
     {
-        return (pieceTaken - pieceMoving) + (pieceTaken * 0.2f);
+        return (capturedPiece - capturingPiece) + (capturedPiece * 0.2f);
     }
 
     public string DisplayMove()
