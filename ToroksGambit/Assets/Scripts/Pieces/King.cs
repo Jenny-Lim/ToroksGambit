@@ -26,7 +26,7 @@ public class King : Piece
         if (InBoundsCheck(pieceX + 1, pieceY + 1))
         {
             clearResult = ClearCheck(pieceX + 1, pieceY + 1);
-            if (clearResult == 0 || clearResult == 3)
+            if (clearResult == 0 || clearResult == 3) // if its 3 then do the thing
             {
                 moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + 1]));
             }
