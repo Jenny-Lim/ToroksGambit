@@ -102,7 +102,6 @@ public class MinMax : MonoBehaviour
             bestMove = new ScoredMove(allAvailableMoves[0],  float.NegativeInfinity);//set best move score to be as low as possible);
             //print("Amount of moves player moves available: " + allAvailableMoves.Count);
 
-            //int i = 0;
             foreach (Move move in allAvailableMoves)
             {
                 // pick move
@@ -129,7 +128,6 @@ public class MinMax : MonoBehaviour
                     print("got into break");
                     break;
                 }*/
-                //i++;
 
             }
         }
@@ -145,7 +143,6 @@ public class MinMax : MonoBehaviour
 
             bestMove = new ScoredMove(allAvailableMoves[0], float.PositiveInfinity);
             //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
-            //int i = 0;
             foreach (Move move in allAvailableMoves)
             {
                 // pick move
@@ -172,7 +169,6 @@ public class MinMax : MonoBehaviour
                     print("got into break");
                     break;
                 }*/
-                //i++;
             }
         }
 
