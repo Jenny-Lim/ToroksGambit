@@ -60,8 +60,6 @@ public class Move
         setFirstMove = moveCheck;
         takenPieceSetFirstMove = takenMoveCheck;
 
-        score = GetScore(pieceTaken, pieceMoving); // jenny
-
     }
 
     public Move(int x1, int y1, int x2, int y2, GameObject object1, GameObject object2)//constructor without the need for pieceTaken data
@@ -74,9 +72,17 @@ public class Move
         endObject = object2;
     }
 
+    void Awake()
+    {
+        if (pieceTaken != 0) // i need to see if the move is a taking move actually
+        {
+            score = GetScore(pieceTaken, pieceMoving);
+        }
+    }
+
     private float GetScore(int pieceTaken, int pieceMoving)
     {
-        return (pieceTaken - pieceMoving) + (pieceTaken * 0.2f); // jenny
+        return (pieceTaken - pieceMoving) + (pieceTaken * 0.2f);
     }
 
     public string DisplayMove()

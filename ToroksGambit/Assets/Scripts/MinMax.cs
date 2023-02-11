@@ -38,9 +38,9 @@ public class MinMax : MonoBehaviour
     }
 
 
-    // jenny start -- these aren't called on rn
+    // jenny start -- these aren't called on rn, still doing
 
-    private List<Move> GetCapturingMoves(List<Move> allAvailableMoves) // 'ere ya go
+    private List<Move> GetCapturingMoves(List<Move> allAvailableMoves) // wait i need to rewrite this sort of
     {
         List<Move> capturingMoves = new List<Move>();
 
@@ -55,7 +55,7 @@ public class MinMax : MonoBehaviour
         return capturingMoves;
     }
 
-    private void PickMove(ref List<Move> allAvailableMoves, ref int startIndex) // supposed to sort as we go through the moves in minmax, so we dont sort unnescessarily?? - need to test
+    private void PickMove(ref List<Move> allAvailableMoves, int startIndex) // supposed to sort as we go through the moves in minmax, so we dont sort unnescessarily?? - need to test
     {
         for (int i = startIndex + 1; i > allAvailableMoves.Count; i++)
         {
@@ -117,7 +117,7 @@ public class MinMax : MonoBehaviour
             bestMove = new ScoredMove(allAvailableMoves[0],  float.NegativeInfinity);//set best move score to be as low as possible);
             //print("Amount of moves player moves available: " + allAvailableMoves.Count);
 
-
+            //int i = 0;
             foreach (Move move in allAvailableMoves)
             {
                 // pick move
@@ -144,7 +144,7 @@ public class MinMax : MonoBehaviour
                     print("got into break");
                     break;
                 }*/
-
+                //i++;
 
             }
         }
@@ -160,6 +160,7 @@ public class MinMax : MonoBehaviour
 
             bestMove = new ScoredMove(allAvailableMoves[0], float.PositiveInfinity);
             //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
+            //int i = 0;
             foreach (Move move in allAvailableMoves)
             {
                 // pick move
@@ -186,7 +187,7 @@ public class MinMax : MonoBehaviour
                     print("got into break");
                     break;
                 }*/
-
+                //i++;
             }
         }
 

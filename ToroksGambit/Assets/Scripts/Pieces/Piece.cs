@@ -235,7 +235,7 @@ public class Piece : MonoBehaviour
                     return;
                 }
 
-                else if (clearResult == 3) // if spot is capturable
+                else if (clearResult == 3) // if spot is capturable -- need to score these ones + add to the capture list
                 {
                     moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)]));
                     return;
