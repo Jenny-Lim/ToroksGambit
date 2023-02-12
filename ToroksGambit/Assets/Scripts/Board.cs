@@ -103,6 +103,9 @@ public class Board : MonoBehaviour
     [SerializeField]
     private GameObject promoteButton;
 
+    private bool playerInCheck;//set if player is in check <- needs to be implemented
+    private bool torokInCheck;//set if torok is in check <- needs to be implemented
+
 
 
     // brought them up here
@@ -918,6 +921,27 @@ public class Board : MonoBehaviour
     public static GameObject[,] GetPieceBoard()
     {
         return pieceBoard;
+    }
+
+    public bool InCheckMate(bool lookingAtTorok)//if false, looking if player is in check, if true looking if torok is in check
+    {
+        if (lookingAtTorok)
+        {
+            if (torokInCheck && GetAllMoves(lookingAtTorok).Count <= 0)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            if (playerInCheck && GetAllMoves(lookingAtTorok).Count <= 0)
+            {
+                return true;
+            }
+        }
+
+
+        return false;
     }
 
     public static int GetSize()

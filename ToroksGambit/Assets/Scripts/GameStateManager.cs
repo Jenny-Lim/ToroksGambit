@@ -13,6 +13,7 @@ public class GameStateManager : MonoBehaviour
     }
 
     private BaseCondition baseCondition;
+    private static BaseCondition.Condition mostRecentWinCheckResult = BaseCondition.Condition.None;
 
     private static bool isPlayersTurn = true;
     [SerializeField] private static int turnCount = 1;//the amount of moves/turns that have happened in the current game
