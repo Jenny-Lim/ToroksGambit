@@ -3252,7 +3252,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Regular
+  m_text: Infinite = false
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5682,9 +5682,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 61773101}
-        m_TargetAssemblyTypeName: Board, Assembly-CSharp
-        m_MethodName: TorokPlacementButton
+      - m_Target: {fileID: 2078189510}
+        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+        m_MethodName: InfiniteButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7131,6 +7131,7 @@ MonoBehaviour:
   - {fileID: 629531653}
   - {fileID: 1736862272}
   - {fileID: 899630775}
+  infiniteText: {fileID: 856318472}
 --- !u!1001 &2125050320
 PrefabInstance:
   m_ObjectHideFlags: 0
