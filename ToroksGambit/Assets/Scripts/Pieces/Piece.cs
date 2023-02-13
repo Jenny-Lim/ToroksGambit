@@ -68,7 +68,7 @@ public class Piece : MonoBehaviour
         return true;
     }
 
-    public virtual int ClearCheck(int endX, int endY) // for new vers, only need the end params and it should return int
+    public virtual int ClearCheck(int endX, int endY) // for new vers, only need the end params and it should return int -- does this even still need to be virtual
     {
         if (pieceBoard[endX, endY] != null)
         {
@@ -93,7 +93,7 @@ public class Piece : MonoBehaviour
     } // ClearCheck
 
 
-    public void MovesAdd(int directionX, int directionY)
+    public virtual void MovesAdd(int directionX, int directionY) // made virtual
     {
         for (int i = 1; i < Board.boardSize; i++)
         {
@@ -103,7 +103,7 @@ public class Piece : MonoBehaviour
 
                 if (clearResult == 0) // if spot is empty
                 {
-                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)]));
+                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], -1, -1));
                 }
                 else if (clearResult == 1) // if spot is wall / same color
                 {
@@ -112,8 +112,9 @@ public class Piece : MonoBehaviour
 
                 else if (clearResult == 3) // if spot is capturable -- need to score these ones + add to the capture list
                 {
-                    //moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], pieceBoard[pieceX, pieceY].type, pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)].type));
-                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)]));
+                    Piece p = pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)].GetComponent<Piece>();
+                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], (int)this.type, (int)p.type));
+                    //moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)]));
                     return;
                 }
 
