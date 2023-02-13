@@ -20,6 +20,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private int[] maxHeldPieces = new int[5];//the maximum number of each piece the player can have
     private int[] heldPieces = new int[5];//the amount of each piece the player has
     [SerializeField] private float ghostPieceVertOffset = -0.05f;
+    private bool infinitePieces = false;
 
     public void ShowInventoryPanel()
     {
@@ -48,6 +49,8 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
 
     [SerializeField] private TextMeshProUGUI[] pieceCountText;
+
+    [SerializeField] private TextMeshProUGUI infiniteText;
 
     public void Start()
     {
@@ -183,27 +186,63 @@ public class Inventory : MonoBehaviour
 
     public void PawnButtonClicked()
     {
-        storedPiece = 0;
+        if(heldPieces[0] > 0 || infinitePieces)
+        {
+            storedPiece = 0;
+        }
+        else
+        {
+            Debug.Log("no pawns in inventory");
+        }
+
     }
 
     public void KnightButtonClicked()
     {
-        storedPiece = 1;
+        if(heldPieces[1] > 0 || infinitePieces)
+        {
+            storedPiece = 1;
+        }
+        else
+        {
+            Debug.Log("no knights in inventory");
+        }    
     }
 
     public void BishopButtonClicked()
     {
-        storedPiece = 2;
+        if(heldPieces[2] > 0 || infinitePieces)
+        {
+            storedPiece = 2;
+        }
+        else
+        {
+            Debug.Log("no bishops in inventory");
+        }   
     }
 
     public void RookButtonClicked()
     {
-        storedPiece = 3;
+        if(heldPieces[3] > 0 || infinitePieces)
+        {
+            storedPiece = 3;
+        }
+        else
+        {
+            Debug.Log("no rooks in inventory");
+        }   
     }
 
     public void QueenButtonClicked()
     {
-        storedPiece = 4;
+        if(heldPieces[4] > 0 || infinitePieces)
+        {
+            storedPiece = 4;
+        }
+        else
+        {
+            Debug.Log("no queens in inventory");
+        }   
     }
 
     public void RemoveButtonClicked()
@@ -291,4 +330,19 @@ public class Inventory : MonoBehaviour
     {
         startButton.SetActive(true);
     }
+
+    public void InfiniteButton()
+    {
+        if(infinitePieces)
+        {
+            infinitePieces = false;
+            infiniteText.text = "Infinite = false";
+        }
+        else
+        {
+            infinitePieces = true;
+            infiniteText.text = "Infinite = true";
+        }
+    }
+
 }
