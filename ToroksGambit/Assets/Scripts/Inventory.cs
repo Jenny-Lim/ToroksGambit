@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private int[] maxHeldPieces = new int[5];//the maximum number of each piece the player can have
     private int[] heldPieces = new int[5];//the amount of each piece the player has
     [SerializeField] private float ghostPieceVertOffset = -0.05f;
-    private bool infinitePieces = false;
+    private bool infinitePieces = true;
 
     public void ShowInventoryPanel()
     {
@@ -335,7 +335,7 @@ public class Inventory : MonoBehaviour
     {
         if(infinitePieces)
         {
-            infinitePieces = false;
+            infinitePieces = true;
             infiniteText.text = "Infinite = false";
         }
         else
