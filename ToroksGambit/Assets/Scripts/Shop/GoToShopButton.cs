@@ -12,7 +12,7 @@ public class GoToShopButton : MonoBehaviour
     private TextMeshProUGUI t;
     private Button b;
     private bool canShop;
-
+    [SerializeField] private GameObject piecePanels;
     void Start()
     {
         t = gameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -40,6 +40,7 @@ public class GoToShopButton : MonoBehaviour
 
             //shop.SetActive(canShop);
             //wallet.SetActive(canShop);
+            piecePanels.SetActive(canShop);
         }
         else
         {
