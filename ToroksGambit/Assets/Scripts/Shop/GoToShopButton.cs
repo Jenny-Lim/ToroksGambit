@@ -38,8 +38,8 @@ public class GoToShopButton : MonoBehaviour
 
             }
 
-            shop.SetActive(canShop);
-            wallet.SetActive(canShop);
+            //shop.SetActive(canShop);
+            //wallet.SetActive(canShop);
         }
         else
         {
