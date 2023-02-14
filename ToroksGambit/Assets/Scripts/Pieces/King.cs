@@ -90,7 +90,7 @@ public class King : Piece
         int clearResult;
         if (InBoundsCheck(endX, endY))
         {
-            clearResult = ClearCheck(pieceX + 1, pieceY + 1);
+            clearResult = ClearCheck(endX, endY);
             if (pieceBoard[endX, endY] != null)
             {
                 Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
@@ -100,10 +100,14 @@ public class King : Piece
                     {
                         moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], (int)this.type, (int)p.type));
                     }
-                    else if (clearResult == 0)
-                    {
-                        moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], -1, -1));
-                    }
+                }
+            }
+
+            else
+            {
+                if (clearResult == 0)
+                {
+                    moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], -1, -1));
                 }
             }
         }

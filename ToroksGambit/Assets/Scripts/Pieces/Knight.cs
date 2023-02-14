@@ -37,7 +37,11 @@ public class Knight : Piece
         //    if (clearResult == 3) // if its 3 then do the thing
         //    {
         //        //moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + 2]));
-        //        moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + 2], this.type, pieceBoard[pieceX + 1, pieceY + 2].type));
+        //        Piece p = pieceBoard[pieceX + 1, pieceY + 2].GetComponent<Piece>();
+        //        if (p != null)
+        //        {
+        //            moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + 2], (int)this.type, (int)p.type));
+        //        }
         //    }
         //    else if (clearResult == 0)
         //    {
@@ -50,8 +54,12 @@ public class Knight : Piece
         //    clearResult = ClearCheck(pieceX + 2, pieceY + 1);
         //    if (clearResult == 3)
         //    {
-        //        //moves.Add(new Move(pieceX, pieceY, pieceX + 2, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 2, pieceY + 1]));
-        //        moves.Add(new Move(pieceX, pieceY, pieceX + 2, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 2, pieceY + 1], this.type, pieceBoard[pieceX + 2, pieceY + 1].type));
+        //        Piece p = pieceBoard[pieceX + 1, pieceY + 2].GetComponent<Piece>();
+        //        if (p != null)
+        //        {
+        //            //moves.Add(new Move(pieceX, pieceY, pieceX + 2, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 2, pieceY + 1]));
+        //            moves.Add(new Move(pieceX, pieceY, pieceX + 2, pieceY + 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 2, pieceY + 1], (int)this.type, (int)p.type));
+        //        }
         //    }
         //    else if (clearResult == 0)
         //    {
@@ -64,7 +72,7 @@ public class Knight : Piece
         //    clearResult = ClearCheck(pieceX - 1, pieceY - 2);
         //    if (clearResult == 3)
         //    {
-        //        moves.Add(new Move(pieceX, pieceY, pieceX - 1, pieceY - 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY - 2], this.type, pieceBoard[pieceX - 1, pieceY - 2].type));
+        //        moves.Add(new Move(pieceX, pieceY, pieceX - 1, pieceY - 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY - 2], (int)this.type, (int)pieceBoard[pieceX - 1, pieceY - 2].type));
         //    }
         //    else if (clearResult == 0)
         //    {
@@ -77,7 +85,11 @@ public class Knight : Piece
         //    clearResult = ClearCheck(pieceX - 2, pieceY - 1);
         //    if (clearResult == 0 || clearResult == 3)
         //    {
-        //        moves.Add(new Move(pieceX, pieceY, pieceX - 2, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 2, pieceY - 1]));
+        //        moves.Add(new Move(pieceX, pieceY, pieceX - 2, pieceY - 1, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 2, pieceY - 1], ));
+        //    }
+        //    else if ()
+        //    {
+
         //    }
         //}
 
@@ -122,7 +134,7 @@ public class Knight : Piece
     public override void MovesAdd(int endX, int endY)
     {
         int clearResult;
-        if (InBoundsCheck(endX, endY)) 
+        if (InBoundsCheck(endX, endY))
         {
             clearResult = ClearCheck(endX, endY);
             if (pieceBoard[endX, endY] != null)
@@ -134,13 +146,16 @@ public class Knight : Piece
                     {
                         moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], (int)this.type, (int)p.type));
                     }
-                    else if (clearResult == 0)
-                    {
-                        moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], -1, -1));
-                    }
+                }
+            }
+
+            else
+            {
+               if (clearResult == 0) {
+                    moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], -1, -1));
                 }
             }
         }
     }
-
 }
+
