@@ -96,9 +96,24 @@ public class GameStateManager : MonoBehaviour
                 break;
         }
 
-        //win condition checks
-        //progress condition
-        //check if win condition found
+        if (currentState == GameState.game)
+        {
+            //win condition checks
+            if (winCondition != null)
+            {
+                winCondition.ProgressConditionState();
+                mostRecentWinCheckResult = winCondition.IsWinCondition();
+            }
+
+            if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
+            {
+                Debug.Log("Player has won.");
+            }
+            else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
+            {
+                Debug.Log("Torok has won.");
+            }
+        }
     }
 
     public void ChangeGameState(GameState newState)
