@@ -18,6 +18,10 @@ public class PhysicalShop : MonoBehaviour
     private GameObject[] shopPieceModels;
     private int[] pieceType;
 
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         pieceType = new int[8];
