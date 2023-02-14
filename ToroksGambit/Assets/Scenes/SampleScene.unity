@@ -3615,7 +3615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardName: Test Board
   savedBoardNames:
-  - Demo
+  - Test Board
 --- !u!4 &775294861
 Transform:
   m_ObjectHideFlags: 0
@@ -6702,10 +6702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d34927b332bffa4c9bbb70412716e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelInterrupts:
-  - {fileID: 11400000, guid: 08a69f902a3228a4b8ce52082377bcc6, type: 2}
-  - {fileID: 11400000, guid: 058fe34c030d8824d9c6ab1feccc9528, type: 2}
-  - {fileID: 11400000, guid: f0e5f6819054a614d808de3d08f05e5d, type: 2}
+  levelInterrupts: []
 --- !u!1 &1360170052
 GameObject:
   m_ObjectHideFlags: 0
@@ -7200,6 +7197,7 @@ MonoBehaviour:
   - {fileID: 1360170052}
   - {fileID: 805089303}
   - {fileID: 494754912}
+  c: {fileID: 963194229}
 --- !u!1 &1477407502
 GameObject:
   m_ObjectHideFlags: 0
@@ -9244,8 +9242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0537fa70c3efb3e4fb040cc1e820074a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winCondition: {fileID: 0}
-  currentState: 0
+  winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
+  currentState: 1
 --- !u!4 &1925806816
 Transform:
   m_ObjectHideFlags: 0
