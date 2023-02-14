@@ -3,23 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-//create higher object for game. game manager
-//cant move to spot you start in
-//fix bug where it wont move after capturinig or when it cant capture
-
-//place piece on enemy piece
-//fix bug where it deletes friendly after clicking
-
-//inventory - text in corner of boxes for counter - ticker to set to torok pieces being set down
-//piece trait system
-
-//traits
-//Tough - cannot be captured by a pawn
-//Promote - when captured it is instead upgraded to a higher piece
-//last chance - if captured by equal or lower value then that piece is captured as well
-
-//rebuidling movepiece
-
 public class Board : MonoBehaviour
 {
     public static int boardSize = 8;//size of 2D array
