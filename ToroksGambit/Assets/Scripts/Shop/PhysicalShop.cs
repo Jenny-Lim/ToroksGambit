@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class PhysicalShop : MonoBehaviour
 {
+    public static PhysicalShop instance; 
+
     [SerializeField] private Transform[] pieceSpots;
     [SerializeField] private GameObject[] pieceModels;
     [SerializeField] private int[] prices;
     [SerializeField] private TextMeshPro[] priceText;
     [SerializeField] public GameObject[] uiSpots;
+
+    [SerializeField] private CameraHeadMovements c;
 
     private GameObject[] shopPieceModels;
     private int[] pieceType;
@@ -38,6 +42,16 @@ public class PhysicalShop : MonoBehaviour
         }
     }
 
+    public void EnterShop()
+    {
+        c.LookAtShop();
+        for(int i = 0; i < shopPieceModels.Length; i++)
+        {
+            uiSpots[i].SetActive(true);
+        }
+
+    }
+
     public void PanelPressed(GameObject buttonObject)
     {
         for(int i = 0;i < uiSpots.Length;i++)
@@ -55,9 +69,9 @@ public class PhysicalShop : MonoBehaviour
         buttonObject.SetActive(false);
     }
 
-    void Update()
-    {
+    //void Update()
+    //{
 
-    }
+    //}
 
 }
