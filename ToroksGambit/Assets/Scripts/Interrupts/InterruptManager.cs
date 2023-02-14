@@ -58,6 +58,16 @@ public class InterruptManager : MonoBehaviour
         }
     }
 
+    public void RegisterInterrupt(BaseInterrupt interrupt)
+    {
+        levelInterrupts.Add(interrupt);
+    }
+
+    public void ClearnInterrupts()
+    {
+        levelInterrupts.Clear();
+    }
+
     public void ResetInterruptListTriggers()
     {
         foreach (BaseInterrupt interrupt in levelInterrupts)
