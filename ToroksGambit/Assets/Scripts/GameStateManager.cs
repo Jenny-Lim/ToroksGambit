@@ -7,6 +7,7 @@ public class GameStateManager : MonoBehaviour
 
     public enum GameState
     {
+        none,
         deployment,
         game,
         shop
@@ -17,7 +18,7 @@ public class GameStateManager : MonoBehaviour
 
     private static bool isPlayersTurn = true;
     [SerializeField] private static int turnCount = 1;//the amount of moves/turns that have happened in the current game
-    [SerializeField] private GameState currentState;
+    [SerializeField] private GameState currentState = GameState.deployment;
     private bool TorokIsMoving;
 
     public static GameStateManager instance;
@@ -108,10 +109,17 @@ public class GameStateManager : MonoBehaviour
             if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
             {
                 Debug.Log("Player has won.");
+                ChangeGameState(GameState.none);
+                turnCount = 1;
+                isPlayersTurn = true;
+                PhysicalShop.instance.EnterShop();
+
+                //reset this state
             }
             else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
             {
                 Debug.Log("Torok has won.");
+                //lose condition
             }
         }
     }
