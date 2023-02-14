@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 public class BaseCondition : MonoBehaviour
 {
@@ -18,7 +19,6 @@ public class BaseCondition : MonoBehaviour
 
     public virtual Condition IsWinCondition()
     {
-        Debug.Log("Check Win Condition");
         return Condition.None;
     } 
 
@@ -29,5 +29,30 @@ public class BaseCondition : MonoBehaviour
 
     public void IncreaseTorokScore() {
         torokScore++;
+    }
+
+    public virtual void ProgressConditionState()
+    {
+
+    }
+
+    public bool PlayerLoseCheck()
+    {
+        for (int i = 0; i < Board.boardSize; i++)
+        {
+            for (int j = 0; j < Board.boardSize; j++)
+            {
+                if (Board.pieceBoard[i, j] != null)
+                {
+                    Piece piece = Board.pieceBoard[i, j].GetComponent<Piece>();
+
+                    if (!piece.isTorok)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

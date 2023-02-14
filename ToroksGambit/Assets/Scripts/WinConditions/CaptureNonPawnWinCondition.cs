@@ -7,6 +7,11 @@ public class CaptureNonPawnWinCondition : BaseCondition
 {
     public override Condition IsWinCondition()
     {
+        if (PlayerLoseCheck())//check if player has no pieces
+        {
+            return Condition.Torok;
+        }
+
         bool foundTorokPiece = false;
         bool foundPlayerPiece = false;
         for (int i = 0; i < Board.boardSize; i++)//loop x pos

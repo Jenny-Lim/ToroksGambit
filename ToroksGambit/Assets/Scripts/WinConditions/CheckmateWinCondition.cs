@@ -15,6 +15,11 @@ public class CheckmateWinCondition : BaseCondition
             return Condition.Player;
         }
 
+        if (PlayerLoseCheck())
+        {
+            return Condition.Torok;
+        }
+
         return Condition.None;
     }
 }

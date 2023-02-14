@@ -4,9 +4,42 @@ using UnityEngine;
 
 public class CaptureTheFlagWinCondition : BaseCondition
 {
-    private Piece[] conditionPieces;//goal pieces
+    private List<Vector2Int> locations = new List<Vector2Int>();
     public override Condition IsWinCondition()
     {
-        return Condition.None;
+        foreach (Vector2Int location in locations)
+        {
+            if (Board.pieceBoard[location.x, location.y] == null)
+            {
+                return Condition.None;
+            }
+
+            Piece piece = Board.pieceBoard[location.x, location.y].GetComponent<Piece>();
+            if (piece.isTorok)
+            {
+                return Condition.None;
+            }
+        }
+
+        if (PlayerLoseCheck())
+        {
+            return Condition.Torok;
+        }
+
+        return Condition.Player;
+    }
+
+    public override void ProgressConditionState()
+    {
+        //turns pieces invincibleif in the designated spots
+        foreach (Vector2Int location in locations)
+        {
+            if (Board.pieceBoard[location.x, location.y] != null)
+            {
+                Piece piece = Board.pieceBoard[location.x, location.y].GetComponent<Piece>();
+
+                //turn that piece invincible
+            }
+        }
     }
 }

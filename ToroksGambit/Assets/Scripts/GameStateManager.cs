@@ -43,6 +43,11 @@ public class GameStateManager : MonoBehaviour
         
     }
 
+    public bool GetIsPlayersTurn()
+    {
+        return isPlayersTurn;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -90,6 +95,10 @@ public class GameStateManager : MonoBehaviour
                 //ShopUpdate();
                 break;
         }
+
+        //win condition checks
+        //progress condition
+        //check if win condition found
     }
 
     public void ChangeGameState(GameState newState)
