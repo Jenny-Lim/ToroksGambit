@@ -19,12 +19,16 @@ public class BoardLoader : MonoBehaviour
      * 
      * boardstart
      * "boardName"
+     * Win Condition **
+     * Active Interrupts **
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * boardend
      * boardstart 
      * "boardName"
+     * Win Condition **
+     * Active Interrupts **
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
@@ -135,6 +139,72 @@ public class BoardLoader : MonoBehaviour
             writer.WriteLine(boardStartText);
             writer.WriteLine(givenName);
 
+            //write victory condition
+            BaseCondition winCondition = GameStateManager.instance.winCondition;
+            string winConditionString = "WinCondition";
+            //0 -> captureNonPawn, 1 -> CaptureTheFlag, 2 -> Checkmate, 3 -> KingOfTheHill
+            if (winCondition.GetType() == typeof(CaptureNonPawnWinCondition))
+            {
+                winConditionString += "," + 0;
+            }
+            else if (winCondition.GetType() == typeof(CaptureTheFlagWinCondition))
+            {
+                winConditionString += "," + 1;
+                CaptureTheFlagWinCondition capFlagCon = (CaptureTheFlagWinCondition)winCondition;
+                foreach (Vector2Int location in capFlagCon.locations)
+                {
+                    winConditionString += "," + location.x + "," + location.y;
+                }
+            }
+            else if (winCondition.GetType() == typeof(CheckmateWinCondition))
+            {
+                winConditionString += "," + 2;
+            }
+            else if (winCondition.GetType() == typeof(KingOfTheHillWinCondition))
+            {
+                winConditionString += "," + 3;
+                KingOfTheHillWinCondition capFlagCon = (KingOfTheHillWinCondition)winCondition;
+                foreach (Vector2Int location in capFlagCon.locations)
+                {
+                    winConditionString += "," + location.x + "," + location.y;
+                }
+            }
+            writer.WriteLine(winConditionString);
+
+            //write active interrupts
+            foreach (BaseInterrupt interrupt in InterruptManager.instance.GetActiveInterrupts())
+            {
+                //interrupt type, specific interrupt type data, Trigger Type ,afterTurn
+
+                // 0 -> AddPiece, 1 -> MovePiece
+                string printingString = "Interrupt";
+                //interrupt type
+                if (interrupt.GetType() == typeof(AddPieceInterrupt)) {
+
+                    printingString += "," + 0;//interrupt type
+
+                    printingString += "," + (int)interrupt.piece;//piece to place
+
+                    printingString += "," + interrupt.placeAt.x + "," + interrupt.placeAt.y;//where
+                }
+                else if (interrupt.GetType() == typeof(MovePieceInterrupt)){
+                    printingString += "," + 1;//interrupt type
+
+                    MovePieceInterrupt moveP = (MovePieceInterrupt)interrupt;//cast
+
+                    printingString += "," + moveP.moveFrom.x + ", " + moveP.moveFrom.y + "," + moveP.moveTo.x + ", " + moveP.moveTo.y;//location to move from and to
+
+                }
+
+                printingString += "," + (int)interrupt.triggerType;//trigger type
+
+                printingString += "," + interrupt.afterTurn;//when
+
+                writer.WriteLine(printingString);//write line to file
+            }
+
+
+            //write pieces
             for (int i = 0; i < Board.boardSize; i++)
             {
                 for (int j = 0; j < Board.boardSize; j++)
@@ -143,22 +213,23 @@ public class BoardLoader : MonoBehaviour
 
                     Piece thisPiece = Board.pieceBoard[i, j].GetComponent<Piece>();
 
-                    string pieceString = "";
+                    string pieceString = "Piece";
 
-                    if (thisPiece.type == Piece.PieceType.pawn) { pieceString = "" + 0; }
-                    else if (thisPiece.type == Piece.PieceType.knight) { pieceString = "" + 1; }
-                    else if (thisPiece.type == Piece.PieceType.bishop) { pieceString = "" + 2; }
-                    else if (thisPiece.type == Piece.PieceType.rook) { pieceString = "" + 3; }
-                    else if (thisPiece.type == Piece.PieceType.queen) { pieceString = "" + 4; }
-                    else if (thisPiece.type == Piece.PieceType.king) { pieceString = "" + 5; }
-                    else if (thisPiece.type == Piece.PieceType.wall) { pieceString = "" + 6; }
-                    else if (thisPiece.type == Piece.PieceType.hole) { pieceString = "" + 7; }
+                    if (thisPiece.type == Piece.PieceType.pawn) { pieceString += "," + 0; }
+                    else if (thisPiece.type == Piece.PieceType.knight) { pieceString += "," + 1; }
+                    else if (thisPiece.type == Piece.PieceType.bishop) { pieceString += "," + 2; }
+                    else if (thisPiece.type == Piece.PieceType.rook) { pieceString += "," + 3; }
+                    else if (thisPiece.type == Piece.PieceType.queen) { pieceString += "," + 4; }
+                    else if (thisPiece.type == Piece.PieceType.king) { pieceString += "," + 5; }
+                    else if (thisPiece.type == Piece.PieceType.wall) { pieceString += "," + 6; }
+                    else if (thisPiece.type == Piece.PieceType.hole) { pieceString += "," + 7; }
 
 
                     pieceString += "," + thisPiece.pieceX + "," + thisPiece.pieceY + "," + thisPiece.isTorok;
                     writer.WriteLine(pieceString);
                 }
             }
+
             writer.WriteLine(boardEndText);
 
             writer.Close();

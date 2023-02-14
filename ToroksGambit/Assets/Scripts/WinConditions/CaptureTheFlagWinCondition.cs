@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "CaptureTheFlagWinCondition", menuName = "ScriptableObjects/WinConditions/CaptureTheFlagWinCondition", order = 3)]
 public class CaptureTheFlagWinCondition : BaseCondition
 {
-    private List<Vector2Int> locations = new List<Vector2Int>();
+    public List<Vector2Int> locations = new List<Vector2Int>();
     public override Condition IsWinCondition()
     {
         foreach (Vector2Int location in locations)

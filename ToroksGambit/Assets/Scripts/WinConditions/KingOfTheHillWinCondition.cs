@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "KingOfTheHillWinCondition", menuName = "ScriptableObjects/WinConditions/KingOfTheHillWinCondition", order = 3)]
 public class KingOfTheHillWinCondition : BaseCondition
 {
     public List<Vector2Int> locations = new List<Vector2Int>();

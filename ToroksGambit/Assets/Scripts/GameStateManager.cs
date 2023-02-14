@@ -12,7 +12,7 @@ public class GameStateManager : MonoBehaviour
         shop
     }
 
-    private BaseCondition baseCondition;
+    public BaseCondition winCondition;
     private static BaseCondition.Condition mostRecentWinCheckResult = BaseCondition.Condition.None;
 
     private static bool isPlayersTurn = true;

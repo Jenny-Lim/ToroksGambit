@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "CaptureNonPawnWinCondition", menuName = "ScriptableObjects/WinConditions/CaptureNonPawnWinConditiont", order = 3)]
 public class CaptureNonPawnWinCondition : BaseCondition
 {
     public override Condition IsWinCondition()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "CheckmateWinCondition", menuName = "ScriptableObjects/WinConditions/CheckmateWinCondition", order = 3)]
 public class CheckmateWinCondition : BaseCondition
 {
     public override Condition IsWinCondition()

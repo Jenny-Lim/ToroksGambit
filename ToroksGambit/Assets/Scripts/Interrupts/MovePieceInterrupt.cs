@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MovePieceInterrupt", menuName = "ScriptableObjects/MovePieceInterrupt", order = 3)]
+[CreateAssetMenu(fileName = "MovePieceInterrupt", menuName = "ScriptableObjects/Interrupts/MovePieceInterrupt", order = 3)]
 public class MovePieceInterrupt : BaseInterrupt
 {
-    [SerializeField] private Vector2Int moveFrom;
-    [SerializeField] private Vector2Int moveTo;
-    [SerializeField] private int moveAfterTurn;
+    public Vector2Int moveFrom;
+    public Vector2Int moveTo;
     public override void Enact()
     {
         if (Board.pieceBoard[moveFrom.x, moveFrom.y] == null)//return if piece is null
@@ -42,6 +41,6 @@ public class MovePieceInterrupt : BaseInterrupt
 
     public override bool ShouldTrigger()
     {
-        return moveAfterTurn == GameStateManager.GetTurnCount() && !hasTriggered;
+        return afterTurn == GameStateManager.GetTurnCount() && !hasTriggered;
     }
 }

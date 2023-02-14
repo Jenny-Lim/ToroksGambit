@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.FilePathAttribute;
 
-public class BaseCondition : MonoBehaviour
+
+public class BaseCondition: ScriptableObject
 {
     public enum Condition
     {
@@ -12,9 +13,9 @@ public class BaseCondition : MonoBehaviour
         Torok
     }
 
-    protected int playerScore = 0;
-    protected int torokScore = 0;
-    protected int scoreToWin = 3;
+    public int playerScore = 0;
+    public int torokScore = 0;
+    public int scoreToWin = 3;
 
 
     public virtual Condition IsWinCondition()

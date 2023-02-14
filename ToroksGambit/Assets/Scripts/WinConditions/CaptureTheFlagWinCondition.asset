@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be81bed1c721d3f4f8213b2c715305f0, type: 3}
-  m_Name: Interrupt3
+  m_Script: {fileID: 11500000, guid: 6e55fdd3e42f28d44a370fa814cde960, type: 3}
+  m_Name: CaptureTheFlagWinCondition
   m_EditorClassIdentifier: 
-  triggerType: 0
-  obstacle: 0
-  placeAt: {x: 6, y: 3}
-  placeAfterTurn: 1
+  playerScore: 0
+  torokScore: 0
+  scoreToWin: 3
+  locations: []

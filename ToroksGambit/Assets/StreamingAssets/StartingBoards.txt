@@ -6,3 +6,13 @@ Demo
 2,5,7,True
 3,6,7,True
 boardend
+boardstart
+Test
+WinCondition,1,2,5,1,6
+Interrupt,0,1,5,5,0,1
+Piece,3,1,7,True
+Piece,1,2,7,True
+Piece,0,3,5,True
+Piece,2,5,7,True
+Piece,3,6,7,True
+boardend
