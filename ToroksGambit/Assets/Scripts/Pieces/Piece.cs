@@ -114,6 +114,7 @@ public class Piece : MonoBehaviour
                 {
                     Piece p = pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)].GetComponent<Piece>();
                     moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], (int)this.type, (int)p.type));
+                    //print(this.type.ToString());
                     //moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)]));
                     return;
                 }
