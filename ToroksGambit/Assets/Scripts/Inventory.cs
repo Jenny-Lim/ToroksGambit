@@ -96,7 +96,7 @@ public class Inventory : MonoBehaviour
                     }
 
                     //show desired visual
-                    if (storedPiece >= 0 && storedPiece < 6)
+                    if (storedPiece >= 0 && storedPiece < 5)
                     {
                         PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
                     }
@@ -114,8 +114,8 @@ public class Inventory : MonoBehaviour
 
                         if(!Board.instance.torokPiece && storedPiece > -1 && storedPiece < 6)//place peice nd remove form inevtory
                         {
-                            AlterPiece((InventoryPieces)storedPiece, -1);
-                            updateCountText();
+                            //AlterPiece((InventoryPieces)storedPiece, -1);
+                            //updateCountText();
                         }
                         else//remove piece from board back into inventroy by pickng board spot - STILL DOESNT WORK
                         {
@@ -243,6 +243,11 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log("no queens in inventory");
         }   
+    }
+
+    public void KingButtonClicked()
+    {
+        storedPiece = 5;
     }
 
     public void RemoveButtonClicked()
