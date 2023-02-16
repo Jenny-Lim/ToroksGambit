@@ -108,6 +108,7 @@ public class Board : MonoBehaviour
 
     public void BoardUpdate()
     {
+        
         // print("in bvoard update");
 
         if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
@@ -1124,6 +1125,152 @@ public class Board : MonoBehaviour
             print(resultLine);
             resultLine = "";
         }
+    }
+
+    public bool IsKingInCheck(bool checkingTorok)
+    {
+        //there should probably be 2 bools for what side has a king, cuz then this check doesnt need to happen, and its a pretty lengthy check
+
+        //find king location
+        Vector2Int kingPos = FindKing(checkingTorok);
+
+        if (kingPos.x < 0 || kingPos.y < 0)//no king found
+        {
+            return false;
+        }
+
+        //search vertical and horizontal for rooks/queen
+        if (SearchLineForCheckingKingPiece(0,1, kingPos, checkingTorok) || SearchLineForCheckingKingPiece(0, -1, kingPos, checkingTorok) 
+            || SearchLineForCheckingKingPiece(1, 0, kingPos, checkingTorok) || SearchLineForCheckingKingPiece(-1, 0, kingPos, checkingTorok))
+        {
+            return true;
+        }
+        //search diagonal for bishop/queen/maybe pawn
+        if (SearchLineForCheckingKingPiece(1, 1, kingPos, checkingTorok) || SearchLineForCheckingKingPiece(1, -1, kingPos, checkingTorok) 
+            || SearchLineForCheckingKingPiece(-1, 1, kingPos, checkingTorok) || SearchLineForCheckingKingPiece(-1, -1, kingPos, checkingTorok))
+        {
+            return true;
+        }
+        //search L for knights
+        if (SearchLForCheckingKingPiece(kingPos, checkingTorok))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool SearchLForCheckingKingPiece(Vector2Int kingPos, bool checkingTorok)
+    {
+        for (int hOffset = -2; hOffset < 3; hOffset++)
+        {
+            if (hOffset == 0) { continue; }
+            int yLocation = 1;
+            if (hOffset % 2 == 0) { yLocation = 2; }
+            if (Piece.InBoundsCheck(kingPos.x + hOffset, kingPos.y + yLocation))// upper knight positions
+            {
+                if (pieceBoard[kingPos.x + hOffset, kingPos.y + yLocation] == null) { continue; }//null check
+
+                Piece lookingAt = pieceBoard[kingPos.x + hOffset, kingPos.y + yLocation].GetComponent<Piece>();
+
+                if (lookingAt.isTorok == checkingTorok) { continue; }
+
+                if (lookingAt.type == Piece.PieceType.knight) { return true; }
+            }
+            else if (Piece.InBoundsCheck(kingPos.x + hOffset, kingPos.y - yLocation))//lower knight positions
+            {
+                if (pieceBoard[kingPos.x + hOffset, kingPos.y - yLocation] == null) { continue; }//null check
+
+                Piece lookingAt = pieceBoard[kingPos.x + hOffset, kingPos.y - yLocation].GetComponent<Piece>();
+
+                if (lookingAt.isTorok == checkingTorok) { continue; }
+
+                if (lookingAt.type == Piece.PieceType.knight) { return true; }
+            }
+        }
+        return false;
+    }
+
+    private bool SearchLineForCheckingKingPiece(int dirX, int dirY, Vector2Int kingPos, bool checkingTorok)
+    {
+        for (int offset = 1; offset < boardSize; offset++)
+        {
+            if (!Piece.InBoundsCheck(kingPos.x + (dirX * offset), kingPos.y + (dirY * offset)))//if not in bounds return false, cuz end of search in direciton dirX, dirY
+            {
+                return false;
+            }
+
+            if (pieceBoard[kingPos.x + (dirX * offset), kingPos.y + (dirY * offset)] == null)// null guard
+            {
+                continue;
+            }
+
+            Piece lookingAt = pieceBoard[kingPos.x + (dirX * offset), kingPos.y + (dirY * offset)].GetComponent<Piece>();
+
+            if (lookingAt.isTorok == checkingTorok)// is ally piece
+            {
+                return false;
+            }
+
+            //is diagonal check or horizontal/vertical check
+            if (dirX == 0 || dirY == 0)//is hor/vert check
+            {
+                if (lookingAt.type == Piece.PieceType.rook || lookingAt.type == Piece.PieceType.queen)//if looking at is rook/queen then king is in check
+                {
+                    return true;
+                }
+            }
+            else//is diagonal check
+            {
+                if (lookingAt.type == Piece.PieceType.bishop || lookingAt.type == Piece.PieceType.queen)//looking at is a bishop/queen, then king is in check
+                {
+                    return true;
+                }
+                else if (lookingAt.type == Piece.PieceType.pawn)// if looking at is a pawn
+                {
+                    if (checkingTorok && offset == 1 && dirY == -1)
+                    {
+                        return true;
+                    }
+                    else if (!checkingTorok && offset == 1 && dirY == 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+        }
+
+        return false;
+    }
+
+    private Vector2Int FindKing(bool checkingTorok)
+    {
+        Vector2Int kingPos = new Vector2Int(-1, -1);
+        for (int xPos = 0; xPos < boardSize; xPos++)
+        {
+            for (int yPos = 0; yPos < boardSize; yPos++)
+            {
+                if (pieceBoard[xPos, yPos] == null) { continue; }//null guard
+
+                Piece lookingAt = pieceBoard[xPos, yPos].GetComponent<Piece>();
+
+                if (lookingAt.type == Piece.PieceType.king)
+                {
+                    if (checkingTorok && lookingAt.isTorok)
+                    {
+                        kingPos.Set(xPos, yPos);
+                        return kingPos;
+                    }
+                    else if (!checkingTorok && !lookingAt.isTorok)
+                    {
+                        kingPos.Set(xPos, yPos);
+                        return kingPos;
+                    }
+                }
+            }
+        }
+        return kingPos;
     }
 }
 

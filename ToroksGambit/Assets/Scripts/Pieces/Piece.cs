@@ -59,7 +59,7 @@ public class Piece : MonoBehaviour
         //moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY]));
     }
 
-    public bool InBoundsCheck(int endX, int endY)
+    public static bool InBoundsCheck(int endX, int endY)
     {
         if (endX >= Board.boardSize || endY >= Board.boardSize || endX < 0 || endY < 0)
         {
