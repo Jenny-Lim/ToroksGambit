@@ -111,6 +111,10 @@ public class Board : MonoBehaviour
         
         // print("in bvoard update");
 
+        if (Input.GetKeyUp("q")) {
+            print(IsKingInCheck(true));
+        }
+
         if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
         {
             print("printing selected piece moves...");
@@ -118,13 +122,6 @@ public class Board : MonoBehaviour
             {
                 print(move.DisplayMove());
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            print("Printing internal board...");
-            PrintInternalPieceBoard();
-
         }
 
         RaycastHit hit;
@@ -162,15 +159,15 @@ public class Board : MonoBehaviour
                 GameObject tempPiece = pieceBoard[clickedX, clickedY];
 
 
-                    if (tempPiece)
-                    {
-                        Piece endPieceScript = tempPiece.GetComponent<Piece>();
+                if (tempPiece)
+                {
+                    Piece endPieceScript = tempPiece.GetComponent<Piece>();
 
-                        if (endPieceScript.lastChance)
-                        {
-                            isLastchance = true;
-                        }
+                    if (endPieceScript.lastChance)
+                    {
+                        isLastchance = true;
                     }
+                }
 
                 
 
@@ -179,8 +176,8 @@ public class Board : MonoBehaviour
                 //print("pieceX of board :" + pieceX);
                 //print("pieceY of board :" + pieceY);
                 bool isValid = MoveValidator(pieceX, pieceY, clickedX, clickedY);
-
-                if(isLastchance)
+                print(IsKingInCheck(true));
+                if (isLastchance)
                 {
                     clickedPiece = null;
                 }
