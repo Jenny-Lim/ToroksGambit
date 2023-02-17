@@ -7,15 +7,18 @@ public class GameStateManager : MonoBehaviour
 
     public enum GameState
     {
+        none,
         deployment,
         game,
         shop
     }
 
+    public BaseCondition winCondition;
+    private static BaseCondition.Condition mostRecentWinCheckResult = BaseCondition.Condition.None;
 
     private static bool isPlayersTurn = true;
     [SerializeField] private static int turnCount = 1;//the amount of moves/turns that have happened in the current game
-    [SerializeField] private GameState currentState;
+    [SerializeField] private GameState currentState = GameState.deployment;
     private bool TorokIsMoving;
 
     public static GameStateManager instance;
@@ -35,10 +38,15 @@ public class GameStateManager : MonoBehaviour
         
         if (BoardLoader.instance.savedBoardNames.Contains("Demo"))
         {
-            BoardLoader.instance.LoadBoard("Demo");
+            //BoardLoader.instance.LoadBoard("Demo");
         }
         
         
+    }
+
+    public bool GetIsPlayersTurn()
+    {
+        return isPlayersTurn;
     }
 
     // Update is called once per frame
@@ -88,6 +96,32 @@ public class GameStateManager : MonoBehaviour
                 //ShopUpdate();
                 break;
         }
+
+        if (currentState == GameState.game)
+        {
+            //win condition checks
+            if (winCondition != null)
+            {
+                winCondition.ProgressConditionState();
+                mostRecentWinCheckResult = winCondition.IsWinCondition();
+            }
+
+            if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
+            {
+                Debug.Log("Player has won.");
+                ChangeGameState(GameState.none);
+                turnCount = 1;
+                isPlayersTurn = true;
+                PhysicalShop.instance.EnterShop();
+
+                //reset this state
+            }
+            else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
+            {
+                Debug.Log("Torok has won.");
+                //lose condition
+            }
+        }
     }
 
     public void ChangeGameState(GameState newState)
@@ -101,10 +135,12 @@ public class GameStateManager : MonoBehaviour
 
     public static void EndTurn()
     {
+        Board.playerInCheck = Board.instance.IsKingInCheck(false);
+        Board.torokInCheck = Board.instance.IsKingInCheck(true);
         InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.AfterTurn);
         turnCount++;
         isPlayersTurn = !isPlayersTurn;
-        
+        //check win condition
     }
 
     public static int GetTurnCount()

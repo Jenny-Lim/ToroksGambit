@@ -26,21 +26,21 @@ public class BoardLoaderInspector : Editor
             loader.savedBoardNames = loader.GetAllSavedBoardNames();
         }
 
-        GUILayout.Space(30);
+        GUILayout.Space(5);
 
         if (GUILayout.Button("Load Board"))
         {
             loader.LoadBoard(loader.boardName);
         }
 
-        GUILayout.Space(30);
+        GUILayout.Space(5);
 
         if (GUILayout.Button("Clear Board"))
         {
             Board.instance.ClearBoard();
         }
 
-        GUILayout.Space(30);
+        GUILayout.Space(5);
 
         if (GUILayout.Button("Delete Board"))
         {

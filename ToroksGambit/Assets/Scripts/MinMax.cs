@@ -37,6 +37,26 @@ public class MinMax : MonoBehaviour
         }
     }
 
+
+    // jenny start -- this isnt called on rn, still doing
+
+    private void PickMove(ref List<Move> allAvailableMoves, int startIndex) // supposed to sort as we go through the moves in minmax, so we dont sort unnescessarily?? - need to test
+    {
+        for (int i = startIndex + 1; i > allAvailableMoves.Count; i++)
+        {
+            if (allAvailableMoves[i].score > allAvailableMoves[startIndex].score)
+            {
+                // swap
+                Move temp = allAvailableMoves[startIndex];
+                allAvailableMoves[startIndex] = allAvailableMoves[i];
+                allAvailableMoves[i] = temp;
+            }
+        }
+    }
+
+    //jenny end
+
+
     //the recursive wrapper for the minmax call
     public Move GetMinMaxMove(playerToMove toMove)
     {
@@ -82,9 +102,11 @@ public class MinMax : MonoBehaviour
             bestMove = new ScoredMove(allAvailableMoves[0],  float.NegativeInfinity);//set best move score to be as low as possible);
             //print("Amount of moves player moves available: " + allAvailableMoves.Count);
 
-
             foreach (Move move in allAvailableMoves)
             {
+                // pick move
+                //PickMove(ref allAvailableMoves, i);
+
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
                 //print("Move from MinMax Depth: " + (maxDepth - depth));
                 //numOfMovesCalled++;
@@ -123,6 +145,9 @@ public class MinMax : MonoBehaviour
             //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
             foreach (Move move in allAvailableMoves)
             {
+                // pick move
+                //PickMove(ref allAvailableMoves, i);
+
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
                 //print("Move from MinMax Depth: " + (maxDepth - depth));
                 //numOfMovesCalled++;
@@ -144,7 +169,6 @@ public class MinMax : MonoBehaviour
                     print("got into break");
                     break;
                 }*/
-
             }
         }
 

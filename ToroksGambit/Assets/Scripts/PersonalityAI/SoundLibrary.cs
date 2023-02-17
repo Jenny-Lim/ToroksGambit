@@ -11,8 +11,8 @@ public class SoundLibrary
         LevelIntro,
         LosesPiece,
         TakesPiece,
-        MakesGoodMove,
-        MakesBadMove,
+        MakesGoodMove,//player makes good move
+        MakesBadMove,//player makes "bad" move
         Idle,
         ObjectiveQuip,
         MiscFunny,
@@ -20,25 +20,67 @@ public class SoundLibrary
         Misc
     }
 
-    private List<List<AudioClip>> masterDialogueList;
+    private List<AudioClip>[] masterDialogueList;
+    private const int maxAngerLevels = 5;
+    private string[] angerLevelFilePath = new string[maxAngerLevels];
+    private string[] categoryNames;
 
-    private void Start() {
-        masterDialogueList = new List<List<AudioClip>>(Enum.GetNames(typeof(Categories)).Length);
+    public SoundLibrary()
+    {
+        InitLibrary();
+    }
 
-        for (int i = 0; i < masterDialogueList.Count; i++)
+    private void InitLibrary()
+    {
+        //create master dialogue lists
+        categoryNames = Enum.GetNames(typeof(Categories));
+                
+        masterDialogueList = new List<AudioClip>[categoryNames.Length];
+        for (int i = 0; i < masterDialogueList.Length; i++)
         {
             masterDialogueList[i] = new List<AudioClip>();
         }
+
+        //create anger level string list
+        for (int i = 0; i < angerLevelFilePath.Length; i++)
+        {
+            angerLevelFilePath[i] = "AngerLevel" + (i+1);
+        }
     }
 
-    private void LoadDialogue(int angerLevel)
+    public void LoadDialogue(int angerLevel)
     {
+        //clear lists
+        for (int i = 0; i < masterDialogueList.Length; i++)
+        {
+            masterDialogueList[i].Clear();
+        }
 
+        //load audio clips from resources into dialogueList
+        for (int categoryIndex = 0; categoryIndex < categoryNames.Length; categoryIndex++)
+        {
+            //get audioClips from resources
+            string path = angerLevelFilePath[angerLevel - 1] + "/Level" + angerLevel + categoryNames[categoryIndex];
+            UnityEngine.Object[] clips = Resources.LoadAll(path , typeof(AudioClip));
+
+            //put clips into dialogueList
+            foreach (UnityEngine.Object clip in clips)
+            {
+                masterDialogueList[categoryIndex].Add(clip as AudioClip);
+            }
+
+            //unload resources
+            for (int i = 0; i < clips.Length; i++)
+            {
+                Resources.UnloadAsset(clips[i]);
+            }
+        }
+ 
     }
 
-    //returns 
     public AudioClip GetAudioClip(Categories from)
     {
-        return null;
+        int rand = (int)UnityEngine.Random.Range(0, masterDialogueList[(int)from].Count-0.01f);
+        return masterDialogueList[(int)from][rand];
     }
 }

@@ -35,7 +35,7 @@ public class ShopButton : MonoBehaviour
             pUI.isBought = true;
             Inventory.instance.AlterPiece((Inventory.InventoryPieces)type, 1);
 
-            print(Inventory.instance.GetNumberOfPieces((Inventory.InventoryPieces)type)); // testing --boi what the hell
+            print(Inventory.instance.GetNumberOfPieces((Inventory.InventoryPieces)type)); // testing
             Inventory.instance.updateCountText();
         }
         else

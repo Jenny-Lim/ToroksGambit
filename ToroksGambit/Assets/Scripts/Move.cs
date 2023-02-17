@@ -29,9 +29,16 @@ public class Move
 
     public bool movingLastChance;
     public bool takenLastChance;
+
+    public bool setFirstMove;
+    public bool takenPieceSetFirstMove;
+
+    public float score = 0f;
+    public int capturedPiece = -1; // this is null
+    public int capturingPiece = -1;
         
 
-    public Move(int x1, int y1, int x2, int y2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck, bool mPro, bool tPro, bool mTough, bool tTough, bool mLC, bool tLC)
+    public Move(int x1, int y1, int x2, int y2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck, bool mPro, bool tPro, bool mTough, bool tTough, bool mLC, bool tLC, bool moveCheck, bool takenMoveCheck)
     {
         startX = x1;
         startY = y1;
@@ -52,9 +59,12 @@ public class Move
         movingLastChance = mLC;
         takenLastChance = tLC;
 
+        setFirstMove = moveCheck;
+        takenPieceSetFirstMove = takenMoveCheck;
+
     }
 
-    public Move(int x1, int y1, int x2, int y2, GameObject object1, GameObject object2)//constructor without the need for pieceTaken data
+    public Move(int x1, int y1, int x2, int y2, GameObject object1, GameObject object2, int capturedPiece, int capturingPiece)//constructor without the need for pieceTaken data
     {
         startX = x1;
         startY = y1;
@@ -62,8 +72,22 @@ public class Move
         endY = y2;
         startObject = object1;
         endObject = object2;
+        this.capturedPiece = capturedPiece;
+        this.capturingPiece = capturingPiece;
     }
 
+    void Awake()
+    {
+        if (capturedPiece != -1)
+        {
+            score = GetScore(capturedPiece, capturingPiece);
+        }
+    }
+
+    private float GetScore(int capturedPiece, int capturingPiece)
+    {
+        return (capturedPiece - capturingPiece) + (capturedPiece * 0.25f);
+    }
 
     public string DisplayMove()
     {

@@ -29,6 +29,11 @@ public class InterruptManager : MonoBehaviour
         }
     }
 
+    public List<BaseInterrupt> GetActiveInterrupts()
+    {
+        return levelInterrupts;
+    }
+
     public void EnactInterrupts(InterruptTrigger type)
     {
         if (levelInterrupts.Count < 1) { return; }
@@ -51,6 +56,16 @@ public class InterruptManager : MonoBehaviour
 
 
         }
+    }
+
+    public void RegisterInterrupt(BaseInterrupt interrupt)
+    {
+        levelInterrupts.Add(interrupt);
+    }
+
+    public void ClearnInterrupts()
+    {
+        levelInterrupts.Clear();
     }
 
     public void ResetInterruptListTriggers()

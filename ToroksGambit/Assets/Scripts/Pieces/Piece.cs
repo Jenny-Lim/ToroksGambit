@@ -59,7 +59,7 @@ public class Piece : MonoBehaviour
         //moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY]));
     }
 
-    public bool InBoundsCheck(int endX, int endY)
+    public static bool InBoundsCheck(int endX, int endY)
     {
         if (endX >= Board.boardSize || endY >= Board.boardSize || endX < 0 || endY < 0)
         {
@@ -68,7 +68,7 @@ public class Piece : MonoBehaviour
         return true;
     }
 
-    public virtual int ClearCheck(int endX, int endY) // for new vers, only need the end params and it should return int
+    public virtual int ClearCheck(int endX, int endY) // for new vers, only need the end params and it should return int -- does this even still need to be virtual
     {
         if (pieceBoard[endX, endY] != null)
         {
@@ -89,136 +89,11 @@ public class Piece : MonoBehaviour
 
         }
 
-        return 0; // keep going + add move
-
-
-
-        //bool isClear = true;
-        //Piece thePiece = pieceBoard[pieceX, pieceY].GetComponent<Piece>();
-
-        ////Patrick - check for tough pieces
-        //if (type == "pawn" && thePiece.isTough)
-        //{
-        //    Debug.Log("TOUGHPROTECT");
-        //    isClear = false;
-        //    return isClear;
-        //}
-
-        //// handling this in here for now, how expensive is getcomponent
-        //if (pieceBoard[endX, endY] != null)
-        //{
-        //    Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
-
-        //    if (type == "pawn" && p.isTough)
-        //    {
-        //        Debug.Log("TOUGHPROTECT");
-        //        isClear = false;
-        //        return isClear;
-        //    }
-
-
-        //    if (p.type == "wall" || p.type == "hole" || p.isTorok == this.isTorok) // if its your own piece, can't capture
-        //    {
-        //        isClear = false;
-        //        return isClear;
-        //    }
-
-        //}
-
-        //if (thePiece.type == "knight") // knights can jump over pieces
-        //{
-        //    //isClear = true;
-        //    return isClear;
-        //}
-        //// below is if the piece isnt a knight
-
-
-        //// horizontally
-        //int start = pieceX; // to start
-        //int end = endX;
-
-        //if (pieceX < endX)
-        //{
-        //    start = pieceX;
-        //    end = endX;
-        //}
-        //if (pieceX > endX)
-        //{
-        //    start = endX;
-        //    end = pieceX;
-        //}
-
-        //for (int i = start; i > end; i++)
-        //{
-        //    if (pieceBoard[i, pieceY] != null)
-        //    {
-
-        //        if (pieceBoard[i, pieceY].GetComponent<Piece>().type != "hole")
-        //        {
-        //            isClear = false;
-        //            return isClear;
-        //        }
-
-        //    }
-        //}
-
-
-        //// vertically
-        //int startY = pieceY; // to start
-        //int enddY = endY;
-
-        //if (pieceY < enddY)
-        //{
-        //    startY = pieceY;
-        //    enddY = endY;
-        //}
-        //if (pieceY > enddY)
-        //{
-        //    startY = endY;
-        //    enddY = pieceY;
-        //}
-
-        //for (int i = startY; i > enddY; i++)
-        //{
-        //    if (pieceBoard[pieceX, i] != null)
-        //    {
-
-        //        if (pieceBoard[pieceX, i].GetComponent<Piece>().type != "hole")
-        //        {
-        //            isClear = false;
-        //            return isClear;
-        //        }
-
-        //    }
-        //}
-
-
-        ////diagonally
-
-        //for (int i = start; i > end; i++)
-        //{
-        //    for (int j = startY; j > enddY; j++)
-        //    {
-
-        //        // along movement path diagonal
-        //        if (pieceBoard[i, j] != null)
-        //        {
-        //            if (pieceBoard[i, j].GetComponent<Piece>().type != "hole")
-        //            {
-        //                isClear = false;
-        //                return isClear;
-        //            }
-        //        }
-
-        //    }
-        //}
-
-
-        //return isClear;
+        return 0; 
     } // ClearCheck
 
 
-    public void MovesAdd(int directionX, int directionY)
+    public virtual void MovesAdd(int directionX, int directionY) // made virtual
     {
         for (int i = 1; i < Board.boardSize; i++)
         {
@@ -228,16 +103,19 @@ public class Piece : MonoBehaviour
 
                 if (clearResult == 0) // if spot is empty
                 {
-                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)]));
+                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], -1, -1));
                 }
                 else if (clearResult == 1) // if spot is wall / same color
                 {
                     return;
                 }
 
-                else if (clearResult == 3) // if spot is capturable
+                else if (clearResult == 3) // if spot is capturable -- need to score these ones + add to the capture list
                 {
-                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)]));
+                    Piece p = pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)].GetComponent<Piece>();
+                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], (int)this.type, (int)p.type));
+                    //print(this.type.ToString());
+                    //moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)]));
                     return;
                 }
 

@@ -39,7 +39,8 @@ public class Pawn : Piece
 
             if (clearResult == 0)
             {
-                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + dir]));
+                //moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + dir]));
+                moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + dir], -1, -1));
             }
         }
 
@@ -49,7 +50,8 @@ public class Pawn : Piece
 
             if (pRight != null && InBoundsCheck(pieceX + 1, pieceY + dir) && pieceBoard[pieceX + 1, pieceY + dir] != null && !IsOnSameTeam(pieceBoard[pieceX + 1, pieceY + dir]) && !pRight.isTough && (int)pRight.type < 6) // if can capture another piece
             {
-                moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + dir]));
+                moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + dir], (int)this.type, (int)pRight.type));
+                //moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + dir]));
             }
         }
         
@@ -59,7 +61,8 @@ public class Pawn : Piece
             Piece pLeft = pieceBoard[pieceX - 1, pieceY + dir].GetComponent<Piece>();
             if (pLeft != null && InBoundsCheck(pieceX - 1, pieceY + dir) && pieceBoard[pieceX - 1, pieceY + dir] != null && !IsOnSameTeam(pieceBoard[pieceX - 1, pieceY + dir]) && !pLeft.isTough && (int)pLeft.type < 6) // if can capture another piece
             {
-                moves.Add(new Move(pieceX, pieceY, pieceX -1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY + dir]));
+                moves.Add(new Move(pieceX, pieceY, pieceX -1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY + dir], (int)this.type, (int)pLeft.type));
+                //moves.Add(new Move(pieceX, pieceY, pieceX - 1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY + dir]));
             }
         }
         
@@ -72,7 +75,8 @@ public class Pawn : Piece
                 clearResult = ClearCheck(pieceX, pieceY + dir * 2);
                 if (clearResult == 0 && pieceBoard[pieceX, pieceY + dir] == null) // checks if the spot before is empty as well **changed pieceX + dir -> pieceX**
                 {
-                    moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + dir * 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + dir * 2]));
+                    //moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + dir * 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + dir * 2]));
+                    moves.Add(new Move(pieceX, pieceY, pieceX, pieceY + dir * 2, pieceBoard[pieceX, pieceY], pieceBoard[pieceX, pieceY + dir * 2], -1, -1));
                 }
             }
         }

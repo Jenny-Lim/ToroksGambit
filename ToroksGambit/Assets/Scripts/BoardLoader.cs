@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
-
+using UnityEditor.UIElements;
 
 public class BoardLoader : MonoBehaviour
 {
@@ -19,12 +19,16 @@ public class BoardLoader : MonoBehaviour
      * 
      * boardstart
      * "boardName"
+     * Win Condition **
+     * Active Interrupts **
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * boardend
      * boardstart 
      * "boardName"
+     * Win Condition **
+     * Active Interrupts **
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
@@ -39,6 +43,7 @@ public class BoardLoader : MonoBehaviour
         {
             instance = this;
         }
+        savedBoardNames = GetAllSavedBoardNames();
     }
 
     public void LoadBoard(string boardName)
@@ -56,10 +61,109 @@ public class BoardLoader : MonoBehaviour
         StreamReader reader = null;
         try
         {
+            InterruptManager.instance.ClearnInterrupts();
             fs = new FileStream(Application.streamingAssetsPath + "/" + fileName, FileMode.Open, FileAccess.Read);
             reader = new StreamReader(fs);
             string line = "";
 
+            while (line.CompareTo(boardName) == 0)
+            {
+                line = reader.ReadLine();
+                if (reader.EndOfStream)
+                {
+                    Debug.LogError("Did not find saved board with given name " + boardName);
+                    return;
+                }
+            }
+            line = reader.ReadLine();
+
+            while (line.CompareTo(boardEndText) != 0)
+            {
+                //process line
+                if (reader.EndOfStream) {
+                    Debug.LogError("Reached end of file of " + boardName + " while loading. didnt reach " + boardEndText);
+                    return;
+                }
+
+                line = reader.ReadLine();
+                string[] splitLines = line.Split(",");
+
+                if (splitLines[0].CompareTo("Piece") == 0)
+                {
+                    if (Convert.ToBoolean(splitLines[4]))//if is torok piece
+                    {
+                        Board.instance.PlacePieceTorok(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]));
+                    }
+                    else//else player piece
+                    {
+                        Board.instance.PlacePiece(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]));
+                    }
+                }
+                else if (splitLines[0].CompareTo("Interrupt") == 0)
+                {
+                    switch (int.Parse(splitLines[1]))
+                    {
+                        case 0://addpiece interrupt
+                            AddPieceInterrupt newAddInterrupt = ScriptableObject.CreateInstance("AddPieceInterrupt") as AddPieceInterrupt;
+
+                            newAddInterrupt.placeAt.Set(int.Parse(splitLines[3]), int.Parse(splitLines[4]));//set placeAt
+                            newAddInterrupt.piece = (BaseInterrupt.PieceType)int.Parse(splitLines[2]);//set piece type
+                            newAddInterrupt.triggerType = (InterruptManager.InterruptTrigger)int.Parse(splitLines[5]);//trigger type
+                            newAddInterrupt.afterTurn = int.Parse(splitLines[6]);//after what type
+                            InterruptManager.instance.RegisterInterrupt(newAddInterrupt);
+                        break;
+
+                        case 1://move piece interrupt
+                            MovePieceInterrupt newMoveInterrupt = ScriptableObject.CreateInstance("MovePieceInterrupt") as MovePieceInterrupt;
+                            newMoveInterrupt.moveFrom.Set(int.Parse(splitLines[2]), int.Parse(splitLines[3]));
+                            newMoveInterrupt.moveTo.Set(int.Parse(splitLines[4]), int.Parse(splitLines[5]));
+                            newMoveInterrupt.triggerType = (InterruptManager.InterruptTrigger)int.Parse(splitLines[6]);//trigger type
+                            newMoveInterrupt.afterTurn = int.Parse(splitLines[7]);//after what type
+                            InterruptManager.instance.RegisterInterrupt(newMoveInterrupt);
+                            break;
+                    }
+                }
+                else if (splitLines[0].CompareTo("WinCondition") == 0)
+                {
+                    //0 -> captureNonPawn, 1 -> CaptureTheFlag, 2 -> Checkmate, 3 -> KingOfTheHill
+                    switch (int.Parse(splitLines[1]))
+                    {
+                        case 0:
+                            CaptureNonPawnWinCondition newCapPawnWin = ScriptableObject.CreateInstance("CaptureNonPawnWinCondition") as CaptureNonPawnWinCondition;
+                            GameStateManager.instance.winCondition = newCapPawnWin;
+                            break;
+
+                        case 1:
+                            CaptureTheFlagWinCondition captureFlagWin = ScriptableObject.CreateInstance("CaptureTheFlagWinCondition") as CaptureTheFlagWinCondition;
+                            for (int i = 2; i <= splitLines.Length-2; i+= 2)
+                            {
+                                captureFlagWin.locations.Add(new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i + 1])));
+                            }
+                            GameStateManager.instance.winCondition = captureFlagWin;
+                            break;
+
+                        case 2:
+                            CheckmateWinCondition checkmateWin = ScriptableObject.CreateInstance("CheckmateWinCondition") as CheckmateWinCondition;
+                            GameStateManager.instance.winCondition = checkmateWin;
+                            break;
+
+                        case 3:
+                            KingOfTheHillWinCondition kingOfHillWin = ScriptableObject.CreateInstance("KingOfTheHillWinCondition") as KingOfTheHillWinCondition;
+                            for (int i = 2; i <= splitLines.Length - 2; i += 2)
+                            {
+                                kingOfHillWin.locations.Add(new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i + 1])));
+                            }
+                            kingOfHillWin.scoreToWin = int.Parse(splitLines[splitLines.Length - 1]);
+                            GameStateManager.instance.winCondition = kingOfHillWin;
+                            break;
+                    }
+                }
+
+
+            }
+
+
+            /*
             //Debug.Log("find start");
             while (line.CompareTo(boardName) != 0)
             {
@@ -83,7 +187,7 @@ public class BoardLoader : MonoBehaviour
             while (line.CompareTo(boardEndText) != 0)
             {
                 string[] lines = line.Split(char.Parse(","));// will seperate line into mutliple strings, [0] = pieceId, [1] = xPos, [2] = yPos, [3] = isTorok
-                print("Lines length: " + lines.Length);
+                
                 if (Convert.ToBoolean(lines[3]))//if is torok piece
                 {
                     Board.instance.PlacePieceTorok(int.Parse(lines[1]), int.Parse(lines[2]), int.Parse(lines[0]));
@@ -95,6 +199,7 @@ public class BoardLoader : MonoBehaviour
                 line = reader.ReadLine();
             }
             //Debug.Log("reached end");
+            */
         }
         catch (Exception e)
         { 
@@ -134,6 +239,77 @@ public class BoardLoader : MonoBehaviour
             writer.WriteLine(boardStartText);
             writer.WriteLine(givenName);
 
+            //write victory condition
+            BaseCondition winCondition = GameStateManager.instance.winCondition;
+            string winConditionString = "WinCondition";
+            //0 -> captureNonPawn, 1 -> CaptureTheFlag, 2 -> Checkmate, 3 -> KingOfTheHill
+            if (winCondition.GetType() == typeof(CaptureNonPawnWinCondition))
+            {
+                winConditionString += "," + 0;
+            }
+            else if (winCondition.GetType() == typeof(CaptureTheFlagWinCondition))
+            {
+                winConditionString += "," + 1;
+                CaptureTheFlagWinCondition capFlagCon = (CaptureTheFlagWinCondition)winCondition;
+                foreach (Vector2Int location in capFlagCon.locations)
+                {
+                    winConditionString += "," + location.x + "," + location.y;
+                }
+            }
+            else if (winCondition.GetType() == typeof(CheckmateWinCondition))
+            {
+                winConditionString += "," + 2;
+            }
+            else if (winCondition.GetType() == typeof(KingOfTheHillWinCondition))
+            {
+                winConditionString += "," + 3;
+                KingOfTheHillWinCondition capFlagCon = (KingOfTheHillWinCondition)winCondition;
+                
+                foreach (Vector2Int location in capFlagCon.locations)
+                {
+                    winConditionString += "," + location.x + "," + location.y;
+                }
+                winConditionString += ',';
+                winConditionString += capFlagCon.scoreToWin;
+            }
+            writer.WriteLine(winConditionString);
+            //end victory conditoon
+
+
+            //write active interrupts
+            foreach (BaseInterrupt interrupt in InterruptManager.instance.GetActiveInterrupts())
+            {
+                //interrupt type, specific interrupt type data, Trigger Type ,afterTurn
+
+                // 0 -> AddPiece, 1 -> MovePiece
+                string printingString = "Interrupt";
+                //interrupt type
+                if (interrupt.GetType() == typeof(AddPieceInterrupt)) {
+
+                    printingString += "," + 0;//interrupt type
+
+                    printingString += "," + (int)interrupt.piece;//piece to place
+
+                    printingString += "," + interrupt.placeAt.x + "," + interrupt.placeAt.y;//where
+                }
+                else if (interrupt.GetType() == typeof(MovePieceInterrupt)){
+                    printingString += "," + 1;//interrupt type
+
+                    MovePieceInterrupt moveP = (MovePieceInterrupt)interrupt;//cast
+
+                    printingString += "," + moveP.moveFrom.x + ", " + moveP.moveFrom.y + "," + moveP.moveTo.x + ", " + moveP.moveTo.y;//location to move from and to
+
+                }
+
+                printingString += "," + (int)interrupt.triggerType;//trigger type
+
+                printingString += "," + interrupt.afterTurn;//when
+
+                writer.WriteLine(printingString);//write line to file
+            }
+
+
+            //write pieces
             for (int i = 0; i < Board.boardSize; i++)
             {
                 for (int j = 0; j < Board.boardSize; j++)
@@ -142,22 +318,23 @@ public class BoardLoader : MonoBehaviour
 
                     Piece thisPiece = Board.pieceBoard[i, j].GetComponent<Piece>();
 
-                    string pieceString = "";
+                    string pieceString = "Piece";
 
-                    if (thisPiece.type == Piece.PieceType.pawn) { pieceString = "" + 0; }
-                    else if (thisPiece.type == Piece.PieceType.knight) { pieceString = "" + 1; }
-                    else if (thisPiece.type == Piece.PieceType.bishop) { pieceString = "" + 2; }
-                    else if (thisPiece.type == Piece.PieceType.rook) { pieceString = "" + 3; }
-                    else if (thisPiece.type == Piece.PieceType.queen) { pieceString = "" + 4; }
-                    else if (thisPiece.type == Piece.PieceType.king) { pieceString = "" + 5; }
-                    else if (thisPiece.type == Piece.PieceType.wall) { pieceString = "" + 6; }
-                    else if (thisPiece.type == Piece.PieceType.hole) { pieceString = "" + 7; }
+                    if (thisPiece.type == Piece.PieceType.pawn) { pieceString += "," + 0; }
+                    else if (thisPiece.type == Piece.PieceType.knight) { pieceString += "," + 1; }
+                    else if (thisPiece.type == Piece.PieceType.bishop) { pieceString += "," + 2; }
+                    else if (thisPiece.type == Piece.PieceType.rook) { pieceString += "," + 3; }
+                    else if (thisPiece.type == Piece.PieceType.queen) { pieceString += "," + 4; }
+                    else if (thisPiece.type == Piece.PieceType.king) { pieceString += "," + 5; }
+                    else if (thisPiece.type == Piece.PieceType.wall) { pieceString += "," + 6; }
+                    else if (thisPiece.type == Piece.PieceType.hole) { pieceString += "," + 7; }
 
 
                     pieceString += "," + thisPiece.pieceX + "," + thisPiece.pieceY + "," + thisPiece.isTorok;
                     writer.WriteLine(pieceString);
                 }
             }
+
             writer.WriteLine(boardEndText);
 
             writer.Close();

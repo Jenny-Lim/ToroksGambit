@@ -3,23 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-//create higher object for game. game manager
-//cant move to spot you start in
-//fix bug where it wont move after capturinig or when it cant capture
-
-//place piece on enemy piece
-//fix bug where it deletes friendly after clicking
-
-//inventory - text in corner of boxes for counter - ticker to set to torok pieces being set down
-//piece trait system
-
-//traits
-//Tough - cannot be captured by a pawn
-//Promote - when captured it is instead upgraded to a higher piece
-//last chance - if captured by equal or lower value then that piece is captured as well
-
-//rebuidling movepiece
-
 public class Board : MonoBehaviour
 {
     public static int boardSize = 8;//size of 2D array
@@ -103,6 +86,9 @@ public class Board : MonoBehaviour
     [SerializeField]
     private GameObject promoteButton;
 
+    public static bool playerInCheck;//set if player is in check <- needs to be implemented
+    public static bool torokInCheck;//set if torok is in check <- needs to be implemented
+
 
 
     // brought them up here
@@ -122,7 +108,12 @@ public class Board : MonoBehaviour
 
     public void BoardUpdate()
     {
+        
         // print("in bvoard update");
+
+        if (Input.GetKeyUp("q")) {
+            print(IsKingInCheck(false));
+        }
 
         if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
         {
@@ -131,13 +122,6 @@ public class Board : MonoBehaviour
             {
                 print(move.DisplayMove());
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            print("Printing internal board...");
-            PrintInternalPieceBoard();
-
         }
 
         RaycastHit hit;
@@ -175,15 +159,15 @@ public class Board : MonoBehaviour
                 GameObject tempPiece = pieceBoard[clickedX, clickedY];
 
 
-                    if (tempPiece)
-                    {
-                        Piece endPieceScript = tempPiece.GetComponent<Piece>();
+                if (tempPiece)
+                {
+                    Piece endPieceScript = tempPiece.GetComponent<Piece>();
 
-                        if (endPieceScript.lastChance)
-                        {
-                            isLastchance = true;
-                        }
+                    if (endPieceScript.lastChance)
+                    {
+                        isLastchance = true;
                     }
+                }
 
                 
 
@@ -192,8 +176,8 @@ public class Board : MonoBehaviour
                 //print("pieceX of board :" + pieceX);
                 //print("pieceY of board :" + pieceY);
                 bool isValid = MoveValidator(pieceX, pieceY, clickedX, clickedY);
-
-                if(isLastchance)
+                print(IsKingInCheck(true));
+                if (isLastchance)
                 {
                     clickedPiece = null;
                 }
@@ -340,7 +324,7 @@ public class Board : MonoBehaviour
             newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
 
-            Debug.Log("placed piece type: "+piece.type);
+            //Debug.Log("placed piece type: "+piece.type);
 
             if(torokPiece)
             {
@@ -622,6 +606,8 @@ public class Board : MonoBehaviour
         bool movingLastChance = false;
         bool takenLastChance = false;
 
+        bool takenPieceMoved = false;
+
         int pieceIdMoving = 0;
       
         GameObject tempPiece = pieceBoard[startX, startY];
@@ -652,9 +638,11 @@ public class Board : MonoBehaviour
         {
             Piece pieceForCaptureId = pieceBoard[endX, endY].GetComponent<Piece>();
 
+
             takenTough = pieceForCaptureId.isTough;
             takenPromote = pieceForCaptureId.promote;
             takenLastChance = pieceForCaptureId.lastChance;
+            takenPieceMoved = pieceForCaptureId.moved;
 
             pieceIdTaken = (int)(pieceForCaptureId.type) + 1;
             //print("taken ID " + pieceIdTaken);
@@ -690,8 +678,9 @@ public class Board : MonoBehaviour
         bool oldIsTorok = piece.isTorok;
         bool oldIsTough = piece.isTough;
         bool oldLastChance = piece.lastChance;
+        
 
-        moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, takenLastChance)); // moveList is a list of the moves done
+        moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, lastChanceCheck, piece.moved, takenPieceMoved)); // moveList is a list of the moves done
 
         if(willPromote && !lastChanceCheck)//if this piece captured another piece and has promotion
         {
@@ -701,7 +690,15 @@ public class Board : MonoBehaviour
 
                 Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
                 
-                endPiece.promote = willPromote;
+                if(piece.type == Piece.PieceType.rook)
+                {
+                    endPiece.promote = false;
+                }
+                else
+                {
+                    endPiece.promote = willPromote;
+                }
+
                 endPiece.isTorok = oldIsTorok;
                 endPiece.isTough = oldIsTough;
                 endPiece.lastChance = oldLastChance;
@@ -715,7 +712,7 @@ public class Board : MonoBehaviour
 
             }
         }
-        else if(!lastChanceCheck)//if it doesnt have that, that being which was written above, this not being that, that wouldnt make sense cause this isnt that. This is this.
+        else if(!lastChanceCheck)
         {
             //Debug.Log("regular move");
             //PlacePiece(endX,endY, pieceIdMoving-1);
@@ -725,10 +722,10 @@ public class Board : MonoBehaviour
 
             Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
                 
-            endPiece.promote = willPromote;
-            endPiece.isTorok = oldIsTorok;
-            endPiece.isTough = oldIsTough;
-            endPiece.lastChance = oldLastChance;
+            //endPiece.promote = willPromote;
+            //endPiece.isTorok = oldIsTorok;
+            //endPiece.isTough = oldIsTough;
+            //endPiece.lastChance = oldLastChance;
 
             endPiece.moved = true;// changes piece to say has moved
             endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
@@ -736,7 +733,8 @@ public class Board : MonoBehaviour
         }
         else
         {
-
+            Destroy(pieceBoard[startX, startY]);
+            pieceBoard[startX, startY] = null;
         }
 
     }
@@ -791,12 +789,30 @@ public class Board : MonoBehaviour
             return;
         }
 
+        if (moveList[moveList.Count - 1].takenLastChance)
+        {
+            PlacePiece(moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY, moveList[moveList.Count - 1].pieceMoving - 1);
+        }
+        else if (moveList[moveList.Count - 1].promoted)
+        {
+            Destroy(pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]);
+            pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
+            PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceMoving - 1);
+            MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
+            pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
+            pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;            
+        }
+        else
+        {
+            MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
+            pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
+            pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
+        }
 
 
-        MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
 
-        pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
-        pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count    - 1].endY] = null;
+
+
 
         
         if (moveList[moveList.Count - 1].pieceTaken > 0)
@@ -819,7 +835,19 @@ public class Board : MonoBehaviour
             endScript.isTough = moveList[moveList.Count -1].takenTough;
             endScript.promote = moveList[moveList.Count -1].takenPromote;
             endScript.lastChance = moveList[moveList.Count -1].takenLastChance;
+            endScript.moved = moveList[moveList.Count -1].takenPieceSetFirstMove;
         }
+
+        Piece startPosPiece = pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY].GetComponent<Piece>();
+
+        if(moveList[moveList.Count - 1].promoted || moveList[moveList.Count - 1].takenLastChance)
+        {
+            startPosPiece.isTough = moveList[moveList.Count -1].movingTough;
+            startPosPiece.promote = moveList[moveList.Count -1].movingPromote;
+            startPosPiece.lastChance = moveList[moveList.Count -1].movingLastChance;
+        }
+
+        startPosPiece.moved = moveList[moveList.Count - 1].setFirstMove;
 
         moveList.RemoveAt(moveList.Count -1);
 
@@ -876,6 +904,27 @@ public class Board : MonoBehaviour
         return pieceBoard;
     }
 
+    public bool InCheckMate(bool lookingAtTorok)//if false, looking if player is in check, if true looking if torok is in check
+    {
+        if (lookingAtTorok)
+        {
+            if (torokInCheck && GetAllMoves(lookingAtTorok).Count <= 0)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            if (playerInCheck && GetAllMoves(lookingAtTorok).Count <= 0)
+            {
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
     public static int GetSize()
     {
         return boardSize;
@@ -910,7 +959,22 @@ public class Board : MonoBehaviour
         }
 
         return returnArray;
-    } 
+    }
+
+    public List<Move> GetCapturingMoves(List<Move> moves) // wait i need to rewrite this sort of
+    {
+        List<Move> capturingMoves = new List<Move>();
+
+        foreach (Move m in moves)
+        {
+            if (m.capturedPiece != -1)
+            {
+                capturingMoves.Add(m);
+            }
+        }
+
+        return capturingMoves;
+    }
 
     //returns the location of a gameobject inside the pieceboard if it exists, or -1,-1 if it doesnt
     public Vector2Int GetPieceLocation(GameObject piece)
@@ -1058,6 +1122,152 @@ public class Board : MonoBehaviour
             print(resultLine);
             resultLine = "";
         }
+    }
+
+    public bool IsKingInCheck(bool checkingTorok)
+    {
+        //there should probably be 2 bools for what side has a king, cuz then this check doesnt need to happen, and its a pretty lengthy check
+
+        //find king location
+        Vector2Int kingPos = FindKing(checkingTorok);
+
+        if (kingPos.x < 0 || kingPos.y < 0)//no king found
+        {
+            return false;
+        }
+
+        //search vertical and horizontal for rooks/queen
+        if (SearchLineForCheckingKingPiece(0,1, kingPos, checkingTorok) || SearchLineForCheckingKingPiece(0, -1, kingPos, checkingTorok) 
+            || SearchLineForCheckingKingPiece(1, 0, kingPos, checkingTorok) || SearchLineForCheckingKingPiece(-1, 0, kingPos, checkingTorok))
+        {
+            return true;
+        }
+        //search diagonal for bishop/queen/maybe pawn
+        if (SearchLineForCheckingKingPiece(1, 1, kingPos, checkingTorok) || SearchLineForCheckingKingPiece(1, -1, kingPos, checkingTorok) 
+            || SearchLineForCheckingKingPiece(-1, 1, kingPos, checkingTorok) || SearchLineForCheckingKingPiece(-1, -1, kingPos, checkingTorok))
+        {
+            return true;
+        }
+        //search L for knights
+        if (SearchLForCheckingKingPiece(kingPos, checkingTorok))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool SearchLForCheckingKingPiece(Vector2Int kingPos, bool checkingTorok)
+    {
+        for (int hOffset = -2; hOffset < 3; hOffset++)
+        {
+            if (hOffset == 0) { continue; }
+            int yLocation = 2;
+            if (hOffset % 2 == 0) { yLocation = 1; }
+
+            //print((kingPos.x + hOffset) + ", " + (kingPos.y + yLocation));
+            //print((kingPos.x + hOffset) + ", " + (kingPos.y - yLocation));
+
+            if (Piece.InBoundsCheck(kingPos.x + hOffset, kingPos.y + yLocation) && pieceBoard[kingPos.x + hOffset, kingPos.y + yLocation] != null)// upper knight positions
+            {
+                Piece lookingAt = pieceBoard[kingPos.x + hOffset, kingPos.y + yLocation].GetComponent<Piece>();
+
+                if (lookingAt.type == Piece.PieceType.knight && lookingAt.isTorok != checkingTorok) { return true; }
+            }
+            if (Piece.InBoundsCheck(kingPos.x + hOffset, kingPos.y - yLocation) && pieceBoard[kingPos.x + hOffset, kingPos.y - yLocation] != null)//lower knight positions
+            {
+                Piece lookingAt = pieceBoard[kingPos.x + hOffset, kingPos.y - yLocation].GetComponent<Piece>();
+
+                if (lookingAt.type == Piece.PieceType.knight && lookingAt.isTorok != checkingTorok) { return true; }
+            }
+        }
+        return false;
+    }
+
+    private bool SearchLineForCheckingKingPiece(int dirX, int dirY, Vector2Int kingPos, bool checkingTorok)
+    {
+        for (int offset = 1; offset < boardSize; offset++)
+        {
+            if (!Piece.InBoundsCheck(kingPos.x + (dirX * offset), kingPos.y + (dirY * offset)))//if not in bounds return false, cuz end of search in direciton dirX, dirY
+            {
+                return false;
+            }
+
+            if (pieceBoard[kingPos.x + (dirX * offset), kingPos.y + (dirY * offset)] == null)// null guard
+            {
+                continue;
+            }
+
+            Piece lookingAt = pieceBoard[kingPos.x + (dirX * offset), kingPos.y + (dirY * offset)].GetComponent<Piece>();
+
+            if (lookingAt.isTorok == checkingTorok)// is ally piece
+            {
+                return false;
+            }
+
+            //is diagonal check or horizontal/vertical check
+            if (dirX == 0 || dirY == 0)//is hor/vert check
+            {
+                //print("inside hor/vert check");
+                if (lookingAt.type == Piece.PieceType.rook || lookingAt.type == Piece.PieceType.queen)//if looking at is rook/queen then king is in check
+                {
+                    return true;
+                }
+            }
+            else//is diagonal check
+            {
+                //print("inside diagonal check");
+                if (lookingAt.type == Piece.PieceType.bishop || lookingAt.type == Piece.PieceType.queen)//looking at is a bishop/queen, then king is in check
+                {
+                    return true;
+                }
+                else if (lookingAt.type == Piece.PieceType.pawn)// if looking at is a pawn
+                {
+                    if (checkingTorok && offset == 1 && dirY == -1)
+                    {
+                        return true;
+                    }
+                    else if (!checkingTorok && offset == 1 && dirY == 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+
+        }
+
+        return false;
+    }
+
+    private Vector2Int FindKing(bool checkingTorok)
+    {
+        Vector2Int kingPos = new Vector2Int(-1, -1);
+        for (int xPos = 0; xPos < boardSize; xPos++)
+        {
+            for (int yPos = 0; yPos < boardSize; yPos++)
+            {
+                if (pieceBoard[xPos, yPos] == null) { continue; }//null guard
+
+                Piece lookingAt = pieceBoard[xPos, yPos].GetComponent<Piece>();
+
+                if (lookingAt.type == Piece.PieceType.king)
+                {
+                    if (checkingTorok && lookingAt.isTorok)
+                    {
+                        kingPos.Set(xPos, yPos);
+                        return kingPos;
+                    }
+                    else if (!checkingTorok && !lookingAt.isTorok)
+                    {
+                        kingPos.Set(xPos, yPos);
+                        return kingPos;
+                    }
+                }
+            }
+        }
+        return kingPos;
     }
 }
 
