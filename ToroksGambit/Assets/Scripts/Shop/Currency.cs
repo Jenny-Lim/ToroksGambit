@@ -32,4 +32,10 @@ public class Currency : MonoBehaviour
     {
         tickets -= amount;
     }
+
+    public void GetReward(int level) // idk im just thinking, might not be in here
+    {
+        int amount = level * 10;
+        instance.AddToCurrency(amount);
+    }
 }
