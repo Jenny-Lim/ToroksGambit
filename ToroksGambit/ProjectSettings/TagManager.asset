@@ -8,6 +8,7 @@ TagManager:
   - Chess Piece
   - StoreStock
   - Inventory
+  - LeaveShopSign
   layers:
   - Default
   - TransparentFX
