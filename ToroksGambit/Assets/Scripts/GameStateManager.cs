@@ -135,6 +135,8 @@ public class GameStateManager : MonoBehaviour
 
     public static void EndTurn()
     {
+        Board.playerInCheck = Board.instance.IsKingInCheck(false);
+        Board.torokInCheck = Board.instance.IsKingInCheck(true);
         InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.AfterTurn);
         turnCount++;
         isPlayersTurn = !isPlayersTurn;

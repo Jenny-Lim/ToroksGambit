@@ -9378,7 +9378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0537fa70c3efb3e4fb040cc1e820074a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
+  winCondition: {fileID: 0}
   currentState: 1
 --- !u!4 &1925806816
 Transform:

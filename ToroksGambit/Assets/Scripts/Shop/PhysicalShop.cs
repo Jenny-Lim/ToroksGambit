@@ -35,7 +35,7 @@ public class PhysicalShop : MonoBehaviour
         for (int i = 0; i < pieceSpots.Length; i++)
         {
             pieceType[i] = (int)(Random.Range(0, 4));
-            Debug.Log("piecetype" + i + " is " + pieceType[i]);
+            //Debug.Log("piecetype" + i + " is " + pieceType[i]);
 
             //place model at spot
             shopPieceModels[i] = Instantiate(pieceModels[pieceType[i]], pieceSpots[i].position, Quaternion.identity, gameObject.transform);

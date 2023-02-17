@@ -86,8 +86,8 @@ public class Board : MonoBehaviour
     [SerializeField]
     private GameObject promoteButton;
 
-    private bool playerInCheck;//set if player is in check <- needs to be implemented
-    private bool torokInCheck;//set if torok is in check <- needs to be implemented
+    public static bool playerInCheck;//set if player is in check <- needs to be implemented
+    public static bool torokInCheck;//set if torok is in check <- needs to be implemented
 
 
 
@@ -112,7 +112,7 @@ public class Board : MonoBehaviour
         // print("in bvoard update");
 
         if (Input.GetKeyUp("q")) {
-            print(IsKingInCheck(true));
+            print(IsKingInCheck(false));
         }
 
         if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
@@ -324,7 +324,7 @@ public class Board : MonoBehaviour
             newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
 
-            Debug.Log("placed piece type: "+piece.type);
+            //Debug.Log("placed piece type: "+piece.type);
 
             if(torokPiece)
             {
@@ -1162,27 +1162,23 @@ public class Board : MonoBehaviour
         for (int hOffset = -2; hOffset < 3; hOffset++)
         {
             if (hOffset == 0) { continue; }
-            int yLocation = 1;
-            if (hOffset % 2 == 0) { yLocation = 2; }
-            if (Piece.InBoundsCheck(kingPos.x + hOffset, kingPos.y + yLocation))// upper knight positions
-            {
-                if (pieceBoard[kingPos.x + hOffset, kingPos.y + yLocation] == null) { continue; }//null check
+            int yLocation = 2;
+            if (hOffset % 2 == 0) { yLocation = 1; }
 
+            //print((kingPos.x + hOffset) + ", " + (kingPos.y + yLocation));
+            //print((kingPos.x + hOffset) + ", " + (kingPos.y - yLocation));
+
+            if (Piece.InBoundsCheck(kingPos.x + hOffset, kingPos.y + yLocation) && pieceBoard[kingPos.x + hOffset, kingPos.y + yLocation] != null)// upper knight positions
+            {
                 Piece lookingAt = pieceBoard[kingPos.x + hOffset, kingPos.y + yLocation].GetComponent<Piece>();
 
-                if (lookingAt.isTorok == checkingTorok) { continue; }
-
-                if (lookingAt.type == Piece.PieceType.knight) { return true; }
+                if (lookingAt.type == Piece.PieceType.knight && lookingAt.isTorok != checkingTorok) { return true; }
             }
-            else if (Piece.InBoundsCheck(kingPos.x + hOffset, kingPos.y - yLocation))//lower knight positions
+            if (Piece.InBoundsCheck(kingPos.x + hOffset, kingPos.y - yLocation) && pieceBoard[kingPos.x + hOffset, kingPos.y - yLocation] != null)//lower knight positions
             {
-                if (pieceBoard[kingPos.x + hOffset, kingPos.y - yLocation] == null) { continue; }//null check
-
                 Piece lookingAt = pieceBoard[kingPos.x + hOffset, kingPos.y - yLocation].GetComponent<Piece>();
 
-                if (lookingAt.isTorok == checkingTorok) { continue; }
-
-                if (lookingAt.type == Piece.PieceType.knight) { return true; }
+                if (lookingAt.type == Piece.PieceType.knight && lookingAt.isTorok != checkingTorok) { return true; }
             }
         }
         return false;
@@ -1212,6 +1208,7 @@ public class Board : MonoBehaviour
             //is diagonal check or horizontal/vertical check
             if (dirX == 0 || dirY == 0)//is hor/vert check
             {
+                //print("inside hor/vert check");
                 if (lookingAt.type == Piece.PieceType.rook || lookingAt.type == Piece.PieceType.queen)//if looking at is rook/queen then king is in check
                 {
                     return true;
@@ -1219,6 +1216,7 @@ public class Board : MonoBehaviour
             }
             else//is diagonal check
             {
+                //print("inside diagonal check");
                 if (lookingAt.type == Piece.PieceType.bishop || lookingAt.type == Piece.PieceType.queen)//looking at is a bishop/queen, then king is in check
                 {
                     return true;
@@ -1235,6 +1233,8 @@ public class Board : MonoBehaviour
                     }
                 }
             }
+
+            return false;
 
         }
 
