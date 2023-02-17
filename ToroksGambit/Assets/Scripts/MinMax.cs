@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,8 @@ public class MinMax : MonoBehaviour
 
     int totalNumNodesLookedAt = 0;
 
-    private class ScoredMove {
+    private class ScoredMove
+    {
         public Move move;
         public float score;
 
@@ -90,7 +92,7 @@ public class MinMax : MonoBehaviour
 
         if (whosMoving == playerToMove.player)//max
         {
-           
+
             List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
 
             //check if allavailableMoves has no moves
@@ -99,7 +101,7 @@ public class MinMax : MonoBehaviour
                 return new ScoredMove(null, float.NegativeInfinity);
             }
 
-            bestMove = new ScoredMove(allAvailableMoves[0],  float.NegativeInfinity);//set best move score to be as low as possible);
+            bestMove = new ScoredMove(allAvailableMoves[0], float.NegativeInfinity);//set best move score to be as low as possible);
             //print("Amount of moves player moves available: " + allAvailableMoves.Count);
 
             foreach (Move move in allAvailableMoves)
@@ -110,7 +112,7 @@ public class MinMax : MonoBehaviour
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
                 //print("Move from MinMax Depth: " + (maxDepth - depth));
                 //numOfMovesCalled++;
-                ScoredMove recursiveResult = MinMaxRecursive(depth-1, playerToMove.torok, alpha , beta);//recursive call
+                ScoredMove recursiveResult = MinMaxRecursive(depth - 1, playerToMove.torok, alpha, beta);//recursive call
                 Board.instance.UndoMove();//undo previous move
                 //print("Undo from MinMax Depth: " + (maxDepth - depth));
                 //numOfUndoCalled++;
@@ -123,11 +125,11 @@ public class MinMax : MonoBehaviour
 
                 alpha = Mathf.Max(alpha, bestMove.score);//update alpha value if needed
 
-                /*if (beta <= alpha)//prune tree if applicable
+                if (beta <= alpha)//prune tree if applicable
                 {
                     print("got into break");
                     break;
-                }*/
+                }
 
             }
         }
@@ -164,11 +166,11 @@ public class MinMax : MonoBehaviour
 
                 beta = Mathf.Min(beta, bestMove.score);//update beta if needed
 
-                /*if (beta <= alpha)//prune tree if applicable
+                if (beta >= alpha)//prune tree if applicable
                 {
                     print("got into break");
                     break;
-                }*/
+                }
             }
         }
 
