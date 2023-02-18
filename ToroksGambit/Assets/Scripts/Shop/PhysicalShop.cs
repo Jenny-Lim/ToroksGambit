@@ -47,6 +47,25 @@ public class PhysicalShop : MonoBehaviour
         }
     }
 
+    public void ResetShop()
+    {
+        for(int i = 0;i < pieceSpots.Length;i++)
+        {
+            Destroy(shopPieceModels[i]);
+        }
+
+        for (int i = 0; i < pieceSpots.Length; i++)
+        {
+            pieceType[i] = (int)(Random.Range(0, 4));
+            //place model at spot
+            shopPieceModels[i] = Instantiate(pieceModels[pieceType[i]], pieceSpots[i].position, Quaternion.identity, gameObject.transform);
+            //change price
+            priceText[i].text = prices[pieceType[i]].ToString();
+            //re activate panels
+            uiSpots[i].SetActive(true);
+        }
+    }
+
     public void EnterShop()
     {
         c.LookAtShop();

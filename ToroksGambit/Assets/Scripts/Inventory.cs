@@ -166,6 +166,8 @@ public class Inventory : MonoBehaviour
         {
             heldPieces[(int)type] = maxHeldPieces[(int)type];
         }
+        updateCountText();
+
     }
 
     //sets the designated held amount of pieces to amount

@@ -136,6 +136,7 @@ public class Board : MonoBehaviour
             
             if((hit.transform.tag == "Chess Board" || hit.transform.tag == "Chess Piece") && clickedPiece)//if a piece is stored and another spot is chosen
             {
+                Debug.Log("hit piece");
                 //Debug.Log("TEST");
                 int clickedX = 0;
                 int clickedY = 0;
@@ -147,7 +148,7 @@ public class Board : MonoBehaviour
                 {
                     for(int j=0;j<boardSize;j++)
                     {
-                        if(hit.transform.gameObject == hitBoxBoard[i,j])
+                        if(hit.transform.gameObject == hitBoxBoard[i,j] || hit.transform.gameObject == pieceBoard[i,j])
                         {
                             clickedX = i;//get position of second spot
                             clickedY = j;
@@ -245,9 +246,39 @@ public class Board : MonoBehaviour
                 //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
 
             }
+        else if (hit.transform.tag == "Chess Board")
+        {
+
+                    for(int i=0;i<boardSize;i++)//doesnt appear to work, always returns as 0
+                    {
+                        for(int j=0;j<boardSize;j++)
+                        {
+                            if(hit.transform.gameObject == hitBoxBoard[i,j])//get position of piece in array, smae as the two above comments
+                            {
+                                if(pieceBoard[i,j])
+                                {
+                                    Piece piece = pieceBoard[i,j].GetComponent<Piece>();
+
+                                    if(!piece.isTorok)
+                                    {
+                                        clickedPiece = pieceBoard[i,j];//store piece, same as above comment about prefabs
+                                        pieceX = i;//store locations
+                                        pieceY = j;
+                                    }
+
+                                }
+                                    
+                            }
+                        }
+                    }
+
+            Debug.Log("no piece and picked board");
         }
+        }
+
         else 
         {
+
                 //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position - new Vector3(0, 5, 0), 10f * Time.deltaTime);
                 clickedPiece = null; 
         }
