@@ -127,6 +127,7 @@ public class Inventory : MonoBehaviour
                 }
                 else if (hit.transform.gameObject.CompareTag("Chess Piece") && storedPiece == -1)//if trying to remove player piece
                 {
+
                     Piece hitPiece = hit.transform.GetComponent<Piece>();
                     if (Input.GetMouseButtonDown(0) && hitPiece && !hitPiece.isTorok)
                     {

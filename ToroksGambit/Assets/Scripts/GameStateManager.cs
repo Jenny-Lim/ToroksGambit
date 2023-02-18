@@ -85,6 +85,7 @@ public class GameStateManager : MonoBehaviour
                         if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
                         {
                             Debug.Log("Player has won.");
+                            Currency.instance.GetReward(currentLevelNumber + 1);
                             ChangeGameState(GameState.shop);
                             turnCount = 1;
                             isPlayersTurn = true;
