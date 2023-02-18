@@ -39,10 +39,10 @@ public class GameStateManager : MonoBehaviour
     private void Start()
     {
         
-        //if (BoardLoader.instance.savedBoardNames.Contains("ThreePawns"))
-        //{
-            BoardLoader.instance.LoadBoard("ThreePawns");
-        //}
+        if (LevelNames.Count > 0)
+        {
+            BoardLoader.instance.LoadBoard(LevelNames[0]);
+        }
         
         
     }
