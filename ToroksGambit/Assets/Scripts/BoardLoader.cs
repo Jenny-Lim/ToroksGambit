@@ -66,7 +66,7 @@ public class BoardLoader : MonoBehaviour
             reader = new StreamReader(fs);
             string line = "";
 
-            while (line.CompareTo(boardName) == 0)
+            while (line.CompareTo(boardName) != 0)
             {
                 line = reader.ReadLine();
                 if (reader.EndOfStream)

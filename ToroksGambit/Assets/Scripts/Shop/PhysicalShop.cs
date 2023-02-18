@@ -15,6 +15,7 @@ public class PhysicalShop : MonoBehaviour
     [SerializeField] public GameObject[] uiSpots;
 
     [SerializeField] private CameraHeadMovements c;
+    private Camera cam;
 
     private GameObject[] shopPieceModels;
     private int[] pieceType;
@@ -22,6 +23,7 @@ public class PhysicalShop : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        cam = Camera.main;
     }
     private void Start()
     {
@@ -29,6 +31,25 @@ public class PhysicalShop : MonoBehaviour
         shopPieceModels = new GameObject[8];
 
         InitializeShop();
+    }
+
+    public void PhysicalShopUpdate()// created by jordan to allow for raycasts to use exit button/sign whatever
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit ,25f))
+            {
+                if (hit.transform.CompareTag("LeaveShopSign"))
+                {
+                    //leave shop function
+                    c.LookAtBoard();
+                    GameStateManager.instance.SetNextLevel();
+                }
+            }
+        }
     }
 
     public void InitializeShop()

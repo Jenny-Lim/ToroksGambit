@@ -1,10 +1,13 @@
 //using OpenCover.Framework.Model;
 using UnityEngine;
 using System.IO;
+using System.Collections.Generic;
 
 public class GameStateManager : MonoBehaviour
 {
-
+    //level stuff
+    public List<string> LevelNames;
+    public int currentLevelNumber = 0;
     public enum GameState
     {
         none,
@@ -36,10 +39,10 @@ public class GameStateManager : MonoBehaviour
     private void Start()
     {
         
-        if (BoardLoader.instance.savedBoardNames.Contains("Demo"))
-        {
-            //BoardLoader.instance.LoadBoard("Demo");
-        }
+        //if (BoardLoader.instance.savedBoardNames.Contains("ThreePawns"))
+        //{
+            BoardLoader.instance.LoadBoard("ThreePawns");
+        //}
         
         
     }
@@ -68,6 +71,33 @@ public class GameStateManager : MonoBehaviour
                 {
                     TorokIsMoving = false;
                     Board.instance.BoardUpdate();
+
+                    //chekc win condition
+                    if (currentState == GameState.game)
+                    {
+                        //win condition checks
+                        if (winCondition != null)
+                        {
+                            winCondition.ProgressConditionState();
+                            mostRecentWinCheckResult = winCondition.IsWinCondition();
+                        }
+
+                        if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
+                        {
+                            Debug.Log("Player has won.");
+                            ChangeGameState(GameState.shop);
+                            turnCount = 1;
+                            isPlayersTurn = true;
+                            PhysicalShop.instance.EnterShop();
+
+                            //reset this state
+                        }
+                        else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
+                        {
+                            Debug.Log("Torok has won.");
+                            //lose condition
+                        }
+                    }
                 }
                 else
                 {
@@ -93,35 +123,19 @@ public class GameStateManager : MonoBehaviour
                 }
                 break;
             case GameState.shop:
-                //ShopUpdate();
+                PhysicalShop.instance.PhysicalShopUpdate();
                 break;
         }
+    }
 
-        if (currentState == GameState.game)
+    public void SetNextLevel()
+    {
+        ResetToDeploy();
+        if (currentLevelNumber + 1 < LevelNames.Count)
         {
-            //win condition checks
-            if (winCondition != null)
-            {
-                winCondition.ProgressConditionState();
-                mostRecentWinCheckResult = winCondition.IsWinCondition();
-            }
-
-            if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
-            {
-                Debug.Log("Player has won.");
-                ChangeGameState(GameState.none);
-                turnCount = 1;
-                isPlayersTurn = true;
-                PhysicalShop.instance.EnterShop();
-
-                //reset this state
-            }
-            else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
-            {
-                Debug.Log("Torok has won.");
-                //lose condition
-            }
+            BoardLoader.instance.LoadBoard(LevelNames[++currentLevelNumber]);
         }
+        
     }
 
     public void ChangeGameState(GameState newState)
@@ -154,6 +168,14 @@ public class GameStateManager : MonoBehaviour
         turnCount = 1;
         isPlayersTurn = true;
         InterruptManager.instance.ResetInterruptListTriggers();
+        Inventory.instance.ResetStartButton();
+    }
+
+    public void ResetToDeploy()
+    {
+        ChangeGameState(GameState.deployment);
+        turnCount = 1;
+        isPlayersTurn = true;
         Inventory.instance.ResetStartButton();
     }
 
