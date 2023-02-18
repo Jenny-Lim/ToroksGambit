@@ -233,7 +233,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 38e63eda148ef244597d2bb1fe9cc26f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1a8d66ca08bd272478997f0c311b8307, type: 2}
+      objectReference: {fileID: 2100000, guid: 5a163df751cb1594f91e4be709726495, type: 2}
     - target: {fileID: 919132149155446097, guid: 38e63eda148ef244597d2bb1fe9cc26f, type: 3}
       propertyPath: m_Name
       value: knight_piece

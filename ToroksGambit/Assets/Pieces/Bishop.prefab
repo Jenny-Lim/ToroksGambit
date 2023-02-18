@@ -233,7 +233,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 81f95686125182344a5360552bb233af, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8e67a001e2db8934b9a793b3bc168e70, type: 2}
+      objectReference: {fileID: 2100000, guid: 5a163df751cb1594f91e4be709726495, type: 2}
     - target: {fileID: 919132149155446097, guid: 81f95686125182344a5360552bb233af, type: 3}
       propertyPath: m_Name
       value: bishop_piece
