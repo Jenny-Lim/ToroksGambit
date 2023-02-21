@@ -10,7 +10,7 @@ public class Rook : Piece
         pieceBoard = Board.GetPieceBoard();
         moves = new List<Move>();
         type = PieceType.rook;
-        value = 5;
+        value = 490;
     }
 
     public override void UpdateMoves()

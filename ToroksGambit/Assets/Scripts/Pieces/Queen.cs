@@ -10,7 +10,7 @@ public class Queen : Piece
         pieceBoard = Board.GetPieceBoard();
         moves = new List<Move>();
         type = PieceType.queen;
-        value = 8;
+        value = 900;
     }
 
     public override void UpdateMoves()

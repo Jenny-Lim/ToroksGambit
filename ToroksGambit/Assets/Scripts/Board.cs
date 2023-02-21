@@ -112,7 +112,7 @@ public class Board : MonoBehaviour
         // print("in bvoard update");
 
         if (Input.GetKeyUp("q")) {
-            print(IsKingInCheck(false));
+            print(BoardAnalyzer.instance.Analyze(pieceBoard));
         }
 
         if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
@@ -177,7 +177,9 @@ public class Board : MonoBehaviour
                 //print("pieceX of board :" + pieceX);
                 //print("pieceY of board :" + pieceY);
                 bool isValid = MoveValidator(pieceX, pieceY, clickedX, clickedY);
-                print(IsKingInCheck(true));
+
+                //print(IsKingInCheck(true));
+
                 if (isLastchance)
                 {
                     clickedPiece = null;
@@ -433,7 +435,6 @@ public class Board : MonoBehaviour
             newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[1];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
             if (piece.type == Piece.PieceType.knight) {
-                print("get rotated nerd");
                 newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
             }
 

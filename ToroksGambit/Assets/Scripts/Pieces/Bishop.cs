@@ -10,7 +10,7 @@ public class Bishop : Piece
         pieceBoard = Board.GetPieceBoard();
         moves = new List<Move>();
         type = PieceType.bishop;
-        value = 3f;
+        value = 320;
     }
 
     public override void UpdateMoves()

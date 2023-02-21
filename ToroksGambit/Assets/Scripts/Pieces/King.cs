@@ -11,8 +11,10 @@ public class King : Piece
         pieceBoard = Board.GetPieceBoard();
         moves = new List<Move>();
         type = PieceType.king;
-        value = 1000;
+        value = 60000;
     }
+
+
 
     public override void UpdateMoves()
     {

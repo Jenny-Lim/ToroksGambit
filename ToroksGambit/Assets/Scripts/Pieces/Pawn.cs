@@ -11,7 +11,7 @@ public class Pawn : Piece
         pieceBoard = Board.GetPieceBoard();
         moves = new List<Move>();
         type = PieceType.pawn;
-        value = 1;
+        value = 100;
     }
 
     public override void UpdateMoves()

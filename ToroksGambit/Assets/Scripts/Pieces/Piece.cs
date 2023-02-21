@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
+    //piece_value_base_mid_game = [100, 290, 320, 490, 900, 60000]
+    //p,n,b,r,q,k,
 
     public enum PieceType
     {
@@ -44,6 +46,14 @@ public class Piece : MonoBehaviour
         //isTaken = false;
         pieceBoard = Board.GetPieceBoard();
         moves = new List<Move>();
+    }
+
+    public void Start()
+    {
+        //if (isTorok)
+        //{
+          //  value *= -1;
+        //}
     }
 
     public virtual void UpdateMoves()

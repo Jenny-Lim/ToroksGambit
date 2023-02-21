@@ -3617,9 +3617,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardName: Test Board
   savedBoardNames:
-  - Test Board
-  - ThreePawns
   - RookRook
+  - ThreePawns
+  - FullBoard
 --- !u!4 &775294861
 Transform:
   m_ObjectHideFlags: 0
@@ -9482,7 +9482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
-  - ThreePawns
+  - FullBoard
   - RookRook
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}

@@ -10,7 +10,7 @@ public class Knight : Piece
         pieceBoard = Board.GetPieceBoard();
         moves = new List<Move>();
         type = PieceType.knight;
-        value = 3;
+        value = 290;
     }
 
     public override void UpdateMoves() // knights can jump over pieces
