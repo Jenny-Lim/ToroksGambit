@@ -136,11 +136,12 @@ public class BoardAnalyzer
                     if (targetPiece.type == Piece.PieceType.hole || targetPiece.type == Piece.PieceType.wall) { continue; }
                     if (targetPiece.isTorok)
                     {
-                        resultsTorok += posPST[(int)targetPiece.type][(j * Board.boardSize) + i];
+                        resultsTorok += posPST[(int)targetPiece.type][(j * Board.boardSize) + i];//((bs - y) * bs) - (bs - x) = arrayIndex, bs - boardsize, x - xPos, y - yPos
                     }
                     else
                     {
-                        resultsPlayer += posPST[(int)targetPiece.type][((j * Board.boardSize) + i)];
+                        resultsPlayer += posPST[(int)targetPiece.type][((Board.boardSize - j) * Board.boardSize) - (Board.boardSize - i)];
+
                     }
                 }
             }
