@@ -85,8 +85,8 @@ public class King : Piece
         MovesAdd(pieceX, pieceY + 1);
         MovesAdd(pieceX - 1, pieceY);
         MovesAdd(pieceX, pieceY - 1);
-        MovesAdd(pieceX + 1, pieceY - 1));
-        MovesAdd(pieceX - 1, pieceY + 1));
+        MovesAdd(pieceX + 1, pieceY - 1);
+        MovesAdd(pieceX - 1, pieceY + 1);
     }
 
     public override void MovesAdd(int endX, int endY)
