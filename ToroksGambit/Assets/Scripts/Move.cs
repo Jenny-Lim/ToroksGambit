@@ -74,15 +74,20 @@ public class Move
         endObject = object2;
         this.capturedPiece = capturedPiece;
         this.capturingPiece = capturingPiece;
-    }
 
-    void Awake()
-    {
         if (capturedPiece != -1)
         {
             score = GetScore(capturedPiece, capturingPiece);
         }
     }
+
+    //void Awake()
+    //{
+    //    if (capturedPiece != -1)
+    //    {
+    //        score = GetScore(capturedPiece, capturingPiece);
+    //    }
+    //}
 
     private float GetScore(int capturedPiece, int capturingPiece)
     {

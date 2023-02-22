@@ -44,6 +44,28 @@ public class MinMax : MonoBehaviour
 
     }
 
+    public class MoveComparer: IComparer<Move> // jenny -- makes it better yippee :]
+    {
+        public int Compare(Move moveA, Move moveB)
+        {
+
+            if (moveA.score == moveB.score) // if equal
+            {
+                return 0;
+            }
+            else if (moveB.score > moveA.score) // descending order
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+
+        }
+    }
+
+
     public enum playerToMove
     {
         player, torok
@@ -56,25 +78,6 @@ public class MinMax : MonoBehaviour
             instance = this;
         }
     }
-
-
-    // jenny start -- this isnt called on rn, still doing
-
-    private void PickMove(ref List<Move> allAvailableMoves, int startIndex) // supposed to sort as we go through the moves in minmax, so we dont sort unnescessarily?? - need to test
-    {
-        for (int i = startIndex + 1; i > allAvailableMoves.Count; i++)
-        {
-            if (allAvailableMoves[i].score > allAvailableMoves[startIndex].score)
-            {
-                // swap
-                Move temp = allAvailableMoves[startIndex];
-                allAvailableMoves[startIndex] = allAvailableMoves[i];
-                allAvailableMoves[i] = temp;
-            }
-        }
-    }
-
-    //jenny end
 
 
     //the recursive wrapper for the minmax call
@@ -100,6 +103,8 @@ public class MinMax : MonoBehaviour
     //the recursive functionality of the minmax call
     private ScoredMove MinMaxRecursive(int depth, playerToMove whosMoving, float alpha, float beta)
     {
+        MoveComparer mc = new MoveComparer(); // jenny
+
         //recursive termination
         if (depth == 0)
         {
@@ -121,14 +126,13 @@ public class MinMax : MonoBehaviour
                 return new ScoredMove(null, float.NegativeInfinity);
             }
 
+            allAvailableMoves.Sort(mc); // jenny
+
             bestMove = new ScoredMove(allAvailableMoves[0], float.NegativeInfinity);//set best move score to be as low as possible);
             //print("Amount of moves player moves available: " + allAvailableMoves.Count);
 
             foreach (Move move in allAvailableMoves)
             {
-                // pick move
-                //PickMove(ref allAvailableMoves, i);
-
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
                 ScoredMove recursiveResult = MinMaxRecursive(depth - 1, playerToMove.torok, alpha, beta);//recursive call
                 Board.instance.UndoMove();//undo previous move
@@ -158,13 +162,17 @@ public class MinMax : MonoBehaviour
                 return new ScoredMove(null, float.PositiveInfinity);
             }
 
+            allAvailableMoves.Sort(mc); // jenny
+
+            //foreach (Move move in allAvailableMoves)
+            //{
+            //    print("move: " + move.score.ToString());
+            //}
+
             bestMove = new ScoredMove(allAvailableMoves[0], float.PositiveInfinity);
             //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
             foreach (Move move in allAvailableMoves)
             {
-                // pick move
-                //PickMove(ref allAvailableMoves, i);
-
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
                 ScoredMove recursiveResult = MinMaxRecursive(depth - 1, playerToMove.player, alpha, beta);//recursive call
                 Board.instance.UndoMove();//undo previous move
