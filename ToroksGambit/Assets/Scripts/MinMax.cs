@@ -8,6 +8,7 @@ public class MinMax : MonoBehaviour
     public static MinMax instance;//static instance of this
     private BoardAnalyzer analyzer = new BoardAnalyzer();
     [SerializeField] private int maxDepth = 1;
+    MoveComparer mc = new MoveComparer();
 
     //int numOfUndoCalled = 0;
     //int numOfMovesCalled = 0;
@@ -23,23 +24,6 @@ public class MinMax : MonoBehaviour
         {
             move = newMove;
             score = newScore;
-        }
-
-        public ScoredMove SetMin(ScoredMove compareWith)
-        {
-            if (compareWith.score < this.score)
-            {
-                return compareWith;
-            }
-            return this;
-        }
-        public ScoredMove SetMax(ScoredMove compareWith)
-        {
-            if (compareWith.score > this.score)
-            {
-                return compareWith;
-            }
-            return this;
         }
 
     }
@@ -103,7 +87,6 @@ public class MinMax : MonoBehaviour
     //the recursive functionality of the minmax call
     private ScoredMove MinMaxRecursive(int depth, playerToMove whosMoving, float alpha, float beta)
     {
-        MoveComparer mc = new MoveComparer(); // jenny
 
         //recursive termination
         if (depth == 0)
@@ -147,7 +130,7 @@ public class MinMax : MonoBehaviour
 
                 if (alpha >= beta)
                 {
-                    print("broke in max");
+                    //print("broke in max");
                     break;
                 }
             }
@@ -163,11 +146,6 @@ public class MinMax : MonoBehaviour
             }
 
             allAvailableMoves.Sort(mc); // jenny
-
-            //foreach (Move move in allAvailableMoves)
-            //{
-            //    print("move: " + move.score.ToString());
-            //}
 
             bestMove = new ScoredMove(allAvailableMoves[0], float.PositiveInfinity);
             //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
@@ -187,7 +165,7 @@ public class MinMax : MonoBehaviour
 
                 if (alpha >= beta)
                 {
-                    print("broke in main");
+                    //print("broke in main");
                     break;
                 }
 
