@@ -89,6 +89,9 @@ public class Board : MonoBehaviour
     public static bool playerInCheck;//set if player is in check <- needs to be implemented
     public static bool torokInCheck;//set if torok is in check <- needs to be implemented
 
+    [SerializeField] private GameObject moveStartIndicator;
+    [SerializeField] private GameObject moveEndIndicator;
+
 
 
     // brought them up here
@@ -104,6 +107,13 @@ public class Board : MonoBehaviour
         hitBoxBoard = new GameObject[boardSize,boardSize];
         pieceBoard = new GameObject[boardSize, boardSize];
         BuildBoard();
+    }
+
+    //**Place anything were that needs to be reset when a new level is loaded**
+    public void Reset()
+    {
+        moveStartIndicator.transform.position = new Vector3(-200,0,0);
+        moveEndIndicator.transform.position = new Vector3(-200, 0, 0);
     }
 
     public void BoardUpdate()
@@ -607,6 +617,15 @@ public class Board : MonoBehaviour
                 canMove = true;
                 MovePieceVisualTeleport(pieceX, pieceY, endX, endY);
                 MovePiece(pieceX, pieceY, endX, endY);
+
+                Vector3 startIndicatorPos = hitBoxBoard[move.startX, move.startY].transform.position;
+                startIndicatorPos.y = 0.032f;
+                moveStartIndicator.transform.position = startIndicatorPos;
+
+                Vector3 endIndicatorPos = hitBoxBoard[move.endX, move.endY].transform.position;
+                endIndicatorPos.y = 0.032f;
+                moveEndIndicator.transform.position = endIndicatorPos;
+
                 return true;
             }
         }
@@ -1301,5 +1320,7 @@ public class Board : MonoBehaviour
         }
         return kingPos;
     }
+
+
 }
 

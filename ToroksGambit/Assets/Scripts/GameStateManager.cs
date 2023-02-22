@@ -132,6 +132,7 @@ public class GameStateManager : MonoBehaviour
     public void SetNextLevel()
     {
         ResetToDeploy();
+        Board.instance.Reset();
         if (currentLevelNumber + 1 < LevelNames.Count)
         {
             BoardLoader.instance.LoadBoard(LevelNames[++currentLevelNumber]);
