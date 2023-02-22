@@ -155,7 +155,7 @@ public class GameStateManager : MonoBehaviour
         InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.AfterTurn);
         turnCount++;
         isPlayersTurn = !isPlayersTurn;
-        print("Current Board Score " + BoardAnalyzer.instance.Analyze(Board.pieceBoard));
+        //print("Current Board Score " + BoardAnalyzer.instance.Analyze(Board.pieceBoard));
         //check win condition
     }
 
