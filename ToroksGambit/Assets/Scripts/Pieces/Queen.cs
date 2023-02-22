@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Queen : Piece
 {
-    // Start is called before the first frame update
     void Awake()
     {
         pieceBoard = Board.GetPieceBoard();

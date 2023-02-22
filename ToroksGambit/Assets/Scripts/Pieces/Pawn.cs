@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Pawn : Piece
 {
-
-    // Start is called before the first frame update
     void Awake()
     {
         pieceBoard = Board.GetPieceBoard();

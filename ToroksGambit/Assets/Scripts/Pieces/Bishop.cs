@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bishop : Piece
 {
-    // Start is called before the first frame update
     void Awake()
     {
         pieceBoard = Board.GetPieceBoard();
@@ -25,7 +24,6 @@ public class Bishop : Piece
         MovesAdd(-1, -1);
         MovesAdd(1, -1);
         MovesAdd(-1, 1);
-
 
     }
 }

@@ -59,7 +59,7 @@ public class Piece : MonoBehaviour
     public virtual void UpdateMoves()
     {
 
-        // empty to be overwritten -- maybe it can hold default functionality (see pats movePiece)
+        // empty to be overwritten
         //moves.Clear();
 
         //int endX = Board.GetClickedX();
@@ -78,7 +78,7 @@ public class Piece : MonoBehaviour
         return true;
     }
 
-    public virtual int ClearCheck(int endX, int endY) // for new vers, only need the end params and it should return int -- does this even still need to be virtual
+    public int ClearCheck(int endX, int endY) // not virtual anymore
     {
         if (pieceBoard[endX, endY] != null)
         {
@@ -103,7 +103,7 @@ public class Piece : MonoBehaviour
     } // ClearCheck
 
 
-    public virtual void MovesAdd(int directionX, int directionY) // made virtual
+    public void MovesAdd(int directionX, int directionY) // not virtual anymore
     {
         for (int i = 1; i < Board.boardSize; i++)
         {
@@ -136,6 +136,36 @@ public class Piece : MonoBehaviour
             }
         }
     } // MovesAdd
+
+
+    public void MovesAdd_K(int endX, int endY) // K for [k]ing, [k]night
+    {
+        int clearResult;
+        if (InBoundsCheck(endX, endY))
+        {
+            clearResult = ClearCheck(endX, endY);
+            if (pieceBoard[endX, endY] != null)
+            {
+                Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
+                if (p != null)
+                {
+                    if (clearResult == 3) // if its 3 then do the thing
+                    {
+                        moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], (int)this.type, (int)p.type));
+                    }
+                }
+            }
+
+            else
+            {
+                if (clearResult == 0)
+                {
+                    moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], -1, -1));
+                }
+            }
+        }
+    } // MovesAdd_K
+
 
     public bool IsOnSameTeam(GameObject compareTo)
     {

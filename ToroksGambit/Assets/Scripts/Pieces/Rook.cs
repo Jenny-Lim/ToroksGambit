@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rook : Piece
 {
-    // Start is called before the first frame update
+
     void Awake()
     {
         pieceBoard = Board.GetPieceBoard();
@@ -26,7 +26,6 @@ public class Rook : Piece
         MovesAdd(0, 1);
         MovesAdd(0, -1);
 
-      
     }
 
 }
