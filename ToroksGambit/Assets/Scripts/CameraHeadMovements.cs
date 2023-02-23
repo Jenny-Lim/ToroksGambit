@@ -61,18 +61,14 @@ public class CameraHeadMovements : MonoBehaviour
     // below -- jenny added
     public void LookAtShop()
     {
-        if (!movementInProgress)
-        {
+            StopAllCoroutines();
             StartCoroutine(LookAtShopCoRo());
-        }
     }
 
     public void LookAtBoard()
     {
-        if (!movementInProgress)
-        {
-            StartCoroutine(LookAtBoardCoRo());
-        }
+        StopAllCoroutines();
+        StartCoroutine(LookAtBoardCoRo());
     }
 
     private IEnumerator LookAtShopCoRo()
