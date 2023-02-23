@@ -161,45 +161,6 @@ public class BoardLoader : MonoBehaviour
 
 
             }
-
-
-            /*
-            //Debug.Log("find start");
-            while (line.CompareTo(boardName) != 0)
-            {
-                line = reader.ReadLine();
-                print(line);
-                if (reader.EndOfStream)
-                {
-                    Debug.LogError("Did not find saved board with given name " + boardName);
-                    return;
-                }
-            }
-
-            if (reader.EndOfStream && line.CompareTo(boardName) != 0)// if at the end of the file meaning no name was found
-            {
-                Debug.LogError("File Error| Could not find board " + boardName + " inside file " + Application.streamingAssetsPath + "/" + fileName);
-            }
-
-            line = reader.ReadLine();
-
-            //Debug.Log("Load to end");
-            while (line.CompareTo(boardEndText) != 0)
-            {
-                string[] lines = line.Split(char.Parse(","));// will seperate line into mutliple strings, [0] = pieceId, [1] = xPos, [2] = yPos, [3] = isTorok
-                
-                if (Convert.ToBoolean(lines[3]))//if is torok piece
-                {
-                    Board.instance.PlacePieceTorok(int.Parse(lines[1]), int.Parse(lines[2]), int.Parse(lines[0]));
-                }
-                else//else player piece
-                {
-                    Board.instance.PlacePiece(int.Parse(lines[1]), int.Parse(lines[2]), int.Parse(lines[0]));
-                }
-                line = reader.ReadLine();
-            }
-            //Debug.Log("reached end");
-            */
         }
         catch (Exception e)
         { 
@@ -213,6 +174,7 @@ public class BoardLoader : MonoBehaviour
             if (reader != null) { reader.Close(); }
         }
 
+        this.boardName = boardName;
         Debug.Log("Finished loading board with name " + boardName);
 
     }

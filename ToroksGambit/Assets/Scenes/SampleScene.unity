@@ -3700,11 +3700,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e273330cf297344a512cd570046dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardName: Test Board
+  boardName: LevelExample
   savedBoardNames:
   - RookRook
   - ThreePawns
   - FullBoard
+  - Test
 --- !u!4 &775294861
 Transform:
   m_ObjectHideFlags: 0

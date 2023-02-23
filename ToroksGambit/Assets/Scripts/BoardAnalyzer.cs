@@ -94,6 +94,10 @@ public class BoardAnalyzer
 
     public float materialWeight { get; private set; } = 1.0f;
 
+    public float toughtTraitWeight = 0.1f;
+    public float promoteTraitWeight = 0.1f;
+    public float lastChanceTraitWeight = 0.1f;
+
     public BoardAnalyzer()
     {
         posPST[0] = pawnPST;
@@ -164,6 +168,12 @@ public class BoardAnalyzer
                     if (targetPiece.type == Piece.PieceType.hole || targetPiece.type == Piece.PieceType.wall) { continue; }
 
                     float value = targetPiece.value;
+
+                    //add slightly more if piece has trait
+                    if (targetPiece.isTough) { value += toughtTraitWeight; }
+                    if (targetPiece.promote) { value += promoteTraitWeight; }
+                    if (targetPiece.lastChance) { value += lastChanceTraitWeight; }
+
                     if (targetPiece.isTorok) { value *= -1; }
 
                     result += value;
