@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    private string currentLevelName;
+    private string currentSceneName;
 
     void Awake()
     {
@@ -31,25 +31,25 @@ public class GameManager : MonoBehaviour
         StartCoroutine("LoadScene", "SampleScene");
     }
 
-    IEnumerator LoadScene(string levelName)
+    IEnumerator LoadScene(string sceneName)
     {
-        if (!string.IsNullOrEmpty(currentLevelName))
+        if (!string.IsNullOrEmpty(currentSceneName))
         {
-            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(currentLevelName);
+            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(currentSceneName);
             while (!asyncUnload.isDone)
             {
                 yield return null;
             }
         }
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
 
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
 
-        currentLevelName = levelName;
+        currentSceneName = sceneName;
     }
 }
