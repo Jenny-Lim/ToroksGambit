@@ -231,9 +231,19 @@ public struct MinMaxJob : IJob
     public playerToMove toMove;
     public Move selectedMove;
 
+    public MinMaxJob(int depth, playerToMove FirstToMove)
+    {
+        maxDepth = depth;
+        toMove = FirstToMove;
+        mc = new MoveComparer();
+        totalNumNodesLookedAt = 0;
+        selectedMove = null;
+        analyzer= new BoardAnalyzer();
+
+    }
+
     public void Execute()
     {
-        
         totalNumNodesLookedAt = 0;
         float startTime = Time.realtimeSinceStartup;
         //Debug.Log("AI: Looking for move...");

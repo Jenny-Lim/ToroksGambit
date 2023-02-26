@@ -13,8 +13,12 @@ public class TorokPersonalityAI : MonoBehaviour
 
     public static TorokPersonalityAI instance;
 
-    private void IncreaseAngerLevel() { 
-        library.LoadDialogue(++currentAngerLevel);//increment anger level and reload dialogue
+    private Animator anim;
+    private bool isPlaying = false;
+
+    private void Awake()
+    {
+        //amim = GetComponent<Animator>();
     }
 
     private void Start()
@@ -26,9 +30,50 @@ public class TorokPersonalityAI : MonoBehaviour
         library.LoadDialogue(currentAngerLevel);
     }
 
-    private void PlaySoundFromCategory(SoundLibrary.Categories from)
+    private float PlaySoundFromCategory(SoundLibrary.Categories from)
     {
         audioPlayer.clip = library.GetAudioClip(from);
         audioPlayer.Play();
+        return audioPlayer.clip.length;
+    }
+
+    private void OpenMouth()
+    {
+        
+    }
+
+    private void CloseMouth()
+    {
+
+    }
+
+    private void PlayAnimation(int which = -1)
+    {
+
+    }
+
+    public void PlayAnimationAndSound(SoundLibrary.Categories category)
+    {
+        if (isPlaying)
+        {
+            StopAllCoroutines();
+        }
+        StartCoroutine(PlayAnimationAndSoundCoRo(category));
+    }
+
+    private IEnumerator PlayAnimationAndSoundCoRo(SoundLibrary.Categories category)
+    {
+        isPlaying = true;
+        OpenMouth();
+        PlayAnimation();
+        float clipLength = PlaySoundFromCategory(category);
+        yield return new WaitForSeconds(clipLength);
+        CloseMouth();
+        isPlaying = false;
+    }
+
+    private void IncreaseAngerLevel()
+    {
+        library.LoadDialogue(++currentAngerLevel);//increment anger level and reload dialogue
     }
 }

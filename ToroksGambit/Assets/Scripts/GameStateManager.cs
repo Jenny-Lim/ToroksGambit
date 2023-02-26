@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
+using Unity.Jobs;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -96,7 +97,7 @@ public class GameStateManager : MonoBehaviour
                         else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
                         {
                             Debug.Log("Torok has won.");
-                            //lose condition
+                            //lose logic
                         }
                     }
                 }
