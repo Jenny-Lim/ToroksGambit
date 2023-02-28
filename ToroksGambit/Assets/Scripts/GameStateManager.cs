@@ -158,6 +158,20 @@ public class GameStateManager : MonoBehaviour
             case GameState.shop:
                 PhysicalShop.instance.PhysicalShopUpdate();
                 break;
+            case GameState.intro:
+                //make camera look at torok
+                //play animation
+
+                break;
+            case GameState.win:
+                //put up some text that says you wont
+                //add tickets
+
+                break;
+            case GameState.title:
+                //just a title bro
+
+                break;
         }
     }
 
