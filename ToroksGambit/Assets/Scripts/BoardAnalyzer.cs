@@ -28,9 +28,9 @@ public class BoardAnalyzer
     //p,n,b,r,q,k,
 
     //(PST -> piece square table)
-    private int[][] posPST = new int[6][];
+    private static int[][] posPST = new int[6][];
 
-    private int[] kingPST =    {0, 0, 0, 0, 0, 0, 0, 0,
+    private static int[] kingPST =    {0, 0, 0, 0, 0, 0, 0, 0,
                                 0, 0, 0, 0, 0, 0, 0, 0,
                                 0, 0, 0, 0, 0, 0, 0, 0,
                                 0, 0, 0, 0, 0, 0, 0, 0,
@@ -39,7 +39,7 @@ public class BoardAnalyzer
                                 0, 0, 0, -5, -5, -5, 0, 0,
                                 0, 0, 10, -5, -5, -5, 10, 0 };
 
-    private int[] queenPST =    {-20, -10, -10, -5, -5, -10, -10, -20,
+    private static int[] queenPST =    {-20, -10, -10, -5, -5, -10, -10, -20,
                                  -10, 0, 0, 0, 0, 0, 0, -10,
                                  -10, 0, 5, 5, 5, 5, 0, -10,
                                   -5, 0, 5, 5, 5, 5, 0, -5,
@@ -48,7 +48,7 @@ public class BoardAnalyzer
                                  -10, 0, 5, 0, 0, 0, 0, -10,
                                  -20, -10, -10, 0, 0, -10, -10, -20 };
 
-    private int[] rookPST =    {10,  10,  10,  10,  10,  10,  10,  10,
+    private static int[] rookPST =    {10,  10,  10,  10,  10,  10,  10,  10,
                                 10,  10,  10,  10,  10,  10,  10,  10,
                                  0,   0,   0,   0,   0,   0,   0,   0,
                                  0,   0,   0,   0,   0,   0,   0,   0,
@@ -57,7 +57,7 @@ public class BoardAnalyzer
                                  0,   0,   0,  10,  10,   0,   0,   0,
                                  0,   0,   0,  10,  10,   5,   0,   0 };
 
-    private int[] bishopPST =      {0,   0,   0,   0,   0,   0,   0,   0,
+    private static int[] bishopPST =      {0,   0,   0,   0,   0,   0,   0,   0,
                                     0,   0,   0,   0,   0,   0,   0,   0,
                                     0,   0,   0,   0,   0,   0,   0,   0,
                                     0,  10,   0,   0,   0,   0,  10,   0,
@@ -66,7 +66,7 @@ public class BoardAnalyzer
                                     0,  10,   0,  10,  10,   0,  10,   0,
                                     0,   0, -10,   0,   0, -10,   0,   0 };
 
-    private int[] knightPST =    {-5,  -5, -5, -5, -5, -5,  -5, -5,
+    private static int[] knightPST =    {-5,  -5, -5, -5, -5, -5,  -5, -5,
                                   -5,   0,  0, 10, 10,  0,   0, -5,
                                   -5,   5, 10, 10, 10, 10,   5, -5,
                                   -5,   5, 10, 15, 15, 10,   5, -5,
@@ -75,7 +75,7 @@ public class BoardAnalyzer
                                   -5,   0,  0,  5,  5,  0,   0, -5,
                                   -5, -10, -5, -5, -5, -5, -10, -5 };
 
-    private int[] pawnPST =       { 0,   0,   0,   0,   0,   0,   0,   0,
+    private static int[] pawnPST =       { 0,   0,   0,   0,   0,   0,   0,   0,
                                 30,  30,  30,  40,  40,  30,  30,  30,
                                 20,  20,  20,  30,  30,  30,  20,  20,
                                 10,  10,  15,  25,  25,  15,  10,  10,

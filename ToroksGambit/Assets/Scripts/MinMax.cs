@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Jobs;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Jobs;
 
@@ -9,14 +11,14 @@ public class MinMax : MonoBehaviour
 {
     public static MinMax instance;//static instance of this
     private BoardAnalyzer analyzer = new BoardAnalyzer();
-    [SerializeField] private int maxDepth = 1;
+    [SerializeField] public int maxDepth = 1;
     MoveComparer mc = new MoveComparer();
 
     //int numOfUndoCalled = 0;
     //int numOfMovesCalled = 0;
 
     int totalNumNodesLookedAt = 0;
-
+/*
     private class ScoredMove
     {
         public Move move;
@@ -29,29 +31,7 @@ public class MinMax : MonoBehaviour
         }
 
     }
-
-    public class MoveComparer: IComparer<Move> // jenny -- makes it better yippee :]
-    {
-        public int Compare(Move moveA, Move moveB)
-        {
-
-            if (moveA.score == moveB.score) // if equal
-            {
-                return 0;
-            }
-            else if (moveB.score > moveA.score) // descending order
-            {
-                return 1;
-            }
-            else
-            {
-                return -1;
-            }
-
-        }
-    }
-
-
+*/
     public enum playerToMove
     {
         player, torok
@@ -185,9 +165,44 @@ public class MinMax : MonoBehaviour
     }
 }
 
+public struct ScoredMove
+{
+    public Move move;
+    public float score;
+
+    public ScoredMove(Move newMove, float newScore)
+    {
+        move = newMove;
+        score = newScore;
+    }
+
+}
+
+public class MoveComparer : IComparer<Move> // jenny -- makes it better yippee :]
+{
+    public int Compare(Move moveA, Move moveB)
+    {
+
+        if (moveA.score == moveB.score) // if equal
+        {
+            return 0;
+        }
+        else if (moveB.score > moveA.score) // descending order
+        {
+            return 1;
+        }
+        else
+        {
+            return -1;
+        }
+
+    }
+}
+
+
 public struct MinMaxJob : IJob
 {
-    public class ScoredMove
+    /*public class ScoredMove
     {
         public Move move;
         public float score;
@@ -219,6 +234,7 @@ public struct MinMaxJob : IJob
 
         }
     }
+    */
 
     public int totalNumNodesLookedAt;
     public BoardAnalyzer analyzer;
