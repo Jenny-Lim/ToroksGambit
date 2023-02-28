@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
     private RectTransform rectTrans;
     [SerializeField] private TextMeshProUGUI hideShowText;
     [SerializeField] private int[] maxHeldPieces = {5,5,5,5,1};//the maximum number of each piece the player can have
-    private int[] heldPieces = {5,5,5,5,1};//the amount of each piece the player has
+    private int[] heldPieces = {4,5,5,5,1};//the amount of each piece the player has
     [SerializeField] private float ghostPieceVertOffset = -0.05f;
     private bool infinitePieces = true;
 
@@ -30,6 +30,7 @@ public class Inventory : MonoBehaviour
     public void HideInventoryPanel()
     {
         gameObject.SetActive(false);
+        Debug.Log("Hi Jordan! It's Aidan. I have hijacked your game.");
     }
 
     private bool isShowingPanel = false;
@@ -42,7 +43,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject[] PiecePrefabs;
     private Camera cam;
 
-    [SerializeField] private int storedPiece = 1;//pawn - 0, knight - 1, bishop - 2, rook - 3, queen - 4, remove - -1
+    [SerializeField] private int storedPiece = -1;//pawn - 0, knight - 1, bishop - 2, rook - 3, queen - 4, remove - -1
 
     [SerializeField] private GameObject startButton;
 
@@ -64,11 +65,11 @@ public class Inventory : MonoBehaviour
         //initialize the max number of each puece can be held in inventory
         //placeholder values
 
-        maxHeldPieces[0] = 5; //max pawns
-        maxHeldPieces[1] = 5; //max knights
-        maxHeldPieces[2] = 5; //max bishops
-        maxHeldPieces[3] = 5; //max rooks
-        maxHeldPieces[4] = 1; //max queens
+        //maxHeldPieces[0] = 5; //max pawns
+        //maxHeldPieces[1] = 5; //max knights
+        //maxHeldPieces[2] = 5; //max bishops
+        //maxHeldPieces[3] = 5; //max rooks
+        //maxHeldPieces[4] = 1; //max queens
 
         updateCountText();
 
