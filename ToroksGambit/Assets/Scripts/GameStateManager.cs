@@ -12,8 +12,11 @@ public class GameStateManager : MonoBehaviour
     public enum GameState
     {
         none,
+        title,
+        intro,
         deployment,
         game,
+        win,
         shop
     }
 
@@ -26,6 +29,10 @@ public class GameStateManager : MonoBehaviour
     private bool TorokIsMoving;
 
     public static GameStateManager instance;
+
+    JobHandle handle;
+    MinMaxJob moveSearchJob;
+    public bool lookingForMove = false;
 
     private void Awake()
     {
@@ -45,7 +52,6 @@ public class GameStateManager : MonoBehaviour
             BoardLoader.instance.LoadBoard(LevelNames[0]);
         }
         
-        
     }
 
     public bool GetIsPlayersTurn()
@@ -56,10 +62,6 @@ public class GameStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("g"))
-        {
-            print(isPlayersTurn);
-        }
 
         switch (currentState)
         {
@@ -103,6 +105,35 @@ public class GameStateManager : MonoBehaviour
                 }
                 else
                 {
+                    
+                    /*if (lookingForMove)
+                    {
+                        if (handle.IsCompleted)
+                        {
+                            Move resultMove = moveSearchJob.selectedMove;
+                            if (resultMove != null)
+                            {
+                                //Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY], resultMove.promoted);
+                                Board.instance.canMove = false;
+                                Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
+                            }
+                            else
+                            {
+                                Debug.Log("MinMax was not able to find a move. Either the game has ended, or it has no pieces on the board");
+                                Debug.Log("Switching back to player's turn for convenience");
+                            }
+                            lookingForMove = false;
+                            EndTurn();
+                        }
+                    }
+                    else
+                    {
+                        moveSearchJob = new MinMaxJob(MinMax.instance.maxDepth, MinMaxJob.playerToMove.torok);
+                        handle = moveSearchJob.Schedule();
+                        lookingForMove = true;
+                    }*/
+
+
                     if (!TorokIsMoving)
                     {
                         TorokIsMoving = true;
@@ -126,6 +157,20 @@ public class GameStateManager : MonoBehaviour
                 break;
             case GameState.shop:
                 PhysicalShop.instance.PhysicalShopUpdate();
+                break;
+            case GameState.intro:
+                //make camera look at torok
+                //play animation
+
+                break;
+            case GameState.win:
+                //put up some text that says you wont
+                //add tickets
+
+                break;
+            case GameState.title:
+                //just a title bro
+
                 break;
         }
     }

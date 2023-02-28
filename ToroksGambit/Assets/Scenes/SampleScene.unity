@@ -9572,7 +9572,8 @@ MonoBehaviour:
   - RookRook
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
-  currentState: 1
+  currentState: 3
+  lookingForMove: 0
 --- !u!4 &1925806816
 Transform:
   m_ObjectHideFlags: 0
@@ -10847,7 +10848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideShowText: {fileID: 1477407504}
-  maxHeldPieces: 0000000000000000000000000000000000000000
+  maxHeldPieces: 0500000005000000050000000500000001000000
   ghostPieceVertOffset: -0.05
   travelSpeed: 7
   showLocation: {x: -846, y: 130, z: 0}
@@ -10858,7 +10859,7 @@ MonoBehaviour:
   - {fileID: 2142598314}
   - {fileID: 1125712925}
   - {fileID: 175245312}
-  storedPiece: 1
+  storedPiece: -1
   startButton: {fileID: 1969337867}
   pieceCountText:
   - {fileID: 1381076412}

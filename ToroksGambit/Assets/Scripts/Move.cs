@@ -10,8 +10,8 @@ public class Move
     public int endX;
     public int endY;
 
-    public GameObject startObject;
-    public GameObject endObject;
+    //public GameObject startObject;
+    //public GameObject endObject;
 
     public bool promoted;
 
@@ -70,8 +70,8 @@ public class Move
         startY = y1;
         endX = x2;
         endY = y2;
-        startObject = object1;
-        endObject = object2;
+        //startObject = object1;
+        //endObject = object2;
         this.capturedPiece = capturedPiece;
         this.capturingPiece = capturingPiece;
 
