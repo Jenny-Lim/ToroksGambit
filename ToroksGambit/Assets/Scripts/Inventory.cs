@@ -30,7 +30,6 @@ public class Inventory : MonoBehaviour
     public void HideInventoryPanel()
     {
         gameObject.SetActive(false);
-        Debug.Log("Hi Jordan! It's Aidan. I have hijacked your game.");
     }
 
     private bool isShowingPanel = false;
@@ -99,7 +98,10 @@ public class Inventory : MonoBehaviour
                     //show desired visual
                     if (storedPiece >= 0 && storedPiece < 5)
                     {
-                        PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
+                        if(heldPieces[storedPiece] > 0)
+                        {
+                            PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
+                        }
                     }
 
                     if(Input.GetMouseButtonDown(0))//Patrick - mouse input to place piece
@@ -110,7 +112,19 @@ public class Inventory : MonoBehaviour
                         }
                         else
                         {
-                            Board.instance.PlacePiece(hit.transform, storedPiece);
+                            Debug.Log("PLACEPLAYERPIECE: "+(InventoryPieces)storedPiece);
+                            if(storedPiece < 5)
+                            {
+                                if(heldPieces[storedPiece] > 0)
+                                {
+                                    AlterPiece((InventoryPieces)storedPiece, -1);
+                                    Board.instance.PlacePiece(hit.transform, storedPiece);
+                                }
+                            }
+                            else
+                            {
+                                Board.instance.PlacePiece(hit.transform, storedPiece);
+                            }
                         }
 
                         if(!Board.instance.torokPiece && storedPiece > -1 && storedPiece < 6)//place peice nd remove form inevtory
@@ -135,7 +149,10 @@ public class Inventory : MonoBehaviour
                         //print("inside removePLayer");
                         Debug.Log((int)storedPiece);
                         Board.instance.PlacePiece(hit.transform, storedPiece);
-                        AlterPiece((InventoryPieces)hitPiece.type, 1);
+                        if((int)hitPiece.type < 5)
+                        {
+                            AlterPiece((InventoryPieces)hitPiece.type, 1);
+                        }
                         updateCountText();
                     }
                 }
