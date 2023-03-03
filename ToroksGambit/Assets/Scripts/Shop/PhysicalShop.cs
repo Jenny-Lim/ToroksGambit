@@ -14,6 +14,8 @@ public class PhysicalShop : MonoBehaviour
     [SerializeField] private TextMeshPro[] priceText;
     [SerializeField] public GameObject[] uiSpots;
 
+    [SerializeField] private GameObject piecePanels;
+
     [SerializeField] private CameraHeadMovements c;
     private Camera cam;
 
@@ -45,6 +47,7 @@ public class PhysicalShop : MonoBehaviour
                 if (hit.transform.CompareTag("LeaveShopSign"))
                 {
                     //leave shop function
+                    piecePanels.SetActive(false);
                     c.LookAtBoard();
                     GameStateManager.instance.SetNextLevel();
                 }
@@ -90,7 +93,8 @@ public class PhysicalShop : MonoBehaviour
     public void EnterShop()
     {
         c.LookAtShop();
-        for(int i = 0; i < shopPieceModels.Length; i++)
+        piecePanels.SetActive(true);
+        for (int i = 0; i < shopPieceModels.Length; i++)
         {
             uiSpots[i].SetActive(true);
         }
