@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using Unity.Jobs;
 using System.Collections;
+using TMPro;
 using UnityEngine.UIElements;
 
 public class GameStateManager : MonoBehaviour
@@ -37,6 +38,10 @@ public class GameStateManager : MonoBehaviour
     public bool lookingForMove = false;
     [SerializeField] private GameObject victoryText;
     [SerializeField] private Coroutine activeCoRo;
+
+    [SerializeField] private TextMeshProUGUI objectiveText;
+
+
     
 
     private void Awake()
@@ -246,6 +251,7 @@ public class GameStateManager : MonoBehaviour
         InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.AfterTurn);
         turnCount++;
         isPlayersTurn = !isPlayersTurn;
+        
         //print("Current Board Score " + BoardAnalyzer.instance.Analyze(Board.pieceBoard));
         //check win condition
     }

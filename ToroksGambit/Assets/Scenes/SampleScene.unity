@@ -11271,6 +11271,7 @@ MonoBehaviour:
   currentState: 2
   lookingForMove: 0
   victoryText: {fileID: 1480075905}
+  objectiveText: {fileID: 1907121239}
 --- !u!4 &1925806816
 Transform:
   m_ObjectHideFlags: 0
