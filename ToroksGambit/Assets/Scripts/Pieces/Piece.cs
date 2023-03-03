@@ -76,7 +76,7 @@ public class Piece : MonoBehaviour
         int i = 0;
         foreach (Move m in moves)
         {
-            Board.instance.MovePiece(pieceX, pieceY, m.endX, m.endY);
+            Board.instance.MovePiece(m.startX, m.startY, m.endX, m.endY);
             if (!Board.instance.IsKingInCheck(isTorok))
             {
                 moves.RemoveAt(i);
