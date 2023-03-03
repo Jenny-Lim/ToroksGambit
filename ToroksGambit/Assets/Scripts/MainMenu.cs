@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour
     {
         startPressed = false;
         if (instance == null) { instance = this; }
+        //Hi Jordan!
     }
 
     void OnEnable()
