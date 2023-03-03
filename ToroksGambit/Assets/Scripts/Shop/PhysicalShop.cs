@@ -48,6 +48,7 @@ public class PhysicalShop : MonoBehaviour
                 {
                     //leave shop function
                     piecePanels.SetActive(false);
+                    Inventory.instance.objectiveArea.SetActive(true);
                     c.LookAtBoard();
                     GameStateManager.instance.SetNextLevel();
                 }
@@ -93,6 +94,7 @@ public class PhysicalShop : MonoBehaviour
     public void EnterShop()
     {
         c.LookAtShop();
+        Inventory.instance.objectiveArea.SetActive(false);
         piecePanels.SetActive(true);
         for (int i = 0; i < shopPieceModels.Length; i++)
         {
@@ -105,7 +107,7 @@ public class PhysicalShop : MonoBehaviour
     {
         for(int i = 0;i < uiSpots.Length;i++)
         {
-            if(buttonObject == uiSpots[i])
+            if(buttonObject == uiSpots[i] && prices[pieceType[i]] <= Currency.instance.tickets)
             {
                 //Debug.Log(i);
                 Destroy(shopPieceModels[i]);

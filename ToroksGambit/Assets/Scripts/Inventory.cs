@@ -21,6 +21,7 @@ public class Inventory : MonoBehaviour
     private int[] heldPieces = {4,5,5,5,1};//the amount of each piece the player has
     [SerializeField] private float ghostPieceVertOffset = -0.05f;
     private bool infinitePieces = true;
+    [SerializeField] public GameObject objectiveArea;
 
     public void ShowInventoryPanel()
     {
