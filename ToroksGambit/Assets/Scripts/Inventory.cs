@@ -126,14 +126,12 @@ public class Inventory : MonoBehaviour
                             }
                             else
                             {
-                                Debug.Log("remove piece");
                                 for(int i = 0;i<8;i++)
                                 {
                                     for(int j = 0;j<8;j++)
                                     {
                                         if(hit.transform.gameObject == Board.instance.hitBoxBoard[i,j])
                                         {
-                                            Debug.Log("its this one: "+i+j);
                                             Piece removePiece = Board.pieceBoard[i, j].GetComponent<Piece>();
                                             if(!removePiece.isTorok && (int)removePiece.type < 5)
                                             {
