@@ -23,7 +23,7 @@ public class Board : MonoBehaviour
 
     private Camera cam;
 
-    private GameObject clickedPiece; 
+    public GameObject clickedPiece; 
 
     public List<Move> moveList = new List<Move>();
 

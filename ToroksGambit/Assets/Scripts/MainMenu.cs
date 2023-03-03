@@ -10,6 +10,16 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button continueButton;
     [SerializeField] private Button optionsButton; // to change once there's stuff
 
+
+    public static MainMenu instance;
+    public bool startPressed;
+
+    private void Start()
+    {
+        startPressed = false;
+        if (instance == null) { instance = this; }
+    }
+
     void OnEnable()
     {
         continueButton.interactable = false;
@@ -20,6 +30,9 @@ public class MainMenu : MonoBehaviour
     {
         //GameManager.instance.StartNewGame();
         // get first level
+
+        startPressed = true;
+
         GameStateManager.instance.currentLevelNumber = -1;
         GameStateManager.instance.SetNextLevel();
 
@@ -38,6 +51,8 @@ public class MainMenu : MonoBehaviour
         // reset currency
         Currency.instance.SetCurrency(10); // for now
 
+
+        CameraHeadMovements.instance.LookAtPlayArea();
 
         gameObject.SetActive(false); // hide main menu
     }

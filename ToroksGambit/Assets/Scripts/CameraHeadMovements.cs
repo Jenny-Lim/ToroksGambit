@@ -12,10 +12,12 @@ public class CameraHeadMovements : MonoBehaviour
     [SerializeField] private Vector3 lookAtBoardPosition;
     [SerializeField] private Vector3 lookAtShopPosition;
     public static CameraHeadMovements instance;
+    private Animator ani;
 
     private void Start()
     {
         initialRotation = transform.eulerAngles;
+        ani = gameObject.GetComponent<Animator>();
         if (instance == null ) { instance = this; }
     }
 
@@ -94,6 +96,23 @@ public class CameraHeadMovements : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, lookAtBoardPosition, speed * Time.deltaTime);
             yield return null;
         }
+        movementInProgress = false;
+    }
+
+
+    public void LookAtPlayArea()
+    {
+        StopAllCoroutines();
+        StartCoroutine(LookAtPlayAreaCoRo());
+    }
+    private IEnumerator LookAtPlayAreaCoRo()
+    {
+        movementInProgress = true;
+        //while (transform.position.z > -1.77) {
+        //ani.Play("Base Layer.CameraIdle", 0, 1.0f);
+        ani.SetBool("StartPressed", MainMenu.instance.startPressed);
+        //}
+        yield return null;
         movementInProgress = false;
     }
 
