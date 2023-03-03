@@ -113,7 +113,7 @@ public class Inventory : MonoBehaviour
                         else
                         {
                             Debug.Log("PLACEPLAYERPIECE: "+(InventoryPieces)storedPiece);
-                            if(storedPiece < 5)
+                            if(storedPiece < 5 && storedPiece > -1)
                             {
                                 if(heldPieces[storedPiece] > 0)
                                 {
