@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,5 +60,10 @@ public class KingOfTheHillWinCondition : BaseCondition
                 }
             }
         }
+    }
+
+    public override string GetObjectiveText()
+    {
+        return "Have a piece on the marked tile(s) for " + playerScore + "/" + scoreToWin + " turns.";
     }
 }

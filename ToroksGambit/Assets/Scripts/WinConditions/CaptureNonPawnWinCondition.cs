@@ -51,4 +51,9 @@ public class CaptureNonPawnWinCondition : BaseCondition
 
         return Condition.None;
     }
+
+    public override string GetObjectiveText()
+    {
+        return "Take all non pawn pieces.";
+    }
 }

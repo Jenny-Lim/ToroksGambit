@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CheckmateWinCondition", menuName = "ScriptableObjects/WinConditions/CheckmateWinCondition", order = 3)]
 public class CheckmateWinCondition : BaseCondition
 {
+
     public override Condition IsWinCondition()
     {
         if (Board.instance.InCheckMate(true))//is torok in checkmate
@@ -22,5 +23,10 @@ public class CheckmateWinCondition : BaseCondition
         }
 
         return Condition.None;
+    }
+
+    public override string GetObjectiveText()
+    {
+        return "Checkmate Torok's king.";
     }
 }

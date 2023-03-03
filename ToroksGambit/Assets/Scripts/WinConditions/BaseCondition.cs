@@ -56,4 +56,9 @@ public class BaseCondition: ScriptableObject
         }
         return true;
     }
+
+    public virtual string GetObjectiveText()
+    {
+        return "";
+    }
 }
