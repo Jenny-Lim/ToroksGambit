@@ -9,7 +9,7 @@ public class Board : MonoBehaviour
     [SerializeField] float boardVerticalOffset = 0.5f;//offset for board tiles vertically
     [SerializeField] float verticalPlaceOffset = 0.5f;
 
-    private GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
+    public GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
     public static GameObject[,] pieceBoard;//array for storing pieces and piece location -- made static (jenny)
 

@@ -126,12 +126,30 @@ public class Inventory : MonoBehaviour
                             }
                             else
                             {
+                                Debug.Log("remove piece");
+                                for(int i = 0;i<8;i++)
+                                {
+                                    for(int j = 0;j<8;j++)
+                                    {
+                                        if(hit.transform.gameObject == Board.instance.hitBoxBoard[i,j])
+                                        {
+                                            Debug.Log("its this one: "+i+j);
+                                            Piece removePiece = Board.pieceBoard[i, j].GetComponent<Piece>();
+                                            if(!removePiece.isTorok && (int)removePiece.type < 5)
+                                            {
+                                                AlterPiece((InventoryPieces)removePiece.type, 1);
+                                            }
+                                            Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, storedPiece);
+                                        }
+                                    }
+                                }
                                 Board.instance.PlacePiece(hit.transform, storedPiece);
                             }
                         }
 
-                        if(!Board.instance.torokPiece && storedPiece > -1 && storedPiece < 6)//place peice nd remove form inevtory
+                        if(!Board.instance.torokPiece && storedPiece == -1)//place peice nd remove form inevtory
                         {
+                            //Debug.Log("remove player piece");
                             //AlterPiece((InventoryPieces)storedPiece, -1);
                             //updateCountText();
                         }
