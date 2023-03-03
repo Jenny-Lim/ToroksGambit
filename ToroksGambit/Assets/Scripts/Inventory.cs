@@ -17,8 +17,8 @@ public class Inventory : MonoBehaviour
 
     private RectTransform rectTrans;
     [SerializeField] private TextMeshProUGUI hideShowText;
-    [SerializeField] private int[] maxHeldPieces = new int[5];//the maximum number of each piece the player can have
-    private int[] heldPieces = new int[5];//the amount of each piece the player has
+    [SerializeField] private int[] maxHeldPieces = {5,5,5,5,1};//the maximum number of each piece the player can have
+    private int[] heldPieces = {4,5,5,5,1};//the amount of each piece the player has
     [SerializeField] private float ghostPieceVertOffset = -0.05f;
     private bool infinitePieces = true;
 
@@ -42,7 +42,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject[] PiecePrefabs;
     private Camera cam;
 
-    [SerializeField] private int storedPiece = 1;//pawn - 0, knight - 1, bishop - 2, rook - 3, queen - 4, remove - -1
+    [SerializeField] private int storedPiece = -1;//pawn - 0, knight - 1, bishop - 2, rook - 3, queen - 4, remove - -1
 
     [SerializeField] private GameObject startButton;
 
@@ -64,11 +64,11 @@ public class Inventory : MonoBehaviour
         //initialize the max number of each puece can be held in inventory
         //placeholder values
 
-        maxHeldPieces[0] = 5; //max pawns
-        maxHeldPieces[1] = 5; //max knights
-        maxHeldPieces[2] = 5; //max bishops
-        maxHeldPieces[3] = 5; //max rooks
-        maxHeldPieces[4] = 1; //max queens
+        //maxHeldPieces[0] = 5; //max pawns
+        //maxHeldPieces[1] = 5; //max knights
+        //maxHeldPieces[2] = 5; //max bishops
+        //maxHeldPieces[3] = 5; //max rooks
+        //maxHeldPieces[4] = 1; //max queens
 
         updateCountText();
 
@@ -98,7 +98,10 @@ public class Inventory : MonoBehaviour
                     //show desired visual
                     if (storedPiece >= 0 && storedPiece < 5)
                     {
-                        PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
+                        if(heldPieces[storedPiece] > 0)
+                        {
+                            PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
+                        }
                     }
 
                     if(Input.GetMouseButtonDown(0))//Patrick - mouse input to place piece
@@ -109,7 +112,19 @@ public class Inventory : MonoBehaviour
                         }
                         else
                         {
-                            Board.instance.PlacePiece(hit.transform, storedPiece);
+                            Debug.Log("PLACEPLAYERPIECE: "+(InventoryPieces)storedPiece);
+                            if(storedPiece < 5 && storedPiece > -1)
+                            {
+                                if(heldPieces[storedPiece] > 0)
+                                {
+                                    AlterPiece((InventoryPieces)storedPiece, -1);
+                                    Board.instance.PlacePiece(hit.transform, storedPiece);
+                                }
+                            }
+                            else
+                            {
+                                Board.instance.PlacePiece(hit.transform, storedPiece);
+                            }
                         }
 
                         if(!Board.instance.torokPiece && storedPiece > -1 && storedPiece < 6)//place peice nd remove form inevtory
@@ -134,7 +149,10 @@ public class Inventory : MonoBehaviour
                         //print("inside removePLayer");
                         Debug.Log((int)storedPiece);
                         Board.instance.PlacePiece(hit.transform, storedPiece);
-                        AlterPiece((InventoryPieces)hitPiece.type, 1);
+                        if((int)hitPiece.type < 5)
+                        {
+                            AlterPiece((InventoryPieces)hitPiece.type, 1);
+                        }
                         updateCountText();
                     }
                 }

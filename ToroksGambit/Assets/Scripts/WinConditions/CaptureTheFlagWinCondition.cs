@@ -6,6 +6,7 @@ using UnityEngine;
 public class CaptureTheFlagWinCondition : BaseCondition
 {
     public List<Vector2Int> locations = new List<Vector2Int>();
+
     public override Condition IsWinCondition()
     {
         foreach (Vector2Int location in locations)
@@ -42,5 +43,10 @@ public class CaptureTheFlagWinCondition : BaseCondition
                 //turn that piece invincible
             }
         }
+    }
+
+    public override string GetObjectiveText()
+    {
+        return "Land on the marked safe spaces.";
     }
 }

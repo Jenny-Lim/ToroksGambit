@@ -16,19 +16,40 @@ public class MainMenu : MonoBehaviour
         optionsButton.interactable = false; // to change once there's stuff
     }
 
-    public void NewGame()
+    public void NewGame() // have yet to test fully
     {
-        GameManager.instance.StartNewGame();
+        //GameManager.instance.StartNewGame();
+        // get first level
+        GameStateManager.instance.currentLevelNumber = -1;
+        GameStateManager.instance.SetNextLevel();
+
+        // reset torok
+        TorokPersonalityAI.instance.SetAngerLevel(1);
+        InterruptManager.instance.ResetInterruptListTriggers();
+
+        // reset inventory
+        Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)0, 4); // pawns
+        for (int i = 1; i < 3; i++)
+        {
+            Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)i, 5); // others (no king)
+        }
+        Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)4, 1); // queen
+
+        // reset currency
+        Currency.instance.SetCurrency(10); // for now
+
+
+        gameObject.SetActive(false); // hide main menu
     }
 
     public void ContinueGame()
     {
-        // nothing atm
+        // nothing atm -- should save level, angerlvl, interrupt thing??, inventory, currency
     }
 
     public void Options()
     {
-        // nothing atm
+        // nothing atm -- probably difficulty settings, audio, dialogue / cutscenes
     }
 
     public void ExitGame()

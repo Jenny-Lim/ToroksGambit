@@ -39,4 +39,9 @@ public class Currency : MonoBehaviour
         Debug.Log("Amount rewarded: " + amount);
         instance.AddToCurrency(amount);
     }
+
+    public void SetCurrency(int amount)
+    {
+        tickets = amount;
+    }
 }

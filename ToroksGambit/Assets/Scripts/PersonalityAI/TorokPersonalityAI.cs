@@ -76,4 +76,9 @@ public class TorokPersonalityAI : MonoBehaviour
     {
         library.LoadDialogue(++currentAngerLevel);//increment anger level and reload dialogue
     }
+
+    public void SetAngerLevel(int level) // jenny
+    {
+        currentAngerLevel = level;
+    }
 }

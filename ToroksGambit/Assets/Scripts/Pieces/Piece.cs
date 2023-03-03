@@ -113,7 +113,12 @@ public class Piece : MonoBehaviour
 
                 if (clearResult == 0) // if spot is empty
                 {
-                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], -1, -1));
+                    //Board.instance.MovePiece(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY));
+                    //if (!Board.instance.IsKingInCheck(isTorok))
+                    //{
+                        moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], -1, -1));
+                    //}
+                    //Board.instance.UndoMove();
                 }
                 else if (clearResult == 1) // if spot is wall / same color
                 {
@@ -123,7 +128,13 @@ public class Piece : MonoBehaviour
                 else if (clearResult == 3) // if spot is capturable -- need to score these ones + add to the capture list
                 {
                     Piece p = pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)].GetComponent<Piece>();
-                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], (int)this.type, (int)p.type));
+
+                    //Board.instance.MovePiece(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY));
+                    //if (!Board.instance.IsKingInCheck(isTorok))
+                    //{
+                        moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], (int)this.type, (int)p.type));
+                    //}
+                    //Board.instance.UndoMove();
                     //print(this.type.ToString());
                     //moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)]));
                     return;
@@ -151,7 +162,12 @@ public class Piece : MonoBehaviour
                 {
                     if (clearResult == 3) // if its 3 then do the thing
                     {
-                        moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], (int)this.type, (int)p.type));
+                        //Board.instance.MovePiece(pieceX, pieceY, endX, endY);
+                        //if (!Board.instance.IsKingInCheck(isTorok))
+                        //{
+                            moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], (int)this.type, (int)p.type));
+                        //}
+                        //Board.instance.UndoMove();
                     }
                 }
             }
@@ -160,7 +176,12 @@ public class Piece : MonoBehaviour
             {
                 if (clearResult == 0)
                 {
-                    moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], -1, -1));
+                    //Board.instance.MovePiece(pieceX, pieceY, endX, endY);
+                    //if (!Board.instance.IsKingInCheck(isTorok))
+                    //{
+                        moves.Add(new Move(pieceX, pieceY, endX, endY, pieceBoard[pieceX, pieceY], pieceBoard[endX, endY], -1, -1));
+                    //}
+                    //Board.instance.UndoMove();
                 }
             }
         }
