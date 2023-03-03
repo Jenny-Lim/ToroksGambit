@@ -325,6 +325,7 @@ MonoBehaviour:
   - {fileID: 8301887920537776768, guid: 4f1049550a8bd974ca00423c7f8baee2, type: 3}
   - {fileID: 1837992072599089850, guid: a4d2b0ae656f82e469f58bca238e4399, type: 3}
   chessPiece: {fileID: 7919663814949119795, guid: 62d5eb6fcc71b4b48a7fc93fe84d661a, type: 3}
+  clickedPiece: {fileID: 0}
   canMove: 0
   inventoryScript: {fileID: 2078189510}
   pieceMoveSpeed: 8
@@ -8943,6 +8944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   continueButton: {fileID: 483181921}
   optionsButton: {fileID: 431986569}
+  startPressed: 0
 --- !u!114 &1582766830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11006,7 +11008,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: heheheheh
+  m_text: placeholder
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -12705,6 +12707,7 @@ MonoBehaviour:
   hideShowText: {fileID: 1477407504}
   maxHeldPieces: 0500000005000000050000000500000001000000
   ghostPieceVertOffset: -0.05
+  objectiveArea: {fileID: 0}
   travelSpeed: 7
   showLocation: {x: -846, y: 130, z: 0}
   hideLocation: {x: -1073.93, y: 130, z: 0}
