@@ -78,5 +78,7 @@ public class Pawn : Piece
                 }
             }
         }
+
+        MoveFiltering(moves);
     }
 }

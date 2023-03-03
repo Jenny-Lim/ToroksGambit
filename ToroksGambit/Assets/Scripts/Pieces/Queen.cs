@@ -35,6 +35,7 @@ public class Queen : Piece
         MovesAdd(1, -1);
         MovesAdd(-1, 1);
 
+        MoveFiltering(moves);
     }
 
 }

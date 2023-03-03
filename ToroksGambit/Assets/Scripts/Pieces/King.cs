@@ -29,6 +29,8 @@ public class King : Piece
         MovesAdd_K(pieceX, pieceY - 1);
         MovesAdd_K(pieceX + 1, pieceY - 1);
         MovesAdd_K(pieceX - 1, pieceY + 1);
+
+        MoveFiltering(moves);
     }
 
     //public override void MovesAdd(int endX, int endY)

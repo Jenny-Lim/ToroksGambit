@@ -29,7 +29,9 @@ public class Knight : Piece
         MovesAdd_K(pieceX - 1, pieceY + 2);
         MovesAdd_K(pieceX - 2, pieceY + 1);
 
-        base.UpdateMoves();
+        MoveFiltering(moves);
+
+        //base.UpdateMoves();
     }
 
     //public override void MovesAdd(int endX, int endY)
