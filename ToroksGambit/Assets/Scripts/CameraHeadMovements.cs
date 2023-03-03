@@ -11,10 +11,12 @@ public class CameraHeadMovements : MonoBehaviour
     [SerializeField] private Vector3 LookAtShopRotation;
     [SerializeField] private Vector3 lookAtBoardPosition;
     [SerializeField] private Vector3 lookAtShopPosition;
+    public static CameraHeadMovements instance;
 
     private void Start()
     {
         initialRotation = transform.eulerAngles;
+        if (instance == null ) { instance = this; }
     }
 
     private void Update()

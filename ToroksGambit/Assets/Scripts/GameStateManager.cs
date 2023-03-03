@@ -3,6 +3,8 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 using Unity.Jobs;
+using System.Collections;
+using UnityEngine.UIElements;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -33,6 +35,9 @@ public class GameStateManager : MonoBehaviour
     JobHandle handle;
     MinMaxJob moveSearchJob;
     public bool lookingForMove = false;
+    [SerializeField] private GameObject victoryText;
+    [SerializeField] private Coroutine activeCoRo;
+    
 
     private void Awake()
     {
@@ -87,13 +92,7 @@ public class GameStateManager : MonoBehaviour
 
                         if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
                         {
-                            Debug.Log("Player has won.");
-                            Currency.instance.GetReward(currentLevelNumber + 1);
-                            ChangeGameState(GameState.shop);
-                            turnCount = 1;
-                            isPlayersTurn = true;
-                            PhysicalShop.instance.EnterShop();
-
+                            ChangeGameState(GameState.win);
                             //reset this state
                         }
                         else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
@@ -161,11 +160,20 @@ public class GameStateManager : MonoBehaviour
             case GameState.intro:
                 //make camera look at torok
                 //play animation
+                if (activeCoRo == null)
+                {
+                    activeCoRo = StartCoroutine(IntroCoRo());
+                }
 
                 break;
             case GameState.win:
                 //put up some text that says you wont
                 //add tickets
+                if (activeCoRo == null)
+                {
+                    activeCoRo = StartCoroutine(WinAnimCoro());
+                }
+                
 
                 break;
             case GameState.title:
@@ -173,6 +181,42 @@ public class GameStateManager : MonoBehaviour
 
                 break;
         }
+    }
+
+    public IEnumerator IntroCoRo()
+    {
+        yield return new WaitForSeconds(1);
+        CameraHeadMovements.instance.LookAtTorok(2f);
+        yield return new WaitForSeconds(2);
+        ChangeGameState(GameState.deployment);
+        activeCoRo = null;
+    }
+
+    public IEnumerator WinAnimCoro()
+    {
+        float counter = 0;
+        while (counter < 2000)
+        {
+            if (Mathf.Sin(counter * 0.02f) > 0)
+            {
+                victoryText.SetActive(true);
+            }
+            else
+            {
+                victoryText.SetActive(false);
+            }
+            counter++;
+            yield return null;
+        }
+        victoryText.SetActive(false);
+        Debug.Log("Player has won.");
+        Currency.instance.GetReward(currentLevelNumber + 1);
+        turnCount = 1;
+        isPlayersTurn = true;
+        ChangeGameState(GameState.shop);
+        PhysicalShop.instance.EnterShop();
+        activeCoRo = null;
+        
     }
 
     public void SetNextLevel()
