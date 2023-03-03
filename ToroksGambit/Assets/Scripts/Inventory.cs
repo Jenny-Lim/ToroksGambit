@@ -52,6 +52,8 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI infiniteText;
 
+    [SerializeField] private TextMeshProUGUI objectiveText;
+
     public void Start()
     {
         if (instance == null)
@@ -316,6 +318,11 @@ public class Inventory : MonoBehaviour
     public int GetStoredPiece()
     {
         return storedPiece;
+    }
+
+    public void SetObjective()
+    {
+        objectiveText.text = GameStateManager.instance.winCondition.GetObjectiveText();
     }
 
     private IEnumerator ShowHideInventoryPanel()

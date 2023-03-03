@@ -10985,7 +10985,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Take all non pawn pieces
+  m_text: heheheheh
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11271,7 +11271,6 @@ MonoBehaviour:
   currentState: 2
   lookingForMove: 0
   victoryText: {fileID: 1480075905}
-  objectiveText: {fileID: 1907121239}
 --- !u!4 &1925806816
 Transform:
   m_ObjectHideFlags: 0
@@ -12703,6 +12702,7 @@ MonoBehaviour:
   - {fileID: 1736862272}
   - {fileID: 899630775}
   infiniteText: {fileID: 856318472}
+  objectiveText: {fileID: 1907121239}
 --- !u!1001 &2125050320
 PrefabInstance:
   m_ObjectHideFlags: 0

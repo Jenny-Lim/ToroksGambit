@@ -39,7 +39,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private GameObject victoryText;
     [SerializeField] private Coroutine activeCoRo;
 
-    [SerializeField] private TextMeshProUGUI objectiveText;
+    [SerializeField] private static TextMeshProUGUI objectiveText;
 
 
     
@@ -168,6 +168,7 @@ public class GameStateManager : MonoBehaviour
                 if (activeCoRo == null)
                 {
                     activeCoRo = StartCoroutine(IntroCoRo());
+                    Inventory.instance.SetObjective();
                 }
 
                 break;
@@ -251,7 +252,7 @@ public class GameStateManager : MonoBehaviour
         InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.AfterTurn);
         turnCount++;
         isPlayersTurn = !isPlayersTurn;
-        
+        Inventory.instance.SetObjective();
         //print("Current Board Score " + BoardAnalyzer.instance.Analyze(Board.pieceBoard));
         //check win condition
     }
