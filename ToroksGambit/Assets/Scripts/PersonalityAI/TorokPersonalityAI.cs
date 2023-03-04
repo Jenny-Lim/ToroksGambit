@@ -7,6 +7,9 @@ public class TorokPersonalityAI : MonoBehaviour
     [SerializeField] private int currentAngerLevel = 1;
     [Range(0f, 1f)]
     [SerializeField] private float[] dialogLikelyhoodByCategory = new float[10];
+    public float minTimeBetweenIdleBark = 12;
+    public float maxTimeBetweenIdleBark = 25;
+
 
     private SoundLibrary library;
     private AudioSource audioPlayer;
@@ -19,10 +22,6 @@ public class TorokPersonalityAI : MonoBehaviour
     private void Awake()
     {
         //amim = GetComponent<Animator>();
-    }
-
-    private void Start()
-    {
         if (instance == null) { instance = this; }
         audioPlayer = GetComponent<AudioSource>();
         library = new SoundLibrary();
@@ -30,8 +29,19 @@ public class TorokPersonalityAI : MonoBehaviour
         library.LoadDialogue(currentAngerLevel);
     }
 
+    private void Start()
+    {
+       
+
+    }
+
     private float PlaySoundFromCategory(SoundLibrary.Categories from)
     {
+        if (audioPlayer.isPlaying)
+        {
+            return 0;
+        }
+
         Debug.Log("Played sound clip");
         audioPlayer.clip = library.GetAudioClip(from);
         audioPlayer.Play();

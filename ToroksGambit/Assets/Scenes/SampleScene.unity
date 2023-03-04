@@ -357,6 +357,7 @@ MonoBehaviour:
   promoteButton: {fileID: 279869976}
   moveStartIndicator: {fileID: 57781569}
   moveEndIndicator: {fileID: 1939820346}
+  idleDialogueCounter: 0
 --- !u!4 &61773102
 Transform:
   m_ObjectHideFlags: 0
@@ -4208,6 +4209,8 @@ MonoBehaviour:
   - 1
   - 1
   - 1
+  minTimeBetweenIdleBark: 12
+  maxTimeBetweenIdleBark: 25
 --- !u!82 &784873684
 AudioSource:
   m_ObjectHideFlags: 0

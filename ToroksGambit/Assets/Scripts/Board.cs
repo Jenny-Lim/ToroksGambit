@@ -23,7 +23,7 @@ public class Board : MonoBehaviour
 
     private Camera cam;
 
-    public GameObject clickedPiece; 
+    public GameObject clickedPiece;
 
     public List<Move> moveList = new List<Move>();
 
@@ -92,7 +92,7 @@ public class Board : MonoBehaviour
     [SerializeField] private GameObject moveStartIndicator;
     [SerializeField] private GameObject moveEndIndicator;
 
-
+    [SerializeField] private float idleDialogueCounter = 0;
 
     // brought them up here
     //private static int clickedX;
@@ -106,6 +106,7 @@ public class Board : MonoBehaviour
         cam = Camera.main;
         hitBoxBoard = new GameObject[boardSize,boardSize];
         pieceBoard = new GameObject[boardSize, boardSize];
+        idleDialogueCounter = Random.Range(TorokPersonalityAI.instance.maxTimeBetweenIdleBark,TorokPersonalityAI.instance.maxTimeBetweenIdleBark);
         BuildBoard();
     }
 
@@ -120,6 +121,18 @@ public class Board : MonoBehaviour
     {
         
         // print("in bvoard update");
+        if (idleDialogueCounter <= 0.0f)
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.Idle);
+            idleDialogueCounter = Random.Range(TorokPersonalityAI.instance.maxTimeBetweenIdleBark, TorokPersonalityAI.instance.maxTimeBetweenIdleBark);
+        }
+        else
+        {
+            idleDialogueCounter -= Time.deltaTime;
+        }
+            
+        
+
 
         if (Input.GetKeyUp("q")) {
             print(IsKingInCheck(false));
