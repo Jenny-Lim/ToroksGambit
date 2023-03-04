@@ -229,6 +229,7 @@ public class GameStateManager : MonoBehaviour
     {
         ResetToDeploy();
         Board.instance.Reset();
+        Inventory.instance.hasPlacedPiece = false;
         if (currentLevelNumber + 1 < LevelNames.Count)
         {
             BoardLoader.instance.LoadBoard(LevelNames[++currentLevelNumber]);
@@ -268,7 +269,8 @@ public class GameStateManager : MonoBehaviour
         turnCount = 1;
         isPlayersTurn = true;
         InterruptManager.instance.ResetInterruptListTriggers();
-        Inventory.instance.ResetStartButton();
+        Inventory.instance.hasPlacedPiece = false;//replaced below
+        //Inventory.instance.ResetStartButton();
     }
 
     public void ResetToDeploy()
@@ -276,7 +278,8 @@ public class GameStateManager : MonoBehaviour
         ChangeGameState(GameState.deployment);
         turnCount = 1;
         isPlayersTurn = true;
-        Inventory.instance.ResetStartButton();
+        Inventory.instance.hasPlacedPiece = false;//replaced below
+        //Inventory.instance.ResetStartButton();
     }
 
     public void ResetGame()

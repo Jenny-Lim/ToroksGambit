@@ -55,7 +55,7 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI objectiveText;
 
-    private bool hasPlacedPiece = false;
+    public bool hasPlacedPiece = false;
 
     public void Start()
     {
@@ -81,8 +81,10 @@ public class Inventory : MonoBehaviour
 
     public void InventoryUpdate()
     {
-        if (hasPlacedPiece)
+        Debug.Log(hasPlacedPiece);
+        if (hasPlacedPiece == true)
         {
+            
             startButton.SetActive(true);
         }
         
