@@ -630,6 +630,17 @@ public class Board : MonoBehaviour
                 endIndicatorPos.y = 0.032f;
                 moveEndIndicator.transform.position = endIndicatorPos;
 
+                //this might get replaced when the piece actually moves visually with coro, to inside that coro
+                float rand = Random.Range(0,1);
+                if (pieceScript.isTorok && TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.TakesPiece, rand))
+                {
+                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesPiece);
+                }
+                else if (!pieceScript.isTorok && TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LosesPiece, rand))
+                {
+                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LosesPiece);
+                }
+
                 return true;
             }
         }

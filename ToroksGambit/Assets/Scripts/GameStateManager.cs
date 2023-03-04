@@ -193,7 +193,16 @@ public class GameStateManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         CameraHeadMovements.instance.LookAtTorok(2f);
-        yield return new WaitForSeconds(4.2f);
+        yield return new WaitForSeconds(1);
+
+        //depending if we want this to play always this check can be taken out
+        float rand = Random.Range(0,1);
+        if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LevelIntro, rand))
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntro);
+        }
+
+        yield return new WaitForSeconds(3.2f);
         ChangeGameState(GameState.deployment);
         activeCoRo = null;
     }
