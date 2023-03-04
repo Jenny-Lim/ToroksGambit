@@ -25,7 +25,7 @@ public class Bishop : Piece
         MovesAdd(1, -1);
         MovesAdd(-1, 1);
 
-        MoveFiltering(moves);
+        //MoveFiltering(moves);
 
     }
 }

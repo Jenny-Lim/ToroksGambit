@@ -71,7 +71,7 @@ public class Piece : MonoBehaviour
         // move filtering for king check
     }
 
-    public void MoveFiltering(List<Move> moves)
+    public void MoveFiltering(List<Move> moves) // commented out where this was called, -- InvalidOperationException: Collection was modified; enumeration operation may not execute.
     {
         int i = 0;
         foreach (Move m in moves)
