@@ -124,6 +124,10 @@ public class Inventory : MonoBehaviour
                                     Board.instance.PlacePiece(hit.transform, storedPiece);
                                 }
                             }
+                            else if(storedPiece == 5)
+                            {
+                                Board.instance.PlacePiece(hit.transform, storedPiece);
+                            }
                             else
                             {
                                 for(int i = 0;i<8;i++)
