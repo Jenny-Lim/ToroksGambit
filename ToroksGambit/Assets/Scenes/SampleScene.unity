@@ -12729,6 +12729,7 @@ MonoBehaviour:
   - {fileID: 899630775}
   infiniteText: {fileID: 856318472}
   objectiveText: {fileID: 1907121239}
+  hasPlacedPiece: 0
 --- !u!1001 &2125050320
 PrefabInstance:
   m_ObjectHideFlags: 0

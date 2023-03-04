@@ -81,7 +81,6 @@ public class Inventory : MonoBehaviour
 
     public void InventoryUpdate()
     {
-        Debug.Log(hasPlacedPiece);
         if (hasPlacedPiece == true)
         {
             

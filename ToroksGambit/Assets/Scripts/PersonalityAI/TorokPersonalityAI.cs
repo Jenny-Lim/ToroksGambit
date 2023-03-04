@@ -32,9 +32,15 @@ public class TorokPersonalityAI : MonoBehaviour
 
     private float PlaySoundFromCategory(SoundLibrary.Categories from)
     {
+        Debug.Log("Played sound clip");
         audioPlayer.clip = library.GetAudioClip(from);
         audioPlayer.Play();
         return audioPlayer.clip.length;
+    }
+
+    public bool ShouldPlay(SoundLibrary.Categories from, float randomNum)
+    {
+        return randomNum <= dialogLikelyhoodByCategory[(int)from];
     }
 
     private void OpenMouth()
