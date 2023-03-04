@@ -63,3 +63,8 @@ WinCondition,0
 Piece,3,3,1,False
 Piece,3,3,5,True
 boardend
+boardstart
+WhiteKing
+WinCondition,0
+Piece,5,4,0,False
+boardend

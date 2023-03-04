@@ -73,16 +73,28 @@ public class Piece : MonoBehaviour
 
     public void MoveFiltering(List<Move> moves) // commented out where this was called, -- InvalidOperationException: Collection was modified; enumeration operation may not execute.
     {
-        int i = 0;
-        foreach (Move m in moves)
+        for (int i = moves.Count-1; i > -1; i--)  
         {
-            Board.instance.MovePiece(m.startX, m.startY, m.endX, m.endY);
-            if (!Board.instance.IsKingInCheck(isTorok))
+            /*
+             *  jordan -> dont use a foreach here because you cant modify a collection while iterating through it use a regular for loop instead
+                also when removing things from a collection (like a list) its best to iterate from the back to the front, because removing from the back
+                doesn't disrupt the ordering of the elements in front of the one you are deleting, ie pos 1 will still be pos 1 in the list after removing pos 4
+             */
+
+            Board.instance.MovePiece(moves[i].startX, moves[i].startY, moves[i].endX, moves[i].endY);
+            if (Board.instance.IsKingInCheck(isTorok))
             {
+                /* jordan -> aside from the for loop thing, i think its because of the ! before the fuction (which i removed) because we want to remove 
+                 * moves in which result in the functio nbeing true not false
+                 * seems to work "fine" now
+                 * i havent tested this fully so might be a good idea to play around with it for checking for both sides
+                 * you can delete this once you see it
+                 * 
+                 */
+                Debug.Log("removed a move");
                 moves.RemoveAt(i);
             }
             Board.instance.UndoMove();
-            i++;
         }
     }
 

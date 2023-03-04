@@ -122,7 +122,7 @@ public class Board : MonoBehaviour
         // print("in bvoard update");
 
         if (Input.GetKeyUp("q")) {
-            print(BoardAnalyzer.instance.Analyze(pieceBoard));
+            print(IsKingInCheck(false));
         }
 
         if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
