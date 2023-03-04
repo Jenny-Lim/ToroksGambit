@@ -312,14 +312,14 @@ public class Board : MonoBehaviour
 
     }
 
-    public void PlacePiece(Transform boardSpot, int pieceId)
+    public bool PlacePiece(Transform boardSpot, int pieceId)
     {
         //**should reformat this function cuz im sure there is some getComponent overlapping**
 
         if (!boardSpot)
         {
             Debug.LogError("Trying to place piece, given piece transform was null");
-            return;
+            return false;
         }
 
         int placeX = -1;
@@ -342,7 +342,7 @@ public class Board : MonoBehaviour
             if (placeX == -1 && placeY == -1)
             {
                 Debug.LogError("Error trying to place piece where piece already is.");
-                return;
+                return false;
             }
         }
         else if (boardSpot.CompareTag("Chess Piece")) 
@@ -358,7 +358,7 @@ public class Board : MonoBehaviour
         if (pieceBoard[placeX, placeY] != null && pieceId != -1)
         {
             Debug.LogError("Did not place piece because piece was already there");
-            return;
+            return false;
         }
 
         if (pieceId >= 0 && pieceId < 6)
@@ -401,16 +401,17 @@ public class Board : MonoBehaviour
             pieceBoard[placeX, placeY] = null;
         }
 
+        return true;
     }
 
-    public void PlacePiece(int xPos, int yPos, int pieceId)
+    public bool PlacePiece(int xPos, int yPos, int pieceId)
     {
         //int pieceId = inventoryScript.GetStoredPiece();
 
         if (pieceBoard[xPos, yPos] != null && pieceId != -1)
         {
             Debug.LogError("Error trying to place piece where piece already is.");
-            return;
+            return false;
         }
 
         if (pieceId >= 0)
@@ -428,15 +429,16 @@ public class Board : MonoBehaviour
             Destroy(pieceBoard[xPos, yPos]);
             pieceBoard[xPos, yPos] = null;
         }
+        return true;
     }
 
-    public void PlacePieceTorok(int xPos, int yPos, int pieceId)
+    public bool PlacePieceTorok(int xPos, int yPos, int pieceId)
     {
         if (pieceBoard[xPos, yPos] != null)
         {
             //Debug.Log("Trace Stack for ");
             Debug.LogError("Error trying to place piece where piece already is.");
-            return;
+            return false;
         }
 
         if (pieceId >= 0)
@@ -457,16 +459,17 @@ public class Board : MonoBehaviour
         {
             Debug.LogError("Couldn't place piece: unrecognized pieceId");
         }
+        return true;
     }
 
-    public void PlacePieceTorok(Transform boardSpot, int pieceId)
+    public bool PlacePieceTorok(Transform boardSpot, int pieceId)
     {
         //**should reformat this function cuz im sure there is some getComponent overlapping**
 
         if (!boardSpot)
         {
             Debug.LogError("Trying to place piece, given piece transform was null");
-            return;
+            return false;
         }
 
         int placeX = -1;
@@ -489,7 +492,7 @@ public class Board : MonoBehaviour
             if (placeX == -1 && placeY == -1)
             {
                 Debug.LogError("Error trying to place piece where piece already is.");
-                return;
+                return false;
             }
         }
         else if (boardSpot.CompareTag("Chess Piece"))
@@ -505,7 +508,7 @@ public class Board : MonoBehaviour
         if (pieceBoard[placeX, placeY] != null && pieceId != -1)
         {
             Debug.LogError("Did not place piece because piece was already there");
-            return;
+            return false;
         }
 
         if (pieceId >= 0)
@@ -549,7 +552,7 @@ public class Board : MonoBehaviour
             Destroy(pieceBoard[placeX, placeY]);
             pieceBoard[placeX, placeY] = null;
         }
-
+        return true;
     }
 
     public void PlaceObstacle(int xPos, int yPos, int obstacleId)

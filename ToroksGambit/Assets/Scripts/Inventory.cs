@@ -55,6 +55,8 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI objectiveText;
 
+    private bool hasPlacedPiece = false;
+
     public void Start()
     {
         if (instance == null)
@@ -79,6 +81,11 @@ public class Inventory : MonoBehaviour
 
     public void InventoryUpdate()
     {
+        if (hasPlacedPiece)
+        {
+            startButton.SetActive(true);
+        }
+        
         //print("in invenotry update");
         //if in deploy mode
         if (isShowingPanel)
@@ -111,7 +118,11 @@ public class Inventory : MonoBehaviour
                     {
                         if (Board.instance.torokPiece && storedPiece < 6)//
                         {
-                            Board.instance.PlacePieceTorok(hit.transform, storedPiece);
+                            if (Board.instance.PlacePieceTorok(hit.transform, storedPiece) == true)
+                            {
+                                hasPlacedPiece 
+                                    = true;
+                            }
                         }
                         else
                         {
@@ -121,12 +132,18 @@ public class Inventory : MonoBehaviour
                                 if(heldPieces[storedPiece] > 0)
                                 {
                                     AlterPiece((InventoryPieces)storedPiece, -1);
-                                    Board.instance.PlacePiece(hit.transform, storedPiece);
+                                    if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
+                                    {
+                                        hasPlacedPiece = true;
+                                    }
                                 }
                             }
                             else if(storedPiece == 5)
                             {
-                                Board.instance.PlacePiece(hit.transform, storedPiece);
+                                if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
+                                {
+                                    hasPlacedPiece = true;
+                                }
                             }
                             else
                             {
@@ -141,11 +158,20 @@ public class Inventory : MonoBehaviour
                                             {
                                                 AlterPiece((InventoryPieces)removePiece.type, 1);
                                             }
-                                            Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, storedPiece);
+
+                                            if (Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, storedPiece) == true)
+                                            {
+                                                hasPlacedPiece = true;
+                                            }
+                                            
                                         }
                                     }
                                 }
-                                Board.instance.PlacePiece(hit.transform, storedPiece);
+                                if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
+                                {
+                                    hasPlacedPiece = true;
+                                }
+                                
                             }
                         }
 
@@ -171,8 +197,11 @@ public class Inventory : MonoBehaviour
                     {
                         //print("inside removePLayer");
                         Debug.Log((int)storedPiece);
-                        Board.instance.PlacePiece(hit.transform, storedPiece);
-                        if((int)hitPiece.type < 5)
+                        if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
+                        {
+                            hasPlacedPiece = true;
+                        }
+                        if ((int)hitPiece.type < 5)
                         {
                             AlterPiece((InventoryPieces)hitPiece.type, 1);
                         }

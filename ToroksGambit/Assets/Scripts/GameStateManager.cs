@@ -193,7 +193,7 @@ public class GameStateManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         CameraHeadMovements.instance.LookAtTorok(2f);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(4.2f);
         ChangeGameState(GameState.deployment);
         activeCoRo = null;
     }
