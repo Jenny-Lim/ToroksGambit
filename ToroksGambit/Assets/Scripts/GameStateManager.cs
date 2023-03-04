@@ -165,7 +165,7 @@ public class GameStateManager : MonoBehaviour
             case GameState.intro:
                 //make camera look at torok
                 //play animation
-                if (activeCoRo == null)
+                if (activeCoRo == null && MainMenu.instance.menuDone)
                 {
                     activeCoRo = StartCoroutine(IntroCoRo());
                     Inventory.instance.SetObjective();

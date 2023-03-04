@@ -13,12 +13,13 @@ public class MainMenu : MonoBehaviour
 
     public static MainMenu instance;
     public bool startPressed;
+    public bool menuDone;
 
     private void Start()
     {
         startPressed = false;
+        menuDone = false;
         if (instance == null) { instance = this; }
-        //Hi Jordan!
     }
 
     void OnEnable()
@@ -50,9 +51,9 @@ public class MainMenu : MonoBehaviour
         Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)4, 1); // queen
 
         // reset currency
-        Currency.instance.SetCurrency(10); // for now
+        Currency.instance.SetCurrency(0);
 
-
+        // move to proper area
         CameraHeadMovements.instance.LookAtPlayArea();
 
         gameObject.SetActive(false); // hide main menu
