@@ -103,8 +103,10 @@ public class CameraHeadMovements : MonoBehaviour
 
     public void LookAtPlayArea()
     {
-        StopAllCoroutines();
-        StartCoroutine(LookAtPlayAreaCoRo());
+        if (!movementInProgress)
+        {
+            StartCoroutine(LookAtPlayAreaCoRo());
+        }
     }
     private IEnumerator LookAtPlayAreaCoRo()
     {
@@ -123,7 +125,6 @@ public class CameraHeadMovements : MonoBehaviour
         //yield return new WaitUntil(delegate { return ani.GetCurrentAnimatorStateInfo(0).IsName("CameraIdle"); });
 
         movementInProgress = false;
-        MainMenu.instance.menuDone = true;
     }
 
     public bool GetIsMoving()

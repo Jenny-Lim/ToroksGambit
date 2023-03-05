@@ -28,7 +28,7 @@ public class GameStateManager : MonoBehaviour
 
     private static bool isPlayersTurn = true;
     [SerializeField] private static int turnCount = 1;//the amount of moves/turns that have happened in the current game
-    [SerializeField] private GameState currentState = GameState.deployment;
+    [SerializeField] private GameState currentState = GameState.title;
     private bool TorokIsMoving;
 
     public static GameStateManager instance;
@@ -165,7 +165,7 @@ public class GameStateManager : MonoBehaviour
             case GameState.intro:
                 //make camera look at torok
                 //play animation
-                if (activeCoRo == null && MainMenu.instance.menuDone)
+                if (activeCoRo == null)
                 {
                     activeCoRo = StartCoroutine(IntroCoRo());
                     Inventory.instance.SetObjective();
@@ -184,8 +184,21 @@ public class GameStateManager : MonoBehaviour
                 break;
             case GameState.title:
                 //just a title bro
-
+                if (activeCoRo == null)
+                {
+                    activeCoRo = StartCoroutine(titleCoRo());
+                }
                 break;
+        }
+    }
+
+    public IEnumerator titleCoRo()
+    {
+        if (MainMenu.instance.startPressed) {
+            CameraHeadMovements.instance.LookAtPlayArea();
+            yield return null;
+            ChangeGameState(GameState.intro);
+            activeCoRo = null;
         }
     }
 

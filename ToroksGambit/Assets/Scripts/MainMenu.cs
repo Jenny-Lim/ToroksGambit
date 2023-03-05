@@ -13,12 +13,10 @@ public class MainMenu : MonoBehaviour
 
     public static MainMenu instance;
     public bool startPressed;
-    public bool menuDone;
 
     private void Start()
     {
         startPressed = false;
-        menuDone = false;
         if (instance == null) { instance = this; }
     }
 
@@ -54,7 +52,7 @@ public class MainMenu : MonoBehaviour
         Currency.instance.SetCurrency(0);
 
         // move to proper area
-        CameraHeadMovements.instance.LookAtPlayArea();
+        //CameraHeadMovements.instance.LookAtPlayArea();
 
         gameObject.SetActive(false); // hide main menu
     }
