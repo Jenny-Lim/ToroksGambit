@@ -195,16 +195,15 @@ public class Board : MonoBehaviour
 
 
 
-                    //pieceBoard[clickedX, clickedY] = null;
-                    //DisablePiece(tempPiece);
-                    //print("pieceX of board :" + pieceX);
-                    //print("pieceY of board :" + pieceY);
-                    //bool isValid = MoveValidator(pieceX, pieceY, clickedX, clickedY);
+                //pieceBoard[clickedX, clickedY] = null;
+                //DisablePiece(tempPiece);
+                //print("pieceX of board :" + pieceX);
+                //print("pieceY of board :" + pieceY);
+                //bool isValid = MoveValidator(pieceX, pieceY, clickedX, clickedY);
 
-                    if (canMove)
+                if (canMove)
                 {
-                        
-                        StartCoroutine(MovePieceValidatorCoRo(pieceX, pieceY, clickedX, clickedY));
+                    StartCoroutine(MovePieceValidatorCoRo(pieceX, pieceY, clickedX, clickedY));
                 }
 
                 //print(IsKingInCheck(true));
@@ -216,22 +215,22 @@ public class Board : MonoBehaviour
 
                 if(canMove)
                 {
-                        //DisablePiece(tempPiece);
-                        if(clickedPiece)
-                        {
-                            //clickedPiece = pieceBoard[clickedX,clickedY];// <- is this redundant because of moveValidator, shouldnt that have already moved the piece?
-                            //MovePieceVisual(pieceX, pieceY, clickedX, clickedY, clickedPiece,false);
-                           //StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece,false));
-                        }
-                        else
-                        {
-                            //GameStateManager.EndTurn();
-                            isLastchance = false;
-                            isPromote = false;
-
-                        }
-                        //GameStateManager.EndTurn();
+                    //DisablePiece(tempPiece);
+                    if(clickedPiece)
+                    {
+                        //clickedPiece = pieceBoard[clickedX,clickedY];// <- is this redundant because of moveValidator, shouldnt that have already moved the piece?
+                        //MovePieceVisual(pieceX, pieceY, clickedX, clickedY, clickedPiece,false);
+                        //StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece,false));
                     }
+                    else
+                    {
+                        //GameStateManager.EndTurn();
+                        isLastchance = false;//<- idk what this does, so idk if this should be moved after moving validation to a coro above
+                        isPromote = false;
+
+                    }
+                    //GameStateManager.EndTurn();
+                }
                 //canMove = false;
                 clickedPiece = null;
 
