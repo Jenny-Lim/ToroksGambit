@@ -31,7 +31,7 @@ public class Board : MonoBehaviour
 
     private Vector3 boardPosition;
 
-    public bool canMove = false;
+    public bool canMove = true;
 
     [SerializeField]
     private Inventory inventoryScript;
@@ -193,13 +193,19 @@ public class Board : MonoBehaviour
                     }
                 }
 
-                
 
-                //pieceBoard[clickedX, clickedY] = null;
-                //DisablePiece(tempPiece);
-                //print("pieceX of board :" + pieceX);
-                //print("pieceY of board :" + pieceY);
-                bool isValid = MoveValidator(pieceX, pieceY, clickedX, clickedY);
+
+                    //pieceBoard[clickedX, clickedY] = null;
+                    //DisablePiece(tempPiece);
+                    //print("pieceX of board :" + pieceX);
+                    //print("pieceY of board :" + pieceY);
+                    //bool isValid = MoveValidator(pieceX, pieceY, clickedX, clickedY);
+
+                    if (canMove)
+                {
+                        
+                        StartCoroutine(MovePieceValidatorCoRo(pieceX, pieceY, clickedX, clickedY));
+                }
 
                 //print(IsKingInCheck(true));
 
@@ -208,12 +214,12 @@ public class Board : MonoBehaviour
                     clickedPiece = null;
                 }
 
-                if(canMove & isValid)
+                if(canMove)
                 {
                         //DisablePiece(tempPiece);
                         if(clickedPiece)
                         {
-                            clickedPiece = pieceBoard[clickedX,clickedY];// <- is this redundant because of moveValidator, shouldnt that have already moved the piece?
+                            //clickedPiece = pieceBoard[clickedX,clickedY];// <- is this redundant because of moveValidator, shouldnt that have already moved the piece?
                             //MovePieceVisual(pieceX, pieceY, clickedX, clickedY, clickedPiece,false);
                            //StartCoroutine(VisualMovePiece(pieceX, pieceY, clickedX, clickedY, clickedPiece,false));
                         }
@@ -224,9 +230,9 @@ public class Board : MonoBehaviour
                             isPromote = false;
 
                         }
-                        GameStateManager.EndTurn();
+                        //GameStateManager.EndTurn();
                     }
-                canMove = false;
+                //canMove = false;
                 clickedPiece = null;
 
             }
@@ -608,6 +614,80 @@ public class Board : MonoBehaviour
         
     }
 
+    public void MoveValidatorCoRo(int pieceX, int pieceY, int endX, int endY)
+    {
+        StartCoroutine(MovePieceValidatorCoRo(pieceX, pieceY, endX, endY));
+    }
+
+    public IEnumerator MovePieceValidatorCoRo(int pieceX, int pieceY, int endX, int endY)
+    {
+        //Debug.Log("inside coro");
+        canMove= false;
+        if (pieceBoard[pieceX, pieceY] == null)//guard clause if piece given is null
+        {
+            GameStateManager.lastValidateCheck = false;
+            canMove = true;
+            yield break;
+        }
+
+        //find type of piece
+        Piece pieceScript = pieceBoard[pieceX, pieceY].GetComponent<Piece>();
+
+        pieceScript.pieceX = pieceX;
+        pieceScript.pieceY = pieceY;
+
+
+        pieceScript.UpdateMoves();
+
+        foreach (Move move in pieceScript.moves)
+        {
+            if ((move.endX == endX) && (move.endY == endY))
+            {
+                Vector3 startIndicatorPos = hitBoxBoard[move.startX, move.startY].transform.position;
+                startIndicatorPos.y = 0.032f;
+                moveStartIndicator.transform.position = startIndicatorPos;
+
+                Vector3 endIndicatorPos = hitBoxBoard[move.endX, move.endY].transform.position;
+                endIndicatorPos.y = 0.032f;
+                moveEndIndicator.transform.position = endIndicatorPos;
+
+                bool pieceAtEndLocation = pieceBoard[endX,endY] != null;
+
+                yield return StartCoroutine(MovePieceVisual(pieceX, pieceY, endX, endY));
+
+                //print("Confirmed valid move");
+                //print("endX :" + endX + "endY: " + endY + " " + move.DisplayMove());
+                //canMove = true;
+                //MovePieceVisualTeleport(pieceX, pieceY, endX, endY);
+                MovePiece(pieceX, pieceY, endX, endY);
+
+                //this might get replaced when the piece actually moves visually with coro, to inside that coro
+                if (pieceAtEndLocation)
+                {
+                    float rand = Random.Range(0, 1);
+                    if (pieceScript.isTorok && TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.TakesPiece, rand))
+                    {
+                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesPiece);
+                    }
+                    else if (!pieceScript.isTorok && TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LosesPiece, rand))
+                    {
+                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LosesPiece);
+                    }
+                }
+
+                GameStateManager.lastValidateCheck = true;
+                canMove = true;
+                GameStateManager.EndTurn();
+                yield break;
+            }
+        }
+        // print("move not valid");
+        GameStateManager.lastValidateCheck = false;
+        canMove = true;
+        yield break;
+
+    }
+
     public bool MoveValidator(int pieceX, int pieceY, int endX, int endY)
     {
         //print("initX: " + pieceX + "initY: " + pieceY + "endX: " + endX + "endY: " + endY);
@@ -661,7 +741,28 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    
+    public IEnumerator MovePieceVisual(int startX, int startY, int endX, int endY)
+    {
+        GameObject piece = pieceBoard[startX, startY];
+        if (piece == null)//get out if null
+        {
+            yield break;
+        }
+
+        float percentMoved = 0.0f;
+        Vector3 targetPos = hitBoxBoard[endX, endY].transform.position;
+        targetPos.y += verticalPlaceOffset;
+        while (percentMoved <= 1.0f)
+        {
+            //Debug.Log("Moving");
+            percentMoved += Time.deltaTime * pieceMoveSpeed;
+            piece.transform.position = Vector3.Lerp(piece.transform.position, targetPos, percentMoved);
+            yield return null;
+
+        }
+        piece.transform.position = targetPos;
+    }
+
     //input the X and Y of the piece being moved(startX and Y) and the X and Y of the spot being moved to(end X Y)
     //if click impossible move then clear storedmove
     //if click off bord then clear stored item

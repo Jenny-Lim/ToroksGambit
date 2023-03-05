@@ -38,6 +38,7 @@ public class GameStateManager : MonoBehaviour
     public bool lookingForMove = false;
     [SerializeField] private GameObject victoryText;
     [SerializeField] private Coroutine activeCoRo;
+    public static bool lastValidateCheck = false;
 
     [SerializeField] private static TextMeshProUGUI objectiveText;
 
@@ -144,10 +145,15 @@ public class GameStateManager : MonoBehaviour
                         Move resultMove = MinMax.instance.GetMinMaxMove(MinMax.playerToMove.torok);
                         if (resultMove != null)
                         {
-                            //Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY], resultMove.promoted);
-                            Board.instance.canMove = false;
-                            Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
-                            EndTurn();
+                            if (lastValidateCheck == false)
+                            {
+                                //Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY], resultMove.promoted);
+                                Board.instance.canMove = false;
+                                //Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
+                                Board.instance.MoveValidatorCoRo(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
+                            }
+                            
+                            //EndTurn();//take out, move to coro
                         }
                         else
                         {
@@ -274,6 +280,7 @@ public class GameStateManager : MonoBehaviour
 
     public static void EndTurn()
     {
+        lastValidateCheck = false;
         Board.playerInCheck = Board.instance.IsKingInCheck(false);
         Board.torokInCheck = Board.instance.IsKingInCheck(true);
         InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.AfterTurn);
