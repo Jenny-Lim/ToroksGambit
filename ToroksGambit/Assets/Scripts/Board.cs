@@ -653,7 +653,7 @@ public class Board : MonoBehaviour
 
                 bool pieceAtEndLocation = pieceBoard[endX,endY] != null;
 
-                yield return StartCoroutine(MovePieceVisual(pieceX, pieceY, endX, endY));
+                yield return MovePieceVisual(pieceX, pieceY, endX, endY);
 
                 //print("Confirmed valid move");
                 //print("endX :" + endX + "endY: " + endY + " " + move.DisplayMove());
@@ -752,15 +752,21 @@ public class Board : MonoBehaviour
         float percentMoved = 0.0f;
         Vector3 targetPos = hitBoxBoard[endX, endY].transform.position;
         targetPos.y += verticalPlaceOffset;
-        while (percentMoved <= 1.0f)
+        float elapsedTime = 0.0f;
+        float desiredDuration = 1f;
+
+        while (piece.transform.position != targetPos)
         {
             //Debug.Log("Moving");
-            percentMoved += Time.deltaTime * pieceMoveSpeed;
-            piece.transform.position = Vector3.Lerp(piece.transform.position, targetPos, percentMoved);
-            yield return null;
 
+            elapsedTime += Time.deltaTime * pieceMoveSpeed;
+            percentMoved = elapsedTime / desiredDuration;
+            piece.transform.position = Vector3.Lerp(piece.transform.position, targetPos, percentMoved);
+            Debug.Log(percentMoved);
+            yield return null;
         }
         piece.transform.position = targetPos;
+        Debug.Log("Finished moving");
     }
 
     //input the X and Y of the piece being moved(startX and Y) and the X and Y of the spot being moved to(end X Y)

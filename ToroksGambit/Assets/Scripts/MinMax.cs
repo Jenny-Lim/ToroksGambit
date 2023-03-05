@@ -56,12 +56,12 @@ public class MinMax : MonoBehaviour
         //print(resultMove.move == null);
         if (resultMove.move != null)
         {
-            Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
+            //Debug.Log("AI: Move found. " + resultMove.move.DisplayMove());
         }
         //print("Moves " + numOfMovesCalled);
         //print("Undos " + numOfUndoCalled);
-        print("Total Number of Nodes Searched: " + totalNumNodesLookedAt);
-        print("Time taken: " + (Time.realtimeSinceStartup - startTime));
+        //print("Total Number of Nodes Searched: " + totalNumNodesLookedAt);
+        //print("Time taken: " + (Time.realtimeSinceStartup - startTime));
         //print("Move history list count " + Board.instance.moveList.Count);
         return resultMove.move;
     }
