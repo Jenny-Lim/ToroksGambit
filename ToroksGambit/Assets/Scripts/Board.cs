@@ -754,14 +754,16 @@ public class Board : MonoBehaviour
         targetPos.y += verticalPlaceOffset;
         float elapsedTime = 0.0f;
         float desiredDuration = 1f;
+        Vector3 startPos = hitBoxBoard[startX, startY].transform.position;
+        startPos.y += verticalPlaceOffset;
 
-        while (piece.transform.position != targetPos)
+        while (percentMoved < 1.0f)
         {
             //Debug.Log("Moving");
 
             elapsedTime += Time.deltaTime * pieceMoveSpeed;
             percentMoved = elapsedTime / desiredDuration;
-            piece.transform.position = Vector3.Lerp(piece.transform.position, targetPos, percentMoved);
+            piece.transform.position = Vector3.Lerp(startPos, targetPos, percentMoved);
             Debug.Log(percentMoved);
             yield return null;
         }

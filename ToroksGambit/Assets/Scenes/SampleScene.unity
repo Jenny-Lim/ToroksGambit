@@ -328,7 +328,7 @@ MonoBehaviour:
   clickedPiece: {fileID: 0}
   canMove: 1
   inventoryScript: {fileID: 2078189510}
-  pieceMoveSpeed: 0.2
+  pieceMoveSpeed: 6
   piecePrefabs:
   - {fileID: 8310640034951653734, guid: 51879a188a24d99439e757f03eb47c19, type: 3}
   - {fileID: 5957427424637607141, guid: 158d9d3cc26221649b68653101162a69, type: 3}
