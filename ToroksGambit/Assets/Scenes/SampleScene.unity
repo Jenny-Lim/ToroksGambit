@@ -5537,6 +5537,7 @@ MonoBehaviour:
   LookAtShopRotation: {x: 10, y: 120, z: 0}
   lookAtBoardPosition: {x: 3.46, y: 6.1, z: -1.77}
   lookAtShopPosition: {x: 2.92, y: 4.33, z: -7.2}
+  menuDone: 0
 --- !u!95 &963194230
 Animator:
   serializedVersion: 4
@@ -11295,7 +11296,7 @@ MonoBehaviour:
   - RookRook
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
-  currentState: 1
+  currentState: 0
   lookingForMove: 0
   victoryText: {fileID: 1480075905}
 --- !u!4 &1925806816

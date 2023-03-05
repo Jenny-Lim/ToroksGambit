@@ -184,6 +184,7 @@ public class GameStateManager : MonoBehaviour
                 break;
             case GameState.title:
                 //just a title bro
+                //print(MainMenu.instance.startPressed);
                 if (activeCoRo == null)
                 {
                     activeCoRo = StartCoroutine(titleCoRo());
@@ -194,12 +195,15 @@ public class GameStateManager : MonoBehaviour
 
     public IEnumerator titleCoRo()
     {
-        if (MainMenu.instance.startPressed) {
-            CameraHeadMovements.instance.LookAtPlayArea();
+        //if (MainMenu.instance.menuDone) {
+        while (!CameraHeadMovements.instance.menuDone)
+        {
+            //CameraHeadMovements.instance.LookAtPlayArea();
             yield return null;
+        }
             ChangeGameState(GameState.intro);
             activeCoRo = null;
-        }
+        //}
     }
 
     public IEnumerator IntroCoRo()

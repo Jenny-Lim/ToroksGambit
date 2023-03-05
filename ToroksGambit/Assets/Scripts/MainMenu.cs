@@ -12,11 +12,12 @@ public class MainMenu : MonoBehaviour
 
 
     public static MainMenu instance;
-    public bool startPressed;
+    //public bool startPressed;
 
     private void Start()
     {
-        startPressed = false;
+        GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
+        //startPressed = false;
         if (instance == null) { instance = this; }
     }
 
@@ -31,7 +32,7 @@ public class MainMenu : MonoBehaviour
         //GameManager.instance.StartNewGame();
         // get first level
 
-        startPressed = true;
+        //startPressed = true;
 
         GameStateManager.instance.currentLevelNumber = -1;
         GameStateManager.instance.SetNextLevel();
@@ -52,7 +53,7 @@ public class MainMenu : MonoBehaviour
         Currency.instance.SetCurrency(0);
 
         // move to proper area
-        //CameraHeadMovements.instance.LookAtPlayArea();
+        CameraHeadMovements.instance.LookAtPlayArea();
 
         gameObject.SetActive(false); // hide main menu
     }

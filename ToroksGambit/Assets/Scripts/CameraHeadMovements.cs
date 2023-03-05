@@ -13,6 +13,7 @@ public class CameraHeadMovements : MonoBehaviour
     [SerializeField] private Vector3 lookAtShopPosition;
     public static CameraHeadMovements instance;
     //private Animator ani;
+    public bool menuDone = false;
 
     private void Start()
     {
@@ -123,7 +124,7 @@ public class CameraHeadMovements : MonoBehaviour
         }
 
         //yield return new WaitUntil(delegate { return ani.GetCurrentAnimatorStateInfo(0).IsName("CameraIdle"); });
-
+        menuDone = true;
         movementInProgress = false;
     }
 
