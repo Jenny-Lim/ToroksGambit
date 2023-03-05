@@ -8949,7 +8949,6 @@ MonoBehaviour:
   continueButton: {fileID: 483181921}
   optionsButton: {fileID: 431986569}
   startPressed: 0
-  menuDone: 0
 --- !u!114 &1582766830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11296,7 +11295,7 @@ MonoBehaviour:
   - RookRook
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
-  currentState: 2
+  currentState: 1
   lookingForMove: 0
   victoryText: {fileID: 1480075905}
 --- !u!4 &1925806816
