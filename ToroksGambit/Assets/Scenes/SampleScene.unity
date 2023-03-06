@@ -8145,7 +8145,7 @@ MonoBehaviour:
   - {fileID: 3669933133715020309, guid: 61b0841a26d513049a8be8633df68ee1, type: 3}
   - {fileID: 6048779306605727795, guid: fca44e18c6c01ca48bce27e596f43c11, type: 3}
   - {fileID: 7919663814949119795, guid: 62d5eb6fcc71b4b48a7fc93fe84d661a, type: 3}
-  prices: 64000000c80000002c01000090010000f4010000
+  prices: 0100000002000000030000000400000005000000
   priceText:
   - {fileID: 994812890}
   - {fileID: 1224353075}
@@ -12711,7 +12711,7 @@ MonoBehaviour:
   hideShowText: {fileID: 1477407504}
   maxHeldPieces: 0500000005000000050000000500000001000000
   ghostPieceVertOffset: -0.05
-  objectiveArea: {fileID: 0}
+  objectiveArea: {fileID: 1912380705}
   travelSpeed: 7
   showLocation: {x: -846, y: 130, z: 0}
   hideLocation: {x: -1073.93, y: 130, z: 0}

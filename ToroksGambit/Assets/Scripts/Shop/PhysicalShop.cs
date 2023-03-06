@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+//using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 
@@ -114,11 +114,14 @@ public class PhysicalShop : MonoBehaviour
                 priceText[i].text = "SOLD OUT";
                 Currency.instance.SubtractFromCurrency(prices[pieceType[i]]);
                 //add to inventory
+                buttonObject.SetActive(false);
 
             }
+            else if((buttonObject == uiSpots[i] && prices[pieceType[i]] >= Currency.instance.tickets))
+            {
+                Debug.Log("expensive");
+            }
         }
-
-        buttonObject.SetActive(false);
     }
 
     //void Update()
