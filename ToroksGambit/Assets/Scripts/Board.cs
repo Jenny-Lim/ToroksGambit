@@ -1340,6 +1340,23 @@ public class Board : MonoBehaviour
                 }
     }
 
+    public void ReturnPiecesToInventory()
+    {
+        for(int i = 0;i < boardSize;i++)
+        {
+            for(int j = 0; j < boardSize;j++)
+            {
+                if(pieceBoard[i,j])
+                {
+                    if(!pieceBoard[i,j].GetComponent<Piece>().isTorok && (int)pieceBoard[i,j].GetComponent<Piece>().type < 5)
+                    {
+                        Inventory.instance.AlterPiece((Inventory.InventoryPieces)pieceBoard[i,j].GetComponent<Piece>().type, 1);
+                    }
+                }
+            }
+        }
+    }
+
     public bool IsKingInCheck(bool checkingTorok)
     {
         //there should probably be 2 bools for what side has a king, cuz then this check doesnt need to happen, and its a pretty lengthy check

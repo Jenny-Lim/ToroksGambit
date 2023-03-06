@@ -248,6 +248,7 @@ public class GameStateManager : MonoBehaviour
         }
         victoryText.SetActive(false);
         Debug.Log("Player has won.");
+        Board.instance.ReturnPiecesToInventory();
         Currency.instance.GetReward(currentLevelNumber + 1);
         turnCount = 1;
         isPlayersTurn = true;
