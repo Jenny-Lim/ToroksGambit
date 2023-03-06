@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+//using UnityEngine.UI;
 using TMPro;
 
 public class Inventory : MonoBehaviour
@@ -17,6 +18,7 @@ public class Inventory : MonoBehaviour
 
     private RectTransform rectTrans;
     [SerializeField] private TextMeshProUGUI hideShowText;
+    [SerializeField] private GameObject hideShowButton;
     [SerializeField] private int[] maxHeldPieces = {5,5,5,5,1};//the maximum number of each piece the player can have
     private int[] heldPieces = {4,5,5,5,1};//the amount of each piece the player has
     [SerializeField] private float ghostPieceVertOffset = -0.05f;
@@ -65,6 +67,8 @@ public class Inventory : MonoBehaviour
         }
         rectTrans = GetComponent<RectTransform>();
         cam = Camera.main;
+        objectiveArea.SetActive(false);
+        hideShowButton.SetActive(false);
 
         //initialize the max number of each puece can be held in inventory
         //placeholder values
@@ -90,6 +94,8 @@ public class Inventory : MonoBehaviour
         if (CameraHeadMovements.instance.menuDone)
         {
             objectiveArea.SetActive(true);
+            hideShowButton.SetActive(true);
+
         }
 
             //print("in invenotry update");
