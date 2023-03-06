@@ -85,7 +85,8 @@ public class PhysicalShop : MonoBehaviour
         {
             pieceType[i] = (int)(Random.Range(0, 4));
             //place model at spot
-            shopPieceModels[i] = Instantiate(pieceModels[pieceType[i]], pieceSpots[i].position, Quaternion.identity, gameObject.transform);
+            shopPieceModels[i] = Instantiate(pieceModels[pieceType[i]], pieceSpots[i].position,Quaternion.identity, gameObject.transform);
+            shopPieceModels[i].transform.Rotate(0.0f,90.0f,0.0f, Space.Self);
             //change price
             priceText[i].text = prices[pieceType[i]].ToString();
             //re activate panels
