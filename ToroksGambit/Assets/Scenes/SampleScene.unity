@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 61773102}
   - component: {fileID: 61773101}
   m_Layer: 0
-  m_Name: board
+  m_Name: Board
   m_TagString: Chess Board
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -324,6 +324,7 @@ MonoBehaviour:
   boardTiles:
   - {fileID: 8301887920537776768, guid: 4f1049550a8bd974ca00423c7f8baee2, type: 3}
   - {fileID: 1837992072599089850, guid: a4d2b0ae656f82e469f58bca238e4399, type: 3}
+  moveTile: {fileID: 1837992072599089850, guid: 53c69b2de440ed443a1ee0dedb45fe9e, type: 3}
   chessPiece: {fileID: 7919663814949119795, guid: 62d5eb6fcc71b4b48a7fc93fe84d661a, type: 3}
   clickedPiece: {fileID: 0}
   canMove: 1
@@ -7240,6 +7241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tickets: 1000
+  ticketsTxt: {fileID: 1231418731}
 --- !u!114 &1231418731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7247,7 +7249,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231418728}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
@@ -8145,7 +8147,7 @@ MonoBehaviour:
   - {fileID: 3669933133715020309, guid: 61b0841a26d513049a8be8633df68ee1, type: 3}
   - {fileID: 6048779306605727795, guid: fca44e18c6c01ca48bce27e596f43c11, type: 3}
   - {fileID: 7919663814949119795, guid: 62d5eb6fcc71b4b48a7fc93fe84d661a, type: 3}
-  prices: 64000000c80000002c01000090010000f4010000
+  prices: 0100000002000000030000000400000005000000
   priceText:
   - {fileID: 994812890}
   - {fileID: 1224353075}
@@ -11104,7 +11106,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1912380706
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12711,7 +12713,7 @@ MonoBehaviour:
   hideShowText: {fileID: 1477407504}
   maxHeldPieces: 0500000005000000050000000500000001000000
   ghostPieceVertOffset: -0.05
-  objectiveArea: {fileID: 0}
+  objectiveArea: {fileID: 1912380705}
   travelSpeed: 7
   showLocation: {x: -846, y: 130, z: 0}
   hideLocation: {x: -1073.93, y: 130, z: 0}

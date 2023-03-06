@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+//using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 
@@ -49,6 +49,7 @@ public class PhysicalShop : MonoBehaviour
                     //leave shop function
                     piecePanels.SetActive(false);
                     Inventory.instance.objectiveArea.SetActive(true);
+                    Currency.instance.ticketsTxt.enabled = false;
                     c.LookAtBoard();
                     GameStateManager.instance.SetNextLevel();
                 }
@@ -69,6 +70,7 @@ public class PhysicalShop : MonoBehaviour
             priceText[i].text = prices[pieceType[i]].ToString();
             //re activate panels
             uiSpots[i].SetActive(true);
+            //Currency.instance.ticketsTxt.enabled = true;
         }
     }
 
@@ -96,6 +98,7 @@ public class PhysicalShop : MonoBehaviour
         c.LookAtShop();
         Inventory.instance.objectiveArea.SetActive(false);
         piecePanels.SetActive(true);
+        Currency.instance.ticketsTxt.enabled = true;
         for (int i = 0; i < shopPieceModels.Length; i++)
         {
             uiSpots[i].SetActive(true);
@@ -114,11 +117,14 @@ public class PhysicalShop : MonoBehaviour
                 priceText[i].text = "SOLD OUT";
                 Currency.instance.SubtractFromCurrency(prices[pieceType[i]]);
                 //add to inventory
+                buttonObject.SetActive(false);
 
             }
+            else if((buttonObject == uiSpots[i] && prices[pieceType[i]] >= Currency.instance.tickets))
+            {
+                Debug.Log("expensive");
+            }
         }
-
-        buttonObject.SetActive(false);
     }
 
     //void Update()

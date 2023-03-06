@@ -42,6 +42,7 @@ public class GoToShopButton : MonoBehaviour
             //shop.SetActive(canShop);
             //wallet.SetActive(canShop);
             piecePanels.SetActive(canShop);
+            Currency.instance.ticketsTxt.enabled = canShop;
         }
         else
         {

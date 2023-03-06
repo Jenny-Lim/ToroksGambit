@@ -9,6 +9,8 @@ public class Board : MonoBehaviour
     [SerializeField] float boardVerticalOffset = 0.5f;//offset for board tiles vertically
     [SerializeField] float verticalPlaceOffset = 0.5f;
 
+    private GameObject[,] moveTileBoard;
+
     public GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
     public static GameObject[,] pieceBoard;//array for storing pieces and piece location -- made static (jenny)
@@ -17,6 +19,8 @@ public class Board : MonoBehaviour
     private GameObject boardSquare;
 
     [SerializeField] private GameObject[] boardTiles = new GameObject[2];
+
+    [SerializeField] private GameObject moveTile;
 
     [SerializeField]
     private GameObject chessPiece;
@@ -106,6 +110,7 @@ public class Board : MonoBehaviour
         cam = Camera.main;
         hitBoxBoard = new GameObject[boardSize,boardSize];
         pieceBoard = new GameObject[boardSize, boardSize];
+        moveTileBoard = new GameObject[boardSize, boardSize];
         idleDialogueCounter = Random.Range(TorokPersonalityAI.instance.maxTimeBetweenIdleBark,TorokPersonalityAI.instance.maxTimeBetweenIdleBark);
         BuildBoard();
     }
@@ -203,6 +208,7 @@ public class Board : MonoBehaviour
 
                 if (canMove)
                 {
+                    ClearMoveTiles();
                     StartCoroutine(MovePieceValidatorCoRo(pieceX, pieceY, clickedX, clickedY));
                 }
 
@@ -270,7 +276,14 @@ public class Board : MonoBehaviour
                     }
                 }
 
+                ClearMoveTiles();
+
                 piece.UpdateMoves();
+
+                for(int i = 0;i < piece.moves.Count;i++)
+                {
+                    moveTileBoard[piece.moves[i].endX, piece.moves[i].endY].SetActive(true);
+                }
 
                 //signifier that piece is chosen
                 //storedPiece.transform.position = Vector3.MoveTowards(hit.transform.position, hit.transform.position+new Vector3(0,5,0), 10f * Time.deltaTime);
@@ -607,6 +620,10 @@ public class Board : MonoBehaviour
 
                 newTile.gameObject.name = i + "_" + j;
                 hitBoxBoard[i, j] = newTile;
+                GameObject moveTileObject = Instantiate(moveTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.05f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                moveTileObject.gameObject.name = i + "_" + j + "_MoveTile";
+                moveTileBoard[i,j] = moveTileObject;
+                moveTileObject.SetActive(false);
             }
 
         }
@@ -1309,6 +1326,18 @@ public class Board : MonoBehaviour
             print(resultLine);
             resultLine = "";
         }
+    }
+
+    private void ClearMoveTiles()
+    {
+                for(int i = 0;i < boardSize;i++)
+                {
+                    for(int j = 0;j < boardSize;j++)
+                    {
+                        moveTileBoard[i,j].SetActive(false);
+                    }
+
+                }
     }
 
     public bool IsKingInCheck(bool checkingTorok)
