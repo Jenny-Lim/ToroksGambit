@@ -386,7 +386,7 @@ public class Inventory : MonoBehaviour
 
     public void SetObjective()
     {
-        levelCountText.text = "Level "+ (GameStateManager.instance.currentLevelNumber + 1);
+        levelCountText.text = "Board "+ (GameStateManager.instance.currentLevelNumber + 1);
         objectiveText.text = GameStateManager.instance.winCondition.GetObjectiveText();
     }
 
