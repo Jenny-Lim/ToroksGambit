@@ -13510,7 +13510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1912380706
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15127,9 +15127,9 @@ MonoBehaviour:
   hideShowText: {fileID: 1477407504}
   hideShowButton: {fileID: 882856025}
   maxHeldPieces: 0500000005000000050000000500000001000000
-  heldPieces: 0400000004000000040000000400000001000000
   ghostPieceVertOffset: -0.05
   objectiveArea: {fileID: 1912380705}
+  inventoryUI: {fileID: 2078189506}
   travelSpeed: 7
   showLocation: {x: -846, y: 130, z: 0}
   hideLocation: {x: -1073.93, y: 130, z: 0}
@@ -15149,6 +15149,7 @@ MonoBehaviour:
   - {fileID: 899630775}
   infiniteText: {fileID: 856318472}
   objectiveText: {fileID: 1907121239}
+  levelCountText: {fileID: 1914540989}
   hasPlacedPiece: 0
 --- !u!1001 &2125050320
 PrefabInstance:

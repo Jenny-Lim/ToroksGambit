@@ -106,7 +106,6 @@ public class PhysicalShop : MonoBehaviour
     public void EnterShop()
     {
         c.LookAtShop();
-        Inventory.instance.objectiveArea.SetActive(false);
         piecePanels.SetActive(true);
         Currency.instance.ticketsTxt.enabled = true;
         for (int i = 0; i < shopPieceModels.Length; i++)

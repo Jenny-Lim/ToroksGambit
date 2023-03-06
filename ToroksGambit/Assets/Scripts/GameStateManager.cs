@@ -232,6 +232,8 @@ public class GameStateManager : MonoBehaviour
 
     public IEnumerator WinAnimCoro()
     {
+        Inventory.instance.HideInventoryPanel();
+        Inventory.instance.objectiveArea.SetActive(false);
         float counter = 0;
         while (counter < 2000)
         {
@@ -248,6 +250,7 @@ public class GameStateManager : MonoBehaviour
         }
         victoryText.SetActive(false);
         Debug.Log("Player has won.");
+
         Board.instance.ReturnPiecesToInventory();
         Currency.instance.GetReward(currentLevelNumber + 1);
         turnCount = 1;
@@ -267,6 +270,11 @@ public class GameStateManager : MonoBehaviour
         {
             BoardLoader.instance.LoadBoard(LevelNames[++currentLevelNumber]);
         }
+        Inventory.instance.ShowInventoryPanel();
+        Inventory.instance.SetObjective();
+
+
+
         
     }
 

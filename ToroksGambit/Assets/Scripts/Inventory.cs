@@ -24,6 +24,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private float ghostPieceVertOffset = -0.05f;
     private bool infinitePieces = true;
     [SerializeField] public GameObject objectiveArea;
+    [SerializeField] public GameObject inventoryUI;
 
     public void ShowInventoryPanel()
     {
@@ -56,6 +57,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private TextMeshProUGUI infiniteText;
 
     [SerializeField] private TextMeshProUGUI objectiveText;
+    [SerializeField] private TextMeshProUGUI levelCountText;
 
     public bool hasPlacedPiece = false;
 
@@ -384,6 +386,7 @@ public class Inventory : MonoBehaviour
 
     public void SetObjective()
     {
+        levelCountText.text = "Level "+ (GameStateManager.instance.currentLevelNumber + 1);
         objectiveText.text = GameStateManager.instance.winCondition.GetObjectiveText();
     }
 
