@@ -1,0 +1,1139 @@
+<REAPER_PROJECT 0.1 "6.77/win32" 1678068995
+  <NOTES 0 2
+  >
+  RIPPLE 1
+  GROUPOVERRIDE 0 0 0
+  AUTOXFADE 129
+  ENVATTACH 3
+  POOLEDENVATTACH 0
+  MIXERUIFLAGS 11 48
+  PEAKGAIN 1
+  FEEDBACK 0
+  PANLAW 1
+  PROJOFFS 0 0 0
+  MAXPROJLEN 0 0
+  GRID 3199 8 1 8 1 0 0 0
+  TIMEMODE 3 5 -1 30 0 0 -1
+  VIDEO_CONFIG 0 0 256
+  PANMODE 3
+  CURSOR 1
+  ZOOM 136.80210079070005 0 0
+  VZOOMEX 21.96102142 0
+  USE_REC_CFG 0
+  RECMODE 1
+  SMPTESYNC 0 30 100 40 1000 300 0 0 1 0 0
+  LOOP 1
+  LOOPGRAN 0 4
+  RECORD_PATH "" ""
+  <RECORD_CFG
+    ZXZhdxgAAQ==
+  >
+  <APPLYFX_CFG
+  >
+  RENDER_FILE C:\Users\fatca\OneDrive\Desktop\TorokVoice\TorokVoicePass1
+  RENDER_PATTERN $item
+  RENDER_FMT 0 2 44100
+  RENDER_1X 0
+  RENDER_RANGE 4 0 0 18 1000
+  RENDER_RESAMPLE 3 0 1
+  RENDER_ADDTOPROJ 0
+  RENDER_STEMS 32
+  RENDER_DITHER 0
+  TIMELOCKMODE 1
+  TEMPOENVLOCKMODE 1
+  ITEMMIX 1
+  DEFPITCHMODE 589824 0
+  TAKELANE 1
+  SAMPLERATE 44100 0 0
+  <RENDER_CFG
+    ZXZhdxgAAQ==
+  >
+  LOCK 1
+  <METRONOME 6 2
+    VOL 0.25 0.125
+    FREQ 800 1600 1
+    BEATLEN 4
+    SAMPLES "" ""
+    PATTERN 2863311530 2863311529
+    MULT 1
+  >
+  GLOBAL_AUTO -1
+  TEMPO 120 4 4
+  PLAYRATE 1 0 0.25 4
+  SELECTION 5.5 5.5
+  SELECTION2 5.5 5.5
+  MASTERAUTOMODE 0
+  MASTERTRACKHEIGHT 0 0
+  MASTERPEAKCOL 16576
+  MASTERMUTESOLO 0
+  MASTERTRACKVIEW 0 0.6667 0.5 0.5 0 0 0 0 0 0 0 0 0
+  MASTERHWOUT 0 0 1 0 0 0 0 -1
+  MASTER_NCH 2 2
+  MASTER_VOLUME 1 0 -1 -1 1
+  MASTER_PANMODE 3
+  MASTER_FX 1
+  MASTER_SEL 0
+  <MASTERFXLIST
+    SHOW 0
+    LASTSEL 0
+    DOCKED 0
+  >
+  <MASTERPLAYSPEEDENV
+    EGUID {F9418B6A-F120-4136-933E-E941641F4CB8}
+    ACT 0 -1
+    VIS 0 1 1
+    LANEHEIGHT 0 0
+    ARM 0
+    DEFSHAPE 0 -1 -1
+  >
+  <TEMPOENVEX
+    EGUID {59B8A1ED-84D5-462D-97E8-7F78678D424F}
+    ACT 1 -1
+    VIS 1 0 1
+    LANEHEIGHT 0 0
+    ARM 0
+    DEFSHAPE 1 -1 -1
+  >
+  <PROJBAY
+  >
+  <TRACK {DDBF8467-EDC4-4820-9FBA-8B360C950946}
+    NAME Idel
+    PEAKCOL 16576
+    BEAT -1
+    AUTOMODE 0
+    VOLPAN 1 0 -1 -1 1
+    MUTESOLO 0 0 0
+    IPHASE 0
+    PLAYOFFS 0 1
+    ISBUS 0 0
+    BUSCOMP 0 0 0 0 0
+    SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
+    SEL 1
+    REC 0 0 1 0 0 0 0 0
+    VU 2
+    TRACKHEIGHT 0 0 0 0 0 0
+    INQ 0 0 0 0.5 100 0 0 100
+    NCHAN 2
+    FX 1
+    TRACKID {DDBF8467-EDC4-4820-9FBA-8B360C950946}
+    PERF 0
+    MIDIOUT -1
+    MAINSEND 1 0
+    <FXCHAIN
+      WNDRECT 19 47 1463 834
+      SHOW 0
+      LASTSEL 3
+      DOCKED 0
+      BYPASS 1 0 0
+      <JS sstillwell/hpflpf ""
+        800 22000 5 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      >
+      FLOATPOS 0 0 0 0
+      FXID {C46C38A0-7C46-419C-8445-5A9DFA036655}
+      WAK 0 0
+      BYPASS 0 0 0
+      <JS loser/phaseMeter ""
+        44100 0 2 200 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      >
+      FLOATPOS 0 0 0 0
+      FXID {1F95CF14-74BC-4AEF-AC30-6457DE7912A6}
+      WAK 0 0
+      BYPASS 1 0 0
+      <JS misc/reverseness ""
+        500 -6 -6 0.1 0 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      >
+      FLOATPOS 0 0 0 0
+      FXID {AD764D45-2022-4315-BE4C-49B1CE383F64}
+      WAK 0 0
+      BYPASS 0 0 0
+      <VST "VST: ReaDelay (Cockos)" readelay.dll 0 "" 1919247468<5653547265646C72656164656C617900> ""
+        bGRlcu5e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAATAAAAAEAAAAAABAA
+        AAAAAAAAAAABAAAALAAAAAIAAAAAAAAAv8IgQAAAgD8AAAAAAACAP6NAnzjNzEw67F6PPQAAgD/NzEw+AACAPwAAgD8AAIA/AAAAPw==
+        AAAQAAAA
+      >
+      FLOATPOS 0 0 0 0
+      FXID {B74074CB-997A-4E78-8E16-8DF9720AE928}
+      WAK 0 0
+      BYPASS 0 0 0
+      <JS utility/dither_psycho ""
+        16 3 1 2 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      >
+      FLOATPOS 0 0 0 0
+      FXID {F6976F71-9A39-48E7-B8BC-3263E5ABA7B0}
+      WAK 0 0
+      BYPASS 0 0 0
+      <VST "VST: ReaPitch (Cockos)" reapitch.dll 0 "" 1919250531<56535472657063726561706974636800> ""
+        Y3Blcu5e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAATAAAAAEAAAAAABAA
+        AAAAAP////8BAAAALAAAAAIAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAD8AAAA/AAAAPwAAAD8AAAA/AAAAPwAAAD8AAIA/AAAAPw==
+        AAAQAAAA
+      >
+      FLOATPOS 0 0 0 0
+      FXID {E77FB545-5022-4B93-ACB6-DC629AEB2731}
+      WAK 0 0
+      BYPASS 0 0 0
+      <VST "VST: ReaEQ (Cockos)" reaeq.dll 0 "" 1919247729<56535472656571726561657100000000> ""
+        cWVlcu5e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAArAAAAAEAAAAAABAA
+        IQAAAAQAAAAAAAAAAQAAAP7//////1hA3Lfkpx16BkAAAAAAAAAAQAEIAAAAAQAAAAAAAAAAQH9AAAAAAAAA8D8AAAAAAAAAQAEIAAAAAQAAAAAAAAAAQK9AAAAAAAAA
+        8D8AAAAAAAAAQAEBAAAAAQAAAAAAAAAAiLNAZBWrWQyMBkAAAAAAAAAAQAEBAAAAAQAAAAAAAAAAAPA/AAAAAPkDAACdAgAAAgAAAA==
+        AAAQAAAA
+      >
+      FLOATPOS 0 0 0 0
+      FXID {867B0161-7AB0-444C-AC2C-208964CEB432}
+      WAK 0 0
+      BYPASS 0 0 0
+      <VST "VST: ReaVerb (Cockos)" reaverb.dll 0 "" 1919252066<56535472657662726561766572620000> ""
+        YnZlcu5e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAAdAAAAAEAAAAAAAAA
+        AAAQwcybgD4AAIA/AAAAAAAAgD8AAIA/AACAPwAAgD8AAAAAAAAAQFZFUkJHRU4AGAAAAAAAAACR4FdEHay0QN6yu0LByIxCAACAv0VDSE9HRU4AHAAAAMv4tkC1I3VC
+        Xc3TP6LHXz+ZUa88kc2MQJzEAD8=
+        AHN3ZWV0dmVyYm8AAAAAAA==
+      >
+      PRESETNAME sweetverbo
+      FLOATPOS 0 0 0 0
+      FXID {497E4B2F-E022-4AEF-A3B7-1323236A668D}
+      WAK 0 0
+    >
+    <ITEM
+      POSITION 0
+      SNAPOFFS 0
+      LENGTH 1
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 23854999 R
+      SEL 1
+      IGUID {5123A5E3-7274-47FB-AE21-66D9BE03AECF}
+      IID 1
+      NAME HaHa1
+      VOLPAN 1 0 1 -1
+      SOFFS 14
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {C2C8FB1C-CF2E-4206-A1E8-858D541EB7C2}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 1
+      SNAPOFFS 0
+      LENGTH 0.85
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 28049279 R
+      SEL 1
+      IGUID {2A2945A2-418D-4BB7-8EC7-34CC9BC758E9}
+      IID 1
+      NAME Oooo1
+      VOLPAN 1 0 1 -1
+      SOFFS 15.75
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {BE3357FC-786F-4AD4-9442-2C3A3E580655}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 1.85
+      SNAPOFFS 0
+      LENGTH 0.82
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 24004967 R
+      SEL 1
+      IGUID {E76AAD0E-EB55-4E80-93F5-3BCE3DEB1394}
+      IID 1
+      NAME OhYes1
+      VOLPAN 1 0 1 -1
+      SOFFS 17.42
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {ABA4B8D7-43F8-4A0B-953B-43582E7402E5}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 2.67
+      SNAPOFFS 0
+      LENGTH 0.51
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 31167368 R
+      SEL 1
+      IGUID {A94FC90D-B1E5-4336-8A42-A0C5883B5365}
+      IID 1
+      NAME ahhh1
+      VOLPAN 1 0 1 -1
+      SOFFS 19.34
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {AC3D1F1B-0498-48F4-82C8-9EF06135BF4C}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 3.18
+      SNAPOFFS 0
+      LENGTH 1.73
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 26065910 R
+      SEL 1
+      IGUID {A5DBA16B-8C1A-4742-84CB-B21CB76902DF}
+      IID 1
+      NAME What1
+      VOLPAN 1 0 1 -1
+      SOFFS 20.64
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {6DB1AE43-FF08-4E38-A549-C1F4942FA0A7}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 4.91
+      SNAPOFFS 0
+      LENGTH 0.8
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 23851482 R
+      SEL 1
+      IGUID {C09D7642-9F9E-43B0-98EF-2E71D84EF6D2}
+      IID 1
+      NAME Hmmm1
+      VOLPAN 1 0 1 -1
+      SOFFS 23.29
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {C230968D-A339-4EA7-BCE9-2934E912A78D}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 5.71
+      SNAPOFFS 0
+      LENGTH 1.47
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 24301308 R
+      SEL 1
+      IGUID {6EB7ABEA-114B-4D73-B4EA-B651CCC7A631}
+      IID 1
+      NAME ahhhh2
+      VOLPAN 1 0 1 -1
+      SOFFS 25.46
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {10C2875B-E1F8-4FBB-8BC4-F1AB4CDB11B8}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 7.18
+      SNAPOFFS 0
+      LENGTH 1.93
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 25362301 R
+      SEL 1
+      IGUID {3AA2EC57-19E7-4C12-B07A-509BD0FDE28E}
+      IID 1
+      NAME hmmm2
+      VOLPAN 1 0 1 -1
+      SOFFS 32.49
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {564478F7-8451-42C4-AF72-8E53E8A5B8F1}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 9.11
+      SNAPOFFS 0
+      LENGTH 1.90127687404711
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 27690977 R
+      SEL 1
+      IGUID {A7CEEE61-6F45-4740-A51D-D2E9E008BA34}
+      IID 1
+      NAME hmmmm3
+      VOLPAN 1 0 1 -1
+      SOFFS 36.77
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {8D626219-611D-4FE5-8059-36F710B17917}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 11.0112768740471
+      SNAPOFFS 0
+      LENGTH 1.87
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 33519506 R
+      SEL 1
+      IGUID {6232A768-CE65-48C0-8A11-D279EF6D9AE8}
+      IID 1
+      NAME hmmmm4
+      VOLPAN 1 0 1 -1
+      SOFFS 40.95
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {5BCB37E7-ADF4-49E9-8C15-085D3CA9F83D}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 12.88127687404711
+      SNAPOFFS 0
+      LENGTH 1.1
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 32495990 R
+      SEL 1
+      IGUID {A6EF1CAA-280F-4191-9BA5-FEC83A650DF1}
+      IID 1
+      NAME Idel.mp3
+      VOLPAN 1 0 1 -1
+      SOFFS 43.58
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {0EFA272F-4971-4074-9C63-D799938D1CF6}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 13.98127687404711
+      SNAPOFFS 0
+      LENGTH 2.21018350234745
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 25808921 R
+      SEL 1
+      IGUID {9883C1D4-31EB-419A-B454-FF0015813270}
+      IID 1
+      NAME ReadYou
+      VOLPAN 1 0 1 -1
+      SOFFS 48.1071889012069
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {C18C3971-F38E-4192-99CA-075310C71145}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Idel.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 16.19146037639456
+      SNAPOFFS 0
+      LENGTH 1.75967724593768
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 26083197 R
+      SEL 1
+      IGUID {FB9CC6A7-CAF7-469C-809B-707E7478D37B}
+      IID 2
+      NAME NoBishops
+      VOLPAN 1 0 1 -1
+      SOFFS 11.19967483582223
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {556139D7-00C7-4729-BD34-1CAD9D4C46FE}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Quips.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 17.95113762233224
+      SNAPOFFS 0
+      LENGTH 1.633986014085
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 27955450 R
+      SEL 1
+      IGUID {22C8FACE-75F2-4FE4-8DB7-6C127E1EB1E8}
+      IID 2
+      NAME NoBishops2
+      VOLPAN 1 0 1 -1
+      SOFFS 13.76525468599188
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {C8D20AD7-77E5-47C3-BC0C-4E8DA727572A}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Quips.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 19.58512363641724
+      SNAPOFFS 0
+      LENGTH 2.53600544267491
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 33516685 R
+      SEL 1
+      IGUID {6FBE49F6-C607-4DBB-9F9F-A021ADD49D60}
+      IID 2
+      NAME RookWorld
+      VOLPAN 1 0 1 -1
+      SOFFS 16.56003619424586
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {CE741FC0-9A13-48D2-9D94-52CE6A0C717D}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Quips.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 22.12112907909215
+      SNAPOFFS 0
+      LENGTH 3.51935449187536
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 32492898 R
+      SEL 1
+      IGUID {FC0F7912-9AFC-4ADE-B424-FD37580962B2}
+      IID 2
+      NAME NoKing
+      VOLPAN 1 0 1 -1
+      SOFFS 23.96842527168101
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {02B07C99-F966-435B-AD2A-EAAD75ABDF29}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Quips.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 25.64048357096751
+      SNAPOFFS 0
+      LENGTH 3.40105686189638
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 20376477 R
+      SEL 1
+      IGUID {61E6C177-B636-4093-8238-DA16106682B6}
+      IID 2
+      NAME Blunderpants
+      VOLPAN 1 0 1 -1
+      SOFFS 29.75761553877854
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {033ABFD8-9397-4607-9678-D4379662C9FF}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Quips.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 29.04154043286388
+      SNAPOFFS 0
+      LENGTH 3.95845956713612
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 32668107 R
+      SEL 1
+      IGUID {EF35C7F4-0BB1-422F-8464-EA43771EFFFD}
+      IID 2
+      NAME KnightRises
+      VOLPAN 1 0 1 -1
+      SOFFS 34.45994633044398
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {14D5B810-78B8-4CBD-A63F-6D058AC0FBB8}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Quips.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 33
+      SNAPOFFS 0
+      LENGTH 1.98553026818114
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 33531736 R
+      SEL 1
+      IGUID {44EE02E8-68BF-43AF-A833-072F672F4776}
+      IID 2
+      NAME RookyMove
+      VOLPAN 1 0 1 -1
+      SOFFS 39.36525300853984
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {45710518-9948-4E62-9343-D066C3F58DC3}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Quips.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 35
+      SNAPOFFS 0
+      LENGTH 1.66356042157972
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 19648420 R
+      SEL 1
+      IGUID {2F5EA28E-7761-4C65-8F91-DA316CDB3885}
+      IID 2
+      NAME "Skill Issue"
+      VOLPAN 1 0 1 -1
+      SOFFS 42.23801550156352
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {A4F6C787-4142-4E7A-9726-97148E19B470}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Quips.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 36.66356042157972
+      SNAPOFFS 0
+      LENGTH 0.89462582671623
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 25320606 R
+      SEL 1
+      IGUID {09551B43-C398-4E89-A864-480A2C875E35}
+      IID 3
+      NAME Egast
+      VOLPAN 1 0 1 -1
+      SOFFS 7.29417348270354
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {7411AF36-3CF8-4209-8248-553A43D1B4A3}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 37.55818624829596
+      SNAPOFFS 0
+      LENGTH 1.17558269791633
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 25315976 R
+      SEL 1
+      IGUID {B533D4FC-DBC7-4EE5-A994-00487A31F671}
+      IID 3
+      NAME Egast2
+      VOLPAN 1 0 1 -1
+      SOFFS 9.54922205417832
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {C31FD12D-B075-4554-BEC9-EF7CBD7951DB}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 38.73376894621229
+      SNAPOFFS 0
+      LENGTH 1.12382748480051
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 19106027 R
+      SEL 1
+      IGUID {B7CDB824-B028-46A9-8150-5F50A1B40EB8}
+      IID 3
+      NAME Poppycock
+      VOLPAN 1 0 1 -1
+      SOFFS 11.76730261628465
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {0FE43F94-417E-434E-A8B3-F5056D9AD321}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 39.8575964310128
+      SNAPOFFS 0
+      LENGTH 2.18850615461161
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 27688600 R
+      SEL 1
+      IGUID {18021728-019C-443A-88E3-DA9D20DA8F62}
+      IID 3
+      NAME OhYou
+      VOLPAN 1 0 1 -1
+      SOFFS 13.60830948283291
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {B8B3A8B4-F210-40AC-A6D6-3D5BCF5D4C08}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 42.04610258562441
+      SNAPOFFS 0
+      LENGTH 1.9962725058957
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 25713812 R
+      SEL 1
+      IGUID {A9E8D84B-C448-4450-AFB8-82303524EBF8}
+      IID 3
+      NAME WellShit
+      VOLPAN 1 0 1 -1
+      SOFFS 16.86149430725553
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {990D327D-A9E1-454B-BEDA-2870B6962EA9}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 44.04237509152011
+      SNAPOFFS 0
+      LENGTH 1.37520994850593
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 23986058 R
+      SEL 1
+      IGUID {1F845050-2CAD-44BD-8D40-1EEF4C60727C}
+      IID 3
+      NAME Gadzooks
+      VOLPAN 1 0 1 -1
+      SOFFS 20.09989192793077
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {74F22CA9-811E-49E8-A3C3-87028FE540AB}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 45.41758504002603
+      SNAPOFFS 0
+      LENGTH 0.56191374240026
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 28415460 R
+      SEL 1
+      IGUID {28DD64B9-3858-4399-8D56-0B53D68B7EA7}
+      IID 3
+      NAME Ahhh3
+      VOLPAN 1 0 1 -1
+      SOFFS 36.78725135684408
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {1A040FD3-24C4-45D7-9619-A4A70BC85694}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 46.00925734892586
+      SNAPOFFS 0
+      LENGTH 0.69499857612664
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 18776796 R
+      SEL 1
+      IGUID {93534A68-AD88-4885-BC78-EB72266C5DFA}
+      IID 3
+      NAME ooooooh2
+      VOLPAN 1 0 1 -1
+      SOFFS 38.0515572772447
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {4F708783-4D5B-4069-B092-9CAE9790F0B7}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 46.7042559250525
+      SNAPOFFS 0
+      LENGTH 0.52494573303184
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 18334102 R
+      SEL 1
+      IGUID {5C919096-FDE2-45B9-9964-D62FE18419E0}
+      IID 3
+      NAME What2
+      VOLPAN 1 0 1 -1
+      SOFFS 39.61160727259281
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {326FD469-ED3A-41B5-A41E-16CC73BFECE7}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 47.22920165808434
+      SNAPOFFS 0
+      LENGTH 0.49853200065263
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 29841886 R
+      SEL 1
+      IGUID {923D792C-B9DA-44EB-9344-66AA32C9D60E}
+      IID 3
+      NAME Ahhh3
+      VOLPAN 1 0 1 -1
+      SOFFS 41.30158142655176
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {BAE9AD6B-4FF7-426E-BD1A-E85B606D96AB}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 47.72773365873697
+      SNAPOFFS 0
+      LENGTH 0.6062753536424
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 24855679 R
+      SEL 1
+      IGUID {938BE4A0-350F-4843-845B-5854BED5428C}
+      IID 3
+      NAME Ahhh4
+      VOLPAN 1 0 1 -1
+      SOFFS 43.24925939444719
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {7F2769A2-DDA0-439A-977F-2A92A20D1C71}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 48.33400901237937
+      SNAPOFFS 0
+      LENGTH 1.34588377584086
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 23437700 R
+      SEL 1
+      IGUID {E9CAD3BA-FDDB-4BF2-B17A-9DC20011173A}
+      IID 3
+      NAME YouTakeThatBack
+      VOLPAN 1 0 1 -1
+      SOFFS 45.47448532359752
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {01421B39-7238-4AA6-90AF-123060C13C0B}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 49.67989278822022
+      SNAPOFFS 0
+      LENGTH 1.38999715225327
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 27713080 R
+      SEL 1
+      IGUID {3742DD55-6232-4007-AC31-324EA8E5AB57}
+      IID 3
+      NAME Sharlatin
+      VOLPAN 1 0 1 -1
+      SOFFS 47.63366530554404
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {AF7BD2E3-3642-48C1-83C6-99C80ACFA7B1}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 51.06988994047349
+      SNAPOFFS 0
+      LENGTH 2.48520250641022
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 23986079 R
+      SEL 1
+      IGUID {D46E6B8A-2CFB-4965-ACDF-D0FCA0D4768F}
+      IID 3
+      NAME Naive
+      VOLPAN 1 0 1 -1
+      SOFFS 50.44228174069426
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {7C7174E9-2D17-4A28-903D-D09952E70810}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 53.55509244688373
+      SNAPOFFS 0
+      LENGTH 2.28462297896952
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 29446608 R
+      SEL 1
+      IGUID {841EB171-853B-495B-A6ED-ED2DAA442690}
+      IID 3
+      NAME Horswageled
+      VOLPAN 1 0 1 -1
+      SOFFS 54.75370390990537
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {B012A2B4-C9AF-44DE-BBEF-E70BC0DD153C}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 55.83971542585324
+      SNAPOFFS 0
+      LENGTH 0.88723222484259
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 32555377 R
+      SEL 1
+      IGUID {4354426E-7E4C-43AA-A26A-A43C206E689D}
+      IID 3
+      NAME Yoink
+      VOLPAN 1 0 1 -1
+      SOFFS 60.64640460323454
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {45C72726-FD5B-4105-859E-A02D6E7D2A44}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 56.72694765069583
+      SNAPOFFS 0
+      LENGTH 1.24212511477957
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 24511413 R
+      SEL 1
+      IGUID {60666C6F-02D9-4AD5-9BEC-3261C0AD6F58}
+      IID 3
+      NAME illTakeThat
+      VOLPAN 1 0 1 -1
+      SOFFS 62.34693303418271
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {F6F279F9-30A4-491B-A132-74CA84F56AC0}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 57.9690727654754
+      SNAPOFFS 0
+      LENGTH 2.18111255273792
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 22139073 R
+      SEL 1
+      IGUID {DBBEDBCE-408C-424E-B92B-3AEBBFEA7460}
+      IID 3
+      NAME Pile
+      VOLPAN 1 0 1 -1
+      SOFFS 64.74246004125757
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {6B7C53FE-11A6-4CC8-A236-FA78F8AFA0FB}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 60.15018531821332
+      SNAPOFFS 0
+      LENGTH 2.75781349888551
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 30931310 R
+      SEL 1
+      IGUID {418B74BD-40CB-4E0E-818A-4E8728612C20}
+      IID 3
+      NAME YourBlunder
+      VOLPAN 1 0 1 -1
+      SOFFS 67.74426240197479
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {4D2AF8CA-603C-4571-8DF5-82578850F160}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 62.90799881709884
+      SNAPOFFS 0
+      LENGTH 3.71983093839994
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 30440941 R
+      SEL 1
+      IGUID {FB1DE674-AAEC-497D-BD33-ACD453D1C69C}
+      IID 3
+      NAME GetBetter
+      VOLPAN 1 0 1 -1
+      SOFFS 76.26823616640183
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {AB9006F0-35DA-4FBA-938D-4B6AFC1E2120}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+    <ITEM
+      POSITION 66.62782975549878
+      SNAPOFFS 0
+      LENGTH 2.79478150825396
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0.01 0 1 0 0 0
+      FADEOUT 1 0.01 0 1 0 0 0
+      MUTE 0 0
+      COLOR 24690182 R
+      SEL 1
+      IGUID {06BF3E05-3383-419F-A8C1-B89EF04D1D6D}
+      IID 3
+      NAME GotYou
+      VOLPAN 1 0 1 -1
+      SOFFS 81.12668179334969
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {B9403F1C-FE1E-4680-A0C0-98175AF2DD56}
+      <SOURCE MP3
+        FILE "C:\Users\fatca\Downloads\Torok's Gambit Sounds-20230303T140820Z-001\Torok_s Gambit Sounds\Reactions.mp3" 1
+      >
+    >
+  >
+>
