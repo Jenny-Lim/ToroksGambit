@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Currency : MonoBehaviour
 {
     public int tickets;
-    private Text ticketsTxt;
+    public Text ticketsTxt;
     public static Currency instance;
     
     void Awake()
@@ -16,6 +16,7 @@ public class Currency : MonoBehaviour
             instance = this;
         }
         ticketsTxt = gameObject.GetComponent<Text>();
+        ticketsTxt.enabled = false;
     }
 
     void Update()
