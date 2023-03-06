@@ -86,10 +86,15 @@ public class Inventory : MonoBehaviour
             
             startButton.SetActive(true);
         }
-        
-        //print("in invenotry update");
-        //if in deploy mode
-        if (isShowingPanel)
+
+        if (CameraHeadMovements.instance.menuDone)
+        {
+            objectiveArea.SetActive(true);
+        }
+
+            //print("in invenotry update");
+            //if in deploy mode
+            if (isShowingPanel)
         {
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
