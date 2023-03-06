@@ -279,10 +279,12 @@ public class Board : MonoBehaviour
                 ClearMoveTiles();
 
                 piece.UpdateMoves();
-
+                if(!piece.isTorok)
+                {
                 for(int i = 0;i < piece.moves.Count;i++)
                 {
                     moveTileBoard[piece.moves[i].endX, piece.moves[i].endY].SetActive(true);
+                }
                 }
 
                 //signifier that piece is chosen
@@ -308,6 +310,18 @@ public class Board : MonoBehaviour
                                         pieceX = i;//store locations
                                         pieceY = j;
                                     }
+
+                                    ClearMoveTiles();
+
+                                    piece.UpdateMoves();
+                                    if(!piece.isTorok)
+                                    {
+                                    for(int q = 0;q < piece.moves.Count;q++)
+                                    {
+                                        moveTileBoard[piece.moves[q].endX, piece.moves[q].endY].SetActive(true);
+                                    }
+                                    }
+
 
                                 }
                                     
@@ -620,7 +634,7 @@ public class Board : MonoBehaviour
 
                 newTile.gameObject.name = i + "_" + j;
                 hitBoxBoard[i, j] = newTile;
-                GameObject moveTileObject = Instantiate(moveTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.05f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                GameObject moveTileObject = Instantiate(moveTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.031f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
                 moveTileObject.gameObject.name = i + "_" + j + "_MoveTile";
                 moveTileBoard[i,j] = moveTileObject;
                 moveTileObject.SetActive(false);
