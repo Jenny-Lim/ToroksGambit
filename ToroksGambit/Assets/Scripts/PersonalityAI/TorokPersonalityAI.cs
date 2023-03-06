@@ -29,12 +29,6 @@ public class TorokPersonalityAI : MonoBehaviour
         library.LoadDialogue(currentAngerLevel);
     }
 
-    private void Start()
-    {
-       
-
-    }
-
     private float PlaySoundFromCategory(SoundLibrary.Categories from)
     {
         if (audioPlayer.isPlaying)
@@ -55,17 +49,25 @@ public class TorokPersonalityAI : MonoBehaviour
 
     private void OpenMouth()
     {
-        
+        anim.SetBool("OpenMouth", true);
     }
 
     private void CloseMouth()
     {
-
+        anim.SetBool("OpenMouth", false);
     }
 
+    //plays an animation
     private void PlayAnimation(int which = -1)
     {
+        if (which <= -1)
+        {
+            //play random animation
+        }
+        else
+        {
 
+        }
     }
 
     public void PlayAnimationAndSound(SoundLibrary.Categories category)
