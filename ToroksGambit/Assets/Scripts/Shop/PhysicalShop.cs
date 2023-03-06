@@ -14,6 +14,8 @@ public class PhysicalShop : MonoBehaviour
     [SerializeField] private TextMeshPro[] priceText;
     [SerializeField] public GameObject[] uiSpots;
 
+    [SerializeField] private TextMeshPro[] inventoryShopCount;
+
     [SerializeField] private GameObject piecePanels;
 
     [SerializeField] private CameraHeadMovements c;
@@ -55,6 +57,12 @@ public class PhysicalShop : MonoBehaviour
                 }
             }
         }
+
+        for(int i = 0; i < inventoryShopCount.Length;i++)
+        {
+            inventoryShopCount[i].text = Inventory.instance.pieceCountText[i].text;
+        }
+
     }
 
     public void InitializeShop()
@@ -66,6 +74,7 @@ public class PhysicalShop : MonoBehaviour
 
             //place model at spot
             shopPieceModels[i] = Instantiate(pieceModels[pieceType[i]], pieceSpots[i].position, Quaternion.identity, gameObject.transform);
+            shopPieceModels[i].transform.Rotate(0.0f,90.0f,0.0f, Space.Self);
             //change price
             priceText[i].text = prices[pieceType[i]].ToString();
             //re activate panels
@@ -118,6 +127,7 @@ public class PhysicalShop : MonoBehaviour
                 priceText[i].text = "SOLD OUT";
                 Currency.instance.SubtractFromCurrency(prices[pieceType[i]]);
                 //add to inventory
+                Inventory.instance.AlterPiece((Inventory.InventoryPieces)pieceType[i],1);
                 buttonObject.SetActive(false);
 
             }
