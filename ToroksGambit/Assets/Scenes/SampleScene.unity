@@ -3324,7 +3324,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &513258658
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9403,7 +9403,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1649038647
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12711,6 +12711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideShowText: {fileID: 1477407504}
+  hideShowButton: {fileID: 882856025}
   maxHeldPieces: 0500000005000000050000000500000001000000
   ghostPieceVertOffset: -0.05
   objectiveArea: {fileID: 1912380705}
