@@ -1456,7 +1456,7 @@ public class Board : MonoBehaviour
             if (dirX == 0 || dirY == 0)//is hor/vert check
             {
                 //print("inside hor/vert check");
-                if (lookingAt.type == Piece.PieceType.rook || lookingAt.type == Piece.PieceType.queen)//if looking at is rook/queen then king is in check
+                if (lookingAt.type == Piece.PieceType.rook || lookingAt.type == Piece.PieceType.queen || lookingAt.type == Piece.PieceType.king)//if looking at is rook/queen then king is in check
                 {
                     return true;
                 }
@@ -1464,7 +1464,7 @@ public class Board : MonoBehaviour
             else//is diagonal check
             {
                 //print("inside diagonal check");
-                if (lookingAt.type == Piece.PieceType.bishop || lookingAt.type == Piece.PieceType.queen)//looking at is a bishop/queen, then king is in check
+                if (lookingAt.type == Piece.PieceType.bishop || lookingAt.type == Piece.PieceType.queen || lookingAt.type == Piece.PieceType.king)//looking at is a bishop/queen, then king is in check
                 {
                     return true;
                 }
