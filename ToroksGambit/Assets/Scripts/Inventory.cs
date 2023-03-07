@@ -134,9 +134,27 @@ public class Inventory : MonoBehaviour
                         {
                             if (Board.instance.PlacePieceTorok(hit.transform, storedPiece) == true)
                             {
-                                hasPlacedPiece 
+                                hasPlacedPiece
                                     = true;
                             }
+                        }
+                        else if (storedPiece >= (int)Piece.PieceType.wall && storedPiece <= (int)Piece.PieceType.hole)
+                        {
+                            Vector2Int coords = new Vector2Int(-1, -1);
+                            for (int i = 0; i < Board.boardSize; i++)
+                            {
+                                for (int j = 0; j < Board.boardSize; j++)
+                                {
+                                    if (Board.instance.hitBoxBoard[i, j] == hit.transform.gameObject)
+                                    {
+                                        coords.Set(i, j);
+                                    }
+                                }
+                            }
+                            if (!(coords.x < 0 || coords.y < 0)) {
+                                Board.instance.PlaceObstacle(coords.x, coords.y, storedPiece - 6);
+                            }
+
                         }
                         else
                         {
