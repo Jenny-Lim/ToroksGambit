@@ -15,12 +15,16 @@ public class Board : MonoBehaviour
 
     public static GameObject[,] pieceBoard;//array for storing pieces and piece location -- made static (jenny)
 
+    private GameObject[,] winSpotBoard;
+
     [SerializeField]
     private GameObject boardSquare;
 
     [SerializeField] private GameObject[] boardTiles = new GameObject[2];
 
     [SerializeField] private GameObject moveTile;
+
+    [SerializeField] private GameObject winSpotTile;
 
     [SerializeField]
     private GameObject chessPiece;
@@ -98,6 +102,8 @@ public class Board : MonoBehaviour
 
     [SerializeField] private float idleDialogueCounter = 0;
 
+    public List<Vector2Int> winLocations;
+
     // brought them up here
     //private static int clickedX;
     //private static int clickedY;
@@ -111,6 +117,7 @@ public class Board : MonoBehaviour
         hitBoxBoard = new GameObject[boardSize,boardSize];
         pieceBoard = new GameObject[boardSize, boardSize];
         moveTileBoard = new GameObject[boardSize, boardSize];
+        winSpotBoard = new GameObject[boardSize, boardSize];
         idleDialogueCounter = Random.Range(TorokPersonalityAI.instance.maxTimeBetweenIdleBark,TorokPersonalityAI.instance.maxTimeBetweenIdleBark);
         BuildBoard();
     }
@@ -118,6 +125,8 @@ public class Board : MonoBehaviour
     //**Place anything were that needs to be reset when a new level is loaded**
     public void Reset()
     {
+        winLocations.Clear();
+        winLocations.TrimExcess();
         moveStartIndicator.transform.position = new Vector3(-200,0,0);
         moveEndIndicator.transform.position = new Vector3(-200, 0, 0);
     }
@@ -638,10 +647,34 @@ public class Board : MonoBehaviour
                 moveTileObject.gameObject.name = i + "_" + j + "_MoveTile";
                 moveTileBoard[i,j] = moveTileObject;
                 moveTileObject.SetActive(false);
+
+                GameObject winTileObject = Instantiate(winSpotTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.0305f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                winTileObject.gameObject.name = i + "_" + j + "_WinSpot";
+                winSpotBoard[i,j] = winTileObject;
+                winTileObject.SetActive(false);
             }
 
         }
         
+    }
+
+    public void ActivateWinTiles()
+    {
+        for(int i = 0;i < winLocations.Count;i++)
+        {
+            winSpotBoard[winLocations[i].x, winLocations[i].y].SetActive(true);
+        }
+    }
+
+    public void DeactivateWinTiles()
+    {
+        for(int i = 0;i < boardSize;i++)
+        {
+            for(int j = 0;j < boardSize;j++)
+            {
+                winSpotBoard[i,j].SetActive(false);
+            }
+        }
     }
 
     public void MoveValidatorCoRo(int pieceX, int pieceY, int endX, int endY)
