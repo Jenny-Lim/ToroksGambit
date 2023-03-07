@@ -123,7 +123,7 @@ public class Piece : MonoBehaviour
     {
         for (int i = 1; i < Board.boardSize; i++)
         {
-            print(i);
+            //print(i);
             if (InBoundsCheck(pieceX + (i * directionX), pieceY + (i * directionY)))
             {
                 int clearResult = ClearCheck(pieceX + (i * directionX), pieceY + (i * directionY));
@@ -159,7 +159,7 @@ public class Piece : MonoBehaviour
 
                 else if (clearResult == 2) // if spot is a hole
                 {
-                    print("clear result 2");
+                    //print("clear result 2");
                     continue;
                 }
             }
