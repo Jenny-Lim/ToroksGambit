@@ -45,8 +45,11 @@ public class Pawn : Piece
         if (InBoundsCheck(pieceX + 1, pieceY + dir) && pieceBoard[pieceX + 1, pieceY + dir] != null)
         {
             Piece pRight = pieceBoard[pieceX + 1, pieceY + dir].GetComponent<Piece>();
-
-            if (pRight != null && InBoundsCheck(pieceX + 1, pieceY + dir) && pieceBoard[pieceX + 1, pieceY + dir] != null && !IsOnSameTeam(pieceBoard[pieceX + 1, pieceY + dir]) && !pRight.isTough && (int)pRight.type < 6) // if can capture another piece
+            //print(IsOnSameTeam(pieceBoard[pieceX + 1, pieceY + dir]));
+            //print(pRight.isTorok);
+            //print(isTorok);
+            //if (pRight != null && InBoundsCheck(pieceX + 1, pieceY + dir) && pieceBoard[pieceX + 1, pieceY + dir] != null && !IsOnSameTeam(pieceBoard[pieceX + 1, pieceY + dir]) && !pRight.isTough && (int)pRight.type < 6) // if can capture another piece
+            if (pRight != null && InBoundsCheck(pieceX + 1, pieceY + dir) && pieceBoard[pieceX + 1, pieceY + dir] != null && isTorok != pRight.isTorok && !pRight.isTough && (int)pRight.type < 6)
             {
                 moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + dir], (int)this.type, (int)pRight.type));
                 //moves.Add(new Move(pieceX, pieceY, pieceX + 1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX + 1, pieceY + dir]));
@@ -57,7 +60,11 @@ public class Pawn : Piece
         if (InBoundsCheck(pieceX - 1, pieceY + dir) && pieceBoard[pieceX - 1, pieceY + dir] != null)
         {
             Piece pLeft = pieceBoard[pieceX - 1, pieceY + dir].GetComponent<Piece>();
-            if (pLeft != null && InBoundsCheck(pieceX - 1, pieceY + dir) && pieceBoard[pieceX - 1, pieceY + dir] != null && !IsOnSameTeam(pieceBoard[pieceX - 1, pieceY + dir]) && !pLeft.isTough && (int)pLeft.type < 6) // if can capture another piece
+            //print(IsOnSameTeam(pieceBoard[pieceX - 1, pieceY + dir]));
+            //print(pLeft.isTorok);
+            //print(isTorok);
+            //if (pLeft != null && InBoundsCheck(pieceX - 1, pieceY + dir) && pieceBoard[pieceX - 1, pieceY + dir] != null && !IsOnSameTeam(pieceBoard[pieceX - 1, pieceY + dir]) && !pLeft.isTough && (int)pLeft.type < 6) // if can capture another piece
+            if (pLeft != null && InBoundsCheck(pieceX - 1, pieceY + dir) && pieceBoard[pieceX - 1, pieceY + dir] != null && isTorok != pLeft.isTorok && !pLeft.isTough && (int)pLeft.type < 6)
             {
                 moves.Add(new Move(pieceX, pieceY, pieceX -1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY + dir], (int)this.type, (int)pLeft.type));
                 //moves.Add(new Move(pieceX, pieceY, pieceX - 1, pieceY + dir, pieceBoard[pieceX, pieceY], pieceBoard[pieceX - 1, pieceY + dir]));
