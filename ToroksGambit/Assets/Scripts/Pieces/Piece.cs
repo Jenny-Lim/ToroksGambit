@@ -210,14 +210,16 @@ public class Piece : MonoBehaviour
 
         if (!with)
         {
-            return false;
+             return false;
         }
 
-        if (isTorok && with.isTorok)
-        {
-            return true;
-        }
-        return false;
+        //if (isTorok && with.isTorok)
+        //{
+        //    return true;
+        //}
+
+        //return false;
+        return isTorok == with.isTorok;
     }
 
 }
