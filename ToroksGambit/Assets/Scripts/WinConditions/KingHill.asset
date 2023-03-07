@@ -15,4 +15,6 @@ MonoBehaviour:
   playerScore: 0
   torokScore: 0
   scoreToWin: 3
-  locations: []
+  locations:
+  - {x: 4, y: 3}
+  - {x: 3, y: 4}

@@ -4896,14 +4896,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e273330cf297344a512cd570046dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardName: LevelExample
+  boardName: Level1
   savedBoardNames:
-  - RookRook
-  - ThreePawns
-  - FullBoard
-  - Test
-  - WinChangeTest
-  - WhiteKing
+  - Level1
+  - Level2
 --- !u!4 &775294861
 Transform:
   m_ObjectHideFlags: 0
@@ -13697,8 +13693,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
-  - WhiteKing
-  - RookRook
+  - Level2
+  - Level1
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
   currentState: 0

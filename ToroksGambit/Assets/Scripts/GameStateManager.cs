@@ -58,10 +58,10 @@ public class GameStateManager : MonoBehaviour
     private void Start()
     {
         
-        if (LevelNames.Count > 0)
-        {
-            BoardLoader.instance.LoadBoard(LevelNames[0]);
-        }
+        //if (LevelNames.Count > 0)
+        //{
+            //BoardLoader.instance.LoadBoard(LevelNames[0]);
+        //}
         
     }
 
