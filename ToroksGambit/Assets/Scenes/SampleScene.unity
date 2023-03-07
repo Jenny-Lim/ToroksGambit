@@ -4656,6 +4656,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: shop_desk
       objectReference: {fileID: 0}
+    - target: {fileID: 2831065782900121813, guid: 24238d8d2a57c444c966a89ee7692ef1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3bac4ac077df82841b9b4947f218f192, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24238d8d2a57c444c966a89ee7692ef1, type: 3}
 --- !u!1 &382170785
