@@ -13,6 +13,7 @@ public class PhysicalShop : MonoBehaviour
     [SerializeField] private int[] prices;
     [SerializeField] private TextMeshPro[] priceText;
     [SerializeField] public GameObject[] uiSpots;
+    [SerializeField] public GameObject shopkeeper;
 
     [SerializeField] private TextMeshPro[] inventoryShopCount;
 
@@ -28,6 +29,7 @@ public class PhysicalShop : MonoBehaviour
     {
         instance = this;
         cam = Camera.main;
+        shopkeeper.SetActive(false);
     }
     private void Start()
     {
@@ -52,6 +54,7 @@ public class PhysicalShop : MonoBehaviour
                     piecePanels.SetActive(false);
                     Inventory.instance.objectiveArea.SetActive(true);
                     Currency.instance.ticketsTxt.enabled = false;
+                    shopkeeper.SetActive(false);
                     c.LookAtBoard();
                     GameStateManager.instance.SetNextLevel();
                 }
@@ -108,6 +111,7 @@ public class PhysicalShop : MonoBehaviour
         c.LookAtShop();
         piecePanels.SetActive(true);
         Currency.instance.ticketsTxt.enabled = true;
+        shopkeeper.SetActive(true);
         for (int i = 0; i < shopPieceModels.Length; i++)
         {
             uiSpots[i].SetActive(true);

@@ -7412,7 +7412,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11970,6 +11970,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1142967241}
   m_CullTransparentMesh: 1
+--- !u!1 &1155828368 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 22144a22c0c0b074f86fc07cfc51d31b, type: 3}
+  m_PrefabInstance: {fileID: 388293505}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1170470174
 GameObject:
   m_ObjectHideFlags: 0
@@ -14766,6 +14771,7 @@ MonoBehaviour:
   - {fileID: 1360170052}
   - {fileID: 805089303}
   - {fileID: 494754912}
+  shopkeeper: {fileID: 1155828368}
   inventoryShopCount:
   - {fileID: 1426316286}
   - {fileID: 1775287386}
