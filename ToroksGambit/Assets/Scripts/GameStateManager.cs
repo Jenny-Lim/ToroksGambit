@@ -250,6 +250,7 @@ public class GameStateManager : MonoBehaviour
         }
         victoryText.SetActive(false);
         Debug.Log("Player has won.");
+        PhysicalShop.instance.ResetShop();
         Board.instance.ReturnPiecesToInventory();
         Currency.instance.GetReward(currentLevelNumber + 1);
         turnCount = 1;
