@@ -707,7 +707,7 @@ public class Board : MonoBehaviour
 
                 GameStateManager.lastValidateCheck = true;
                 canMove = true;
-                GameStateManager.EndTurn();
+                GameStateManager.instance.EndTurn();
                 yield break;
             }
         }

@@ -60,6 +60,8 @@ public class KingOfTheHillWinCondition : BaseCondition
                 }
             }
         }
+        
+        
     }
 
     public override string GetObjectiveText()

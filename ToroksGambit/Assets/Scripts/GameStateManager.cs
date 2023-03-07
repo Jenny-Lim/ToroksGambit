@@ -86,27 +86,27 @@ public class GameStateManager : MonoBehaviour
                     TorokIsMoving = false;
                     Board.instance.BoardUpdate();
 
-                    //chekc win condition
-                    if (currentState == GameState.game)
-                    {
-                        //win condition checks
-                        if (winCondition != null)
-                        {
-                            winCondition.ProgressConditionState();
-                            mostRecentWinCheckResult = winCondition.IsWinCondition();
-                        }
+                    ////chekc win condition
+                    //if (currentState == GameState.game)
+                    //{
+                    //    //win condition checks
+                    //    if (winCondition != null)
+                    //    {
+                    //        winCondition.ProgressConditionState();
+                    //        mostRecentWinCheckResult = winCondition.IsWinCondition();
+                    //    }
 
-                        if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
-                        {
-                            ChangeGameState(GameState.win);
-                            //reset this state
-                        }
-                        else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
-                        {
-                            Debug.Log("Torok has won.");
-                            //lose logic
-                        }
-                    }
+                    //    if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
+                    //    {
+                    //        ChangeGameState(GameState.win);
+                    //        //reset this state
+                    //    }
+                    //    else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
+                    //    {
+                    //        Debug.Log("Torok has won.");
+                    //        //lose logic
+                    //    }
+                    //}
                 }
                 else
                 {
@@ -287,8 +287,27 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    public static void EndTurn()
+    public void EndTurn()
     {
+        //win condition checks
+        if (winCondition != null)
+        {
+            winCondition.ProgressConditionState();
+            mostRecentWinCheckResult = winCondition.IsWinCondition();
+        }
+
+        if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
+        {
+            ChangeGameState(GameState.win);
+            //reset this state
+        }
+        else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
+        {
+            Debug.Log("Torok has won.");
+            //lose logic
+        }
+
+
         lastValidateCheck = false;
         Board.playerInCheck = Board.instance.IsKingInCheck(false);
         Board.torokInCheck = Board.instance.IsKingInCheck(true);
