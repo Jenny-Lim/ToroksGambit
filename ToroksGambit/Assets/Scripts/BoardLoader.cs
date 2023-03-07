@@ -75,7 +75,7 @@ public class BoardLoader : MonoBehaviour
                     return;
                 }
             }
-            line = reader.ReadLine();
+            //line = reader.ReadLine();
 
             while (line.CompareTo(boardEndText) != 0)
             {
@@ -88,19 +88,37 @@ public class BoardLoader : MonoBehaviour
                 line = reader.ReadLine();
                 string[] splitLines = line.Split(",");
 
+
                 if (splitLines[0].CompareTo("Piece") == 0)
                 {
                     if (Convert.ToBoolean(splitLines[4]))//if is torok piece
                     {
-                        Board.instance.PlacePieceTorok(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]));
+                        if (int.Parse(splitLines[1]) < 6)
+                        {
+                            Board.instance.PlacePieceTorok(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]));
+                        }
+                        else
+                        {
+                            Board.instance.PlaceObstacle(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]) - 6);
+                        }
+                        
                     }
                     else//else player piece
                     {
-                        Board.instance.PlacePiece(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]));
+                        if (int.Parse(splitLines[1]) < 6)
+                        {
+                            Board.instance.PlacePiece(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]));
+                        }
+                        else
+                        {
+                            Board.instance.PlaceObstacle(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]) - 6);
+                        }
                     }
+                    
                 }
                 else if (splitLines[0].CompareTo("Interrupt") == 0)
                 {
+                    Debug.Log("Inside load Interrupt");
                     switch (int.Parse(splitLines[1]))
                     {
                         case 0://addpiece interrupt
@@ -125,6 +143,7 @@ public class BoardLoader : MonoBehaviour
                 }
                 else if (splitLines[0].CompareTo("WinCondition") == 0)
                 {
+                    
                     //0 -> captureNonPawn, 1 -> CaptureTheFlag, 2 -> Checkmate, 3 -> KingOfTheHill
                     switch (int.Parse(splitLines[1]))
                     {
@@ -148,6 +167,7 @@ public class BoardLoader : MonoBehaviour
                             break;
 
                         case 3:
+                            Debug.Log("test");
                             KingOfTheHillWinCondition kingOfHillWin = ScriptableObject.CreateInstance("KingOfTheHillWinCondition") as KingOfTheHillWinCondition;
                             for (int i = 2; i <= splitLines.Length - 2; i += 2)
                             {
