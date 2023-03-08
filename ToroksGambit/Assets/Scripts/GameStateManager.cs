@@ -268,6 +268,8 @@ public class GameStateManager : MonoBehaviour
         ResetToDeploy();
         Board.instance.Reset();
         Inventory.instance.hasPlacedPiece = false;
+        Board.instance.ResetTiles();
+
         if (currentLevelNumber + 1 < LevelNames.Count)
         {
             BoardLoader.instance.LoadBoard(LevelNames[++currentLevelNumber]);

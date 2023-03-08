@@ -666,6 +666,18 @@ public class Board : MonoBehaviour
         
     }
 
+    //resets the rendering on tiles, holes take it away etc
+    public void ResetTiles()
+    {
+        for (int i = 0; i < boardSize; i++)
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                hitBoxBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
+            }
+        }
+    }
+
     public void ActivateWinTiles()
     {
         for(int i = 0;i < winLocations.Count;i++)
@@ -715,11 +727,11 @@ public class Board : MonoBehaviour
             if ((move.endX == endX) && (move.endY == endY))
             {
                 Vector3 startIndicatorPos = hitBoxBoard[move.startX, move.startY].transform.position;
-                startIndicatorPos.y = 0.032f;
+                startIndicatorPos.y = 0.113f;
                 moveStartIndicator.transform.position = startIndicatorPos;
 
                 Vector3 endIndicatorPos = hitBoxBoard[move.endX, move.endY].transform.position;
-                endIndicatorPos.y = 0.032f;
+                endIndicatorPos.y = 0.113f;
                 moveEndIndicator.transform.position = endIndicatorPos;
 
                 bool pieceAtEndLocation = pieceBoard[endX,endY] != null;
