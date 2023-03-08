@@ -250,7 +250,7 @@ public class GameStateManager : MonoBehaviour
         }
         victoryText.SetActive(false);
         Debug.Log("Player has won.");
-
+        PhysicalShop.instance.ResetShop();
         Board.instance.ReturnPiecesToInventory();
         Currency.instance.GetReward(currentLevelNumber + 1);
         turnCount = 1;
@@ -263,6 +263,7 @@ public class GameStateManager : MonoBehaviour
 
     public void SetNextLevel()
     {
+        Board.instance.DeactivateWinTiles();
         ResetToDeploy();
         Board.instance.Reset();
         Inventory.instance.hasPlacedPiece = false;
@@ -270,6 +271,10 @@ public class GameStateManager : MonoBehaviour
         {
             BoardLoader.instance.LoadBoard(LevelNames[++currentLevelNumber]);
         }
+
+        Board.instance.ActivateWinTiles();
+
+
         Inventory.instance.ShowInventoryPanel();
         Inventory.instance.SetObjective();
 

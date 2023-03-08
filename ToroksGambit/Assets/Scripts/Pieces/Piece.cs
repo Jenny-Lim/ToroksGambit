@@ -100,17 +100,30 @@ public class Piece : MonoBehaviour
         {
             Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
 
-            if (p.type == PieceType.wall || p.isTorok == this.isTorok) // if its your own piece / is a wall, can't capture
+
+            if (p.type == PieceType.wall || p.type == PieceType.hole)
             {
-                return 1;
+                if (p.type == PieceType.wall)
+                {
+                    return 1;
+                }
+                if (p.type == PieceType.hole)
+                {
+                    return 2;
+                }
             }
-            else if (p.type == PieceType.hole)
+
+            else
             {
-                return 2;
-            }
-            else if (p.isTorok != this.isTorok)//is an enemy -- move there and sop moving
-            {
-                return 3;
+                if (p.isTorok == this.isTorok) // if its your own piece / is a wall, can't capture
+                {
+                    return 1;
+                }
+
+                else if (p.isTorok != this.isTorok)//is an enemy -- move there and sop moving
+                {
+                    return 3;
+                }
             }
 
         }
@@ -123,6 +136,7 @@ public class Piece : MonoBehaviour
     {
         for (int i = 1; i < Board.boardSize; i++)
         {
+            print(i);
             if (InBoundsCheck(pieceX + (i * directionX), pieceY + (i * directionY)))
             {
                 int clearResult = ClearCheck(pieceX + (i * directionX), pieceY + (i * directionY));
@@ -158,6 +172,7 @@ public class Piece : MonoBehaviour
 
                 else if (clearResult == 2) // if spot is a hole
                 {
+                    print("clear result 2"); // does not reach
                     continue;
                 }
             }

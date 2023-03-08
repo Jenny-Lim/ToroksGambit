@@ -42,12 +42,14 @@ public class MainMenu : MonoBehaviour
         InterruptManager.instance.ResetInterruptListTriggers();
 
         // reset inventory
+        /*
         Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)0, 4); // pawns
         for (int i = 1; i < 3; i++)
         {
             Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)i, 5); // others (no king)
         }
         Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)4, 1); // queen
+        */
 
         // reset currency
         Currency.instance.SetCurrency(0);

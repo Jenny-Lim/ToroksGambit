@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
-using UnityEditor.UIElements;
 
 public class BoardLoader : MonoBehaviour
 {
@@ -172,6 +171,7 @@ public class BoardLoader : MonoBehaviour
                             for (int i = 2; i <= splitLines.Length - 2; i += 2)
                             {
                                 kingOfHillWin.locations.Add(new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i + 1])));
+                                Board.instance.winLocations.Add(new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i + 1])));
                             }
                             kingOfHillWin.scoreToWin = int.Parse(splitLines[splitLines.Length - 1]);
                             GameStateManager.instance.winCondition = kingOfHillWin;
