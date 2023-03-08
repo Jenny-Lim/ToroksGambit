@@ -1257,7 +1257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardVerticalOffset: 0.03
-  verticalPlaceOffset: -0.05
+  verticalPlaceOffset: 0.05
   boardSquare: {fileID: 0}
   boardTiles:
   - {fileID: 8301887920537776768, guid: 4f1049550a8bd974ca00423c7f8baee2, type: 3}
@@ -8310,7 +8310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: db4aac6b6c2ce3b4e977371660cdc8ab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.56
+      value: -11.45
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: db4aac6b6c2ce3b4e977371660cdc8ab, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9710,7 +9710,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 300207afe76c16a488cbc4caf7458067, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5389
+      value: -0.324
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 300207afe76c16a488cbc4caf7458067, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20297,7 +20297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1995542735
 Transform:
   m_ObjectHideFlags: 0
@@ -21476,7 +21476,7 @@ MonoBehaviour:
   hideShowText: {fileID: 1477407504}
   hideShowButton: {fileID: 882856025}
   heldPieces: 140000001400000014000000140000000a000000
-  ghostPieceVertOffset: -0.05
+  ghostPieceVertOffset: 0.05
   objectiveArea: {fileID: 1912380705}
   inventoryUI: {fileID: 2078189506}
   travelSpeed: 7

@@ -619,6 +619,11 @@ public class Board : MonoBehaviour
             Piece piece = newPiece.GetComponent<Piece>();
             piece.pieceX = xPos;
             piece.pieceY = yPos;
+            if (obstacleId == 1)//if its a hole, remove renderer of that tile
+            {
+                hitBoxBoard[xPos, yPos].GetComponent<MeshRenderer>().enabled = false;
+            } 
+
         }
         else
         {
@@ -636,21 +641,22 @@ public class Board : MonoBehaviour
                 GameObject newTile = null;
                 if ( (i+j) % 2 == 0)
                 {
-                    newTile = Instantiate(boardTiles[0], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset) , Quaternion.Euler(new Vector3(90f,0f,0f)), gameObject.transform);
+ 
+                    newTile = Instantiate(boardTiles[0], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset) , Quaternion.Euler(new Vector3(-90f,0f,90f)), gameObject.transform);
                 }
                 else
                 {
-                    newTile = Instantiate(boardTiles[1], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                    newTile = Instantiate(boardTiles[1], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset), Quaternion.Euler(new Vector3(-90f, 0f, 90f)), gameObject.transform);
                 }
 
                 newTile.gameObject.name = i + "_" + j;
                 hitBoxBoard[i, j] = newTile;
-                GameObject moveTileObject = Instantiate(moveTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.031f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                GameObject moveTileObject = Instantiate(moveTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
                 moveTileObject.gameObject.name = i + "_" + j + "_MoveTile";
                 moveTileBoard[i,j] = moveTileObject;
                 moveTileObject.SetActive(false);
 
-                GameObject winTileObject = Instantiate(winSpotTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.0305f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                GameObject winTileObject = Instantiate(winSpotTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
                 winTileObject.gameObject.name = i + "_" + j + "_WinSpot";
                 winSpotBoard[i,j] = winTileObject;
                 winTileObject.SetActive(false);
