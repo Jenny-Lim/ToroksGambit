@@ -227,7 +227,7 @@ public class GameStateManager : MonoBehaviour
 
         yield return new WaitForSeconds(3.2f);
         ChangeGameState(GameState.deployment);
-        Inventory.instance.SlideShowInvenotryPanel();
+        Inventory.instance.SlideShowInventoryPanel();
         activeCoRo = null;
     }
 

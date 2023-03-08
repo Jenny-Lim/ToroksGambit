@@ -397,7 +397,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void SlideShowInvenotryPanel()
+    public void SlideShowInventoryPanel()
     {
         if (isMoving)
         {
@@ -405,6 +405,17 @@ public class Inventory : MonoBehaviour
         }
         isShowingPanel = false;
         hideShowText.text = "Hide";
+        StartCoroutine(ShowHideInventoryPanel());
+    }
+
+    public void SlideHideInventoryPanel()
+    {
+        if (isMoving)
+        {
+            StopAllCoroutines();
+        }
+        isShowingPanel = true;
+        hideShowText.text = "Show";
         StartCoroutine(ShowHideInventoryPanel());
     }
 
