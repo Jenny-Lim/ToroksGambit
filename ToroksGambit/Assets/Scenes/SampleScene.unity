@@ -1142,7 +1142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57781569}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.256, y: 0.032, z: 0}
+  m_LocalPosition: {x: -37.21, y: 0.032, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1299,6 +1299,13 @@ MonoBehaviour:
   moveEndIndicator: {fileID: 1939820346}
   idleDialogueCounter: 0
   winLocations: []
+  TorokPieceMats:
+  - {fileID: 2100000, guid: 1f6d5caf7349f0b41850d68987320f18, type: 2}
+  - {fileID: 2100000, guid: 46f3a9af618e5a7469289657911a86b8, type: 2}
+  - {fileID: 2100000, guid: eb3335101aeb656489ff695a02f1be5c, type: 2}
+  - {fileID: 2100000, guid: dc00ebc2a23b9c34eace9ae9484680c3, type: 2}
+  - {fileID: 2100000, guid: 42daf9a1c4192e54581d8eacc9e5daa0, type: 2}
+  - {fileID: 2100000, guid: 46f3a9af618e5a7469289657911a86b8, type: 2}
 --- !u!4 &61773102
 Transform:
   m_ObjectHideFlags: 0
@@ -19833,7 +19840,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939820346}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.28, y: 0.032, z: 0}
+  m_LocalPosition: {x: -36.233997, y: 0.032, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []

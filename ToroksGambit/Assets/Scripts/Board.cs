@@ -104,6 +104,8 @@ public class Board : MonoBehaviour
 
     public List<Vector2Int> winLocations;
 
+    [SerializeField] private Material[] TorokPieceMats;
+
     // brought them up here
     //private static int clickedX;
     //private static int clickedY;
@@ -418,7 +420,7 @@ public class Board : MonoBehaviour
         if (pieceId >= 0 && pieceId < 6)
         {
             GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
-            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
+            //newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
 
             //Debug.Log("placed piece type: "+piece.type);
@@ -471,7 +473,7 @@ public class Board : MonoBehaviour
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos,yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
-            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
+            //newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
             piece.pieceX = xPos;
             piece.pieceY = yPos;
@@ -498,8 +500,8 @@ public class Board : MonoBehaviour
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
-            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[1];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = TorokPieceMats[(int)piece.type];
             if ((int)piece.type <= (int)Piece.PieceType.king)
             {
                 newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -568,8 +570,8 @@ public class Board : MonoBehaviour
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
-            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[1];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = TorokPieceMats[(int)piece.type];
             if (piece.type == Piece.PieceType.knight)
             {
                 print("get rotated nerd");
