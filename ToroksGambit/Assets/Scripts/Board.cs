@@ -106,6 +106,8 @@ public class Board : MonoBehaviour
 
     [SerializeField] private Material[] TorokPieceMats;
 
+    [SerializeField][Range(0, 1)] private float percentAnimPlays = 0.5f;
+
     // brought them up here
     //private static int clickedX;
     //private static int clickedY;
@@ -750,11 +752,28 @@ public class Board : MonoBehaviour
                     float rand = Random.Range(0, 1);
                     if (pieceScript.isTorok && TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.TakesPiece, rand))
                     {
-                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesPiece);
+
+                        float randAgain = Random.Range(0,1);
+                        if (randAgain < percentAnimPlays)
+                        {
+                            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesPiece);
+                        }
+                        else
+                        {
+                            TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesPiece);
+                        }
                     }
                     else if (!pieceScript.isTorok && TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LosesPiece, rand))
                     {
-                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LosesPiece);
+                        float randAgain = Random.Range(0, 1);
+                        if (randAgain < percentAnimPlays)
+                        {
+                            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LosesPiece);
+                        }
+                        else
+                        {
+                            TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.LosesPiece);
+                        }
                     }
                 }
 
