@@ -266,26 +266,25 @@ public class GameStateManager : MonoBehaviour
 
     public void SetNextLevel()
     {
-        Board.instance.DeactivateWinTiles();
         ResetToDeploy();
+
+        Board.instance.DeactivateWinTiles();
         Board.instance.Reset();
-        Inventory.instance.hasPlacedPiece = false;
         Board.instance.ResetTiles();
+        Board.instance.ActivateWinTiles();
+
+        Inventory.instance.hasPlacedPiece = false;
+        Inventory.instance.ShowInventoryPanel();
+        Inventory.instance.SetObjective();
+
+        TorokPersonalityAI.instance.IncreaseAngerLevel();
 
         if (currentLevelNumber + 1 < LevelNames.Count)
         {
             BoardLoader.instance.LoadBoard(LevelNames[++currentLevelNumber]);
         }
 
-        Board.instance.ActivateWinTiles();
 
-
-        Inventory.instance.ShowInventoryPanel();
-        Inventory.instance.SetObjective();
-
-
-
-        
     }
 
     public void ChangeGameState(GameState newState)

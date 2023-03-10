@@ -4,6 +4,9 @@ using UnityEngine;
 //this class handles torok dialog and anaimation selection
 public class TorokPersonalityAI : MonoBehaviour
 {
+
+    //1 + (index/2) -> angerlevel from level index 
+
     [SerializeField] private int currentAngerLevel = 1;
     [Range(0f, 1f)]
     [SerializeField] private float[] dialogLikelyhoodByCategory = new float[10];
@@ -94,7 +97,7 @@ public class TorokPersonalityAI : MonoBehaviour
         isPlaying = false;
     }
 
-    private void IncreaseAngerLevel()
+    public void IncreaseAngerLevel()
     {
         library.LoadDialogue(++currentAngerLevel);//increment anger level and reload dialogue
     }
