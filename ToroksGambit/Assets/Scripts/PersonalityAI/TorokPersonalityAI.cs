@@ -29,7 +29,7 @@ public class TorokPersonalityAI : MonoBehaviour
         library.LoadDialogue(currentAngerLevel);
     }
 
-    private float PlaySoundFromCategory(SoundLibrary.Categories from)
+    public float PlaySoundFromCategory(SoundLibrary.Categories from)
     {
         if (audioPlayer.isPlaying)
         {
@@ -42,9 +42,11 @@ public class TorokPersonalityAI : MonoBehaviour
         return audioPlayer.clip.length;
     }
 
+
+
     public bool ShouldPlay(SoundLibrary.Categories from, float randomNum)
     {
-        return randomNum <= dialogLikelyhoodByCategory[(int)from];
+        return randomNum < dialogLikelyhoodByCategory[(int)from];
     }
 
     private void OpenMouth()
