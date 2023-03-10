@@ -175,6 +175,7 @@ public class GameStateManager : MonoBehaviour
                 {
                     activeCoRo = StartCoroutine(IntroCoRo());
                     Inventory.instance.SetObjective();
+                    //PauseMenu.instance.enabled = true;
                 }
 
                 break;
@@ -194,6 +195,7 @@ public class GameStateManager : MonoBehaviour
                 if (activeCoRo == null)
                 {
                     activeCoRo = StartCoroutine(titleCoRo());
+                    //PauseMenu.instance.enabled = false;
                 }
                 break;
         }
@@ -227,6 +229,7 @@ public class GameStateManager : MonoBehaviour
 
         yield return new WaitForSeconds(3.2f);
         ChangeGameState(GameState.deployment);
+        Inventory.instance.SlideShowInventoryPanel();
         activeCoRo = null;
     }
 
@@ -267,6 +270,8 @@ public class GameStateManager : MonoBehaviour
         ResetToDeploy();
         Board.instance.Reset();
         Inventory.instance.hasPlacedPiece = false;
+        Board.instance.ResetTiles();
+
         if (currentLevelNumber + 1 < LevelNames.Count)
         {
             BoardLoader.instance.LoadBoard(LevelNames[++currentLevelNumber]);

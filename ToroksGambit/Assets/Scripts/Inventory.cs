@@ -93,16 +93,17 @@ public class Inventory : MonoBehaviour
             startButton.SetActive(true);
         }
 
-        if (CameraHeadMovements.instance.menuDone)
-        {
-            objectiveArea.SetActive(true);
-            hideShowButton.SetActive(true);
+        objectiveArea.SetActive(CameraHeadMovements.instance.menuDone);
 
+        if (!CameraHeadMovements.instance.menuDone) {
+            SlideHideInventoryPanel();
         }
 
-            //print("in invenotry update");
-            //if in deploy mode
-            if (isShowingPanel)
+        hideShowButton.SetActive(CameraHeadMovements.instance.menuDone);
+
+        //print("in invenotry update");
+        //if in deploy mode
+        if (isShowingPanel)
         {
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
@@ -395,6 +396,28 @@ public class Inventory : MonoBehaviour
         {
             pieceCountText[i].text = heldPieces[i].ToString();
         }
+    }
+
+    public void SlideShowInventoryPanel()
+    {
+        if (isMoving)
+        {
+            StopAllCoroutines();
+        }
+        isShowingPanel = false;
+        hideShowText.text = "Hide";
+        StartCoroutine(ShowHideInventoryPanel());
+    }
+
+    public void SlideHideInventoryPanel()
+    {
+        if (isMoving)
+        {
+            StopAllCoroutines();
+        }
+        isShowingPanel = true;
+        hideShowText.text = "Show";
+        StartCoroutine(ShowHideInventoryPanel());
     }
 
     public int GetStoredPiece()

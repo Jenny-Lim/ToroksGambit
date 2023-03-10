@@ -104,6 +104,8 @@ public class Board : MonoBehaviour
 
     public List<Vector2Int> winLocations;
 
+    [SerializeField] private Material[] TorokPieceMats;
+
     // brought them up here
     //private static int clickedX;
     //private static int clickedY;
@@ -418,7 +420,7 @@ public class Board : MonoBehaviour
         if (pieceId >= 0 && pieceId < 6)
         {
             GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
-            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
+            //newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
 
             //Debug.Log("placed piece type: "+piece.type);
@@ -471,7 +473,7 @@ public class Board : MonoBehaviour
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos,yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
-            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
+            //newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
             piece.pieceX = xPos;
             piece.pieceY = yPos;
@@ -498,8 +500,8 @@ public class Board : MonoBehaviour
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
-            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[1];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = TorokPieceMats[(int)piece.type];
             if ((int)piece.type <= (int)Piece.PieceType.king)
             {
                 newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -568,8 +570,8 @@ public class Board : MonoBehaviour
         if (pieceId >= 0)
         {
             GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
-            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[1];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
+            newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = TorokPieceMats[(int)piece.type];
             if (piece.type == Piece.PieceType.knight)
             {
                 print("get rotated nerd");
@@ -617,6 +619,11 @@ public class Board : MonoBehaviour
             Piece piece = newPiece.GetComponent<Piece>();
             piece.pieceX = xPos;
             piece.pieceY = yPos;
+            if (obstacleId == 1)//if its a hole, remove renderer of that tile
+            {
+                hitBoxBoard[xPos, yPos].GetComponent<MeshRenderer>().enabled = false;
+            } 
+
         }
         else
         {
@@ -634,21 +641,22 @@ public class Board : MonoBehaviour
                 GameObject newTile = null;
                 if ( (i+j) % 2 == 0)
                 {
-                    newTile = Instantiate(boardTiles[0], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset) , Quaternion.Euler(new Vector3(90f,0f,0f)), gameObject.transform);
+ 
+                    newTile = Instantiate(boardTiles[0], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset) , Quaternion.Euler(new Vector3(-90f,0f,90f)), gameObject.transform);
                 }
                 else
                 {
-                    newTile = Instantiate(boardTiles[1], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                    newTile = Instantiate(boardTiles[1], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset), Quaternion.Euler(new Vector3(-90f, 0f, 90f)), gameObject.transform);
                 }
 
                 newTile.gameObject.name = i + "_" + j;
                 hitBoxBoard[i, j] = newTile;
-                GameObject moveTileObject = Instantiate(moveTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.031f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                GameObject moveTileObject = Instantiate(moveTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
                 moveTileObject.gameObject.name = i + "_" + j + "_MoveTile";
                 moveTileBoard[i,j] = moveTileObject;
                 moveTileObject.SetActive(false);
 
-                GameObject winTileObject = Instantiate(winSpotTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.0305f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                GameObject winTileObject = Instantiate(winSpotTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
                 winTileObject.gameObject.name = i + "_" + j + "_WinSpot";
                 winSpotBoard[i,j] = winTileObject;
                 winTileObject.SetActive(false);
@@ -656,6 +664,18 @@ public class Board : MonoBehaviour
 
         }
         
+    }
+
+    //resets the rendering on tiles, holes take it away etc
+    public void ResetTiles()
+    {
+        for (int i = 0; i < boardSize; i++)
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                hitBoxBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
+            }
+        }
     }
 
     public void ActivateWinTiles()
@@ -707,11 +727,11 @@ public class Board : MonoBehaviour
             if ((move.endX == endX) && (move.endY == endY))
             {
                 Vector3 startIndicatorPos = hitBoxBoard[move.startX, move.startY].transform.position;
-                startIndicatorPos.y = 0.032f;
+                startIndicatorPos.y = 0.113f;
                 moveStartIndicator.transform.position = startIndicatorPos;
 
                 Vector3 endIndicatorPos = hitBoxBoard[move.endX, move.endY].transform.position;
-                endIndicatorPos.y = 0.032f;
+                endIndicatorPos.y = 0.113f;
                 moveEndIndicator.transform.position = endIndicatorPos;
 
                 bool pieceAtEndLocation = pieceBoard[endX,endY] != null;
