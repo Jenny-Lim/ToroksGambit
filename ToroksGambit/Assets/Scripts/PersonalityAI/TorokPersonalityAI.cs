@@ -16,12 +16,12 @@ public class TorokPersonalityAI : MonoBehaviour
 
     public static TorokPersonalityAI instance;
 
-    [SerializeField]private Animator anim;
+    private Animator anim;
     private bool isPlaying = false;
 
     private void Awake()
     {
-        //amim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         if (instance == null) { instance = this; }
         audioPlayer = GetComponent<AudioSource>();
         library = new SoundLibrary();
