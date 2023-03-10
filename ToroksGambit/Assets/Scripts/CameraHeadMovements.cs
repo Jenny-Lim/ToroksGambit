@@ -11,11 +11,12 @@ public class CameraHeadMovements : MonoBehaviour
     [SerializeField] private Vector3 LookAtShopRotation;
     [SerializeField] private Vector3 lookAtBoardPosition;
     [SerializeField] private Vector3 lookAtShopPosition;
+    [SerializeField] private Vector3 titleScreenPosition;
     public static CameraHeadMovements instance;
     //private Animator ani;
     public bool menuDone = false;
 
-    private void Start()
+    private void Awake()
     {
         //initialRotation = transform.eulerAngles;
         initialRotation = new Vector3(50.885f, 0, 0);
@@ -125,6 +126,27 @@ public class CameraHeadMovements : MonoBehaviour
 
         //yield return new WaitUntil(delegate { return ani.GetCurrentAnimatorStateInfo(0).IsName("CameraIdle"); });
         menuDone = true;
+        movementInProgress = false;
+    }
+
+    public void GetOutPlayArea()
+    {
+        StopAllCoroutines();
+        //if (!movementInProgress)
+        //{
+        StartCoroutine(GetOutPlayAreaCoRo());
+        //}
+    }
+
+    private IEnumerator GetOutPlayAreaCoRo()
+    {
+        movementInProgress = true;
+        while (Vector3.Distance(transform.position, titleScreenPosition) > 0.1f)
+        {
+            transform.position = Vector3.Lerp(transform.position, titleScreenPosition, speed * Time.deltaTime);
+            transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, Vector3.zero, speed * Time.deltaTime);
+            yield return null;
+        }
         movementInProgress = false;
     }
 

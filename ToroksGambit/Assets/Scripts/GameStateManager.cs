@@ -175,6 +175,7 @@ public class GameStateManager : MonoBehaviour
                 {
                     activeCoRo = StartCoroutine(IntroCoRo());
                     Inventory.instance.SetObjective();
+                    //PauseMenu.instance.enabled = true;
                 }
 
                 break;
@@ -194,6 +195,7 @@ public class GameStateManager : MonoBehaviour
                 if (activeCoRo == null)
                 {
                     activeCoRo = StartCoroutine(titleCoRo());
+                    //PauseMenu.instance.enabled = false;
                 }
                 break;
         }

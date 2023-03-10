@@ -10,7 +10,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button continueButton;
     [SerializeField] private Button optionsButton; // to change once there's stuff
 
-
     public static MainMenu instance;
     //public bool startPressed;
 
@@ -23,6 +22,8 @@ public class MainMenu : MonoBehaviour
 
     void OnEnable()
     {
+        //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title); --doesnt work back and forth yet
+        CameraHeadMovements.instance.menuDone = false;
         continueButton.interactable = false;
         optionsButton.interactable = false; // to change once there's stuff
     }
