@@ -82,10 +82,12 @@ public class TorokPersonalityAI : MonoBehaviour
     private IEnumerator PlayAnimationAndSoundCoRo(SoundLibrary.Categories category)
     {
         isPlaying = true;
-        OpenMouth();
+        anim.SetBool("Talk", true);
+        //OpenMouth();
         PlayAnimation();
         float clipLength = PlaySoundFromCategory(category);
         yield return new WaitForSeconds(clipLength);
+        anim.SetBool("Talk", false);
         CloseMouth();
         isPlaying = false;
     }
