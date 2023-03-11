@@ -47,12 +47,18 @@ public class GameStateManager : MonoBehaviour
 
     private void Awake()
     {
+        //bool isNull;
         if (instance == null)
         {
             instance = this;
-        }
 
-        
+            //isNull = true;
+        }
+        //else
+        //{
+        //    isNull = false;
+        //}
+        //print(isNull);
     }
 
     private void Start()
@@ -175,7 +181,6 @@ public class GameStateManager : MonoBehaviour
                 {
                     activeCoRo = StartCoroutine(IntroCoRo());
                     Inventory.instance.SetObjective();
-                    //PauseMenu.instance.enabled = true;
                 }
 
                 break;
@@ -192,10 +197,10 @@ public class GameStateManager : MonoBehaviour
             case GameState.title:
                 //just a title bro
                 //print(MainMenu.instance.startPressed);
+                PauseMenu.instance.enabled = false;
                 if (activeCoRo == null)
                 {
                     activeCoRo = StartCoroutine(titleCoRo());
-                    //PauseMenu.instance.enabled = false;
                 }
                 break;
         }
@@ -230,6 +235,7 @@ public class GameStateManager : MonoBehaviour
         yield return new WaitForSeconds(3.2f);
         ChangeGameState(GameState.deployment);
         Inventory.instance.SlideShowInventoryPanel();
+        PauseMenu.instance.enabled = true;
         activeCoRo = null;
     }
 

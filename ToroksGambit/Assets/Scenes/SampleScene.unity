@@ -1477,6 +1477,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: dc00ebc2a23b9c34eace9ae9484680c3, type: 2}
   - {fileID: 2100000, guid: 42daf9a1c4192e54581d8eacc9e5daa0, type: 2}
   - {fileID: 2100000, guid: 46f3a9af618e5a7469289657911a86b8, type: 2}
+  percentAnimPlays: 0.5
 --- !u!4 &61773102
 Transform:
   m_ObjectHideFlags: 0
@@ -20885,7 +20886,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1944965753
 Transform:
   m_ObjectHideFlags: 0

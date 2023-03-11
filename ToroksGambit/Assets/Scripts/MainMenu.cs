@@ -15,17 +15,27 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
-        //startPressed = false;
         if (instance == null) { instance = this; }
+
+        //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
+
+        // to change once there's stuff
+        continueButton.interactable = false;
+        optionsButton.interactable = false;
+        //startPressed = false;
     }
 
     void OnEnable()
     {
-        //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title); --doesnt work back and forth yet
+        print("yeye");
+        Invoke("GoBackToTitle", 1.0f); // it was some shit with execution order
+        //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
         CameraHeadMovements.instance.menuDone = false;
-        continueButton.interactable = false;
-        optionsButton.interactable = false; // to change once there's stuff
+    }
+
+    void GoBackToTitle()
+    {
+        GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
     }
 
     public void NewGame() // have yet to test fully
@@ -36,7 +46,7 @@ public class MainMenu : MonoBehaviour
         //startPressed = true;
 
         GameStateManager.instance.currentLevelNumber = -1;
-        GameStateManager.instance.SetNextLevel();
+        GameStateManager.instance.SetNextLevel(); // bug possibly here
 
         // reset torok
         TorokPersonalityAI.instance.SetAngerLevel(1);
