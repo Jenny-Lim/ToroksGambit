@@ -277,7 +277,6 @@ public class GameStateManager : MonoBehaviour
         Board.instance.DeactivateWinTiles();
         Board.instance.Reset();
         Board.instance.ResetTiles();
-        Board.instance.ActivateWinTiles();
 
         Inventory.instance.hasPlacedPiece = false;
         Inventory.instance.ShowInventoryPanel();
@@ -289,6 +288,8 @@ public class GameStateManager : MonoBehaviour
         {
             BoardLoader.instance.LoadBoard(LevelNames[++currentLevelNumber]);
         }
+
+        Board.instance.ActivateWinTiles();
 
 
     }
