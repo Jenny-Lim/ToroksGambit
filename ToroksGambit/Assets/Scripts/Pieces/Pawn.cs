@@ -14,6 +14,11 @@ public class Pawn : Piece
 
     public override void UpdateMoves()
     {
+        moves.Clear();
+        if (isInvulnerable)
+        {
+            return;
+        }
 
         int dir = 1;
         int clearResult;
@@ -22,8 +27,6 @@ public class Pawn : Piece
 
         int pieceX = pos.x;
         int pieceY = pos.y;
-
-        moves.Clear();
 
         if (isTorok)
         {

@@ -866,11 +866,11 @@ public class Board : MonoBehaviour
             elapsedTime += Time.deltaTime * pieceMoveSpeed;
             percentMoved = elapsedTime / desiredDuration;
             piece.transform.position = Vector3.Lerp(startPos, targetPos, percentMoved);
-            Debug.Log(percentMoved);
+            //Debug.Log(percentMoved);
             yield return null;
         }
         piece.transform.position = targetPos;
-        Debug.Log("Finished moving");
+        //Debug.Log("Finished moving");
     }
 
     //input the X and Y of the piece being moved(startX and Y) and the X and Y of the spot being moved to(end X Y)

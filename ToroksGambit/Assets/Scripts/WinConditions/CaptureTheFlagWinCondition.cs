@@ -40,7 +40,9 @@ public class CaptureTheFlagWinCondition : BaseCondition
             {
                 Piece piece = Board.pieceBoard[location.x, location.y].GetComponent<Piece>();
 
-                //turn that piece invincible
+                //turn that piece invuln
+                piece.isInvulnerable= true;
+                //probably apply some type of effect to symbolize invuln
             }
         }
     }
