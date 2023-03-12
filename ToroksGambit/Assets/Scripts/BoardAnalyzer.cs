@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
+using System.ComponentModel;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class BoardAnalyzer
 {
@@ -97,7 +94,7 @@ public class BoardAnalyzer
     public float toughtTraitWeight = 0.1f;
     public float promoteTraitWeight = 0.1f;
     public float lastChanceTraitWeight = 0.1f;
-
+    public float lateGamePieceSackWeight = 0.5f;
     public BoardAnalyzer()
     {
         posPST[0] = pawnPST;
@@ -112,12 +109,36 @@ public class BoardAnalyzer
         }
     }
 
-    public float Analyze(GameObject[,] board)
+    public float Analyze(GameObject[,] board, int turnNum)
     {
-        float result = (materialWeight * MaterialCount(board)) + (mobilityWeight * CalcMobility()) + (positionWeight * CalcPositioning(board));
+        float result = (materialWeight * MaterialCount(board)) + //material value count
+            (mobilityWeight * CalcMobility()) + //how mobile the pieces are
+            (positionWeight * CalcPositioning(board) + //how good the positioning of pieces are
+            (turnNum * lateGamePieceSackWeight * LateGamePieceSack(board)))// bias towards the player having less pieces as the game goes on
+            ;
         //Debug.Log("Analyzing Board got: " + result);
         return result;
-        
+    }
+
+    public float LateGamePieceSack(GameObject[,] board)
+    {
+        float sum = 0;
+        for (int i = 0; i < board.GetLength(0)-1; i++)
+        {
+            for (int j = 0; j < board.GetLength(0) - 1; j++)
+            {
+                if (board[i,j] == null) { continue; }
+
+                Piece target = board[i, j].GetComponent<Piece>();
+
+                if (target.type > Piece.PieceType.king || target.isTorok) { continue; }
+
+                sum += target.value;
+
+            }
+        }
+
+        return -20*Mathf.Pow(2, -0.001f*(sum-7000));
     }
 
     public float CalcMobility()

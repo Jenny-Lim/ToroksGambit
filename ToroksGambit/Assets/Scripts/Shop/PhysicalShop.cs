@@ -14,6 +14,7 @@ public class PhysicalShop : MonoBehaviour
     [SerializeField] private TextMeshPro[] priceText;
     [SerializeField] public GameObject[] uiSpots;
     [SerializeField] public GameObject shopkeeper;
+    [SerializeField] public string[] pieceNames;
 
     [SerializeField] private TextMeshPro[] inventoryShopCount;
 
@@ -22,8 +23,21 @@ public class PhysicalShop : MonoBehaviour
     [SerializeField] private CameraHeadMovements c;
     private Camera cam;
 
+    [SerializeField] private GameObject pieceDescriptionObject;
+
+    [SerializeField] private TextMeshProUGUI pieceDescription;
+
+    [SerializeField] private Canvas canvas;
+
+    private RectTransform descriptionRect;
+
+    private RectTransform canvasRect;
+
     private GameObject[] shopPieceModels;
     private int[] pieceType;
+
+    private float canvasWidth;
+    private float canvasHeight;
 
     private void Awake()
     {
@@ -35,6 +49,10 @@ public class PhysicalShop : MonoBehaviour
     {
         pieceType = new int[8];
         shopPieceModels = new GameObject[8];
+        descriptionRect = pieceDescription.GetComponent<RectTransform>();
+        canvasRect = canvas.GetComponent<RectTransform>();
+        canvasWidth = canvasRect.rect.width;
+        canvasHeight = canvasRect.rect.height;
 
         InitializeShop();
     }
@@ -66,6 +84,11 @@ public class PhysicalShop : MonoBehaviour
             inventoryShopCount[i].text = Inventory.instance.pieceCountText[i].text;
         }
 
+        Vector2 mousePos = Input.mousePosition / canvas.scaleFactor;
+        mousePos.x = (float)(mousePos.x - (canvasWidth * 0.5));
+        mousePos.y = (float)(mousePos.y - (canvasHeight * 0.5));
+        descriptionRect.anchoredPosition = mousePos;
+
     }
 
     public void InitializeShop()
@@ -84,6 +107,23 @@ public class PhysicalShop : MonoBehaviour
             uiSpots[i].SetActive(true);
             //Currency.instance.ticketsTxt.enabled = true;
         }
+    }
+
+    public void EnterPieceSpace(GameObject buttonObject)
+    {
+                for(int i = 0;i < uiSpots.Length;i++)
+        {
+            if(buttonObject == uiSpots[i])
+            {
+                pieceDescription.text = pieceNames[pieceType[i]];
+            }
+        }
+        pieceDescriptionObject.SetActive(true);
+    }
+
+    public void LeavePieceSpace()
+    {
+        pieceDescriptionObject.SetActive(false);
     }
 
     public void ResetShop()

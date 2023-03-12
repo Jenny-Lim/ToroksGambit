@@ -74,7 +74,7 @@ public class MinMax : MonoBehaviour
         {
             //print("Move List count: " + Board.instance.moveList.Count);
             totalNumNodesLookedAt++;
-            return new ScoredMove(null, analyzer.Analyze(Board.pieceBoard));
+            return new ScoredMove(null, analyzer.Analyze(Board.pieceBoard, GameStateManager.turnCount + maxDepth));
         }
 
         ScoredMove bestMove;//holder for the best/most likely move to make
@@ -198,10 +198,10 @@ public class MoveComparer : IComparer<Move> // jenny -- makes it better yippee :
     }
 }
 
-
+/*
 public struct MinMaxJob : IJob
 {
-    /*public class ScoredMove
+    public class ScoredMove
     {
         public Move move;
         public float score;
@@ -233,7 +233,7 @@ public struct MinMaxJob : IJob
 
         }
     }
-    */
+    
 
     public int totalNumNodesLookedAt;
     public BoardAnalyzer analyzer;
@@ -367,4 +367,4 @@ public struct MinMaxJob : IJob
         //return resulting move
         return bestMove;
     }
-}
+}*/

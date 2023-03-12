@@ -7,6 +7,10 @@ public class CaptureTheFlagWinCondition : BaseCondition
 {
     public List<Vector2Int> locations = new List<Vector2Int>();
 
+    private void Awake()
+    {
+        conditionType = 1;
+    }
     public override Condition IsWinCondition()
     {
         foreach (Vector2Int location in locations)
@@ -40,7 +44,9 @@ public class CaptureTheFlagWinCondition : BaseCondition
             {
                 Piece piece = Board.pieceBoard[location.x, location.y].GetComponent<Piece>();
 
-                //turn that piece invincible
+                //turn that piece invuln
+                piece.isInvulnerable= true;
+                //probably apply some type of effect to symbolize invuln
             }
         }
     }

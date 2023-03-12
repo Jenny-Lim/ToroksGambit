@@ -8,6 +8,11 @@ public class KingOfTheHillWinCondition : BaseCondition
 {
     public List<Vector2Int> locations = new List<Vector2Int>();
 
+    private void Awake()
+    {
+        conditionType = 3;
+    }
+
     public override Condition IsWinCondition()
     {
         if (playerScore >= scoreToWin)

@@ -16,6 +16,11 @@ public class Queen : Piece
     {
         moves.Clear();
 
+        if (isInvulnerable)
+        {
+            return;
+        }
+
         Vector2Int pos = Board.instance.GetPieceLocation(this.gameObject);
         pieceX = pos.x;
         pieceY = pos.y;

@@ -38,6 +38,7 @@ public class Piece : MonoBehaviour
     public float value;
     public bool promote;
 
+    public bool isInvulnerable = false;//jordan -> pieces that are invulnerable cant be moved or taken
 
     public GameObject[,] pieceBoard;
 
@@ -136,7 +137,7 @@ public class Piece : MonoBehaviour
     {
         for (int i = 1; i < Board.boardSize; i++)
         {
-            print(i);
+            //print(i);
             if (InBoundsCheck(pieceX + (i * directionX), pieceY + (i * directionY)))
             {
                 int clearResult = ClearCheck(pieceX + (i * directionX), pieceY + (i * directionY));
@@ -159,10 +160,12 @@ public class Piece : MonoBehaviour
                 {
                     Piece p = pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)].GetComponent<Piece>();
 
+                    if (p.isInvulnerable) { return; }
+
                     //Board.instance.MovePiece(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY));
                     //if (!Board.instance.IsKingInCheck(isTorok))
                     //{
-                        moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], (int)this.type, (int)p.type));
+                    moves.Add(new Move(pieceX, pieceY, pieceX + (i * directionX), pieceY + (i * directionY), pieceBoard[pieceX, pieceY], pieceBoard[pieceX + (i * directionX), pieceY + (i * directionY)], (int)this.type, (int)p.type));
                     //}
                     //Board.instance.UndoMove();
                     //print(this.type.ToString());
@@ -189,6 +192,7 @@ public class Piece : MonoBehaviour
             if (pieceBoard[endX, endY] != null)
             {
                 Piece p = pieceBoard[endX, endY].GetComponent<Piece>();
+                if (p.isInvulnerable) { return; }
                 if (p != null)
                 {
                     if (clearResult == 3) // if its 3 then do the thing

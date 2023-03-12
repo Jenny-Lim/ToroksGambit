@@ -4,9 +4,12 @@ using UnityEngine;
 //this class handles torok dialog and anaimation selection
 public class TorokPersonalityAI : MonoBehaviour
 {
+
+    //1 + (index/2) -> angerlevel from level index 
+
     [SerializeField] private int currentAngerLevel = 1;
     [Range(0f, 1f)]
-    [SerializeField] private float[] dialogLikelyhoodByCategory = new float[10];
+    [SerializeField] private float[] dialogLikelyhoodByCategory = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; // 17 total 
     public float minTimeBetweenIdleBark = 12;
     public float maxTimeBetweenIdleBark = 25;
 
@@ -28,8 +31,8 @@ public class TorokPersonalityAI : MonoBehaviour
 
         library.LoadDialogue(currentAngerLevel);
     }
-
-    private float PlaySoundFromCategory(SoundLibrary.Categories from)
+    
+    public float PlaySoundFromCategory(SoundLibrary.Categories from)
     {
         if (audioPlayer.isPlaying)
         {
@@ -44,7 +47,7 @@ public class TorokPersonalityAI : MonoBehaviour
 
     public bool ShouldPlay(SoundLibrary.Categories from, float randomNum)
     {
-        return randomNum <= dialogLikelyhoodByCategory[(int)from];
+        return randomNum < dialogLikelyhoodByCategory[(int)from];
     }
 
     private void OpenMouth()
@@ -92,9 +95,10 @@ public class TorokPersonalityAI : MonoBehaviour
         isPlaying = false;
     }
 
-    private void IncreaseAngerLevel()
+    public void IncreaseAngerLevel()
     {
-        library.LoadDialogue(++currentAngerLevel);//increment anger level and reload dialogue
+        currentAngerLevel = Mathf.Min(currentAngerLevel + 1, SoundLibrary.maxAngerLevels);
+        library.LoadDialogue(currentAngerLevel);
     }
 
     public void SetAngerLevel(int level) // jenny

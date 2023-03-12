@@ -156,6 +156,7 @@ public class BoardLoader : MonoBehaviour
                             for (int i = 2; i <= splitLines.Length-2; i+= 2)
                             {
                                 captureFlagWin.locations.Add(new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i + 1])));
+                                Board.instance.winLocations.Add(new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i + 1])));
                             }
                             GameStateManager.instance.winCondition = captureFlagWin;
                             break;
@@ -166,7 +167,7 @@ public class BoardLoader : MonoBehaviour
                             break;
 
                         case 3:
-                            Debug.Log("test");
+                            //Debug.Log("test");
                             KingOfTheHillWinCondition kingOfHillWin = ScriptableObject.CreateInstance("KingOfTheHillWinCondition") as KingOfTheHillWinCondition;
                             for (int i = 2; i <= splitLines.Length - 2; i += 2)
                             {

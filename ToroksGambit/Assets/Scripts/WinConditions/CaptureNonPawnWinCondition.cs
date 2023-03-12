@@ -6,6 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CaptureNonPawnWinCondition", menuName = "ScriptableObjects/WinConditions/CaptureNonPawnWinConditiont", order = 3)]
 public class CaptureNonPawnWinCondition : BaseCondition
 {
+    private void Awake()
+    {
+        conditionType = 0;
+    }
     public override Condition IsWinCondition()
     {
         if (PlayerLoseCheck())//check if player has no pieces

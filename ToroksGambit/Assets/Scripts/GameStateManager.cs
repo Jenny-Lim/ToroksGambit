@@ -27,14 +27,12 @@ public class GameStateManager : MonoBehaviour
     private static BaseCondition.Condition mostRecentWinCheckResult = BaseCondition.Condition.None;
 
     private static bool isPlayersTurn = true;
-    [SerializeField] private static int turnCount = 1;//the amount of moves/turns that have happened in the current game
+    [SerializeField] public static int turnCount = 1;//the amount of moves/turns that have happened in the current game
     [SerializeField] private GameState currentState = GameState.title;
     private bool TorokIsMoving;
 
     public static GameStateManager instance;
 
-    JobHandle handle;
-    MinMaxJob moveSearchJob;
     public bool lookingForMove = false;
     [SerializeField] private GameObject victoryText;
     [SerializeField] private Coroutine activeCoRo;
@@ -47,12 +45,18 @@ public class GameStateManager : MonoBehaviour
 
     private void Awake()
     {
+        //bool isNull;
         if (instance == null)
         {
             instance = this;
-        }
 
-        
+            //isNull = true;
+        }
+        //else
+        //{
+        //    isNull = false;
+        //}
+        //print(isNull);
     }
 
     private void Start()
@@ -175,7 +179,6 @@ public class GameStateManager : MonoBehaviour
                 {
                     activeCoRo = StartCoroutine(IntroCoRo());
                     Inventory.instance.SetObjective();
-                    //PauseMenu.instance.enabled = true;
                 }
 
                 break;
@@ -192,10 +195,10 @@ public class GameStateManager : MonoBehaviour
             case GameState.title:
                 //just a title bro
                 //print(MainMenu.instance.startPressed);
+                PauseMenu.instance.enabled = false;
                 if (activeCoRo == null)
                 {
                     activeCoRo = StartCoroutine(titleCoRo());
-                    //PauseMenu.instance.enabled = false;
                 }
                 break;
         }
@@ -216,20 +219,38 @@ public class GameStateManager : MonoBehaviour
 
     public IEnumerator IntroCoRo()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         CameraHeadMovements.instance.LookAtTorok(2f);
         yield return new WaitForSeconds(1);
 
         //depending if we want this to play always this check can be taken out
-        float rand = Random.Range(0,1);
-        if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LevelIntro, rand))
+        
+        
+        if (winCondition.conditionType == 0)//nonpawn condition
         {
-            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntro);
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroNonPawn);
         }
+        else if (winCondition.conditionType == 1)//capture the flag condition
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroCTF);
+        }
+        else if (winCondition.conditionType == 2)//checkmate condition
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroCheckmate); 
+        }
+        else if (winCondition.conditionType == 3)//king of the hill condition
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroKOTH);
+        }
+        
+        
+        
+        
 
         yield return new WaitForSeconds(3.2f);
         ChangeGameState(GameState.deployment);
         Inventory.instance.SlideShowInventoryPanel();
+        PauseMenu.instance.enabled = true;
         activeCoRo = null;
     }
 
@@ -266,11 +287,21 @@ public class GameStateManager : MonoBehaviour
 
     public void SetNextLevel()
     {
-        Board.instance.DeactivateWinTiles();
         ResetToDeploy();
+
+        Board.instance.DeactivateWinTiles();
         Board.instance.Reset();
-        Inventory.instance.hasPlacedPiece = false;
         Board.instance.ResetTiles();
+
+        Inventory.instance.hasPlacedPiece = false;
+        Inventory.instance.ShowInventoryPanel();
+        Inventory.instance.SetObjective();
+
+        if (currentLevelNumber != -1)
+        {
+            TorokPersonalityAI.instance.IncreaseAngerLevel();
+        }
+        
 
         if (currentLevelNumber + 1 < LevelNames.Count)
         {
@@ -280,12 +311,6 @@ public class GameStateManager : MonoBehaviour
         Board.instance.ActivateWinTiles();
 
 
-        Inventory.instance.ShowInventoryPanel();
-        Inventory.instance.SetObjective();
-
-
-
-        
     }
 
     public void ChangeGameState(GameState newState)

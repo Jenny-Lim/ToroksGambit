@@ -106,6 +106,11 @@ public class Board : MonoBehaviour
 
     [SerializeField] private Material[] TorokPieceMats;
 
+    [SerializeField][Range(0, 1)] private float percentAnimPlays = 0.5f;
+
+    [SerializeField] private float lastAnalyzedBoardScore = 0;
+    [SerializeField] private float goodBadMoveThreshold = 700;
+
     // brought them up here
     //private static int clickedX;
     //private static int clickedY;
@@ -259,6 +264,7 @@ public class Board : MonoBehaviour
                 GameObject tempPiece = hit.transform.gameObject;//removed the ,parent cuz i changed the hitbox to be on the highest level of the piece prefabs - jordan
 
                 Piece piece = tempPiece.GetComponent<Piece>(); 
+                if (piece.isInvulnerable) { return; }//if piece is invuln, then you cant select it
 
                 //Debug.Log("CHOSEN PIECE TYPE: "+piece.type);
 
@@ -744,18 +750,68 @@ public class Board : MonoBehaviour
                 //MovePieceVisualTeleport(pieceX, pieceY, endX, endY);
                 MovePiece(pieceX, pieceY, endX, endY);
 
-                //this might get replaced when the piece actually moves visually with coro, to inside that coro
+                //sound effect of torok taking a piece
                 if (pieceAtEndLocation)
                 {
                     float rand = Random.Range(0, 1);
-                    if (pieceScript.isTorok && TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.TakesPiece, rand))
+                    if (pieceScript.isTorok)//piece being taken is toroks piece
                     {
-                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesPiece);
+                        if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LosesPiece, rand))
+                        {
+                            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LosesPiece);
+                        }
                     }
-                    else if (!pieceScript.isTorok && TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LosesPiece, rand))
+                    else//piece being taken is players piece
                     {
-                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LosesPiece);
+                        float animChance = Random.Range(0,1);
+                        switch ((int)pieceScript.type)
+                        {
+                            case 1://taken knight
+                                if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.TakesKnight, rand))
+                                {
+                                    if (animChance < percentAnimPlays)
+                                    {
+                                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesKnight);
+                                    }
+                                    else
+                                    {
+                                        TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesKnight);
+                                    }
+                                }
+                                break;
+                            case 2://taken bishop
+                                if (animChance < percentAnimPlays)
+                                {
+                                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesBishop);
+                                }
+                                else
+                                {
+                                    TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesBishop);
+                                }
+                                break;
+                            case 3://taken rook
+                                if (animChance < percentAnimPlays)
+                                {
+                                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesRook);
+                                }
+                                else
+                                {
+                                    TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesRook);
+                                }
+                                break;
+                            case 4://taken queen
+                                if (animChance < percentAnimPlays)
+                                {
+                                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesQueen);
+                                }
+                                else
+                                {
+                                    TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesQueen);
+                                }
+                                break;
+                        }
                     }
+                   
                 }
 
                 GameStateManager.lastValidateCheck = true;
@@ -767,10 +823,22 @@ public class Board : MonoBehaviour
         // print("move not valid");
         GameStateManager.lastValidateCheck = false;
         canMove = true;
+
+        float currBoardScore = BoardAnalyzer.instance.Analyze(pieceBoard, GameStateManager.turnCount);
+        if (currBoardScore - lastAnalyzedBoardScore > goodBadMoveThreshold)
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.MakesGoodMove); //    -> might need to be swapped with v
+        }
+        else if (currBoardScore - lastAnalyzedBoardScore < -goodBadMoveThreshold)
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.MakesBadMove);//      -> might need to be swapped with ^
+        }
+        lastAnalyzedBoardScore = currBoardScore;
         yield break;
 
     }
-
+    //old move validator (not coroutine)
+    /*
     public bool MoveValidator(int pieceX, int pieceY, int endX, int endY)
     {
         //print("initX: " + pieceX + "initY: " + pieceY + "endX: " + endX + "endY: " + endY);
@@ -823,7 +891,7 @@ public class Board : MonoBehaviour
        // print("move not valid");
         return false;
     }
-
+    */
     public IEnumerator MovePieceVisual(int startX, int startY, int endX, int endY)
     {
         GameObject piece = pieceBoard[startX, startY];
@@ -847,11 +915,11 @@ public class Board : MonoBehaviour
             elapsedTime += Time.deltaTime * pieceMoveSpeed;
             percentMoved = elapsedTime / desiredDuration;
             piece.transform.position = Vector3.Lerp(startPos, targetPos, percentMoved);
-            Debug.Log(percentMoved);
+            //Debug.Log(percentMoved);
             yield return null;
         }
         piece.transform.position = targetPos;
-        Debug.Log("Finished moving");
+        //Debug.Log("Finished moving");
     }
 
     //input the X and Y of the piece being moved(startX and Y) and the X and Y of the spot being moved to(end X Y)

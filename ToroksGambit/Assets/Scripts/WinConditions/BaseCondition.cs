@@ -15,6 +15,7 @@ public class BaseCondition: ScriptableObject
     public int playerScore = 0;
     public int torokScore = 0;
     public int scoreToWin = 3;
+    public int conditionType;
 
 
     public virtual Condition IsWinCondition()

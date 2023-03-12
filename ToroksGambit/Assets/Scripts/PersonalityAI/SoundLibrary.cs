@@ -8,20 +8,28 @@ public class SoundLibrary
     
     public enum Categories//10
     {
-        LevelIntro,
-        LosesPiece,
-        TakesPiece,
-        MakesGoodMove,//player makes good move
-        MakesBadMove,//player makes "bad" move
-        Idle,
-        ObjectiveQuip,
-        MiscFunny,
-        MiscAngry,
-        Misc
+        //LevelIntro,
+        LevelIntroNonPawn,//hooked up
+        LevelIntroCTF,//hooked up
+        LevelIntroKOTH,//hooked up
+        LevelIntroCheckmate,//hooked up
+        LosesPiece,//hooked up
+        //TakesPiece,
+        TakesKnight,//hooked up (i think)
+        TakesBishop,//hooked up (i think)
+        TakesRook,//hooked up (i think)
+        TakesQueen,//hooked up (i think)
+        MakesGoodMove,//hooked up (i think)
+        MakesBadMove,//hooked up (i think)
+        Idle,//hooked up
+        ObjectiveQuip,// -> is this the same thing as levelintros
+        MiscFunny,// -> could be rolled into misc in some type of way
+        MiscAngry, // -> ^
+        Misc //        -> ^
     }
 
     private List<AudioClip>[] masterDialogueList;
-    private const int maxAngerLevels = 5;
+    public const int maxAngerLevels = 5;
     private string[] angerLevelFilePath = new string[maxAngerLevels];
     private string[] categoryNames;
 
@@ -45,6 +53,7 @@ public class SoundLibrary
         for (int i = 0; i < angerLevelFilePath.Length; i++)
         {
             angerLevelFilePath[i] = "AngerLevel" + (i+1);
+            Debug.Log(angerLevelFilePath[i]);
         }
     }
 
