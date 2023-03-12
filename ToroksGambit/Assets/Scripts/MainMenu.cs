@@ -45,12 +45,12 @@ public class MainMenu : MonoBehaviour
 
         //startPressed = true;
 
-        GameStateManager.instance.currentLevelNumber = -1;
-        GameStateManager.instance.SetNextLevel(); // bug possibly here
-
         // reset torok
         TorokPersonalityAI.instance.SetAngerLevel(1);
         InterruptManager.instance.ResetInterruptListTriggers();
+
+        GameStateManager.instance.currentLevelNumber = -1;
+        GameStateManager.instance.SetNextLevel(); // bug possibly here
 
         // reset inventory
         /*

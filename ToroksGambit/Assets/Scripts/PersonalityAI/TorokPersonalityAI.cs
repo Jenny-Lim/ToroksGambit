@@ -9,7 +9,7 @@ public class TorokPersonalityAI : MonoBehaviour
 
     [SerializeField] private int currentAngerLevel = 1;
     [Range(0f, 1f)]
-    [SerializeField] private float[] dialogLikelyhoodByCategory = new float[10];
+    [SerializeField] private float[] dialogLikelyhoodByCategory = { 1,1,1,1,1,1,1,1,1,1}; // 10 total 
     public float minTimeBetweenIdleBark = 12;
     public float maxTimeBetweenIdleBark = 25;
 
@@ -31,7 +31,7 @@ public class TorokPersonalityAI : MonoBehaviour
 
         library.LoadDialogue(currentAngerLevel);
     }
-
+    
     public float PlaySoundFromCategory(SoundLibrary.Categories from)
     {
         if (audioPlayer.isPlaying)
@@ -99,7 +99,8 @@ public class TorokPersonalityAI : MonoBehaviour
 
     public void IncreaseAngerLevel()
     {
-        library.LoadDialogue(++currentAngerLevel);//increment anger level and reload dialogue
+        currentAngerLevel = Mathf.Min(currentAngerLevel + 1, SoundLibrary.maxAngerLevels);
+        library.LoadDialogue(currentAngerLevel);
     }
 
     public void SetAngerLevel(int level) // jenny

@@ -21,7 +21,7 @@ public class SoundLibrary
     }
 
     private List<AudioClip>[] masterDialogueList;
-    private const int maxAngerLevels = 5;
+    public const int maxAngerLevels = 5;
     private string[] angerLevelFilePath = new string[maxAngerLevels];
     private string[] categoryNames;
 
@@ -45,6 +45,7 @@ public class SoundLibrary
         for (int i = 0; i < angerLevelFilePath.Length; i++)
         {
             angerLevelFilePath[i] = "AngerLevel" + (i+1);
+            Debug.Log(angerLevelFilePath[i]);
         }
     }
 

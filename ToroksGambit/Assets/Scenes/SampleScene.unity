@@ -23022,16 +23022,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentAngerLevel: 1
   dialogLikelyhoodByCategory:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   minTimeBetweenIdleBark: 12
   maxTimeBetweenIdleBark: 25
 --- !u!95 &2107500676

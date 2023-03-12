@@ -229,6 +229,7 @@ public class GameStateManager : MonoBehaviour
         float rand = Random.Range(0,1);
         if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LevelIntro, rand))
         {
+            Debug.Log("testing intro co");
             TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntro);
         }
 
@@ -283,7 +284,11 @@ public class GameStateManager : MonoBehaviour
         Inventory.instance.ShowInventoryPanel();
         Inventory.instance.SetObjective();
 
-        TorokPersonalityAI.instance.IncreaseAngerLevel();
+        if (currentLevelNumber != -1)
+        {
+            TorokPersonalityAI.instance.IncreaseAngerLevel();
+        }
+        
 
         if (currentLevelNumber + 1 < LevelNames.Count)
         {
