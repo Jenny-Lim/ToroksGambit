@@ -747,35 +747,68 @@ public class Board : MonoBehaviour
                 //MovePieceVisualTeleport(pieceX, pieceY, endX, endY);
                 MovePiece(pieceX, pieceY, endX, endY);
 
-                //this might get replaced when the piece actually moves visually with coro, to inside that coro
+                //sound effect of torok taking a piece
                 if (pieceAtEndLocation)
                 {
                     float rand = Random.Range(0, 1);
-                    if (pieceScript.isTorok && TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.TakesPiece, rand))
+                    if (pieceScript.isTorok)//piece being taken is toroks piece
                     {
-
-                        float randAgain = Random.Range(0,1);
-                        if (randAgain < percentAnimPlays)
-                        {
-                            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesPiece);
-                        }
-                        else
-                        {
-                            TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesPiece);
-                        }
-                    }
-                    else if (!pieceScript.isTorok && TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LosesPiece, rand))
-                    {
-                        float randAgain = Random.Range(0, 1);
-                        if (randAgain < percentAnimPlays)
+                        if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LosesPiece, rand))
                         {
                             TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LosesPiece);
                         }
-                        else
+                    }
+                    else//piece being taken is players piece
+                    {
+                        float animChance = Random.Range(0,1);
+                        switch ((int)pieceScript.type)
                         {
-                            TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.LosesPiece);
+                            case 1://taken knight
+                                if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.TakesKnight, rand))
+                                {
+                                    if (animChance < percentAnimPlays)
+                                    {
+                                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesKnight);
+                                    }
+                                    else
+                                    {
+                                        TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesKnight);
+                                    }
+                                }
+                                break;
+                            case 2://taken bishop
+                                if (animChance < percentAnimPlays)
+                                {
+                                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesBishop);
+                                }
+                                else
+                                {
+                                    TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesBishop);
+                                }
+                                break;
+                            case 3://taken rook
+                                if (animChance < percentAnimPlays)
+                                {
+                                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesRook);
+                                }
+                                else
+                                {
+                                    TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesRook);
+                                }
+                                break;
+                            case 4://taken queen
+                                if (animChance < percentAnimPlays)
+                                {
+                                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesQueen);
+                                }
+                                else
+                                {
+                                    TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesQueen);
+                                }
+                                break;
                         }
                     }
+                   
                 }
 
                 GameStateManager.lastValidateCheck = true;
@@ -790,7 +823,8 @@ public class Board : MonoBehaviour
         yield break;
 
     }
-
+    //old move validator (not coroutine)
+    /*
     public bool MoveValidator(int pieceX, int pieceY, int endX, int endY)
     {
         //print("initX: " + pieceX + "initY: " + pieceY + "endX: " + endX + "endY: " + endY);
@@ -843,7 +877,7 @@ public class Board : MonoBehaviour
        // print("move not valid");
         return false;
     }
-
+    */
     public IEnumerator MovePieceVisual(int startX, int startY, int endX, int endY)
     {
         GameObject piece = pieceBoard[startX, startY];

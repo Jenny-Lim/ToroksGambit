@@ -9,19 +9,23 @@ public class SoundLibrary
     public enum Categories//10
     {
         //LevelIntro,
-        LevelIntroNonPawn,
-        LevelIntroCTF,
-        LevelIntroKOTH,
-        LevelIntroCheckmate,
-        LosesPiece,
-        TakesPiece,
-        MakesGoodMove,//player makes good move
-        MakesBadMove,//player makes "bad" move
-        Idle,
-        ObjectiveQuip,
-        MiscFunny,
-        MiscAngry,
-        Misc
+        LevelIntroNonPawn,//hooked up
+        LevelIntroCTF,//hooked up
+        LevelIntroKOTH,//hooked up
+        LevelIntroCheckmate,//hooked up
+        LosesPiece,//hooked up
+        //TakesPiece,
+        TakesKnight,//hooked up (i think)
+        TakesBishop,//hooked up (i think)
+        TakesRook,//hooked up (i think)
+        TakesQueen,//hooked up (i think)
+        MakesGoodMove,
+        MakesBadMove,
+        Idle,//hooked up
+        ObjectiveQuip,// -> is this the same thing as levelintros
+        MiscFunny,// -> could be rolled into misc in some type of way
+        MiscAngry, // -> ^
+        Misc //        -> ^
     }
 
     private List<AudioClip>[] masterDialogueList;
