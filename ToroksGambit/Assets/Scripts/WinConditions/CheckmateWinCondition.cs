@@ -6,6 +6,10 @@ using UnityEngine;
 public class CheckmateWinCondition : BaseCondition
 {
 
+    private void Awake()
+    {
+        conditionType = 2;
+    }
     public override Condition IsWinCondition()
     {
         if (Board.instance.InCheckMate(true))//is torok in checkmate

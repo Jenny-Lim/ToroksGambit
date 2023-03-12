@@ -7,6 +7,10 @@ public class CaptureTheFlagWinCondition : BaseCondition
 {
     public List<Vector2Int> locations = new List<Vector2Int>();
 
+    private void Awake()
+    {
+        conditionType = 1;
+    }
     public override Condition IsWinCondition()
     {
         foreach (Vector2Int location in locations)

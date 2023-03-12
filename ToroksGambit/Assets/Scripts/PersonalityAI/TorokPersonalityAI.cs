@@ -9,7 +9,7 @@ public class TorokPersonalityAI : MonoBehaviour
 
     [SerializeField] private int currentAngerLevel = 1;
     [Range(0f, 1f)]
-    [SerializeField] private float[] dialogLikelyhoodByCategory = { 1,1,1,1,1,1,1,1,1,1}; // 10 total 
+    [SerializeField] private float[] dialogLikelyhoodByCategory = { 1,1,1,1,1,1,1,1,1,1,1,1,1}; // 13 total 
     public float minTimeBetweenIdleBark = 12;
     public float maxTimeBetweenIdleBark = 25;
 

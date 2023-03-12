@@ -8,7 +8,11 @@ public class SoundLibrary
     
     public enum Categories//10
     {
-        LevelIntro,
+        //LevelIntro,
+        LevelIntroNonPawn,
+        LevelIntroCTF,
+        LevelIntroKOTH,
+        LevelIntroCheckmate,
         LosesPiece,
         TakesPiece,
         MakesGoodMove,//player makes good move

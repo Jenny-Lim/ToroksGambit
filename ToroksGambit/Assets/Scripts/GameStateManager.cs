@@ -221,17 +221,33 @@ public class GameStateManager : MonoBehaviour
 
     public IEnumerator IntroCoRo()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         CameraHeadMovements.instance.LookAtTorok(2f);
         yield return new WaitForSeconds(1);
 
         //depending if we want this to play always this check can be taken out
-        float rand = Random.Range(0,1);
-        if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LevelIntro, rand))
+        
+        
+        if (winCondition.conditionType == 0)//nonpawn condition
         {
-            Debug.Log("testing intro co");
-            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntro);
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroNonPawn);
         }
+        else if (winCondition.conditionType == 1)//capture the flag condition
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroCTF);
+        }
+        else if (winCondition.conditionType == 2)//checkmate condition
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroCheckmate); 
+        }
+        else if (winCondition.conditionType == 3)//king of the hill condition
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroKOTH);
+        }
+        
+        
+        
+        
 
         yield return new WaitForSeconds(3.2f);
         ChangeGameState(GameState.deployment);
