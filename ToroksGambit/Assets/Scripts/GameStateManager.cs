@@ -27,14 +27,12 @@ public class GameStateManager : MonoBehaviour
     private static BaseCondition.Condition mostRecentWinCheckResult = BaseCondition.Condition.None;
 
     private static bool isPlayersTurn = true;
-    [SerializeField] private static int turnCount = 1;//the amount of moves/turns that have happened in the current game
+    [SerializeField] public static int turnCount = 1;//the amount of moves/turns that have happened in the current game
     [SerializeField] private GameState currentState = GameState.title;
     private bool TorokIsMoving;
 
     public static GameStateManager instance;
 
-    JobHandle handle;
-    MinMaxJob moveSearchJob;
     public bool lookingForMove = false;
     [SerializeField] private GameObject victoryText;
     [SerializeField] private Coroutine activeCoRo;

@@ -109,7 +109,7 @@ public class Board : MonoBehaviour
     [SerializeField][Range(0, 1)] private float percentAnimPlays = 0.5f;
 
     [SerializeField] private float lastAnalyzedBoardScore = 0;
-    [SerializeField] private float goodBadMoveThreshold = 300;
+    [SerializeField] private float goodBadMoveThreshold = 700;
 
     // brought them up here
     //private static int clickedX;
@@ -824,7 +824,7 @@ public class Board : MonoBehaviour
         GameStateManager.lastValidateCheck = false;
         canMove = true;
 
-        float currBoardScore = BoardAnalyzer.instance.Analyze(pieceBoard);
+        float currBoardScore = BoardAnalyzer.instance.Analyze(pieceBoard, GameStateManager.turnCount);
         if (currBoardScore - lastAnalyzedBoardScore > goodBadMoveThreshold)
         {
             TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.MakesGoodMove); //    -> might need to be swapped with v
@@ -834,7 +834,6 @@ public class Board : MonoBehaviour
             TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.MakesBadMove);//      -> might need to be swapped with ^
         }
         lastAnalyzedBoardScore = currBoardScore;
-        
         yield break;
 
     }
