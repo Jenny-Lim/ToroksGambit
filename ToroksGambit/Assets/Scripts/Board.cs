@@ -108,6 +108,9 @@ public class Board : MonoBehaviour
 
     [SerializeField][Range(0, 1)] private float percentAnimPlays = 0.5f;
 
+    [SerializeField] private float lastAnalyzedBoardScore = 0;
+    [SerializeField] private float goodBadMoveThreshold = 300;
+
     // brought them up here
     //private static int clickedX;
     //private static int clickedY;
@@ -820,6 +823,18 @@ public class Board : MonoBehaviour
         // print("move not valid");
         GameStateManager.lastValidateCheck = false;
         canMove = true;
+
+        float currBoardScore = BoardAnalyzer.instance.Analyze(pieceBoard);
+        if (currBoardScore - lastAnalyzedBoardScore > goodBadMoveThreshold)
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.MakesGoodMove); //    -> might need to be swapped with v
+        }
+        else if (currBoardScore - lastAnalyzedBoardScore < -goodBadMoveThreshold)
+        {
+            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.MakesBadMove);//      -> might need to be swapped with ^
+        }
+        lastAnalyzedBoardScore = currBoardScore;
+        
         yield break;
 
     }

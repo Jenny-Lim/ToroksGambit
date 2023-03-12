@@ -19,8 +19,8 @@ public class SoundLibrary
         TakesBishop,//hooked up (i think)
         TakesRook,//hooked up (i think)
         TakesQueen,//hooked up (i think)
-        MakesGoodMove,
-        MakesBadMove,
+        MakesGoodMove,//hooked up (i think)
+        MakesBadMove,//hooked up (i think)
         Idle,//hooked up
         ObjectiveQuip,// -> is this the same thing as levelintros
         MiscFunny,// -> could be rolled into misc in some type of way
