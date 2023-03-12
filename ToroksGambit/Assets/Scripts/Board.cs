@@ -261,6 +261,7 @@ public class Board : MonoBehaviour
                 GameObject tempPiece = hit.transform.gameObject;//removed the ,parent cuz i changed the hitbox to be on the highest level of the piece prefabs - jordan
 
                 Piece piece = tempPiece.GetComponent<Piece>(); 
+                if (piece.isInvulnerable) { return; }//if piece is invuln, then you cant select it
 
                 //Debug.Log("CHOSEN PIECE TYPE: "+piece.type);
 

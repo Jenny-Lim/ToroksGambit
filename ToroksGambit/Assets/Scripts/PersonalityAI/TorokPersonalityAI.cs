@@ -45,8 +45,6 @@ public class TorokPersonalityAI : MonoBehaviour
         return audioPlayer.clip.length;
     }
 
-
-
     public bool ShouldPlay(SoundLibrary.Categories from, float randomNum)
     {
         return randomNum < dialogLikelyhoodByCategory[(int)from];
