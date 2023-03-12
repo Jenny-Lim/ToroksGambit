@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using UnityEngine;
 
 public class BoardAnalyzer
@@ -93,7 +94,7 @@ public class BoardAnalyzer
     public float toughtTraitWeight = 0.1f;
     public float promoteTraitWeight = 0.1f;
     public float lastChanceTraitWeight = 0.1f;
-    public float lateGamePieceSackWeight = 0.1f;
+    public float lateGamePieceSackWeight = 0.5f;
     public BoardAnalyzer()
     {
         posPST[0] = pawnPST;
