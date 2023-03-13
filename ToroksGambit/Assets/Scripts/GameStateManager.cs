@@ -89,7 +89,7 @@ public class GameStateManager : MonoBehaviour
                 {
                     TorokIsMoving = false;
                     Board.instance.BoardUpdate();
-
+                    
                     ////chekc win condition
                     //if (currentState == GameState.game)
                     //{
