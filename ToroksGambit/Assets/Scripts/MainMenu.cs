@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private Button continueButton;
     [SerializeField] private Button optionsButton; // to change once there's stuff
+    [SerializeField] public PauseMenu pauseFxn;
 
     public static MainMenu instance;
     //public bool startPressed;
@@ -22,6 +23,7 @@ public class MainMenu : MonoBehaviour
         // to change once there's stuff
         continueButton.interactable = false;
         optionsButton.interactable = false;
+        pauseFxn.enabled = false;
         //startPressed = false;
     }
 
