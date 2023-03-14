@@ -17107,7 +17107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   continueButton: {fileID: 483181921}
   optionsButton: {fileID: 431986569}
-  pauseFxn: {fileID: 0}
+  pauseFxn: {fileID: 1944965754}
 --- !u!114 &1582766830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21256,6 +21256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88fe53351d29b544585698599a70106a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasSaveGame: 0
 --- !u!4 &1991795836
 Transform:
   m_ObjectHideFlags: 0
