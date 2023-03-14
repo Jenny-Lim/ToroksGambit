@@ -73,8 +73,10 @@ public class PhysicalShop : MonoBehaviour
                     Inventory.instance.objectiveArea.SetActive(true);
                     Currency.instance.ticketsTxt.enabled = false;
                     shopkeeper.SetActive(false);
+                    SaveManager.instance.SaveGame();
                     c.LookAtBoard();
                     GameStateManager.instance.SetNextLevel();
+                    pieceDescriptionObject.SetActive(false);
                 }
             }
         }
@@ -172,6 +174,7 @@ public class PhysicalShop : MonoBehaviour
                 //add to inventory
                 Inventory.instance.AlterPiece((Inventory.InventoryPieces)pieceType[i],1);
                 buttonObject.SetActive(false);
+                pieceDescriptionObject.SetActive(false);
 
             }
             else if((buttonObject == uiSpots[i] && prices[pieceType[i]] >= Currency.instance.tickets))

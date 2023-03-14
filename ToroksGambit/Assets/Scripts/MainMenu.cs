@@ -21,7 +21,16 @@ public class MainMenu : MonoBehaviour
         //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
 
         // to change once there's stuff
-        continueButton.interactable = true;
+        if(SaveManager.instance.hasSaveGame)
+        {
+            continueButton.interactable = true;
+
+        }
+        else 
+        {
+            continueButton.interactable = false;
+        }
+        //continueButton.interactable = true;
         optionsButton.interactable = false;
         pauseFxn.enabled = false;
         //startPressed = false;
@@ -66,6 +75,7 @@ public class MainMenu : MonoBehaviour
 
         // reset currency
         Currency.instance.SetCurrency(0);
+        SaveManager.instance.StartNew();
 
         // move to proper area
         CameraHeadMovements.instance.LookAtPlayArea();
