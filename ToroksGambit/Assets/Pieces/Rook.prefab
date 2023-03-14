@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3236841451104158753}
   - component: {fileID: 819440268437966577}
   - component: {fileID: 5940127139188520841}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Chess Piece
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 5017698188244204045}
   - component: {fileID: 856168229501896560}
   - component: {fileID: 8799918690244763893}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rook
   m_TagString: Chess Piece
   m_Icon: {fileID: 0}
@@ -156,6 +156,7 @@ MonoBehaviour:
   lastChance: 0
   value: 0
   promote: 0
+  isInvulnerable: 0
 --- !u!65 &8799918690244763893
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -233,12 +234,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: ad5908a1706d3ff41846e7813106f5e8, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ad5908a1706d3ff41846e7813106f5e8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4071576c57464814a81a74e447e7ef7f, type: 2}
     - target: {fileID: 919132149155446097, guid: ad5908a1706d3ff41846e7813106f5e8, type: 3}
       propertyPath: m_Name
       value: MaleRook
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ad5908a1706d3ff41846e7813106f5e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad5908a1706d3ff41846e7813106f5e8, type: 3}
@@ -317,6 +326,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3235e7eb176ed004388f0f5d92aaaab9, type: 3}
       propertyPath: m_Name
       value: rook_piece
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3235e7eb176ed004388f0f5d92aaaab9, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3235e7eb176ed004388f0f5d92aaaab9, type: 3}
       propertyPath: m_IsActive
@@ -399,6 +412,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a75c8c9b159bba04ab55e43a767a9de8, type: 3}
       propertyPath: m_Name
       value: MERGED_MRookPiece
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a75c8c9b159bba04ab55e43a767a9de8, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a75c8c9b159bba04ab55e43a767a9de8, type: 3}
       propertyPath: m_IsActive
