@@ -365,7 +365,7 @@ public class Board : MonoBehaviour
 
         if (clickedPiece != null)//added by jordan to indicate what piece is clicked
         {
-            selectionIndicator.transform.position = clickedPiece.transform.position + new Vector3(0.5f,0.5f,0f);
+            selectionIndicator.transform.position = clickedPiece.transform.position + new Vector3(0f,0.025f,0f);
         }
         else
         {
@@ -657,12 +657,12 @@ public class Board : MonoBehaviour
 
                 newTile.gameObject.name = i + "_" + j;
                 hitBoxBoard[i, j] = newTile;
-                GameObject moveTileObject = Instantiate(moveTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                GameObject moveTileObject = Instantiate(moveTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(0f, 0f, 0f)), gameObject.transform);
                 moveTileObject.gameObject.name = i + "_" + j + "_MoveTile";
                 moveTileBoard[i,j] = moveTileObject;
                 moveTileObject.SetActive(false);
 
-                GameObject winTileObject = Instantiate(winSpotTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(90f, 0f, 0f)), gameObject.transform);
+                GameObject winTileObject = Instantiate(winSpotTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(0f, 0f, 0f)), gameObject.transform);
                 winTileObject.gameObject.name = i + "_" + j + "_WinSpot";
                 winSpotBoard[i,j] = winTileObject;
                 winTileObject.SetActive(false);

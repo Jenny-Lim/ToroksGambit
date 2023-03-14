@@ -89,7 +89,7 @@ public class GameStateManager : MonoBehaviour
                 {
                     TorokIsMoving = false;
                     Board.instance.BoardUpdate();
-
+                    
                     ////chekc win condition
                     //if (currentState == GameState.game)
                     //{
@@ -195,7 +195,7 @@ public class GameStateManager : MonoBehaviour
             case GameState.title:
                 //just a title bro
                 //print(MainMenu.instance.startPressed);
-                PauseMenu.instance.enabled = false;
+                MainMenu.instance.pauseFxn.enabled = false;
                 if (activeCoRo == null)
                 {
                     activeCoRo = StartCoroutine(titleCoRo());
@@ -250,7 +250,7 @@ public class GameStateManager : MonoBehaviour
         yield return new WaitForSeconds(3.2f);
         ChangeGameState(GameState.deployment);
         Inventory.instance.SlideShowInventoryPanel();
-        PauseMenu.instance.enabled = true;
+        MainMenu.instance.pauseFxn.enabled = true;
         activeCoRo = null;
     }
 
