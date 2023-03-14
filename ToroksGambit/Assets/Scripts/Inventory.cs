@@ -111,7 +111,7 @@ public class Inventory : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
 
-                if (hit.transform.gameObject.CompareTag("Chess Board"))//if you hit a board tile
+                if (hit.transform.gameObject.CompareTag("Chess Board"))//if you hit a board tile -- AND the tile is deployment tile
                 {
 
                     //remove other visuals

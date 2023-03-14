@@ -226,8 +226,6 @@ public class GameStateManager : MonoBehaviour
         Debug.Log("Called intro coro");
         yield return new WaitForSeconds(0.5f);
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
-
-        //depending if we want this to play always this check can be taken out
         
         
         if (winCondition.conditionType == 0)//nonpawn condition
@@ -246,6 +244,9 @@ public class GameStateManager : MonoBehaviour
         {
             TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroKOTH);
         }
+
+        //needs to wait for sound to end
+        yield return new WaitForSeconds(2f);
 
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardExclusively());
         ChangeGameState(GameState.deployment);
