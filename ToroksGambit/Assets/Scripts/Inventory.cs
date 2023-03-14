@@ -484,4 +484,14 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public int[] GetInventoryCount()
+    {
+        return heldPieces;
+    }
+
+    public void SetInventoryCount(int[] count)
+    {
+        heldPieces = count;
+    }
+
 }

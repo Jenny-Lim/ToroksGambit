@@ -283,7 +283,7 @@ public class GameStateManager : MonoBehaviour
         ChangeGameState(GameState.shop);
         PhysicalShop.instance.EnterShop();
         activeCoRo = null;
-        
+        SaveManager.instance.SaveGame();
     }
 
     public void SetNextLevel()
@@ -314,7 +314,6 @@ public class GameStateManager : MonoBehaviour
         turnCount = 1;
         Board.instance.ActivateWinTiles();
         ChangeGameState(GameState.intro);
-
     }
 
     public void ChangeGameState(GameState newState)

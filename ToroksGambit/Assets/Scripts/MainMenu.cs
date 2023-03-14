@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour
         //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
 
         // to change once there's stuff
-        continueButton.interactable = false;
+        continueButton.interactable = true;
         optionsButton.interactable = false;
         pauseFxn.enabled = false;
         //startPressed = false;
@@ -75,6 +75,11 @@ public class MainMenu : MonoBehaviour
 
     public void ContinueGame()
     {
+        SaveManager.instance.LoadSave();
+        GameStateManager.instance.SetNextLevel(); // bug possibly here
+        CameraHeadMovements.instance.LookAtPlayArea();
+        gameObject.SetActive(false); // hide main menu
+
         // nothing atm -- should save level, angerlvl, interrupt thing??, inventory, currency
     }
 
