@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681b365a594b3c94cb9b81373444611d, type: 3}
   m_Name: Interrupt1
   m_EditorClassIdentifier: 
+  hasTriggered: 0
   triggerType: 0
-  piece: 1
+  piece: 2
   placeAt: {x: 5, y: 5}
-  placeAfterTurn: 1
+  afterTurn: 1

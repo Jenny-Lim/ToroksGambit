@@ -8,7 +8,19 @@ public class AddPieceInterrupt : BaseInterrupt
 {
     public override void Enact()
     {
-        if (Board.GetPieceBoard()[placeAt.x,placeAt.y] == null)
+        if (Board.pieceBoard[placeAt.x, placeAt.y] != null)
+        {
+            Debug.LogError("InterruptError| Tried placing piece on occupied square at " + placeAt);
+            return;
+        }
+
+        if (coroutineHolder != null) { Destroy(coroutineHolder); }
+        coroutineHolder = InterruptManager.instance.CreateCoRoHolder();
+        InterruptCoroutineHolder holder = coroutineHolder.AddComponent<InterruptCoroutineHolder>();
+        holder.Initialize(this);
+        holder.RunCoroutine(InterruptCoroutineHolder.Coroutines.AddPiece);
+
+        /*if (Board.GetPieceBoard()[placeAt.x,placeAt.y] == null)
         {
             Board.instance.PlacePieceTorok(placeAt.x, placeAt.y, (int)piece);
             hasTriggered = true;
@@ -16,7 +28,7 @@ public class AddPieceInterrupt : BaseInterrupt
         else
         {
             Debug.Log("InterruptError| Didn't place Piece at " + placeAt + "because space was taken.");
-        }
+        }*/
 
     }
 
@@ -24,4 +36,5 @@ public class AddPieceInterrupt : BaseInterrupt
     {
         return GameStateManager.GetTurnCount() == afterTurn && !hasTriggered;
     }
+
 }

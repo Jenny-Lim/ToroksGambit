@@ -82,7 +82,7 @@ public class TorokPersonalityAI : MonoBehaviour
         StartCoroutine(PlayAnimationAndSoundCoRo(category));
     }
 
-    private IEnumerator PlayAnimationAndSoundCoRo(SoundLibrary.Categories category)
+    public IEnumerator PlayAnimationAndSoundCoRo(SoundLibrary.Categories category)
     {
         isPlaying = true;
         anim.SetBool("Talk", true);

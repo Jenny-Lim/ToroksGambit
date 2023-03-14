@@ -6,7 +6,7 @@ using UnityEngine;
 public class SoundLibrary
 {
     
-    public enum Categories//10
+    public enum Categories//17
     {
         //LevelIntro,
         LevelIntroNonPawn,//hooked up
@@ -25,7 +25,8 @@ public class SoundLibrary
         ObjectiveQuip,// -> is this the same thing as levelintros
         MiscFunny,// -> could be rolled into misc in some type of way
         MiscAngry, // -> ^
-        Misc //        -> ^
+        Misc,//        -> ^
+        Interrupt
     }
 
     private List<AudioClip>[] masterDialogueList;
@@ -53,8 +54,8 @@ public class SoundLibrary
         for (int i = 0; i < angerLevelFilePath.Length; i++)
         {
             angerLevelFilePath[i] = "AngerLevel" + (i+1);
-            Debug.Log(angerLevelFilePath[i]);
         }
+
     }
 
     public void LoadDialogue(int angerLevel)

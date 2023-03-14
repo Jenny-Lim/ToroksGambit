@@ -110,10 +110,10 @@ public class CameraHeadMovements : MonoBehaviour
             StartCoroutine(LookAtPlayAreaCoRo());
         }
     }
-    private IEnumerator LookAtPlayAreaCoRo()
+    public IEnumerator LookAtPlayAreaCoRo()
     {
         movementInProgress = true;
-
+        Debug.Log("look at board called");
         //ani.SetBool("StartPressed", MainMenu.instance.startPressed);
 
         //while (Vector3.Distance(transform.eulerAngles, LookAtTorokRotation) > 0.1f)
@@ -153,5 +153,52 @@ public class CameraHeadMovements : MonoBehaviour
     public bool GetIsMoving()
     {
         return movementInProgress;
+    }
+
+    //looks only at torok, doesnt go back down once fully looking
+    public IEnumerator LookAtTorokExclusively()
+    {
+        movementInProgress = true;
+
+        float timeElapsed = 0f;
+        float percentDone = 0f;
+        float desiredTime = 1.5f;
+
+        Vector3 startPos = transform.position;
+        Vector3 startAngle = transform.eulerAngles;
+
+        while (percentDone < 1.0f)
+        {
+            timeElapsed += Time.deltaTime * speed;
+            percentDone = timeElapsed / desiredTime;
+            transform.position = Vector3.Lerp(startPos, lookAtBoardPosition, percentDone);
+            transform.eulerAngles = Vector3.Lerp(startAngle, LookAtTorokRotation, percentDone);
+            yield return null;
+        }
+        transform.position = lookAtBoardPosition;
+        transform.eulerAngles = LookAtTorokRotation;
+    }
+
+    public IEnumerator LookAtTorokBoardExclusively()
+    {
+        movementInProgress = true;
+
+        float timeElapsed = 0f;
+        float percentDone = 0f;
+        float desiredTime = 1.5f;
+
+        Vector3 startPos = transform.position;
+        Vector3 startAngle = transform.eulerAngles;
+
+        while (percentDone < 1.0f)
+        {
+            timeElapsed += Time.deltaTime * speed;
+            percentDone = timeElapsed / desiredTime;
+            transform.position = Vector3.Lerp(startPos, lookAtBoardPosition, percentDone);
+            transform.eulerAngles = Vector3.Lerp(startAngle, initialRotation, percentDone);
+            yield return null;
+        }
+        transform.position = lookAtBoardPosition;
+        transform.eulerAngles = initialRotation;
     }
 }

@@ -20,7 +20,8 @@ public class GameStateManager : MonoBehaviour
         deployment,
         game,
         win,
-        shop
+        shop,
+        Interrupt
     }
 
     public BaseCondition winCondition;
@@ -40,7 +41,10 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] private static TextMeshProUGUI objectiveText;
 
-
+    public GameState GetGameState()
+    {
+        return currentState;
+    }
     
 
     private void Awake()

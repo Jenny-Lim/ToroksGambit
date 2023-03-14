@@ -1345,15 +1345,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.64
+      value: -3.24
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.18
+      value: -3.19
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 23.5
+      value: 24.13
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1453,9 +1453,6 @@ MonoBehaviour:
   deploymentZoneList: []
   selectionIndicator: {fileID: 320377898}
   torokPiece: 0
-  pieceMats:
-  - {fileID: 2100000, guid: 5a163df751cb1594f91e4be709726495, type: 2}
-  - {fileID: 2100000, guid: 68378e1411217924e99d70fe3e98bc6b, type: 2}
   toughPlacer: 0
   lastChancePlacer: 0
   promotePlacer: 0
@@ -5915,15 +5912,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.53
+      value: 6.096
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.18
+      value: -3.172
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.3
+      value: 14.664
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6266,15 +6263,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.79
+      value: -3.236
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.18
+      value: -3.168
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.3
+      value: 14.617
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8616,6 +8613,7 @@ MonoBehaviour:
   - Level1
   - Level2
   - CTFTest
+  - InterruptsV2Test
 --- !u!4 &775294861
 Transform:
   m_ObjectHideFlags: 0
@@ -10886,15 +10884,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.39
+      value: 6.094
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.18
+      value: -3.178
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 23.5
+      value: 24.179
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14661,7 +14659,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d34927b332bffa4c9bbb70412716e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelInterrupts: []
+  levelInterrupts:
+  - {fileID: 11400000, guid: 08a69f902a3228a4b8ce52082377bcc6, type: 2}
+  emptyGO: {fileID: 4513946655837737015, guid: 179f704ebe38be547b4480193f481362, type: 3}
 --- !u!1 &1360170052
 GameObject:
   m_ObjectHideFlags: 0
@@ -20606,7 +20606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
-  - CTFTest
+  - InterruptsV2Test
   - Level1
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}

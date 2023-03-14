@@ -9,7 +9,26 @@ public class MovePieceInterrupt : BaseInterrupt
     public Vector2Int moveTo;
     public override void Enact()
     {
-        if (Board.pieceBoard[moveFrom.x, moveFrom.y] == null)//return if piece is null
+
+        if (!Piece.InBoundsCheck(moveFrom.x, moveFrom.y) || !Piece.InBoundsCheck(moveTo.x, moveTo.y))
+        {
+            Debug.LogError("InterruptError| Move location " + moveFrom + " or " + moveTo + " did not point to a valid board location");
+            return;
+        }
+        if (Board.pieceBoard[moveFrom.x, moveFrom.y] == null)
+        {
+            Debug.LogError("InterruptError| Piece location " + moveFrom + " did not point to a piece");
+            return;
+        }
+
+        if (coroutineHolder != null) { Destroy(coroutineHolder); }
+        coroutineHolder =  InterruptManager.instance.CreateCoRoHolder();
+        InterruptCoroutineHolder holder = coroutineHolder.AddComponent<InterruptCoroutineHolder>();
+        holder.Initialize(this);
+        holder.RunCoroutine(InterruptCoroutineHolder.Coroutines.MovePiece);
+
+
+        /*if (Board.pieceBoard[moveFrom.x, moveFrom.y] == null)//return if piece is null
         {
             Debug.Log("InterruptError| Did not move piece: No piece at " + moveFrom);
             return;
@@ -33,10 +52,10 @@ public class MovePieceInterrupt : BaseInterrupt
 
         //move piece
         //Board.instance.MovePieceVisual(moveFrom.x, moveFrom.y, moveTo.x, moveTo.y, Board.pieceBoard[moveFrom.x, moveFrom.y], false);
-        Board.instance.MovePieceVisualTeleport(moveFrom.x, moveFrom.y, moveTo.x, moveTo.y);
-        Board.instance.MovePiece(moveFrom.x, moveFrom.y, moveTo.x, moveTo.y);
+        //Board.instance.MovePieceVisualTeleport(moveFrom.x, moveFrom.y, moveTo.x, moveTo.y);
+        //Board.instance.MovePiece(moveFrom.x, moveFrom.y, moveTo.x, moveTo.y);
 
-        hasTriggered = true;
+        //hasTriggered = true;*/
     }
 
     public override bool ShouldTrigger()

@@ -6,6 +6,7 @@ public class InterruptManager : MonoBehaviour
 {
     [SerializeField] private List<BaseInterrupt> levelInterrupts;
     public static InterruptManager instance;
+    [SerializeField] private GameObject emptyGO;
     public enum InterruptTrigger
     {
         GameStart,
@@ -74,5 +75,10 @@ public class InterruptManager : MonoBehaviour
         {
             interrupt.ResetHasTrigger();
         }
+    }
+
+    public GameObject CreateCoRoHolder()
+    {
+        return Instantiate(emptyGO, transform);
     }
 }

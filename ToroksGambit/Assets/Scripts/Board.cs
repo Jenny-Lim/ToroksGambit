@@ -65,7 +65,7 @@ public class Board : MonoBehaviour
 
     private bool isPromote;
 
-    [SerializeField] private Material[] pieceMats = new Material[2];// 0 -> player piece color, 1 means torok piece color
+    //[SerializeField] private Material[] pieceMats = new Material[2];// 0 -> player piece color, 1 means torok piece color
 
     //traits
 
@@ -178,7 +178,7 @@ public class Board : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             
-            if((hit.transform.tag == "Chess Board" || hit.transform.tag == "Chess Piece") && clickedPiece)//if a piece is stored and another spot is chosen
+            if((hit.transform.CompareTag("Chess Board") || hit.transform.CompareTag("Chess Piece")) && clickedPiece)//if a piece is stored and another spot is chosen
             {
                 Debug.Log("hit piece");
                 //Debug.Log("TEST");
@@ -257,7 +257,7 @@ public class Board : MonoBehaviour
                 clickedPiece = null;
 
             }
-            else if (hit.transform.tag == "Chess Piece")//if mouse is clicked on chess piece
+            else if (hit.transform.CompareTag("Chess Piece"))//if mouse is clicked on chess piece
             {
 
                 // Debug.Log("Piece");

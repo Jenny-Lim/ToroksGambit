@@ -18,8 +18,9 @@ public abstract class BaseInterrupt : ScriptableObject
         Hole
     }
 
-    public bool hasTriggered { get;  protected set; } = false;
+    public bool hasTriggered = false;
     public InterruptManager.InterruptTrigger triggerType;
+    protected GameObject coroutineHolder;
 
     [Tooltip("What piece will be spawned.")]
     public PieceType piece;
