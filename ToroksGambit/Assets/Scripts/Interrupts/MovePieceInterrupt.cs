@@ -21,6 +21,15 @@ public class MovePieceInterrupt : BaseInterrupt
             return;
         }
 
+        if (Board.pieceBoard[moveTo.x, moveTo.y] != null)
+        {
+            Piece piece = Board.pieceBoard[moveTo.x, moveTo.y].GetComponent<Piece>();
+            if (piece.type == Piece.PieceType.wall)
+            {
+                return;
+            }
+        }
+
         if (coroutineHolder != null) { Destroy(coroutineHolder); }
         coroutineHolder =  InterruptManager.instance.CreateCoRoHolder();
         InterruptCoroutineHolder holder = coroutineHolder.AddComponent<InterruptCoroutineHolder>();
