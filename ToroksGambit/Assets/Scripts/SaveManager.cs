@@ -50,7 +50,7 @@ public class SaveManager : MonoBehaviour
             SaveData data = (SaveData)bf.Deserialize(file);
             file.Close();
 
-            GameStateManager.instance.currentLevelNumber = data.savedLevelNum-1;
+            GameStateManager.instance.currentLevelNumber = data.savedLevelNum;
             Currency.instance.tickets = data.savedCurrency;
             Inventory.instance.SetInventoryCount(data.savedPieces);
 
@@ -80,5 +80,6 @@ class SaveData
     public int savedLevelNum {get; set;}
     public int[] savedPieces {get; set;}
     public int savedCurrency {get; set;}
+
 }
 

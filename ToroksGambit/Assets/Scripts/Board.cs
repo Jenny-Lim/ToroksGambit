@@ -1076,6 +1076,15 @@ public class Board : MonoBehaviour
             pieceBoard[startX, startY] = null;
         }
 
+        if (!piece.isTorok && endY == boardSize - 1 && piece.type == Piece.PieceType.pawn)
+        {
+            Debug.Log("PLAYER REACHED END");
+        }
+        if (piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)
+        {
+            Debug.Log("TOROK REACHED END");
+        }
+
     }
 
     public void MovePieceVisual(int startX, int startY, int endX, int endY, GameObject piece, bool promoteCheck)
