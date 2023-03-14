@@ -223,9 +223,9 @@ public class GameStateManager : MonoBehaviour
 
     public IEnumerator IntroCoRo()
     {
+        Debug.Log("Called intro coro");
         yield return new WaitForSeconds(0.5f);
-        CameraHeadMovements.instance.LookAtTorok(2f);
-        yield return new WaitForSeconds(1);
+        yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
 
         //depending if we want this to play always this check can be taken out
         
@@ -246,13 +246,10 @@ public class GameStateManager : MonoBehaviour
         {
             TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroKOTH);
         }
-        
-        
-        
-        
 
-        yield return new WaitForSeconds(3.2f);
+        yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardExclusively());
         ChangeGameState(GameState.deployment);
+        Inventory.instance.ShowInventoryPanel();
         Inventory.instance.SlideShowInventoryPanel();
         MainMenu.instance.pauseFxn.enabled = true;
         activeCoRo = null;
@@ -298,8 +295,8 @@ public class GameStateManager : MonoBehaviour
         Board.instance.ResetTiles();
 
         Inventory.instance.hasPlacedPiece = false;
-        Inventory.instance.ShowInventoryPanel();
-        Inventory.instance.SetObjective();
+        //Inventory.instance.ShowInventoryPanel();
+        
 
         if (currentLevelNumber != -1)
         {
@@ -312,8 +309,11 @@ public class GameStateManager : MonoBehaviour
             BoardLoader.instance.LoadBoard(LevelNames[++currentLevelNumber]);
         }
 
-        Board.instance.ActivateWinTiles();
+        Inventory.instance.SetObjective();
 
+        turnCount = 1;
+        Board.instance.ActivateWinTiles();
+        ChangeGameState(GameState.intro);
 
     }
 

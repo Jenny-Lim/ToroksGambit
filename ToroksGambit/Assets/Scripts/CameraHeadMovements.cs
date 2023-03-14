@@ -113,7 +113,6 @@ public class CameraHeadMovements : MonoBehaviour
     public IEnumerator LookAtPlayAreaCoRo()
     {
         movementInProgress = true;
-        Debug.Log("look at board called");
         //ani.SetBool("StartPressed", MainMenu.instance.startPressed);
 
         //while (Vector3.Distance(transform.eulerAngles, LookAtTorokRotation) > 0.1f)
@@ -179,7 +178,7 @@ public class CameraHeadMovements : MonoBehaviour
         transform.eulerAngles = LookAtTorokRotation;
     }
 
-    public IEnumerator LookAtTorokBoardExclusively()
+    public IEnumerator LookAtBoardExclusively()
     {
         movementInProgress = true;
 

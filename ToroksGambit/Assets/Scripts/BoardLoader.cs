@@ -117,7 +117,6 @@ public class BoardLoader : MonoBehaviour
                 }
                 else if (splitLines[0].CompareTo("Interrupt") == 0)
                 {
-                    Debug.Log("Inside load Interrupt");
                     switch (int.Parse(splitLines[1]))
                     {
                         case 0://addpiece interrupt

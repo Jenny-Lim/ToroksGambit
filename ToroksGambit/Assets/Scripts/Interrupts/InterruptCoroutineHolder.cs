@@ -62,13 +62,13 @@ public class InterruptCoroutineHolder : MonoBehaviour
         }
         else
         {
-            Board.instance.PlacePiece(holderType.placeAt.x, holderType.placeAt.y, (int)holderType.piece);
+            Board.instance.PlacePieceTorok(holderType.placeAt.x, holderType.placeAt.y, (int)holderType.piece);
         }
 
         GameObject placedPiece = Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y];// manipulate piece GO for animation effect thingy
 
         //return camera to board can be placed here for before effect 
-        yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokBoardExclusively());
+        yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardExclusively());
 
         //***this would be where we do some type of effect like smoke appears or the piece falls from the sky or something***
 
@@ -108,7 +108,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
 
         Board.instance.MovePiece(holderType.moveFrom.x, holderType.moveFrom.y, holderType.moveTo.x, holderType.moveTo.y);
 
-        yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokBoardExclusively());
+        yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardExclusively());
 
         GameStateManager.instance.ChangeGameState(returnState);//change game state back to what it was before this ran
         isRunning = false;//set coro running to false
