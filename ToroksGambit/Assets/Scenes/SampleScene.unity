@@ -19278,8 +19278,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.73097056, y: 0.25999802, z: 0.16262051}
-  m_Center: {x: -0.0000172361, y: -0.00021756825, z: 0.073893405}
+  m_Size: {x: 0.46108425, y: 0.25999802, z: 0.16262051}
+  m_Center: {x: -0.0019748078, y: -0.00021756292, z: 0.07389341}
 --- !u!1001 &1694368780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20282,7 +20282,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1802445127
 Transform:
   m_ObjectHideFlags: 0
