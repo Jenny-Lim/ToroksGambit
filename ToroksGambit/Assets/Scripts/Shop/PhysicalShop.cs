@@ -76,6 +76,7 @@ public class PhysicalShop : MonoBehaviour
                     SaveManager.instance.SaveGame();
                     c.LookAtBoard();
                     GameStateManager.instance.SetNextLevel();
+                    pieceDescriptionObject.SetActive(false);
                 }
             }
         }
