@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4481303978258161604}
   - component: {fileID: 43153728721195806}
   - component: {fileID: 6336702941575084421}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Chess Piece
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 4970929683162726228}
   - component: {fileID: 2305305813573602463}
   - component: {fileID: 662561896451127506}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Queen
   m_TagString: Chess Piece
   m_Icon: {fileID: 0}
@@ -156,6 +156,7 @@ MonoBehaviour:
   lastChance: 0
   value: 0
   promote: 0
+  isInvulnerable: 0
 --- !u!65 &662561896451127506
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -241,6 +242,10 @@ PrefabInstance:
       value: queen_piece
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 06ecba63064258244a622562fcc2a0ce, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 06ecba63064258244a622562fcc2a0ce, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -319,12 +324,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: b8b789d85229ccb4f8782a83b9ab1f5d, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b8b789d85229ccb4f8782a83b9ab1f5d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 118d32dd12448764e9d5f7b945b8de51, type: 2}
     - target: {fileID: 919132149155446097, guid: b8b789d85229ccb4f8782a83b9ab1f5d, type: 3}
       propertyPath: m_Name
       value: Queen
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b8b789d85229ccb4f8782a83b9ab1f5d, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8b789d85229ccb4f8782a83b9ab1f5d, type: 3}
@@ -399,6 +412,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2bbec09131926074a965a4fdf15edf6c, type: 3}
       propertyPath: m_Name
       value: MERGED_QueenPiece
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2bbec09131926074a965a4fdf15edf6c, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2bbec09131926074a965a4fdf15edf6c, type: 3}
       propertyPath: m_IsActive
