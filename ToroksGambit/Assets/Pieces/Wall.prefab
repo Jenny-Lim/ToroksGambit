@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5045749864416666138}
   - component: {fileID: 7120923808140009681}
   - component: {fileID: 9170383083247416491}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,6 +57,7 @@ MonoBehaviour:
   lastChance: 0
   value: 0
   promote: 0
+  isInvulnerable: 0
 --- !u!65 &9170383083247416491
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -82,7 +83,7 @@ GameObject:
   - component: {fileID: 8073194391509250221}
   - component: {fileID: 4353990325556230727}
   - component: {fileID: 5407801183831433106}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,6 +234,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c201824c2e7a0224186ad4b4e598ebea, type: 3}
       propertyPath: m_Name
       value: wall_middle
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c201824c2e7a0224186ad4b4e598ebea, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c201824c2e7a0224186ad4b4e598ebea, type: 3}
