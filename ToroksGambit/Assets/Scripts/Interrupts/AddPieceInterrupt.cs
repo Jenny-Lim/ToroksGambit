@@ -8,11 +8,11 @@ public class AddPieceInterrupt : BaseInterrupt
 {
     public override void Enact()
     {
-        if (Board.pieceBoard[placeAt.x, placeAt.y] != null)
+        /*if (Board.pieceBoard[placeAt.x, placeAt.y] != null)
         {
-            Debug.LogError("InterruptError| Tried placing piece on occupied square at " + placeAt);
+            Debug.LogError("Piece detected at " + placeAt + " replacing with interrupt piece");
             return;
-        }
+        }*/
 
         if (coroutineHolder != null) { Destroy(coroutineHolder); }
         coroutineHolder = InterruptManager.instance.CreateCoRoHolder();

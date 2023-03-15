@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Interrupt1
   m_EditorClassIdentifier: 
   hasTriggered: 0
-  triggerType: 0
+  triggerType: 1
   piece: 2
   placeAt: {x: 5, y: 5}
-  afterTurn: 1
+  afterTurn: 3

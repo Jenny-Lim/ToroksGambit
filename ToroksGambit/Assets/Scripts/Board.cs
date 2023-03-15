@@ -619,6 +619,7 @@ public class Board : MonoBehaviour
 
     public void PlaceObstacle(int xPos, int yPos, int obstacleId)
     {
+        Debug.Log("obstacle id is " + obstacleId);
         if (obstacleId >= 0 && obstacleId < obstaclePrefabs.Length)
         {
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(obstaclePrefabs[obstacleId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate obstacle and place in pieceBoard location

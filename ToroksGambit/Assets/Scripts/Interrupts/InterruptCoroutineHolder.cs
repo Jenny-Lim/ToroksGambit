@@ -43,10 +43,10 @@ public class InterruptCoroutineHolder : MonoBehaviour
         AddPieceInterrupt holderType = (AddPieceInterrupt)holder;
         
         //gets out if there is a piece there, remove this and this interrupt will replace that piece regardless of team, which we might want
-        if (Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y] != null)
+        /*if (Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y] != null)
         {
             yield break; 
-        }
+        }*/
 
         holder.hasTriggered = true;//tell the interrupt it has triggered
         isRunning = true;//set this coroholder to be runnning
@@ -54,11 +54,18 @@ public class InterruptCoroutineHolder : MonoBehaviour
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.Interrupt);//set game state to interrupt
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
 
-        yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.Interrupt));//this plays the animation of looking at torok and stuff
+        yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.Interrupt));//this plays the animation of looking at torok and stuff=
 
-        if ((int)holderType.piece > (int)Piece.PieceType.king)
+
+        if (Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y] != null)
         {
-            Board.instance.PlaceObstacle(holderType.placeAt.x, holderType.placeAt.y, (int)holderType.piece);
+            Destroy(Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y]);
+            Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y] = null;
+        }
+
+        if ((int)holderType.piece >= (int)Piece.PieceType.king)
+        {
+            Board.instance.PlaceObstacle(holderType.placeAt.x, holderType.placeAt.y, (int)holderType.piece-5);
         }
         else
         {
