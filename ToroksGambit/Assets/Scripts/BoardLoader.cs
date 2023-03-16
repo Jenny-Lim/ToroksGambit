@@ -90,15 +90,16 @@ public class BoardLoader : MonoBehaviour
 
                 if (splitLines[0].CompareTo("Piece") == 0)
                 {
+                    Vector2Int pos = new Vector2Int(int.Parse(splitLines[2]), int.Parse(splitLines[3]));
                     if (Convert.ToBoolean(splitLines[4]))//if is torok piece
                     {
                         if (int.Parse(splitLines[1]) < 6)
                         {
-                            Board.instance.PlacePieceTorok(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]));
+                            Board.instance.PlacePieceTorok(pos.x, pos.y, int.Parse(splitLines[1]));
                         }
                         else
                         {
-                            Board.instance.PlaceObstacle(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]) - 6);
+                            Board.instance.PlaceObstacle(pos.x, pos.y, int.Parse(splitLines[1]) - 6);
                         }
                         
                     }
@@ -106,14 +107,20 @@ public class BoardLoader : MonoBehaviour
                     {
                         if (int.Parse(splitLines[1]) < 6)
                         {
-                            Board.instance.PlacePiece(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]));
+                            Board.instance.PlacePiece(pos.x, pos.y, int.Parse(splitLines[1]));
                         }
                         else
                         {
-                            Board.instance.PlaceObstacle(int.Parse(splitLines[2]), int.Parse(splitLines[3]), int.Parse(splitLines[1]) - 6);
+                            Board.instance.PlaceObstacle(pos.x, pos.y, int.Parse(splitLines[1]) - 6);
                         }
                     }
-                    
+
+                    //traits
+                    Piece placedPiece = Board.pieceBoard[pos.x, pos.y].GetComponent<Piece>();
+                    placedPiece.isTough = Convert.ToBoolean(splitLines[5]);
+                    placedPiece.lastChance = Convert.ToBoolean(splitLines[6]);
+                    placedPiece.promote = Convert.ToBoolean(splitLines[7]);
+                   
                 }
                 else if (splitLines[0].CompareTo("Interrupt") == 0)
                 {
@@ -328,7 +335,7 @@ public class BoardLoader : MonoBehaviour
                     else if (thisPiece.type == Piece.PieceType.hole) { pieceString += "," + 7; }
 
 
-                    pieceString += "," + thisPiece.pieceX + "," + thisPiece.pieceY + "," + thisPiece.isTorok;
+                    pieceString += "," + thisPiece.pieceX + "," + thisPiece.pieceY + "," + thisPiece.isTorok + "," + thisPiece.isTough + "," + thisPiece.lastChance + "," + thisPiece.promote;
                     writer.WriteLine(pieceString);
                 }
             }
