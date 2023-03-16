@@ -54,7 +54,7 @@ public class Board : MonoBehaviour
     [SerializeField] private GameObject[] obstaclePrefabs;//list of obstacles, 0 -> wall, 1 -> hole
 
     public static Board instance;//jordan, static ref to board
-    public List<Vector2> deploymentZoneList;//jordan, list of positions on the board that can be deployed on
+    public List<Vector2Int> deploymentZoneList;//jordan, list of positions on the board that can be deployed on
 
     [SerializeField] private GameObject selectionIndicator;// testing gameobject that floats above the selected piece for indication purposes 
 
@@ -118,7 +118,7 @@ public class Board : MonoBehaviour
     void Start()
     {
         if (instance == null) { instance = this; }//added by jordan for static reference to board for minmax
-        deploymentZoneList = new List<Vector2>();
+        deploymentZoneList = new List<Vector2Int>();
         boardPosition = transform.position;
         cam = Camera.main;
         hitBoxBoard = new GameObject[boardSize,boardSize];

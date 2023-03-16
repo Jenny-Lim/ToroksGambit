@@ -178,8 +178,16 @@ public class BoardLoader : MonoBehaviour
                             break;
                     }
                 }
+                else if (splitLines[0].CompareTo("DeploymentZone") == 0)
+                {
+                    List<Vector2Int> deployList = Board.instance.deploymentZoneList;
+                    deployList.Clear();
 
-
+                    for (int i = 1; i < splitLines.Length; i += 2)
+                    {
+                        deployList.Add( new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i+1])) );
+                    }
+                }
             }
         }
         catch (Exception e)
@@ -290,6 +298,14 @@ public class BoardLoader : MonoBehaviour
                 writer.WriteLine(printingString);//write line to file
             }
 
+            //write level deployment area positions
+            string deployAreaResult = "DeploymentZone";
+            foreach (Vector2Int pos in Board.instance.deploymentZoneList)
+            {
+                deployAreaResult += "," + pos.x + "," + pos.y;
+            }
+            writer.WriteLine(deployAreaResult);
+            
 
             //write pieces
             for (int i = 0; i < Board.boardSize; i++)

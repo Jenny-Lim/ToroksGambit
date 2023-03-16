@@ -175,7 +175,7 @@ public class Piece : MonoBehaviour
 
                 else if (clearResult == 2) // if spot is a hole
                 {
-                    print("clear result 2"); // does not reach
+                    //print("clear result 2"); // does not reach
                     continue;
                 }
             }
