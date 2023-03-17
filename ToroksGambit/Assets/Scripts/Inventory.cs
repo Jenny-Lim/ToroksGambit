@@ -472,8 +472,8 @@ public class Inventory : MonoBehaviour
 
     public void SetDeployUI()
     {
-        deployPieceText.text = "Piece Limit: "+deployPieceCount+"/ 5";
-        deployPointText.text = "Piece Limit: "+deployPointCount+"/ 21";
+        deployPieceText.text = "Piece Limit: "+deployPieceCount+"/"+deployPieceCap;
+        deployPointText.text = "Piece Limit: "+deployPointCount+"/"+deployPointCap;
     }
 
     private IEnumerator ShowHideInventoryPanel()

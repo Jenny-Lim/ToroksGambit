@@ -289,6 +289,8 @@ public class GameStateManager : MonoBehaviour
 
     public void SetNextLevel()
     {
+        Inventory.instance.resetDeployCount();
+        Inventory.instance.SetDeployUI();
         ResetToDeploy();
 
         Board.instance.DeactivateWinTiles();

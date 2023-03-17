@@ -1,6 +1,7 @@
 boardstart
 Level1
 WinCondition,0
+DeploymentZone,0,0,1,0,2,0,3,0,4,0,5,0,6,0,7,0
 Piece,6,0,0,False,False,False,False
 Piece,6,0,1,False,False,False,False
 Piece,6,0,2,False,False,False,False
