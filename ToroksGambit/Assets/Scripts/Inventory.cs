@@ -61,6 +61,21 @@ public class Inventory : MonoBehaviour
 
     public bool hasPlacedPiece = false;
 
+    private bool deployCapReached;
+
+    private int deployPointCap = 21;
+    private int deployPieceCap = 5;
+
+    private int deployPointCount = 0;
+    private int deployPieceCount = 0;
+
+    private int[] deployValues = {1, 3, 3, 5, 9};
+
+    [SerializeField] private GameObject deployUIObject;
+
+    [SerializeField] private TextMeshProUGUI deployPointText;
+    [SerializeField] private TextMeshProUGUI deployPieceText;
+
     public void Start()
     {
         if (instance == null)
@@ -87,6 +102,17 @@ public class Inventory : MonoBehaviour
 
     public void InventoryUpdate()
     {
+
+        if((deployPointCount >= deployPointCap) || (deployPieceCount >= deployPieceCap))
+        {
+            Debug.Log("CAP REACHED");
+            deployCapReached = true;
+        }
+        else
+        {
+            deployCapReached = false;
+        }
+
         if (hasPlacedPiece == true)
         {
             
@@ -161,9 +187,12 @@ public class Inventory : MonoBehaviour
                             Debug.Log("PLACEPLAYERPIECE: "+(InventoryPieces)storedPiece);
                             if(storedPiece < 5 && storedPiece > -1 && hit.transform.gameObject.name.Contains("_DeploySpot"))
                             {
-                                if(heldPieces[storedPiece] > 0)
+                                if(heldPieces[storedPiece] > 0  && !deployCapReached && (deployPointCount + deployValues[storedPiece]) <= deployPointCap)
                                 {
                                     AlterPiece((InventoryPieces)storedPiece, -1);
+                                    deployPieceCount++;
+                                    deployPointCount += deployValues[storedPiece];
+                                    SetDeployUI();
                                     if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
                                     {
                                         hasPlacedPiece = true;
@@ -185,14 +214,19 @@ public class Inventory : MonoBehaviour
                                     {
                                         if(hit.transform.gameObject == Board.instance.hitBoxBoard[i,j])
                                         {
+                                            Debug.Log("BOARDREMOVETESTING");
                                             Piece removePiece = Board.pieceBoard[i, j].GetComponent<Piece>();
                                             if(!removePiece.isTorok && (int)removePiece.type < 5)
                                             {
                                                 AlterPiece((InventoryPieces)removePiece.type, 1);
+                                                deployPieceCount--;
+                                                deployPointCount -= deployValues[(int)removePiece.type];
+                                                SetDeployUI();
                                             }
 
                                             if (Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, storedPiece) == true)
                                             {
+                                                Debug.Log("REMOVE?");
                                                 hasPlacedPiece = true;
                                             }
                                             
@@ -236,6 +270,10 @@ public class Inventory : MonoBehaviour
                         if ((int)hitPiece.type < 5)
                         {
                             AlterPiece((InventoryPieces)hitPiece.type, 1);
+                            deployPieceCount--;
+                            deployPointCount -= deployValues[(int)hitPiece.type];
+                            SetDeployUI();
+
                         }
                         updateCountText();
                     }
@@ -430,6 +468,12 @@ public class Inventory : MonoBehaviour
         objectiveText.text = GameStateManager.instance.winCondition.GetObjectiveText();
     }
 
+    public void SetDeployUI()
+    {
+        deployPieceText.text = "Piece Limit: "+deployPieceCount+"/ 5";
+        deployPointText.text = "Piece Limit: "+deployPointCount+"/ 21";
+    }
+
     private IEnumerator ShowHideInventoryPanel()
     {
         isMoving = true;
@@ -491,6 +535,12 @@ public class Inventory : MonoBehaviour
     public void SetInventoryCount(int[] count)
     {
         heldPieces = count;
+    }
+
+    public void resetDeployCount()
+    {
+        deployPieceCount = 0;
+        deployPointCount = 0;
     }
 
 }
