@@ -8,7 +8,7 @@ public class DeployLines : MonoBehaviour
     public GameObject left, right, up, down;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         left = lines.transform.Find("DeploySpotLine_L").gameObject;
         right = lines.transform.Find("DeploySpotLine_R").gameObject;

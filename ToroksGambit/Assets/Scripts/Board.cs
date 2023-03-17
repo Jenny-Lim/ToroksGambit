@@ -721,6 +721,26 @@ public class Board : MonoBehaviour
         for (int i = 0; i < deploymentZoneList.Count; i++)
         {
             deployBoard[deploymentZoneList[i].x, deploymentZoneList[i].y].SetActive(true);
+
+            //set the lines
+            DeployLines l = deployBoard[deploymentZoneList[i].x, deploymentZoneList[i].y].GetComponent<DeployLines>();
+
+            if (i < deploymentZoneList.Count-1)
+            {
+                DeployLines nextL = deployBoard[deploymentZoneList[i + 1].x, deploymentZoneList[i + 1].y].GetComponent<DeployLines>();
+
+                if (deploymentZoneList[i + 1].x == deploymentZoneList[i].x + 1) //if the next one has the same x as this one+1, they are neighbours (right)
+                {
+                    l.right.SetActive(false);
+                    nextL.left.SetActive(false);
+                }
+
+                if (deploymentZoneList[i + 1].y == deploymentZoneList[i].y + 1) //if the next one has the same x as this one+1, they are neighbours (bottom)
+                {
+                    l.down.SetActive(false);
+                    nextL.up.SetActive(false);
+                }
+            }
         }
     }
 
