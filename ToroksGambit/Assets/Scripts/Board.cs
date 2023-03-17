@@ -722,7 +722,7 @@ public class Board : MonoBehaviour
         {
             deployBoard[deploymentZoneList[i].x, deploymentZoneList[i].y].SetActive(true);
 
-            //set the lines
+            //set the lines -- im pretty certain that spots are written in order
             DeployLines l = deployBoard[deploymentZoneList[i].x, deploymentZoneList[i].y].GetComponent<DeployLines>();
 
             if (i < deploymentZoneList.Count-1)
