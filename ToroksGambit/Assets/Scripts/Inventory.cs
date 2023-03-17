@@ -215,7 +215,9 @@ public class Inventory : MonoBehaviour
                                         if(hit.transform.gameObject == Board.instance.hitBoxBoard[i,j])
                                         {
                                             Debug.Log("BOARDREMOVETESTING");
+
                                             Piece removePiece = Board.pieceBoard[i, j].GetComponent<Piece>();
+
                                             if(!removePiece.isTorok && (int)removePiece.type < 5)
                                             {
                                                 AlterPiece((InventoryPieces)removePiece.type, 1);
