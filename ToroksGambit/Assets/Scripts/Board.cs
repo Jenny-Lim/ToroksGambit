@@ -17,13 +17,15 @@ public class Board : MonoBehaviour
 
     private GameObject[,] winSpotBoard;
 
+    public GameObject[,] deployBoard;
+
     [SerializeField]
     private GameObject boardSquare;
 
     [SerializeField] private GameObject[] boardTiles = new GameObject[2];
 
     [SerializeField] private GameObject moveTile;
-
+    [SerializeField] private GameObject deployTile;
     [SerializeField] private GameObject winSpotTile;
 
     [SerializeField]
@@ -57,7 +59,6 @@ public class Board : MonoBehaviour
     public List<Vector2Int> deploymentZoneList;//jordan, list of positions on the board that can be deployed on
 
     [SerializeField] private GameObject selectionIndicator;// testing gameobject that floats above the selected piece for indication purposes 
-
 
     public bool torokPiece = false;
 
@@ -125,6 +126,7 @@ public class Board : MonoBehaviour
         pieceBoard = new GameObject[boardSize, boardSize];
         moveTileBoard = new GameObject[boardSize, boardSize];
         winSpotBoard = new GameObject[boardSize, boardSize];
+        deployBoard = new GameObject[boardSize, boardSize];
         idleDialogueCounter = Random.Range(TorokPersonalityAI.instance.maxTimeBetweenIdleBark,TorokPersonalityAI.instance.maxTimeBetweenIdleBark);
         BuildBoard();
     }
@@ -134,14 +136,17 @@ public class Board : MonoBehaviour
     {
         winLocations.Clear();
         winLocations.TrimExcess();
+        deploymentZoneList.Clear();
+        deploymentZoneList.TrimExcess();
         moveStartIndicator.transform.position = new Vector3(-200,0,0);
         moveEndIndicator.transform.position = new Vector3(-200, 0, 0);
     }
 
     public void BoardUpdate()
     {
-        
-        // print("in bvoard update");
+        print("in bvoard update");
+        DeactivateDeployTiles();
+
         if (idleDialogueCounter <= 0.0f)
         {
             TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.Idle);
@@ -392,10 +397,12 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < boardSize; j++)
                 {
-                    if (boardSpot.gameObject == hitBoxBoard[i, j])//get position of piece in array
+                    if (boardSpot.gameObject == hitBoxBoard[i, j] || boardSpot.gameObject == deployBoard[i,j])//get position of piece in array
                     {
                         placeX = i;//store locations
+                        print("x: " + placeX);
                         placeY = j;
+                        print("y: " + placeY);
 
                     }
                 }
@@ -667,6 +674,11 @@ public class Board : MonoBehaviour
                 winTileObject.gameObject.name = i + "_" + j + "_WinSpot";
                 winSpotBoard[i,j] = winTileObject;
                 winTileObject.SetActive(false);
+
+                GameObject deployTileObject = Instantiate(deployTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(0f, 0f, 0f)), gameObject.transform);
+                deployTileObject.gameObject.name = i + "_" + j + "_DeploySpot";
+                deployBoard[i, j] = deployTileObject;
+                deployTileObject.SetActive(false);
             }
 
         }
@@ -701,6 +713,22 @@ public class Board : MonoBehaviour
             {
                 winSpotBoard[i,j].SetActive(false);
             }
+        }
+    }
+
+    public void ActivateDeployTiles()
+    {
+        for (int i = 0; i < deploymentZoneList.Count; i++)
+        {
+            deployBoard[deploymentZoneList[i].x, deploymentZoneList[i].y].SetActive(true);
+        }
+    }
+
+    public void DeactivateDeployTiles()
+    {
+        for (int i = 0; i < deploymentZoneList.Count; i++)
+        {
+        deployBoard[deploymentZoneList[i].x, deploymentZoneList[i].y].SetActive(false);
         }
     }
 

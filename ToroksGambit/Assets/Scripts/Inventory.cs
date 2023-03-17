@@ -110,8 +110,7 @@ public class Inventory : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-
-                if (hit.transform.gameObject.CompareTag("Chess Board"))//if you hit a board tile -- AND the tile is deployment tile
+                if (hit.transform.gameObject.CompareTag("Chess Board"))//if you hit a board tile -- AND the tile is deployment tile if player
                 {
 
                     //remove other visuals
@@ -160,7 +159,7 @@ public class Inventory : MonoBehaviour
                         else
                         {
                             Debug.Log("PLACEPLAYERPIECE: "+(InventoryPieces)storedPiece);
-                            if(storedPiece < 5 && storedPiece > -1)
+                            if(storedPiece < 5 && storedPiece > -1 && hit.transform.gameObject.name.Contains("_DeploySpot"))
                             {
                                 if(heldPieces[storedPiece] > 0)
                                 {

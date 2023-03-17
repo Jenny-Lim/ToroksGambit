@@ -1435,6 +1435,7 @@ MonoBehaviour:
   - {fileID: 8301887920537776768, guid: 4f1049550a8bd974ca00423c7f8baee2, type: 3}
   - {fileID: 1837992072599089850, guid: a4d2b0ae656f82e469f58bca238e4399, type: 3}
   moveTile: {fileID: 1837992072599089850, guid: 53c69b2de440ed443a1ee0dedb45fe9e, type: 3}
+  deployTile: {fileID: 1837992072599089850, guid: 00b61111937ec1d44846a49ebfc47fd2, type: 3}
   winSpotTile: {fileID: 1837992072599089850, guid: e25e535fed184394c91c76dabac126aa, type: 3}
   chessPiece: {fileID: 7919663814949119795, guid: 62d5eb6fcc71b4b48a7fc93fe84d661a, type: 3}
   clickedPiece: {fileID: 0}
@@ -21483,6 +21484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
+  - DeploySaveTest
   - InterruptsV2Test
   - Level1
   currentLevelNumber: 0

@@ -292,6 +292,7 @@ public class GameStateManager : MonoBehaviour
         ResetToDeploy();
 
         Board.instance.DeactivateWinTiles();
+        Board.instance.DeactivateDeployTiles();
         Board.instance.Reset();
         Board.instance.ResetTiles();
 
@@ -314,6 +315,7 @@ public class GameStateManager : MonoBehaviour
 
         turnCount = 1;
         Board.instance.ActivateWinTiles();
+        Board.instance.ActivateDeployTiles();
         ChangeGameState(GameState.intro);
     }
 
