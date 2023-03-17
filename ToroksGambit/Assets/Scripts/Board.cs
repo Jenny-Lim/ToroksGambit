@@ -735,6 +735,7 @@ public class Board : MonoBehaviour
                     nextL.left.SetActive(false);
                 }
 
+                // here down is silly
                 if (deploymentZoneList[i + 1].y == deploymentZoneList[i].y + 1) //if the next one has the same x as this one+1, they are neighbours (bottom)
                 {
                     l.down.SetActive(false);
