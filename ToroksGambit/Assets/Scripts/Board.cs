@@ -397,7 +397,8 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < boardSize; j++)
                 {
-                    if (boardSpot.gameObject == hitBoxBoard[i, j] || boardSpot.gameObject == deployBoard[i,j])//get position of piece in array
+                    //if (boardSpot.gameObject == hitBoxBoard[i, j] || boardSpot.gameObject == deployBoard[i,j])//get position of piece in array
+                    if (boardSpot.gameObject == hitBoxBoard[i, j])
                     {
                         placeX = i;//store locations
                         placeY = j;
@@ -546,7 +547,8 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < boardSize; j++)
                 {
-                    if (boardSpot.gameObject == hitBoxBoard[i, j] || boardSpot.gameObject == deployBoard[i, j])//get position of piece in array
+                    //if (boardSpot.gameObject == hitBoxBoard[i, j] || boardSpot.gameObject == deployBoard[i, j])//get position of piece in array
+                    if (boardSpot.gameObject == hitBoxBoard[i, j])
                     {
                         placeX = i;//store locations
                         placeY = j;

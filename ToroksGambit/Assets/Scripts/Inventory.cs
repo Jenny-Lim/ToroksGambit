@@ -184,37 +184,34 @@ public class Inventory : MonoBehaviour
                         }
                         else
                         {
-                            //bool inDeploy;
                             Debug.Log("PLACEPLAYERPIECE: "+(InventoryPieces)storedPiece);
                             //if(storedPiece < 5 && storedPiece > -1 && hit.transform.gameObject.name.Contains("_DeploySpot"))
                             if (storedPiece < 5 && storedPiece > -1)
                             {
-                                //if(heldPieces[storedPiece] > 0  && !deployCapReached && (deployPointCount + deployValues[storedPiece]) <= deployPointCap)
+                                int count = 0;
+                                foreach (Vector2Int location in Board.instance.deploymentZoneList)
                                 {
-                                    int count = 0;
-                                    foreach (Vector2Int location in Board.instance.deploymentZoneList) {
-                                        for (int i = 0; i < Board.boardSize; i++)
+                                    for (int i = 0; i < Board.boardSize; i++)
+                                    {
+                                        for (int j = 0; j < Board.boardSize; j++)
                                         {
-                                            for (int j = 0; j < Board.boardSize; j++)
-                                            {
-                                                if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j] && i == Board.instance.deploymentZoneList[count].x && j == Board.instance.deploymentZoneList[count].y)
-                                                {
-                                                    if (heldPieces[storedPiece] > 0 && !deployCapReached && (deployPointCount + deployValues[storedPiece]) <= deployPointCap)
-                                                    {
-                                                        AlterPiece((InventoryPieces)storedPiece, -1);
-                                                        deployPieceCount++;
-                                                        deployPointCount += deployValues[storedPiece];
-                                                        SetDeployUI();
-                                                        if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
-                                                        {
-                                                            hasPlacedPiece = true;
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                             if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j] && i == Board.instance.deploymentZoneList[count].x && j == Board.instance.deploymentZoneList[count].y)
+                                             {
+                                                 if (heldPieces[storedPiece] > 0 && !deployCapReached && (deployPointCount + deployValues[storedPiece]) <= deployPointCap)
+                                                 {
+                                                     AlterPiece((InventoryPieces)storedPiece, -1);
+                                                     deployPieceCount++;
+                                                     deployPointCount += deployValues[storedPiece];
+                                                     SetDeployUI();
+                                                     if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
+                                                     {
+                                                         hasPlacedPiece = true;
+                                                     }
+                                                 }
+                                             }
                                         }
-                                        count++;
                                     }
+                                    count++;
                                 }
                             }
                             else if(storedPiece == 5)
