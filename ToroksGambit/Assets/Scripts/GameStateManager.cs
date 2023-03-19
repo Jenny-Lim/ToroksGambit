@@ -261,6 +261,8 @@ public class GameStateManager : MonoBehaviour
         Inventory.instance.ShowInventoryPanel();
         Inventory.instance.SlideShowInventoryPanel();
         MainMenu.instance.pauseFxn.enabled = true;
+        
+        Inventory.instance.EnableDeployUI();
         activeCoRo = null;
     }
 

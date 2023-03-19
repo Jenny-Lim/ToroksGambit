@@ -144,7 +144,7 @@ public class Board : MonoBehaviour
 
     public void BoardUpdate()
     {
-        print("in bvoard update");
+        //print("in bvoard update");
         DeactivateDeployTiles();
 
         if (idleDialogueCounter <= 0.0f)
@@ -397,13 +397,11 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < boardSize; j++)
                 {
-                    if (boardSpot.gameObject == hitBoxBoard[i, j] || boardSpot.gameObject == deployBoard[i,j])//get position of piece in array
+                    //if (boardSpot.gameObject == hitBoxBoard[i, j] || boardSpot.gameObject == deployBoard[i,j])//get position of piece in array
+                    if (boardSpot.gameObject == hitBoxBoard[i, j])
                     {
                         placeX = i;//store locations
-                        print("x: " + placeX);
                         placeY = j;
-                        print("y: " + placeY);
-
                     }
                 }
             }
@@ -549,11 +547,11 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < boardSize; j++)
                 {
-                    if (boardSpot.gameObject == hitBoxBoard[i, j])//get position of piece in array
+                    //if (boardSpot.gameObject == hitBoxBoard[i, j] || boardSpot.gameObject == deployBoard[i, j])//get position of piece in array
+                    if (boardSpot.gameObject == hitBoxBoard[i, j])
                     {
                         placeX = i;//store locations
                         placeY = j;
-
                     }
                 }
             }
@@ -718,28 +716,39 @@ public class Board : MonoBehaviour
 
     public void ActivateDeployTiles()
     {
-        for (int i = 0; i < deploymentZoneList.Count; i++)
+        foreach (Vector2Int location in deploymentZoneList)
         {
-            deployBoard[deploymentZoneList[i].x, deploymentZoneList[i].y].SetActive(true);
-
-            //set the lines -- im pretty certain that spots are written in order
-            DeployLines l = deployBoard[deploymentZoneList[i].x, deploymentZoneList[i].y].GetComponent<DeployLines>();
-
-            if (i < deploymentZoneList.Count-1)
+            deployBoard[location.x, location.y].SetActive(true);
+            DeployLines l = deployBoard[location.x, location.y].GetComponent<DeployLines>();
+            for (int i = 0; i < boardSize; i++)
             {
-                DeployLines nextL = deployBoard[deploymentZoneList[i + 1].x, deploymentZoneList[i + 1].y].GetComponent<DeployLines>();
-
-                if (deploymentZoneList[i + 1].x == deploymentZoneList[i].x + 1) //if the next one has the same x as this one+1, they are neighbours (right)
+                for (int j = 0; j < boardSize; j++)
                 {
-                    l.right.SetActive(false);
-                    nextL.left.SetActive(false);
-                }
-
-                // here down is silly
-                if (deploymentZoneList[i + 1].y == deploymentZoneList[i].y + 1) //if the next one has the same x as this one+1, they are neighbours (bottom)
-                {
-                    l.down.SetActive(false);
-                    nextL.up.SetActive(false);
+                    if (location.x == i && location.y == j) {
+                        foreach (Vector2Int location2 in deploymentZoneList)
+                        {
+                            if (location2.x == i + 1 && location2.y == j) // right
+                            {
+                                l.right.SetActive(false);
+                                deployBoard[i + 1, j].GetComponent<DeployLines>().left.SetActive(false);
+                            }
+                            if (location2.x == i - 1 && location2.y == j) // left
+                            {
+                                l.left.SetActive(false);
+                                deployBoard[i - 1, j].GetComponent<DeployLines>().right.SetActive(false);
+                            }
+                            if (location2.x == i && location2.y == j - 1) // down
+                            {
+                                l.down.SetActive(false);
+                                deployBoard[i, j - 1].GetComponent<DeployLines>().up.SetActive(false);
+                            }
+                            if (location2.x == i && location2.y == j + 1) // up
+                            {
+                                l.up.SetActive(false);
+                                deployBoard[i, j + 1].GetComponent<DeployLines>().down.SetActive(false);
+                            }
+                        }
+                    }
                 }
             }
         }

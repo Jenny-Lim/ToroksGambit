@@ -97,6 +97,7 @@ public class Inventory : MonoBehaviour
         //maxHeldPieces[4] = 1; //max queens
 
         updateCountText();
+        DisableDeployUI();
 
     }
 
@@ -185,17 +186,30 @@ public class Inventory : MonoBehaviour
                         else
                         {
                             Debug.Log("PLACEPLAYERPIECE: "+(InventoryPieces)storedPiece);
-                            if(storedPiece < 5 && storedPiece > -1 && hit.transform.gameObject.name.Contains("_DeploySpot"))
+                            //if(storedPiece < 5 && storedPiece > -1 && hit.transform.gameObject.name.Contains("_DeploySpot"))
+                            if (storedPiece < 5 && storedPiece > -1)
                             {
-                                if(heldPieces[storedPiece] > 0  && !deployCapReached && (deployPointCount + deployValues[storedPiece]) <= deployPointCap)
+                                foreach (Vector2Int location in Board.instance.deploymentZoneList)
                                 {
-                                    AlterPiece((InventoryPieces)storedPiece, -1);
-                                    deployPieceCount++;
-                                    deployPointCount += deployValues[storedPiece];
-                                    SetDeployUI();
-                                    if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
+                                    for (int i = 0; i < Board.boardSize; i++)
                                     {
-                                        hasPlacedPiece = true;
+                                        for (int j = 0; j < Board.boardSize; j++)
+                                        {
+                                             if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j] && i == location.x && j == location.y)
+                                             {
+                                                 if (heldPieces[storedPiece] > 0 && !deployCapReached && (deployPointCount + deployValues[storedPiece]) <= deployPointCap)
+                                                 {
+                                                     AlterPiece((InventoryPieces)storedPiece, -1);
+                                                     deployPieceCount++;
+                                                     deployPointCount += deployValues[storedPiece];
+                                                     SetDeployUI();
+                                                     if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
+                                                     {
+                                                         hasPlacedPiece = true;
+                                                     }
+                                                 }
+                                             }
+                                        }
                                     }
                                 }
                             }
@@ -206,32 +220,34 @@ public class Inventory : MonoBehaviour
                                     hasPlacedPiece = true;
                                 }
                             }
-                            else
+                            else if (storedPiece == -1)// if on remove
                             {
                                 for(int i = 0;i<8;i++)
                                 {
-                                    for(int j = 0;j<8;j++)
+                                    for (int j = 0; j < 8; j++)
                                     {
-                                        if(hit.transform.gameObject == Board.instance.hitBoxBoard[i,j])
+                                        //if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j] || hit.transform.gameObject == Board.instance.deployBoard[i,j])
+                                        if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j])
                                         {
                                             Debug.Log("BOARDREMOVETESTING");
-
-                                            Piece removePiece = Board.pieceBoard[i, j].GetComponent<Piece>();
-
-                                            if(!removePiece.isTorok && (int)removePiece.type < 5)
+                                            if (Board.pieceBoard[i, j] != null)
                                             {
-                                                AlterPiece((InventoryPieces)removePiece.type, 1);
-                                                deployPieceCount--;
-                                                deployPointCount -= deployValues[(int)removePiece.type];
-                                                SetDeployUI();
-                                            }
+                                                Piece removePiece = Board.pieceBoard[i, j].GetComponent<Piece>();
 
-                                            if (Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, storedPiece) == true)
-                                            {
-                                                Debug.Log("REMOVE?");
-                                                hasPlacedPiece = true;
+                                                if (!removePiece.isTorok && (int)removePiece.type < 5)
+                                                {
+                                                    AlterPiece((InventoryPieces)removePiece.type, 1);
+                                                    deployPieceCount--;
+                                                    deployPointCount -= deployValues[(int)removePiece.type];
+                                                    SetDeployUI();
+                                                }
+
+                                                if (Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, storedPiece) == true)
+                                                {
+                                                    Debug.Log("REMOVE?");
+                                                    hasPlacedPiece = true;
+                                                }
                                             }
-                                            
                                         }
                                     }
                                 }
@@ -543,6 +559,16 @@ public class Inventory : MonoBehaviour
     {
         deployPieceCount = 0;
         deployPointCount = 0;
+    }
+
+    public void DisableDeployUI()
+    {
+        deployUIObject.SetActive(false);
+    }
+
+    public void EnableDeployUI()
+    {
+        deployUIObject.SetActive(true);
     }
 
 }

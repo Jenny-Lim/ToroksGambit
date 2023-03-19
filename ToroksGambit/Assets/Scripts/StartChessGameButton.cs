@@ -9,5 +9,6 @@ public class StartChessGameButton : MonoBehaviour
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.game);
         Inventory.instance.SlideHideInventoryPanel();
         this.gameObject.SetActive(false);
+        Inventory.instance.DisableDeployUI();
     }
 }
