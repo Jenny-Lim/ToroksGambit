@@ -8,16 +8,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 1353908527129749504}
     m_Modifications:
     - target: {fileID: 1367876183236630411, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1367876183236630411, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1367876183236630411, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.numCapVertices
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1619182055553539678, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Name
       value: DeploySpotLines
       objectReference: {fileID: 0}
     - target: {fileID: 1667639823829088939, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667639823829088939, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667639823829088939, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.numCapVertices
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1781740712654767317, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_LocalPosition.x
@@ -65,7 +81,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6348218854990426293, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6348218854990426293, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_LocalPosition.z
@@ -100,12 +116,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6807600972000818706, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6807600972000818706, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6807600972000818706, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.numCapVertices
-      value: 2
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7249972450416645889, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7249972450416645889, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7249972450416645889, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.numCapVertices
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7711206692120226175, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_LocalPosition.x
@@ -259,7 +291,3 @@ MonoBehaviour:
   right: {fileID: 0}
   up: {fileID: 0}
   down: {fileID: 0}
-  lNeighbor: {fileID: 0}
-  rNeighbor: {fileID: 0}
-  upNeighbor: {fileID: 0}
-  downNeighbor: {fileID: 0}
