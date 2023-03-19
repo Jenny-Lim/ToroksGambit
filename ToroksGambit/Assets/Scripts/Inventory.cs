@@ -188,14 +188,13 @@ public class Inventory : MonoBehaviour
                             //if(storedPiece < 5 && storedPiece > -1 && hit.transform.gameObject.name.Contains("_DeploySpot"))
                             if (storedPiece < 5 && storedPiece > -1)
                             {
-                                int count = 0;
                                 foreach (Vector2Int location in Board.instance.deploymentZoneList)
                                 {
                                     for (int i = 0; i < Board.boardSize; i++)
                                     {
                                         for (int j = 0; j < Board.boardSize; j++)
                                         {
-                                             if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j] && i == Board.instance.deploymentZoneList[count].x && j == Board.instance.deploymentZoneList[count].y)
+                                             if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j] && i == location.x && j == location.y)
                                              {
                                                  if (heldPieces[storedPiece] > 0 && !deployCapReached && (deployPointCount + deployValues[storedPiece]) <= deployPointCap)
                                                  {
@@ -211,7 +210,6 @@ public class Inventory : MonoBehaviour
                                              }
                                         }
                                     }
-                                    count++;
                                 }
                             }
                             else if(storedPiece == 5)
