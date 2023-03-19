@@ -97,6 +97,7 @@ public class Inventory : MonoBehaviour
         //maxHeldPieces[4] = 1; //max queens
 
         updateCountText();
+        DisableDeployUI();
 
     }
 
@@ -558,6 +559,16 @@ public class Inventory : MonoBehaviour
     {
         deployPieceCount = 0;
         deployPointCount = 0;
+    }
+
+    public void DisableDeployUI()
+    {
+        deployUIObject.SetActive(false);
+    }
+
+    public void EnableDeployUI()
+    {
+        deployUIObject.SetActive(true);
     }
 
 }
