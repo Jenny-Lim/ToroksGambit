@@ -130,6 +130,7 @@ public class CameraHeadMovements : MonoBehaviour
 
     public void GetOutPlayArea()
     {
+        Inventory.instance.DisableDeployUI();
         StopAllCoroutines();
         //if (!movementInProgress)
         //{
