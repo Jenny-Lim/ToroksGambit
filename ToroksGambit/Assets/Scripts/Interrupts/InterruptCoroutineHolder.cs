@@ -38,7 +38,6 @@ public class InterruptCoroutineHolder : MonoBehaviour
 
     private IEnumerator InterruptCoroutineAddPiece()
     {
-
         //check if thing is possible
         AddPieceInterrupt holderType = (AddPieceInterrupt)holder;
         
@@ -73,11 +72,37 @@ public class InterruptCoroutineHolder : MonoBehaviour
         }
 
         GameObject placedPiece = Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y];// manipulate piece GO for animation effect thingy
+        Vector3 finalPos = placedPiece.transform.position;
+        placedPiece.transform.position += Vector3.up * 6;
+        Vector3 initPos = placedPiece.transform.position;
 
         //return camera to board can be placed here for before effect 
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardExclusively());
 
         //***this would be where we do some type of effect like smoke appears or the piece falls from the sky or something***
+        float rand = Random.Range(0,1);
+        //**    THE COMMENTED CODE BELOW IS FOR USE WHEN VFX CAN BE USED**
+
+        //if (rand <= 0.5 || (int)holderType.piece > (int)BaseInterrupt.PieceType.Queen)//use smoke effect
+        //{
+            //placedPiece.transform.position = finalPos;
+        //}
+        //else//use fall effect
+        //{
+            float percentMoved = 0;
+            float desiredTime = 1.3f;
+            float elapsedTime = 0;
+            float fallSpeed = 1.5f;
+            float fallRate = 0.1f;
+            while (percentMoved < 1.0)
+            {
+                fallSpeed += fallRate;
+                elapsedTime += Time.deltaTime * fallSpeed;
+                percentMoved = elapsedTime / desiredTime;
+                placedPiece.transform.position = Vector3.Lerp(initPos, finalPos, percentMoved);
+                yield return null;
+            }
+        //}
 
         //return camera to board can be placed here for after effect 
 
