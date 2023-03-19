@@ -6,6 +6,7 @@ public class DeployLines : MonoBehaviour
 {
     [SerializeField] private GameObject lines;
     public GameObject left, right, up, down;
+    public GameObject lNeighbor, rNeighbor, upNeighbor, downNeighbor; // set in board
 
     // Start is called before the first frame update
     void Awake()

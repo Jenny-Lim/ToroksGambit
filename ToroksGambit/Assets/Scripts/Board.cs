@@ -144,7 +144,7 @@ public class Board : MonoBehaviour
 
     public void BoardUpdate()
     {
-        print("in bvoard update");
+        //print("in bvoard update");
         DeactivateDeployTiles();
 
         if (idleDialogueCounter <= 0.0f)
@@ -400,10 +400,7 @@ public class Board : MonoBehaviour
                     if (boardSpot.gameObject == hitBoxBoard[i, j] || boardSpot.gameObject == deployBoard[i,j])//get position of piece in array
                     {
                         placeX = i;//store locations
-                        print("x: " + placeX);
                         placeY = j;
-                        print("y: " + placeY);
-
                     }
                 }
             }
@@ -549,11 +546,10 @@ public class Board : MonoBehaviour
             {
                 for (int j = 0; j < boardSize; j++)
                 {
-                    if (boardSpot.gameObject == hitBoxBoard[i, j])//get position of piece in array
+                    if (boardSpot.gameObject == hitBoxBoard[i, j] || boardSpot.gameObject == deployBoard[i, j])//get position of piece in array
                     {
                         placeX = i;//store locations
                         placeY = j;
-
                     }
                 }
             }
