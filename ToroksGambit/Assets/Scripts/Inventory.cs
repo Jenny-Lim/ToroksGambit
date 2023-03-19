@@ -63,8 +63,8 @@ public class Inventory : MonoBehaviour
 
     private bool deployCapReached;
 
-    private int deployPointCap = 21;
-    private int deployPieceCap = 5;
+    public int deployPointCap = 21;
+    public int deployPieceCap = 5;
 
     private int deployPointCount = 0;
     private int deployPieceCount = 0;

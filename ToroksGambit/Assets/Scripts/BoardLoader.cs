@@ -10,6 +10,8 @@ public class BoardLoader : MonoBehaviour
     private const string boardEndText = "boardend";
     private string fileName = "StartingBoards.txt";
     public string boardName = "";
+    public int boardValueLimit = -1;
+    public int boardPieceLimit = -1;
     public List<string> savedBoardNames;
     public static BoardLoader instance;
 
@@ -19,7 +21,9 @@ public class BoardLoader : MonoBehaviour
      * boardstart
      * "boardName"
      * Win Condition **
+     * **Deploy zone**
      * Active Interrupts **
+     * **Limits**
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
      * piece information per line (piece type, pieceX, pieceY, who owns piece, abilities)
@@ -195,6 +199,11 @@ public class BoardLoader : MonoBehaviour
                         deployList.Add( new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i+1])) );
                     }
                 }
+                else if (splitLines[0].CompareTo("Limit") == 0)
+                {
+                    Inventory.instance.deployPieceCap = int.Parse(splitLines[1]);
+                    Inventory.instance.deployPointCap = int.Parse(splitLines[2]);
+                }
             }
         }
         catch (Exception e)
@@ -304,6 +313,9 @@ public class BoardLoader : MonoBehaviour
 
                 writer.WriteLine(printingString);//write line to file
             }
+
+            //deploy limits
+            writer.WriteLine("Limit," + boardPieceLimit + "," + boardValueLimit);
 
             //write level deployment area positions
             string deployAreaResult = "DeploymentZone";

@@ -16,6 +16,8 @@ public class BoardLoaderInspector : Editor
 
     public override void OnInspectorGUI()
     {
+        base.OnInspectorGUI();
+
         BoardLoader loader = (BoardLoader)target;
 
         GUILayout.BeginHorizontal();
@@ -64,7 +66,7 @@ public class BoardLoaderInspector : Editor
 
         GUILayout.EndHorizontal();
 
-        base.OnInspectorGUI();
+        
 
     }
 }
