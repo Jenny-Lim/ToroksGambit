@@ -13,6 +13,11 @@ public class CaptureTheFlagWinCondition : BaseCondition
     }
     public override Condition IsWinCondition()
     {
+        if (PlayerLoseCheck())
+        {
+            return Condition.Torok;
+        }
+
         foreach (Vector2Int location in locations)
         {
             if (Board.pieceBoard[location.x, location.y] == null)
@@ -27,12 +32,55 @@ public class CaptureTheFlagWinCondition : BaseCondition
             }
         }
 
-        if (PlayerLoseCheck())
+        return Condition.Player;
+    }
+
+    public override bool PlayerLoseCheck()
+    {
+        int playerPieces = 0;
+        int playerPiecesOnObjective = 0;
+
+        //count player pieces on objective spots
+        foreach (Vector2Int pos in locations)
         {
-            return Condition.Torok;
+            if (Board.pieceBoard[pos.x,pos.y] == null) { continue; }//no piece get keep going
+
+            Piece targetPiece = Board.pieceBoard[pos.x, pos.y].GetComponent<Piece>();
+
+            if (targetPiece.isTorok) { continue; }// if torok piece keep going
+
+            if ((int)targetPiece.type > (int)Piece.PieceType.king) { continue; }//obstacle, keep going
+
+            playerPiecesOnObjective++;
+
         }
 
-        return Condition.Player;
+        //count total player pieces
+        for (int i = 0; i < Board.boardSize; i++)
+        {
+            for (int j = 0; j < Board.boardSize; j++)
+            {
+                if (Board.pieceBoard[i,j] == null) { continue; }//no piece get keep going
+
+                Piece targetPiece = Board.pieceBoard[i, j].GetComponent<Piece>();
+
+                if (targetPiece.isTorok) { continue; }// if torok piece keep going
+
+                if ((int)targetPiece.type > (int)Piece.PieceType.king) { continue; }//obstacle, keep going
+
+                playerPieces++;
+
+            }
+        }
+
+        int playerPiecesNotOnObjective = playerPieces - playerPiecesOnObjective;
+        int requiredNumPiecesToWin = locations.Count - playerPiecesOnObjective;
+
+        if (playerPiecesNotOnObjective < requiredNumPiecesToWin) {
+            return true;
+        }
+
+        return false;
     }
 
     public override void ProgressConditionState()
@@ -45,7 +93,7 @@ public class CaptureTheFlagWinCondition : BaseCondition
                 Piece piece = Board.pieceBoard[location.x, location.y].GetComponent<Piece>();
 
                 //turn that piece invuln
-                piece.isInvulnerable= true;
+                piece.isInvulnerable = true;
                 //probably apply some type of effect to symbolize invuln
             }
         }

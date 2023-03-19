@@ -58,6 +58,7 @@ MonoBehaviour:
   lastChance: 0
   value: 0
   promote: 0
+  isInvulnerable: 0
 --- !u!1 &6421039718102586662
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +372,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 7284ba64f4bdcc741ac7ab630ddd01d4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 41e427e5c9e294b48913711e677d8efe, type: 2}
+      objectReference: {fileID: 2100000, guid: 0862660a092cc5e428b8e7eaee621ec6, type: 2}
     - target: {fileID: 919132149155446097, guid: 7284ba64f4bdcc741ac7ab630ddd01d4, type: 3}
       propertyPath: m_Name
       value: FemaleBishop

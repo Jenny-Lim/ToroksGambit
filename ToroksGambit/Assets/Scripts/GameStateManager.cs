@@ -21,7 +21,8 @@ public class GameStateManager : MonoBehaviour
         game,
         win,
         shop,
-        Interrupt
+        Interrupt,
+        lose
     }
 
     public BaseCondition winCondition;
@@ -205,6 +206,12 @@ public class GameStateManager : MonoBehaviour
                     activeCoRo = StartCoroutine(titleCoRo());
                 }
                 break;
+            case GameState.lose:
+                if (activeCoRo == null)
+                {
+                    activeCoRo = StartCoroutine(LoseCoRo());
+                }
+                break;
         }
     }
 
@@ -216,8 +223,9 @@ public class GameStateManager : MonoBehaviour
             //CameraHeadMovements.instance.LookAtPlayArea();
             yield return null;
         }
-            ChangeGameState(GameState.intro);
-            activeCoRo = null;
+        ChangeGameState(GameState.intro);
+        activeCoRo = null;
+        yield return new WaitForSeconds(0.5f);
         //}
     }
 
@@ -287,6 +295,16 @@ public class GameStateManager : MonoBehaviour
         SaveManager.instance.SaveGame();
     }
 
+    public IEnumerator LoseCoRo()
+    {
+        //show some type of defeat text or something
+
+        yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
+        yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame));
+        //yield return new WaitForSeconds(3);
+        PauseMenu.instance.ReturnToMainMenu();
+    }
+
     public void SetNextLevel()
     {
         Inventory.instance.resetDeployCount();
@@ -341,15 +359,23 @@ public class GameStateManager : MonoBehaviour
             winCondition.ProgressConditionState();
             mostRecentWinCheckResult = winCondition.IsWinCondition();
         }
+        else
+        {
+            Debug.LogError("WinCondition| no win condition is set for this board state");
+            return;
+        }
 
         if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
         {
             ChangeGameState(GameState.win);
+            return;
             //reset this state
         }
         else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
         {
-            Debug.Log("Torok has won.");
+            ChangeGameState(GameState.lose);
+            return;
+            //Debug.Log("Torok has won.");
             //lose logic
         }
 

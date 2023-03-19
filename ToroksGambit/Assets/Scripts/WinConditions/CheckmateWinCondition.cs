@@ -29,6 +29,17 @@ public class CheckmateWinCondition : BaseCondition
         return Condition.None;
     }
 
+    public override bool PlayerLoseCheck()
+    {
+        bool hasMoves = base.PlayerLoseCheck();
+        if (!hasMoves && Board.instance.IsKingInCheck(false))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public override string GetObjectiveText()
     {
         return "Checkmate Torok's king.";

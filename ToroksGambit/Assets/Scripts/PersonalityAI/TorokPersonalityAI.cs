@@ -36,7 +36,10 @@ public class TorokPersonalityAI : MonoBehaviour
     {
         if (audioPlayer.isPlaying)
         {
-            return 0;
+            Debug.Log("audio was already playing");
+            //return 0; //<-this causes some weirdness as when u/him captues a piece
+            //it could play dialogue but if the game is over after that move then it kinda clashes with the dialogue that should play when you lose for example
+            //doing it like this without the return overrides the last call, which might be the best solution rn but is a little jarring when it happens
         }
 
         Debug.Log("Played sound clip");
@@ -78,17 +81,19 @@ public class TorokPersonalityAI : MonoBehaviour
         if (isPlaying)
         {
             StopAllCoroutines();
+            isPlaying = false;
         }
         StartCoroutine(PlayAnimationAndSoundCoRo(category));
     }
 
     public IEnumerator PlayAnimationAndSoundCoRo(SoundLibrary.Categories category)
     {
-        isPlaying = true;
+        
         anim.SetBool("Talk", true);
-        //OpenMouth();
         PlayAnimation();
         float clipLength = PlaySoundFromCategory(category);
+        Debug.Log("ClipLenth " + clipLength);
+        isPlaying = true;
         yield return new WaitForSeconds(clipLength);
         anim.SetBool("Talk", false);
         CloseMouth();

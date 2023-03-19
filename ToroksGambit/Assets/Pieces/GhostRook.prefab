@@ -140,6 +140,7 @@ MonoBehaviour:
   lastChance: 0
   value: 0
   promote: 0
+  isInvulnerable: 0
 --- !u!1001 &1821060460294102401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -206,7 +207,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: a75c8c9b159bba04ab55e43a767a9de8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 41e427e5c9e294b48913711e677d8efe, type: 2}
+      objectReference: {fileID: 2100000, guid: 0862660a092cc5e428b8e7eaee621ec6, type: 2}
     - target: {fileID: 919132149155446097, guid: a75c8c9b159bba04ab55e43a767a9de8, type: 3}
       propertyPath: m_Name
       value: MERGED_MRookPiece

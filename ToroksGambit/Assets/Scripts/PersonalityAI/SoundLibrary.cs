@@ -6,7 +6,7 @@ using UnityEngine;
 public class SoundLibrary
 {
     
-    public enum Categories//17
+    public enum Categories//14
     {
         //LevelIntro,
         LevelIntroNonPawn,//hooked up
@@ -22,7 +22,8 @@ public class SoundLibrary
         MakesGoodMove,//hooked up (i think)
         MakesBadMove,//hooked up (i think)
         Idle,//hooked up
-        Interrupt
+        Interrupt,
+        LoseGame
     }
 
     private List<AudioClip>[] masterDialogueList;
@@ -51,7 +52,6 @@ public class SoundLibrary
         {
             angerLevelFilePath[i] = "AngerLevel" + (i+1);
         }
-
     }
 
     public void LoadDialogue(int angerLevel)

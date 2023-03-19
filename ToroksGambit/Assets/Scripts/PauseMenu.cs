@@ -6,6 +6,12 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
     private bool escPressed = false;
+    public static PauseMenu instance;
+
+    private void Awake()
+    {
+        if (instance == null) { instance = this; }
+    }
 
     // Update is called once per frame
     void Update()

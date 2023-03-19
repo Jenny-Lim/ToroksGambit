@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -37,8 +39,10 @@ public class BaseCondition: ScriptableObject
 
     }
 
-    public bool PlayerLoseCheck()
+    public virtual bool PlayerLoseCheck()
     {
+        //this part counts player pieces but im thinking that if the player has no pieces that also means they have no moves, which will be calculated later regardless so i think this part can be skipped
+        /*int totalPlayerPieces = 0;
         for (int i = 0; i < Board.boardSize; i++)
         {
             for (int j = 0; j < Board.boardSize; j++)
@@ -49,12 +53,22 @@ public class BaseCondition: ScriptableObject
 
                     if (!piece.isTorok)
                     {
-                        return false;
+                        totalPlayerPieces++;
                     }
                 }
             }
         }
-        return true;
+        if (totalPlayerPieces < 1)
+        {
+            return true;
+        }*/
+
+        if (Board.instance.GetAllMoves(false).Count < 1)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public virtual string GetObjectiveText()

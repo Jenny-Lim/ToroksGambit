@@ -22,15 +22,14 @@ public class KingOfTheHillWinCondition : BaseCondition
         else if (torokScore >= scoreToWin) {
             return Condition.Torok;
         }
-        else
-        {
-            if (PlayerLoseCheck())
-            {
-                return Condition.Torok;
-            }
 
-            return Condition.None;
+        if (PlayerLoseCheck())
+        {
+            return Condition.Torok;
         }
+
+        return Condition.None;
+        
     }
 
     public override void ProgressConditionState()

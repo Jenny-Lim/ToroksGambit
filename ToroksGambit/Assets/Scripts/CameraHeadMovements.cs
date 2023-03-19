@@ -43,7 +43,7 @@ public class CameraHeadMovements : MonoBehaviour
     }
 
     //coro which moves the camera towards torok, stops for x seconds, then looks back at the board
-    private IEnumerator LookAtTorokCoRo(float lookAtDuration)
+    public IEnumerator LookAtTorokCoRo(float lookAtDuration)
     {
         movementInProgress = true;//inform that movement is in progress
 
