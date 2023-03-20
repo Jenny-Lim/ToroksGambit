@@ -199,13 +199,17 @@ public class Inventory : MonoBehaviour
                                              {
                                                  if (heldPieces[storedPiece] > 0 && !deployCapReached && (deployPointCount + deployValues[storedPiece]) <= deployPointCap)
                                                  {
-                                                     AlterPiece((InventoryPieces)storedPiece, -1);
-                                                     deployPieceCount++;
-                                                     deployPointCount += deployValues[storedPiece];
-                                                     SetDeployUI();
+                                                     //AlterPiece((InventoryPieces)storedPiece, -1);
+                                                     //deployPieceCount++;
+                                                     //deployPointCount += deployValues[storedPiece];
+                                                     //SetDeployUI();
                                                      if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
                                                      {
-                                                         hasPlacedPiece = true;
+                                                        AlterPiece((InventoryPieces)storedPiece, -1);
+                                                        deployPieceCount++;
+                                                        deployPointCount += deployValues[storedPiece];
+                                                        SetDeployUI();
+                                                        hasPlacedPiece = true;
                                                      }
                                                  }
                                              }
