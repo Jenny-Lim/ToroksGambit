@@ -720,6 +720,11 @@ public class Board : MonoBehaviour
         {
             deployBoard[location.x, location.y].SetActive(true);
             DeployLines l = deployBoard[location.x, location.y].GetComponent<DeployLines>();
+            //reset lines
+            l.right.SetActive(true);
+            l.left.SetActive(true);
+            l.up.SetActive(true);
+            l.down.SetActive(true);
             for (int i = 0; i < boardSize; i++)
             {
                 for (int j = 0; j < boardSize; j++)
