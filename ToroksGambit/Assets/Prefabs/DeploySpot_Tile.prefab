@@ -29,7 +29,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1367876183236630411, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
-      value: 0.04322423
+      value: 0.060558215
       objectReference: {fileID: 0}
     - target: {fileID: 1619182055553539678, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Name
@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1667639823829088939, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
-      value: 0.04322423
+      value: 0.060558215
       objectReference: {fileID: 0}
     - target: {fileID: 1781740712654767317, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_LocalPosition.x
@@ -161,7 +161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6807600972000818706, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
-      value: 0.04322423
+      value: 0.060558215
       objectReference: {fileID: 0}
     - target: {fileID: 7249972450416645889, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_CastShadows
@@ -185,7 +185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7249972450416645889, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
-      value: 0.04322423
+      value: 0.060558215
       objectReference: {fileID: 0}
     - target: {fileID: 7711206692120226175, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_LocalPosition.x
