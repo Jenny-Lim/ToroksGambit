@@ -16,6 +16,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1367876183236630411, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_Parameters.textureMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1367876183236630411, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.numCapVertices
       value: 4
       objectReference: {fileID: 0}
@@ -30,6 +34,10 @@ PrefabInstance:
     - target: {fileID: 1667639823829088939, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_ReceiveShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667639823829088939, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_Parameters.textureMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1667639823829088939, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.numCapVertices
@@ -124,6 +132,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6807600972000818706, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_Parameters.textureMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6807600972000818706, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.numCapVertices
       value: 4
       objectReference: {fileID: 0}
@@ -134,6 +146,10 @@ PrefabInstance:
     - target: {fileID: 7249972450416645889, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_ReceiveShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7249972450416645889, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
+      propertyPath: m_Parameters.textureMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7249972450416645889, guid: 97b9ed303c22ca94da3dc54a8774ec64, type: 3}
       propertyPath: m_Parameters.numCapVertices
