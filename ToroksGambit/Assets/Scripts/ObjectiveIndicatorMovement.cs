@@ -23,13 +23,13 @@ public class ObjectiveIndicatorMovement : MonoBehaviour
     {
         scaledTime = Time.time * speed;
         // scale in, scale out
-        if (GameStateManager.instance.GetGameState() == GameStateManager.GameState.deployment)
+        //if (GameStateManager.instance.GetGameState() == GameStateManager.GameState.deployment)
         {
             transform.localScale = new Vector3(Mathf.PingPong(scaledTime, scaleLength) + newScale, Mathf.PingPong(scaledTime, scaleLength) + newScale, Mathf.PingPong(scaledTime, scaleLength) + newScale);
         }
-        else
-        {
-            transform.localScale = originalScale;
-        }
+        //else
+        //{
+        //    transform.localScale = originalScale;
+        //}
     }
 }
