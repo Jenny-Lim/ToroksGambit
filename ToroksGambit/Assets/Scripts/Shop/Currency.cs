@@ -36,7 +36,7 @@ public class Currency : MonoBehaviour
 
     public void GetReward(int level) // idk im just thinking, might not be in here
     {
-        int amount = level * 10;
+        int amount = level * 6;
         Debug.Log("Amount rewarded: " + amount);
         instance.AddToCurrency(amount);
     }

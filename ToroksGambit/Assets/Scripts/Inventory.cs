@@ -19,8 +19,8 @@ public class Inventory : MonoBehaviour
     private RectTransform rectTrans;
     [SerializeField] private TextMeshProUGUI hideShowText;
     [SerializeField] private GameObject hideShowButton;
-    private int[] maxHeldPieces = {50,50,50,50,10};//the maximum number of each piece the player can have
-    [SerializeField] private int[] heldPieces = {20,20,20,20,10};//the amount of each piece the player has
+    private int[] maxHeldPieces = {8,4,4,3,1};//the maximum number of each piece the player can have
+    [SerializeField] private int[] heldPieces = {5,2,2,0,0};//the amount of each piece the player has
     [SerializeField] private float ghostPieceVertOffset = -0.05f;
     private bool infinitePieces = true;
     [SerializeField] public GameObject objectiveArea;
