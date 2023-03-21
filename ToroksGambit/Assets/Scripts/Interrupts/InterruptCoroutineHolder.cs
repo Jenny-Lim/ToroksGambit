@@ -60,6 +60,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
         {
             Destroy(Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y]);
             Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y] = null;
+            yield return null;
         }
 
         if ((int)holderType.piece >= (int)Piece.PieceType.king)
@@ -72,7 +73,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
         }
 
         GameObject placedPiece = Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y];// manipulate piece GO for animation effect thingy
-        print(placedPiece == true);
+        //print(placedPiece == true);
         Vector3 finalPos = placedPiece.transform.position;
         placedPiece.transform.position += Vector3.up * 6;
         Vector3 initPos = placedPiece.transform.position;
