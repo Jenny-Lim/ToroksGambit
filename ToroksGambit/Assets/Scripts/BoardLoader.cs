@@ -159,6 +159,7 @@ public class BoardLoader : MonoBehaviour
                         case 0:
                             CaptureNonPawnWinCondition newCapPawnWin = ScriptableObject.CreateInstance("CaptureNonPawnWinCondition") as CaptureNonPawnWinCondition;
                             GameStateManager.instance.winCondition = newCapPawnWin;
+                            Inventory.instance.requiredPiecesToPlay = 1;
                             break;
 
                         case 1:
@@ -169,11 +170,13 @@ public class BoardLoader : MonoBehaviour
                                 Board.instance.winLocations.Add(new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i + 1])));
                             }
                             GameStateManager.instance.winCondition = captureFlagWin;
+                            Inventory.instance.requiredPiecesToPlay = captureFlagWin.locations.Count;
                             break;
 
                         case 2:
                             CheckmateWinCondition checkmateWin = ScriptableObject.CreateInstance("CheckmateWinCondition") as CheckmateWinCondition;
                             GameStateManager.instance.winCondition = checkmateWin;
+                            Inventory.instance.requiredPiecesToPlay = 1;
                             break;
 
                         case 3:
@@ -186,6 +189,7 @@ public class BoardLoader : MonoBehaviour
                             }
                             kingOfHillWin.scoreToWin = int.Parse(splitLines[splitLines.Length - 1]);
                             GameStateManager.instance.winCondition = kingOfHillWin;
+                            Inventory.instance.requiredPiecesToPlay = 1;
                             break;
                     }
                 }

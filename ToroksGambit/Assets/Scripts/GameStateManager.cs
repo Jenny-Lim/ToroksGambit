@@ -318,9 +318,10 @@ public class GameStateManager : MonoBehaviour
         Board.instance.Reset();
         Board.instance.ResetTiles();
 
-        Inventory.instance.hasPlacedPiece = false;
+        //Inventory.instance.hasPlacedPiece = false;
+        Inventory.instance.numPiecesPlaced = 0;
         //Inventory.instance.ShowInventoryPanel();
-        
+
 
         if (currentLevelNumber != -1)
         {
@@ -409,6 +410,7 @@ public class GameStateManager : MonoBehaviour
     public void ResetToDeploy()
     {
         ChangeGameState(GameState.deployment);
+        Inventory.instance.numPiecesPlaced = 0;
         turnCount = 1;
         isPlayersTurn = true;
         Inventory.instance.hasPlacedPiece = false;//replaced below

@@ -22002,8 +22002,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
-  - DeploySaveTest
   - Level1
+  - DeploySaveTest
   - InterruptsV2Test
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
@@ -24188,6 +24188,8 @@ MonoBehaviour:
   objectiveText: {fileID: 1907121239}
   levelCountText: {fileID: 1914540989}
   hasPlacedPiece: 0
+  numPiecesPlaced: 0
+  requiredPiecesToPlay: 0
   deployPointCap: 21
   deployPieceCap: 5
   deployUIObject: {fileID: 737868337}

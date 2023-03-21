@@ -60,6 +60,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelCountText;
 
     public bool hasPlacedPiece = false;
+    public int numPiecesPlaced = 0;
+    public int requiredPiecesToPlay = 0;
 
     private bool deployCapReached;
 
@@ -114,10 +116,14 @@ public class Inventory : MonoBehaviour
             deployCapReached = false;
         }
 
-        if (hasPlacedPiece == true)
+        if (numPiecesPlaced >= requiredPiecesToPlay)
         {
             
             startButton.SetActive(true);
+        }
+        else
+        {
+            startButton.SetActive(false);
         }
 
         objectiveArea.SetActive(CameraHeadMovements.instance.menuDone);
@@ -159,11 +165,7 @@ public class Inventory : MonoBehaviour
                     {
                         if (Board.instance.torokPiece && storedPiece < 6)//
                         {
-                            if (Board.instance.PlacePieceTorok(hit.transform, storedPiece) == true)
-                            {
-                                hasPlacedPiece
-                                    = true;
-                            }
+                            Board.instance.PlacePieceTorok(hit.transform, storedPiece);
                         }
                         else if (storedPiece >= (int)Piece.PieceType.wall && storedPiece <= (int)Piece.PieceType.hole)
                         {
@@ -209,7 +211,7 @@ public class Inventory : MonoBehaviour
                                                         deployPieceCount++;
                                                         deployPointCount += deployValues[storedPiece];
                                                         SetDeployUI();
-                                                        hasPlacedPiece = true;
+                                                        numPiecesPlaced++;
                                                      }
                                                  }
                                              }
@@ -249,7 +251,7 @@ public class Inventory : MonoBehaviour
                                                 if (Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, storedPiece) == true)
                                                 {
                                                     Debug.Log("REMOVE?");
-                                                    hasPlacedPiece = true;
+                                                    //numPiecesPlaced--;
                                                 }
                                             }
                                         }
@@ -257,7 +259,7 @@ public class Inventory : MonoBehaviour
                                 }
                                 if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
                                 {
-                                    hasPlacedPiece = true;
+                                    //hasPlacedPiece = true;
                                 }
                                 
                             }
@@ -287,7 +289,7 @@ public class Inventory : MonoBehaviour
                         Debug.Log((int)storedPiece);
                         if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
                         {
-                            hasPlacedPiece = true;
+                            numPiecesPlaced--;
                         }
                         if ((int)hitPiece.type < 5)
                         {
