@@ -363,6 +363,26 @@ public class GameStateManager : MonoBehaviour
         Inventory.instance.SetObjective();
         //print("Current Board Score " + BoardAnalyzer.instance.Analyze(Board.pieceBoard));
         //check win condition
+
+        int torokPieceCount = 0;
+        for (int i = 0; i < Board.boardSize; i++)
+        {
+            for (int j = 0; j < Board.boardSize; j++)
+            {
+                if (Board.pieceBoard[i,j] == null) { continue; }
+
+                Piece targetPiece = Board.pieceBoard[i,j].GetComponent<Piece>();
+
+                if (targetPiece.isTorok && (int)targetPiece.type <= (int)Piece.PieceType.queen) { 
+                    torokPieceCount++;
+                }
+            }
+        }
+
+        if (torokPieceCount <= 1)
+        {
+            MinMax.instance.SetNewDepth(1);
+        }
     }
 
     public static int GetTurnCount()
