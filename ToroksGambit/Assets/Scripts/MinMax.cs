@@ -12,6 +12,7 @@ public class MinMax : MonoBehaviour
     private BoardAnalyzer analyzer = new BoardAnalyzer();
     [SerializeField] public int maxDepth = 1;
     MoveComparer mc = new MoveComparer();
+    private int initDepth;
 
     //int numOfUndoCalled = 0;
     //int numOfMovesCalled = 0;
@@ -42,9 +43,13 @@ public class MinMax : MonoBehaviour
         {
             instance = this;
         }
+        initDepth = maxDepth;
     }
 
-
+    public void ResetDepth()
+    {
+        maxDepth = initDepth;
+    }
     //the recursive wrapper for the minmax call
     public Move GetMinMaxMove(playerToMove toMove)
     {

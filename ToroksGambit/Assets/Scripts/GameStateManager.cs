@@ -295,6 +295,7 @@ public class GameStateManager : MonoBehaviour
         Inventory.instance.numPiecesPlaced = 0;
         //Inventory.instance.ShowInventoryPanel();
 
+        MinMax.instance.ResetDepth();
 
         if (currentLevelNumber != -1)
         {

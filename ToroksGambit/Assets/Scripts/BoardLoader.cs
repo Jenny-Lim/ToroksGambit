@@ -207,6 +207,7 @@ public class BoardLoader : MonoBehaviour
                 {
                     Inventory.instance.deployPieceCap = int.Parse(splitLines[1]);
                     Inventory.instance.deployPointCap = int.Parse(splitLines[2]);
+                    Inventory.instance.SetDeployUI();
                 }
             }
         }
