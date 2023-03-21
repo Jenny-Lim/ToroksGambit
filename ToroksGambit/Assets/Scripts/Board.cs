@@ -1228,7 +1228,7 @@ public class Board : MonoBehaviour
         {
             Destroy(pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]);
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
-            PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceMoving - 1);
+            PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceMoving - 1);
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;            
@@ -1237,7 +1237,11 @@ public class Board : MonoBehaviour
         {
             Destroy(pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]);
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
-            PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY,0);
+            if(moveList[moveList.Count - 1].movingTorok)
+            {
+                PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0);
+            }
+            PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0);
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
