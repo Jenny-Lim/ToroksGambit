@@ -1081,9 +1081,16 @@ public class Board : MonoBehaviour
         bool oldIsTorok = piece.isTorok;
         bool oldIsTough = piece.isTough;
         bool oldLastChance = piece.lastChance;
-        
 
-        moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, lastChanceCheck, piece.moved, takenPieceMoved)); // moveList is a list of the moves done
+        bool pawnWillPromote = false;
+
+        if (((!piece.isTorok && endY == boardSize - 1 && piece.type == Piece.PieceType.pawn) || (piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)))
+        { 
+            pawnWillPromote = true;
+        }
+
+
+            moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, lastChanceCheck, piece.moved, takenPieceMoved, pawnWillPromote)); // moveList is a list of the moves done
 
         if(willPromote && !lastChanceCheck)//if this piece captured another piece and has promotion
         {
@@ -1144,11 +1151,21 @@ public class Board : MonoBehaviour
 
         if (!piece.isTorok && endY == boardSize - 1 && piece.type == Piece.PieceType.pawn)
         {
-            Debug.Log("PLAYER REACHED END");
+            //PlacePiece(endX, endY, 4);
+            Debug.Log("PLAYER PAWN REACHED END");
+            Destroy(pieceBoard[endX, endY]);
+            pieceBoard[endX, endY] = null;
+            PlacePiece(endX, endY, 4);
+            //piece.pawnPromote = true;
+            //PlacePiece(endX, endY, 4);
+
         }
         if (piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)
         {
-            Debug.Log("TOROK REACHED END");
+            Debug.Log("TOROK PAWN REACHED END");
+            Destroy(pieceBoard[endX, endY]);
+            pieceBoard[endX, endY] = null;
+            PlacePieceTorok(endX, endY, 4);
         }
 
     }
@@ -1215,6 +1232,16 @@ public class Board : MonoBehaviour
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;            
+        }
+        else if (moveList[moveList.Count - 1].pawnPromote)
+        {
+            Destroy(pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]);
+            pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
+            PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY,0);
+            MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
+            pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
+            pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
+
         }
         else
         {

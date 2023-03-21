@@ -36,9 +36,11 @@ public class Move
     public float score = 0f;
     public int capturedPiece = -1; // this is null
     public int capturingPiece = -1;
+
+    public bool pawnPromote;
         
 
-    public Move(int x1, int y1, int x2, int y2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck, bool mPro, bool tPro, bool mTough, bool tTough, bool mLC, bool tLC, bool moveCheck, bool takenMoveCheck)
+    public Move(int x1, int y1, int x2, int y2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck, bool mPro, bool tPro, bool mTough, bool tTough, bool mLC, bool tLC, bool moveCheck, bool takenMoveCheck, bool pawnPromoted)
     {
         startX = x1;
         startY = y1;
@@ -61,6 +63,8 @@ public class Move
 
         setFirstMove = moveCheck;
         takenPieceSetFirstMove = takenMoveCheck;
+
+        pawnPromote = pawnPromoted;
 
     }
 

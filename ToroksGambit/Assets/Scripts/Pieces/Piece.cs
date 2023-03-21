@@ -42,6 +42,10 @@ public class Piece : MonoBehaviour
 
     public GameObject[,] pieceBoard;
 
+    public bool pawnPromote;
+
+
+
     void Awake()
     {
         //isTaken = false;
