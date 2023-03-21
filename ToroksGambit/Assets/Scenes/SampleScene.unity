@@ -11043,14 +11043,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.009831528, y: -0.013857071, z: 0.0014586847, w: 0.9998546}
+  m_LocalRotation: {x: 0.009851239, y: -0.013848154, z: 0.00013644117, w: 0.9998556}
   m_LocalPosition: {x: 4.72, y: 2.7, z: -93.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 1.129, y: -1.587, z: 0.152}
+  m_LocalEulerAnglesHint: {x: 1.129, y: -1.587, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11067,7 +11067,7 @@ MonoBehaviour:
   speed: 4
   LookAtShopRotation: {x: 8.933286, y: 91.481606, z: 359.07385}
   lookAtBoardPosition: {x: 4.72, y: 6.26, z: -4.95}
-  lookAtBoardRotation: {x: 34.565964, y: 0, z: 359.0896}
+  lookAtBoardRotation: {x: 34.565964, y: 0, z: 0}
   lookAtShopPosition: {x: 2.54, y: 6.26, z: -7.77}
   titleScreenPosition: {x: 3.46, y: 6.1, z: -50}
   menuDone: 0
