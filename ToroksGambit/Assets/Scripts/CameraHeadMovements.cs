@@ -209,12 +209,12 @@ public class CameraHeadMovements : MonoBehaviour
     {
         Debug.Log("get out LookAtPlay");
         movementInProgress = true;
-        while (Vector3.Distance(transform.position, titleScreenPosition) > 0.1f)
+        /*while (Vector3.Distance(transform.position, titleScreenPosition) > 0.1f)
         {
             transform.position = Vector3.Lerp(transform.position, titleScreenPosition, speed * Time.deltaTime);
             transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, Vector3.zero, speed * Time.deltaTime);
             yield return null;
-        }
+        }*/
 
 
         float elapsedTime = 0f;
