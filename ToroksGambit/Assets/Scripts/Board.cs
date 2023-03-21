@@ -624,7 +624,7 @@ public class Board : MonoBehaviour
 
     public void PlaceObstacle(int xPos, int yPos, int obstacleId)
     {
-        Debug.Log("obstacle id is " + obstacleId);
+        //Debug.Log("obstacle id is " + obstacleId);
         if (obstacleId >= 0 && obstacleId < obstaclePrefabs.Length)
         {
             GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(obstaclePrefabs[obstacleId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate obstacle and place in pieceBoard location
@@ -1087,6 +1087,7 @@ public class Board : MonoBehaviour
 
         if(willPromote && !lastChanceCheck)//if this piece captured another piece and has promotion
         {
+            Debug.Log("PROMOTE PIECE");
             if(piece.type != Piece.PieceType.queen)
             {
                 PlacePiece(endX,endY,pieceIdMoving);
@@ -1136,6 +1137,7 @@ public class Board : MonoBehaviour
         }
         else
         {
+            Debug.Log("LAST CHANCE ACTIVATE");
             Destroy(pieceBoard[startX, startY]);
             pieceBoard[startX, startY] = null;
         }
@@ -1190,7 +1192,7 @@ public class Board : MonoBehaviour
     //repeatedly calling will undo moves until beggining
     public void UndoMove()
     {
-        //Debug.Log("Undo called");
+        Debug.Log("Undo called");
 
         //GameObject startingPiece = null;
         GameObject endPiece = null;

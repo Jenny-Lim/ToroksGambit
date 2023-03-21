@@ -34,7 +34,7 @@ public class Knight : Piece
         MovesAdd_K(pieceX - 1, pieceY + 2);
         MovesAdd_K(pieceX - 2, pieceY + 1);
 
-        MoveFiltering(moves);
+        MoveFiltering(moves, isTorok);
 
         //base.UpdateMoves();
     }

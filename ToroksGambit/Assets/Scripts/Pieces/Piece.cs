@@ -72,17 +72,20 @@ public class Piece : MonoBehaviour
         // move filtering for king check
     }
 
-    public void MoveFiltering(List<Move> moves)
+    public void MoveFiltering(List<Move> moves, bool isNotPlayer)
     {
-        for (int i = moves.Count-1; i > -1; i--)  
+        if(isNotPlayer)
         {
-            Board.instance.MovePiece(moves[i].startX, moves[i].startY, moves[i].endX, moves[i].endY);
-            if (Board.instance.IsKingInCheck(isTorok))
+            for (int i = moves.Count-1; i > -1; i--)  
             {
-                Debug.Log("removed a move");
-                moves.RemoveAt(i);
+                Board.instance.MovePiece(moves[i].startX, moves[i].startY, moves[i].endX, moves[i].endY);
+                if (Board.instance.IsKingInCheck(isTorok))
+                {
+                    Debug.Log("removed a move");
+                    moves.RemoveAt(i);
+                }
+                Board.instance.UndoMove();
             }
-            Board.instance.UndoMove();
         }
     }
 

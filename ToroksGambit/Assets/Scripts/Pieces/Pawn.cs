@@ -89,6 +89,6 @@ public class Pawn : Piece
             }
         }
 
-        MoveFiltering(moves);
+        MoveFiltering(moves, isTorok);
     }
 }

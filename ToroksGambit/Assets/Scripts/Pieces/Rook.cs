@@ -31,7 +31,7 @@ public class Rook : Piece
         MovesAdd(0, 1);
         MovesAdd(0, -1);
 
-        MoveFiltering(moves);
+        MoveFiltering(moves, isTorok);
 
     }
 
