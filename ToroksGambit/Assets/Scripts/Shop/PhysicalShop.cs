@@ -59,10 +59,30 @@ public class PhysicalShop : MonoBehaviour
 
     public void PhysicalShopUpdate()// created by jordan to allow for raycasts to use exit button/sign whatever
     {
-        if (Input.GetMouseButtonDown(0))
+        RaycastHit hit;
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, 25f))
         {
-            RaycastHit hit;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (hit.transform.CompareTag("Chess Piece"))
+            {
+                Debug.Log("Shop Piece HIt");
+                pieceDescriptionObject.SetActive(true);
+            }
+            if (hit.transform.CompareTag("StoreStock"))
+            {
+                Debug.Log("HONK");
+            }
+        }
+        else
+        {
+            Debug.Log("OFF PIECE");
+            pieceDescriptionObject.SetActive(false);
+        }
+
+                if (Input.GetMouseButtonDown(0))
+        {
+            //RaycastHit hit;
+           //Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit ,25f))
             {
@@ -169,7 +189,7 @@ public class PhysicalShop : MonoBehaviour
             {
                 //Debug.Log(i);
                 Destroy(shopPieceModels[i]);
-                priceText[i].text = "SOLD OUT";
+                priceText[i].text = "";
                 Currency.instance.SubtractFromCurrency(prices[pieceType[i]]);
                 //add to inventory
                 Inventory.instance.AlterPiece((Inventory.InventoryPieces)pieceType[i],1);
