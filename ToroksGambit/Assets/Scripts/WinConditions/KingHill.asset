@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScore: 0
   torokScore: 0
-  scoreToWin: 3
+  scoreToWin: 7
+  conditionType: 3
   locations:
   - {x: 4, y: 3}
   - {x: 3, y: 4}
