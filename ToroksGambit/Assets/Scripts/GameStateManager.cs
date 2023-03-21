@@ -1,11 +1,8 @@
 //using OpenCover.Framework.Model;
 using UnityEngine;
-using System.IO;
 using System.Collections.Generic;
-using Unity.Jobs;
 using System.Collections;
 using TMPro;
-using UnityEngine.UIElements;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -120,33 +117,7 @@ public class GameStateManager : MonoBehaviour
                 else
                 {
                     
-                    /*if (lookingForMove)
-                    {
-                        if (handle.IsCompleted)
-                        {
-                            Move resultMove = moveSearchJob.selectedMove;
-                            if (resultMove != null)
-                            {
-                                //Board.instance.MovePieceVisual(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY, Board.pieceBoard[resultMove.startX, resultMove.startY], resultMove.promoted);
-                                Board.instance.canMove = false;
-                                Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
-                            }
-                            else
-                            {
-                                Debug.Log("MinMax was not able to find a move. Either the game has ended, or it has no pieces on the board");
-                                Debug.Log("Switching back to player's turn for convenience");
-                            }
-                            lookingForMove = false;
-                            EndTurn();
-                        }
-                    }
-                    else
-                    {
-                        moveSearchJob = new MinMaxJob(MinMax.instance.maxDepth, MinMaxJob.playerToMove.torok);
-                        handle = moveSearchJob.Schedule();
-                        lookingForMove = true;
-                    }*/
-
+                    
 
                     if (!TorokIsMoving)
                     {
@@ -217,21 +188,23 @@ public class GameStateManager : MonoBehaviour
 
     public IEnumerator titleCoRo()
     {
+        Debug.Log("insdie titleCoRo");
         //if (MainMenu.instance.menuDone) {
         while (!CameraHeadMovements.instance.menuDone)
         {
             //CameraHeadMovements.instance.LookAtPlayArea();
             yield return null;
         }
-        ChangeGameState(GameState.intro);
+
         activeCoRo = null;
         yield return new WaitForSeconds(0.5f);
+        ChangeGameState(GameState.intro);
         //}
     }
 
     public IEnumerator IntroCoRo()
     {
-        Debug.Log("Called intro coro");
+        Debug.Log("insdie IntroCoRo");
         yield return new WaitForSeconds(0.5f);
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
         
