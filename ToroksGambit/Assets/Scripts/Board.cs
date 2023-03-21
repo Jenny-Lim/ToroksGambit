@@ -797,11 +797,11 @@ public class Board : MonoBehaviour
             if ((move.endX == endX) && (move.endY == endY))
             {
                 Vector3 startIndicatorPos = hitBoxBoard[move.startX, move.startY].transform.position;
-                startIndicatorPos.y = 0.113f;
+                startIndicatorPos.y = 0.306f;
                 moveStartIndicator.transform.position = startIndicatorPos;
 
                 Vector3 endIndicatorPos = hitBoxBoard[move.endX, move.endY].transform.position;
-                endIndicatorPos.y = 0.113f;
+                endIndicatorPos.y = 0.306f;
                 moveEndIndicator.transform.position = endIndicatorPos;
 
                 bool pieceAtEndLocation = pieceBoard[endX,endY] != null;

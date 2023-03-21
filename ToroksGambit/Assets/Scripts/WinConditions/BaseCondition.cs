@@ -65,6 +65,7 @@ public class BaseCondition: ScriptableObject
 
         if (Board.instance.GetAllMoves(false).Count < 1)
         {
+            Debug.Log("is player lose got 0 avail moves");
             return true;
         }
 

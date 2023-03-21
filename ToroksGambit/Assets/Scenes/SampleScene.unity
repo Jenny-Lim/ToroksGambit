@@ -8799,6 +8799,9 @@ MonoBehaviour:
   - CTFTest
   - InterruptsV2Test
   - DeploySaveTest
+  - Level4
+  - Level3
+  - Level5
 --- !u!4 &775294861
 Transform:
   m_ObjectHideFlags: 0
@@ -22003,6 +22006,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
+  - Level5
+  - Level4
   - Level3
   - DeploySaveTest
   - Level1

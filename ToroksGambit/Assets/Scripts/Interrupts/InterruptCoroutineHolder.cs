@@ -72,6 +72,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
         }
 
         GameObject placedPiece = Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y];// manipulate piece GO for animation effect thingy
+        print(placedPiece == true);
         Vector3 finalPos = placedPiece.transform.position;
         placedPiece.transform.position += Vector3.up * 6;
         Vector3 initPos = placedPiece.transform.position;
@@ -83,12 +84,13 @@ public class InterruptCoroutineHolder : MonoBehaviour
         float rand = Random.Range(0,1);
         //**    THE COMMENTED CODE BELOW IS FOR USE WHEN VFX CAN BE USED**
 
-        //if (rand <= 0.5 || (int)holderType.piece > (int)BaseInterrupt.PieceType.Queen)//use smoke effect
-        //{
-            //placedPiece.transform.position = finalPos;
-        //}
-        //else//use fall effect
-        //{
+        if (rand <= 0.5 || (int)holderType.piece > (int)BaseInterrupt.PieceType.Queen)//use smoke effect
+        {
+            print(placedPiece == true);
+            placedPiece.transform.position = finalPos;
+        }
+        else//use fall effect
+        {
             float percentMoved = 0;
             float desiredTime = 1.3f;
             float elapsedTime = 0;
@@ -102,7 +104,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
                 placedPiece.transform.position = Vector3.Lerp(initPos, finalPos, percentMoved);
                 yield return null;
             }
-        //}
+        }
 
         //return camera to board can be placed here for after effect 
 
