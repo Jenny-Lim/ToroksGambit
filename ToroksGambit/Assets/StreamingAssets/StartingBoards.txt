@@ -1,7 +1,7 @@
 boardstart
 Level1
 WinCondition,0
-DeploymentZone,0,0,1,0,2,0,3,0,4,0,5,0,6,0,7,0
+DeploymentZone,1,0,2,0,3,0,4,0,5,0,6,0
 Piece,6,0,0,False,False,False,False
 Piece,6,0,1,False,False,False,False
 Piece,6,0,2,False,False,False,False
@@ -32,6 +32,7 @@ boardend
 boardstart
 Level2
 WinCondition,3,4,3,3,4,3
+DeploymentZone,0,0,1,0,2,0,3,0,4,0,5,0,6,0,7,0
 Piece,6,2,5,False,False,False,False
 Piece,6,3,3,False,False,False,False
 Piece,6,4,4,False,False,False,False
@@ -47,6 +48,7 @@ boardend
 boardstart
 CTFTest
 WinCondition,1,0,0,0,1,0,2
+DeploymentZone,0,0,1,0,2,0,3,0,4,0,5,0,6,0,7,0
 Piece,1,1,7,True,False,False,False
 Piece,1,3,7,True,False,False,False
 Piece,1,5,7,True,False,False,False
@@ -56,6 +58,7 @@ boardstart
 InterruptsV2Test
 WinCondition,1,0,0,0,1,0,2
 Interrupt,0,2,5,5,1,3
+DeploymentZone,0,0,1,0,2,0,3,0,4,0,5,0,6,0,7,0
 Piece,1,1,7,True,False,False,False
 Piece,1,3,7,True,False,False,False
 Piece,1,5,7,True,False,False,False
