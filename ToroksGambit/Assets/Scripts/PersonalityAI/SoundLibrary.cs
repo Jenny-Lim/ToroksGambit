@@ -75,11 +75,12 @@ public class SoundLibrary
                 masterDialogueList[categoryIndex].Add(clip as AudioClip);
             }
 
+            //this was causing the audio to not play, need to ask rick about this cuz i think if this is not done it never unloads them so it just eats up memory
             //unload resources
-            for (int i = 0; i < clips.Length; i++)
+            /*for (int i = 0; i < clips.Length; i++)
             {
                 Resources.UnloadAsset(clips[i]);
-            }
+            }*/
         }
  
     }

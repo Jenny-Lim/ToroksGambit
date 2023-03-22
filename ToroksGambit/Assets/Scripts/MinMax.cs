@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Jobs;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Jobs;
 
@@ -18,6 +19,12 @@ public class MinMax : MonoBehaviour
     //int numOfMovesCalled = 0;
 
     int totalNumNodesLookedAt = 0;
+    int searchCounter = 0;
+    private bool initRunning = false;
+    [HideInInspector] public bool lookingForMove = false;
+    [HideInInspector] public bool finishedSearch = false;
+    public int maxSearchPerFrame = 100;
+
 /*
     private class ScoredMove
     {
@@ -167,6 +174,232 @@ public class MinMax : MonoBehaviour
     {
         maxDepth = newDepth;
     }
+
+    private IEnumerator MinMaxRecursiveCo(DataHolder<ScoredMove> resultData, int depth, playerToMove whosMoving, float alpha, float beta)
+    {
+        //termination
+        if (depth <= 0)
+        {
+            resultData.data = new ScoredMove(null, analyzer.Analyze(Board.pieceBoard, GameStateManager.turnCount + maxDepth));
+            yield break;
+        }
+
+        if (whosMoving == playerToMove.player)//max
+        {
+            List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
+
+            //check if allavailableMoves has no moves
+            if (allAvailableMoves.Count < 1)
+            {
+                resultData.data = new ScoredMove(null, float.NegativeInfinity);
+                yield break;
+            }
+
+            allAvailableMoves.Sort(mc); // jenny
+
+            resultData.data = new ScoredMove(allAvailableMoves[0], float.NegativeInfinity);//set best move score to be as low as possible);
+            //print("Amount of moves player moves available: " + allAvailableMoves.Count);
+
+            foreach (Move move in allAvailableMoves)
+            {
+                searchCounter++;//increment how many searchs you have done this frame
+                if (searchCounter >= maxSearchPerFrame)//if done max searchs yield for next frame
+                {
+                    searchCounter = 0;
+                    yield return null;
+                }
+
+                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+
+                DataHolder<ScoredMove> recursiveResult = new DataHolder<ScoredMove>(); //= MinMaxRecursive(depth - 1, playerToMove.torok, alpha, beta);//recursive call data storage
+
+                yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.torok, alpha, beta));//recursive call
+
+                Board.instance.UndoMove();//undo previous move
+
+                if (recursiveResult.data.score > resultData.data.score)//if subtree result is better make best move equal to that
+                {
+                    resultData.data.move = move;
+                    resultData.data.score = recursiveResult.data.score;
+                }
+
+                alpha = Mathf.Max(alpha, resultData.data.score);//update alpha value if needed
+
+                if (alpha >= beta)
+                {
+                    //print("broke in max");
+                    break;
+                }
+            }
+        }
+        else
+        {
+            List<Move> allAvailableMoves = Board.instance.GetAllMoves(true);// get list of all possible moves
+
+            //check if allavailableMoves has no moves
+            if (allAvailableMoves.Count < 1)
+            {
+                resultData.data = new ScoredMove(null, float.PositiveInfinity);
+                yield break;
+            }
+
+            allAvailableMoves.Sort(mc); // jenny
+
+            resultData.data = new ScoredMove(allAvailableMoves[0], float.PositiveInfinity);
+            //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
+            foreach (Move move in allAvailableMoves)
+            {
+                searchCounter++;//increment how many searchs you have done this frame
+                if (searchCounter >= maxSearchPerFrame)//if done max searchs yield for next frame
+                {
+                    searchCounter = 0;
+                    yield return null;
+                }
+
+                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+
+                DataHolder<ScoredMove> recursiveResult = new DataHolder<ScoredMove>(); //= MinMaxRecursive(depth - 1, playerToMove.player, alpha, beta);//recursive call data storage
+
+                yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.player, alpha, beta));//recursive call
+
+                Board.instance.UndoMove();//undo previous move
+
+                if (recursiveResult.data.score < resultData.data.score)// if subtree is better make best move equal to that
+                {
+                    resultData.data.move = move;
+                    resultData.data.score = recursiveResult.data.score;
+                }
+
+                beta = Mathf.Min(beta, resultData.data.score);//update beta if needed
+
+                if (alpha >= beta)
+                {
+                    //print("broke in main");
+                    break;
+                }
+
+            }
+        }
+    }
+
+    private IEnumerator MinMaxRecursiveCoInit(DataHolder<ScoredMove> resultData, int depth, playerToMove whosMoving, float alpha, float beta)
+    {
+        initRunning = true;
+
+        //termination
+        if (depth <= 0)
+        {
+            resultData.data = new ScoredMove(null, analyzer.Analyze(Board.pieceBoard, GameStateManager.turnCount + maxDepth));
+            initRunning = false;
+            yield break;
+        }
+
+        if (whosMoving == playerToMove.player)//max
+        {
+            List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
+
+            //check if allavailableMoves has no moves
+            if (allAvailableMoves.Count < 1)
+            {
+                resultData.data = new ScoredMove(null, float.NegativeInfinity);
+                initRunning = false;
+                yield break;
+            }
+
+            allAvailableMoves.Sort(mc); // jenny
+
+            resultData.data = new ScoredMove(allAvailableMoves[0], float.NegativeInfinity);//set best move score to be as low as possible);
+            //print("Amount of moves player moves available: " + allAvailableMoves.Count);
+
+            foreach (Move move in allAvailableMoves)
+            {
+                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+
+                DataHolder<ScoredMove> recursiveResult = new DataHolder<ScoredMove>(); //= MinMaxRecursive(depth - 1, playerToMove.torok, alpha, beta);//recursive call data storage
+
+                yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.torok, alpha, beta));//recursive call
+
+                Board.instance.UndoMove();//undo previous move
+
+                if (recursiveResult.data.score > resultData.data.score)//if subtree result is better make best move equal to that
+                {
+                    resultData.data.move = move;
+                    resultData.data.score = recursiveResult.data.score;
+                }
+
+                alpha = Mathf.Max(alpha, resultData.data.score);//update alpha value if needed
+
+                if (alpha >= beta)
+                {
+                    //print("broke in max");
+                    break;
+                }
+            }
+        }
+        else
+        {
+            List<Move> allAvailableMoves = Board.instance.GetAllMoves(true);// get list of all possible moves
+
+            //check if allavailableMoves has no moves
+            if (allAvailableMoves.Count < 1)
+            {
+                resultData.data = new ScoredMove(null, float.PositiveInfinity);
+                initRunning = false;
+                yield break;
+            }
+
+            allAvailableMoves.Sort(mc); // jenny
+
+            resultData.data = new ScoredMove(allAvailableMoves[0], float.PositiveInfinity);
+            //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
+            foreach (Move move in allAvailableMoves)
+            {
+                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+
+                DataHolder<ScoredMove> recursiveResult = new DataHolder<ScoredMove>(); //= MinMaxRecursive(depth - 1, playerToMove.player, alpha, beta);//recursive call data storage
+
+                yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.player, alpha, beta));//recursive call
+
+                Board.instance.UndoMove();//undo previous move
+
+                if (recursiveResult.data.score < resultData.data.score)// if subtree is better make best move equal to that
+                {
+                    resultData.data.move = move;
+                    resultData.data.score = recursiveResult.data.score;
+                }
+
+                beta = Mathf.Min(beta, resultData.data.score);//update beta if needed
+
+                if (alpha >= beta)
+                {
+                    //print("broke in main");
+                    break;
+                }
+
+            }
+        }
+
+        initRunning = false;
+    }
+
+    public IEnumerator GetMinMaxMoveCo(DataHolder<Move> resultMove,playerToMove toMove)
+    {
+        lookingForMove = true;
+
+
+        DataHolder<ScoredMove> finalResult = new DataHolder<ScoredMove>();
+        searchCounter = 0;
+
+        yield return StartCoroutine(MinMaxRecursiveCoInit(finalResult,maxDepth, toMove, float.MinValue, float.MaxValue));
+
+        /*while (initRunning)
+        {
+            yield return null;
+        }*/
+
+        resultMove.data = finalResult.data.move;
+        lookingForMove = false;
+    }
 }
 
 public struct ScoredMove
@@ -203,6 +436,22 @@ public class MoveComparer : IComparer<Move> // jenny -- makes it better yippee :
     }
 }
 
+
+public class DataHolder<T>
+{
+    
+    public T data;
+
+    public DataHolder()
+    {
+        data = default(T);
+    }
+
+    public DataHolder(T newData)
+    {
+        data = newData;
+    }
+}
 /*
 public struct MinMaxJob : IJob
 {

@@ -39,6 +39,8 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] private static TextMeshProUGUI objectiveText;
 
+    private DataHolder<Move> resultingMove;
+
     public GameState GetGameState()
     {
         return currentState;
@@ -116,9 +118,23 @@ public class GameStateManager : MonoBehaviour
                 }
                 else
                 {
-                    
-                    
+                    //**THIS IS THE ONE THAT USES A MULTIPLE FRAME SEARCH**
+                    /*if (!TorokIsMoving)//if not currently looking for a move
+                    {
+                        resultingMove = new DataHolder<Move>();
+                        MinMax.instance.StartCoroutine(MinMax.instance.GetMinMaxMoveCo(resultingMove, MinMax.playerToMove.torok));
+                        TorokIsMoving = true;
+                    }
+                    else//if already looking for move
+                    {
+                        if (!MinMax.instance.lookingForMove && Board.instance.canMove == true)// <- means finished searching
+                        {
+                            Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
+                            Board.instance.canMove = false;
+                        }
+                    }*/
 
+                    //**THIS IS THE ONE THAT USES A SINGLE FRAME SEARCH**
                     if (!TorokIsMoving)
                     {
                         TorokIsMoving = true;
