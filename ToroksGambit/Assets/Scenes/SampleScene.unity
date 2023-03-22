@@ -5670,7 +5670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 22144a22c0c0b074f86fc07cfc51d31b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -13.2946415
+      value: -29.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 22144a22c0c0b074f86fc07cfc51d31b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5712,6 +5712,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 57612b070a18a9c4bbea3d2bddae2876, type: 2}
+    - target: {fileID: -8212321458638540018, guid: 22144a22c0c0b074f86fc07cfc51d31b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -7745010685568182239, guid: 22144a22c0c0b074f86fc07cfc51d31b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -13415,6 +13419,26 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 22144a22c0c0b074f86fc07cfc51d31b, type: 3}
   m_PrefabInstance: {fileID: 388293505}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1155828369
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155828368}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 98c7780c5cea523458bf49736d4470d0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1158447065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16817,6 +16841,7 @@ MonoBehaviour:
   pieceDescriptionObject: {fileID: 1205953926}
   pieceDescription: {fileID: 1205953928}
   canvas: {fileID: 1981679070}
+  anim: {fileID: 1155828369}
 --- !u!1 &1477407502
 GameObject:
   m_ObjectHideFlags: 0
@@ -22006,10 +22031,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
+  - DeploySaveTest
   - Level5
   - Level4
   - Level3
-  - DeploySaveTest
   - Level1
   - InterruptsV2Test
   currentLevelNumber: 0

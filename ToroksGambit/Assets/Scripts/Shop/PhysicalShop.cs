@@ -39,6 +39,8 @@ public class PhysicalShop : MonoBehaviour
     private float canvasWidth;
     private float canvasHeight;
 
+    [SerializeField] private Animator anim;
+
     private void Awake()
     {
         instance = this;
@@ -89,14 +91,16 @@ public class PhysicalShop : MonoBehaviour
                 if (hit.transform.CompareTag("LeaveShopSign"))
                 {
                     //leave shop function
+                    anim.SetBool("ExitedShop", true);
                     piecePanels.SetActive(false);
                     Inventory.instance.objectiveArea.SetActive(true);
                     Currency.instance.ticketsTxt.enabled = false;
-                    shopkeeper.SetActive(false);
                     SaveManager.instance.SaveGame();
                     c.LookAtBoard();
                     GameStateManager.instance.SetNextLevel();
                     pieceDescriptionObject.SetActive(false);
+                    Invoke("ShopkeeperInactive", 1.0f);
+                    //shopkeeper.SetActive(false);
                 }
             }
         }
@@ -111,6 +115,11 @@ public class PhysicalShop : MonoBehaviour
         mousePos.y = (float)(mousePos.y - (canvasHeight * 0.5));
         descriptionRect.anchoredPosition = mousePos;
 
+    }
+
+    void ShopkeeperInactive()
+    {
+        shopkeeper.SetActive(false);
     }
 
     public void InitializeShop()
@@ -174,6 +183,7 @@ public class PhysicalShop : MonoBehaviour
         piecePanels.SetActive(true);
         Currency.instance.ticketsTxt.enabled = true;
         shopkeeper.SetActive(true);
+        anim.SetBool("EnteredShop", true);
         for (int i = 0; i < shopPieceModels.Length; i++)
         {
             uiSpots[i].SetActive(true);
