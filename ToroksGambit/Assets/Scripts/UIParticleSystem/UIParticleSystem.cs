@@ -17,6 +17,8 @@ public class UIParticleSystem : MonoBehaviour
         }
     };
 
+    public static UIParticleSystem instance;
+
     [Tooltip("The object that the tickets will move towards")]
     [SerializeField] Transform target;
     [Space(4)]
@@ -43,12 +45,14 @@ public class UIParticleSystem : MonoBehaviour
 
     [SerializeField] private float maxParticleSpeed = 20;
     [SerializeField] private float minParticleSpeed = 1;
+    [SerializeField] private float scaleSpeed;
 
     private int particleCount { get { return particles.Count; } }//returns the number of active particles 
 
 
     private void Awake()
     {
+        if (instance == null) { instance = this; }
 
         if (maxParticles > -1)
         {
@@ -60,15 +64,12 @@ public class UIParticleSystem : MonoBehaviour
         }
         spawnArea = new SpawnBox(spawnAreaCenter, spawnAreaBounds);
 
-        while (particleCount < maxParticles)
-        {
-            SpawnParticle();
-        }
+        
     }
 
     private void Start()
     {
-        Debug.Log(target.position);
+        
     }
 
     private void Update()
@@ -104,14 +105,29 @@ public class UIParticleSystem : MonoBehaviour
 
     }
 
-    private void DeleteParticle(int index)
+    public void DeleteParticle(int index)
     {
 
     }
 
-    private void DeleteParticle()
+    public void DeleteParticle()
     {
 
+    }
+
+    public void DeleteParticle(GameObject particle)
+    {
+        for (int i =  0; i < particleCount; i++)
+        {
+            if (particle == particles[i].gameObject)
+            {
+                particles.RemoveAt(i);
+                Destroy(particle);
+                return;
+            }
+        }
+
+        Debug.LogError("Tried to remove particle that did not exist inside list");
     }
 
     private void SpawnParticle()
@@ -155,5 +171,24 @@ public class UIParticleSystem : MonoBehaviour
         particle.transform.localPosition = FindSpawnLocation();
         particle.SetVelocity(RandomParticleVelocity());
         particle.transform.localScale = Vector3.zero;
+        particle.scaleSpeed = scaleSpeed;
+    }
+
+    public void SpawnTickets(int amount)
+    {
+        StartCoroutine(SpawnTicketsCoRo(amount));
+    }
+
+    private IEnumerator SpawnTicketsCoRo(int amount)
+    {
+        while (particleCount < amount)
+        {
+            int rand = (int)Random.Range(minSpawnAmount, maxSpawnAmount + 0.99f);
+            for (int i = 0; i < rand; i++)
+            {
+                SpawnParticle();
+            }
+            yield return new WaitForSeconds(spawnDelay);
+        }
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - StoreStock
   - Inventory
   - LeaveShopSign
+  - Ticket
   layers:
   - Default
   - TransparentFX

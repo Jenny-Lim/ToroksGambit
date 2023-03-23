@@ -45,4 +45,15 @@ public class Currency : MonoBehaviour
     {
         tickets = amount;
     }
+
+    //add by jordan so that when a ticket touches this thing it will add to the counter and get rid of the ticket
+    public void OnTriggerEnter(Collider collision)
+    {
+        Debug.Log("got collision");
+        if (collision.gameObject.CompareTag("Ticket"))
+        {
+            AddToCurrency(1);
+            UIParticleSystem.instance.DeleteParticle(collision.gameObject);
+        }
+    }
 }
