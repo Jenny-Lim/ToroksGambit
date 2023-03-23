@@ -14579,6 +14579,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDepth: 2
+  lookingForMove: 0
+  finishedSearch: 0
+  maxSearchPerFrame: 500
 --- !u!1 &1220230189
 GameObject:
   m_ObjectHideFlags: 0

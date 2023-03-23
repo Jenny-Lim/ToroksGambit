@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using TMPro;
+using System.Threading.Tasks;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private static TextMeshProUGUI objectiveText;
 
     private DataHolder<Move> resultingMove;
+
+    private Task moveSearchTask;
 
     public GameState GetGameState()
     {
@@ -118,6 +121,25 @@ public class GameStateManager : MonoBehaviour
                 }
                 else
                 {
+
+                    //**THIS IS THE ONE THAT USES TASK SYSTEM AND DOESNT WORK RN MAYBE FOREVER CUZ THIS SHIT WACK**
+                    /*if (!TorokIsMoving)
+                    {
+                        TorokIsMoving = true;
+                        moveSearchTask = await MinMax.instance.GetMinMaxMoveAsync(resultingMove, MinMax.playerToMove.torok);
+                        
+                    }
+                    else
+                    {
+                        Debug.Log(MinMax.instance.finishedSearch);
+                        if (MinMax.instance.finishedSearch && Board.instance.canMove == true)
+                        {
+                            Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
+                            Board.instance.canMove = false;
+                        }
+                    }
+                    */
+
                     //**THIS IS THE ONE THAT USES A MULTIPLE FRAME SEARCH**
                     /*if (!TorokIsMoving)//if not currently looking for a move
                     {
@@ -132,7 +154,8 @@ public class GameStateManager : MonoBehaviour
                             Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
                             Board.instance.canMove = false;
                         }
-                    }*/
+                    }
+                    */
 
                     //**THIS IS THE ONE THAT USES A SINGLE FRAME SEARCH**
                     if (!TorokIsMoving)
@@ -159,6 +182,7 @@ public class GameStateManager : MonoBehaviour
                         }
                        
                     }
+                    
                 }
                 break;
             case GameState.shop:

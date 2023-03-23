@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
-using Unity.Jobs;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Jobs;
+using System.Threading.Tasks;
 
 public class MinMax : MonoBehaviour
 {
@@ -23,7 +21,8 @@ public class MinMax : MonoBehaviour
     private bool initRunning = false;
     [HideInInspector] public bool lookingForMove = false;
     [HideInInspector] public bool finishedSearch = false;
-    public int maxSearchPerFrame = 100;
+    [SerializeField] private int maxSearchPerFrame = 100;
+    private int numFramesSearched = 0;
 
 /*
     private class ScoredMove
@@ -52,12 +51,7 @@ public class MinMax : MonoBehaviour
         }
         initDepth = maxDepth;
     }
-
-    public void ResetDepth()
-    {
-        maxDepth = initDepth;
-    }
-    //the recursive wrapper for the minmax call
+    //old version
     public Move GetMinMaxMove(playerToMove toMove)
     {
         totalNumNodesLookedAt = 0;
@@ -71,9 +65,8 @@ public class MinMax : MonoBehaviour
         }
         //print("Moves " + numOfMovesCalled);
         //print("Undos " + numOfUndoCalled);
-        //print("Total Number of Nodes Searched: " + totalNumNodesLookedAt);
-        //print("Time taken: " + (Time.realtimeSinceStartup - startTime));
-        //print("Move history list count " + Board.instance.moveList.Count);
+        print("Total Number of Nodes Searched: " + totalNumNodesLookedAt);
+        print("Time taken: " + (Time.realtimeSinceStartup - startTime));
         return resultMove.move;
     }
 
@@ -169,17 +162,154 @@ public class MinMax : MonoBehaviour
         //return resulting move
         return bestMove;
     }
+    
+
+    public void ResetDepth()
+    {
+        maxDepth = initDepth;
+    }
+    //---------async version
+    /*
+    public async Task GetMinMaxMoveAsync(DataHolder<Move> resultHolder ,playerToMove toMove)
+    {
+        finishedSearch = false;
+        totalNumNodesLookedAt = 0;
+        float startTime = Time.realtimeSinceStartup;
+        //Debug.Log("AI: Looking for move...");
+
+        
+        return await MinMaxRecursiveAsync(maxDepth, toMove, float.MinValue, float.MaxValue);
+        resultHolder.data = resultMove.move;
+        finishedSearch = true;
+    }
+
+    private async Task<ScoredMove> MinMaxRecursiveAsync(int depth, playerToMove whosMoving, float alpha, float beta)
+    {
+
+        //recursive termination
+        if (depth == 0)
+        {
+            //print("Move List count: " + Board.instance.moveList.Count);
+            totalNumNodesLookedAt++;
+            return new ScoredMove(null, analyzer.Analyze(Board.pieceBoard, GameStateManager.turnCount + maxDepth));
+        }
+
+        ScoredMove bestMove;//holder for the best/most likely move to make
+
+        if (whosMoving == playerToMove.player)//max
+        {
+
+            List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
+
+            //check if allavailableMoves has no moves
+            if (allAvailableMoves.Count < 1)
+            {
+                return new ScoredMove(null, float.NegativeInfinity);
+            }
+
+            allAvailableMoves.Sort(mc); // jenny
+
+            bestMove = new ScoredMove(allAvailableMoves[0], float.NegativeInfinity);//set best move score to be as low as possible);
+            //resultHolder.data = new ScoredMove(allAvailableMoves[0], float.NegativeInfinity);
+
+            //print("Amount of moves player moves available: " + allAvailableMoves.Count);
+            foreach (Move move in allAvailableMoves)
+            {
+                searchCounter++;
+                if (searchCounter >= maxSearchPerFrame)
+                {
+                    searchCounter = 0;
+                    await Task.Yield();
+                }
+
+                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+
+                ScoredMove recursiveResult = await MinMaxRecursiveAsync(depth - 1, playerToMove.torok, alpha, beta);//recursive call
+
+                Board.instance.UndoMove();//undo previous move
+
+                if (recursiveResult.score > bestMove.score)//if subtree result is better make best move equal to that
+                {
+                    bestMove.move = move;
+                    bestMove.score = recursiveResult.score;
+                }
+
+                alpha = Mathf.Max(alpha, bestMove.score);//update alpha value if needed
+
+                if (alpha >= beta)
+                {
+                    //print("broke in max");
+                    break;
+                }
+            }
+        }
+        else//min
+        {
+            List<Move> allAvailableMoves = Board.instance.GetAllMoves(true);// get list of all possible moves
+
+            //check if allavailableMoves has no moves
+            if (allAvailableMoves.Count < 1)
+            {
+                return new ScoredMove(null, float.PositiveInfinity);
+            }
+
+            allAvailableMoves.Sort(mc); // jenny
+
+            bestMove = new ScoredMove(allAvailableMoves[0], float.PositiveInfinity);
+            
+            //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
+            foreach (Move move in allAvailableMoves)
+            {
+                searchCounter++;
+                if (searchCounter >= maxSearchPerFrame)
+                {
+                    searchCounter = 0;
+                    await Task.Yield();
+                }
+
+                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
+
+                ScoredMove recursiveResult = await MinMaxRecursiveAsync(depth - 1, playerToMove.player, alpha, beta);//recursive call
+
+                Board.instance.UndoMove();//undo previous move
+
+                if (recursiveResult.score < bestMove.score)// if subtree is better make best move equal to that
+                {
+                    bestMove.move = move;
+                    bestMove.score = recursiveResult.score;
+                }
+
+                beta = Mathf.Min(beta, bestMove.score);//update beta if needed
+
+                if (alpha >= beta)
+                {
+                    //print("broke in main");
+                    break;
+                }
+
+            }
+        }
+
+
+        //return resulting move
+        return bestMove;
+    }
+    */
+    //-----------
 
     public void SetNewDepth(int newDepth)
     {
         maxDepth = newDepth;
     }
 
+    //----------coroutine version
+
     private IEnumerator MinMaxRecursiveCo(DataHolder<ScoredMove> resultData, int depth, playerToMove whosMoving, float alpha, float beta)
     {
         //termination
         if (depth <= 0)
         {
+            totalNumNodesLookedAt++;
             resultData.data = new ScoredMove(null, analyzer.Analyze(Board.pieceBoard, GameStateManager.turnCount + maxDepth));
             yield break;
         }
@@ -202,10 +332,12 @@ public class MinMax : MonoBehaviour
 
             foreach (Move move in allAvailableMoves)
             {
+                totalNumNodesLookedAt++;
                 searchCounter++;//increment how many searchs you have done this frame
                 if (searchCounter >= maxSearchPerFrame)//if done max searchs yield for next frame
                 {
                     searchCounter = 0;
+                    numFramesSearched++;
                     yield return null;
                 }
 
@@ -213,7 +345,8 @@ public class MinMax : MonoBehaviour
 
                 DataHolder<ScoredMove> recursiveResult = new DataHolder<ScoredMove>(); //= MinMaxRecursive(depth - 1, playerToMove.torok, alpha, beta);//recursive call data storage
 
-                yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.torok, alpha, beta));//recursive call
+                //yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.torok, alpha, beta));//recursive call
+                yield return MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.torok, alpha, beta);
 
                 Board.instance.UndoMove();//undo previous move
 
@@ -249,10 +382,12 @@ public class MinMax : MonoBehaviour
             //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
             foreach (Move move in allAvailableMoves)
             {
+                totalNumNodesLookedAt++;
                 searchCounter++;//increment how many searchs you have done this frame
                 if (searchCounter >= maxSearchPerFrame)//if done max searchs yield for next frame
                 {
                     searchCounter = 0;
+                    numFramesSearched++;
                     yield return null;
                 }
 
@@ -260,7 +395,8 @@ public class MinMax : MonoBehaviour
 
                 DataHolder<ScoredMove> recursiveResult = new DataHolder<ScoredMove>(); //= MinMaxRecursive(depth - 1, playerToMove.player, alpha, beta);//recursive call data storage
 
-                yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.player, alpha, beta));//recursive call
+                //yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.player, alpha, beta));//recursive call
+                yield return MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.torok, alpha, beta);
 
                 Board.instance.UndoMove();//undo previous move
 
@@ -289,6 +425,7 @@ public class MinMax : MonoBehaviour
         //termination
         if (depth <= 0)
         {
+            totalNumNodesLookedAt++;
             resultData.data = new ScoredMove(null, analyzer.Analyze(Board.pieceBoard, GameStateManager.turnCount + maxDepth));
             initRunning = false;
             yield break;
@@ -313,11 +450,13 @@ public class MinMax : MonoBehaviour
 
             foreach (Move move in allAvailableMoves)
             {
+                totalNumNodesLookedAt++;
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
 
                 DataHolder<ScoredMove> recursiveResult = new DataHolder<ScoredMove>(); //= MinMaxRecursive(depth - 1, playerToMove.torok, alpha, beta);//recursive call data storage
 
-                yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.torok, alpha, beta));//recursive call
+                //yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.torok, alpha, beta));//recursive call
+                yield return MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.torok, alpha, beta);
 
                 Board.instance.UndoMove();//undo previous move
 
@@ -354,11 +493,13 @@ public class MinMax : MonoBehaviour
             //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
             foreach (Move move in allAvailableMoves)
             {
+                totalNumNodesLookedAt++;
                 Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
 
                 DataHolder<ScoredMove> recursiveResult = new DataHolder<ScoredMove>(); //= MinMaxRecursive(depth - 1, playerToMove.player, alpha, beta);//recursive call data storage
 
-                yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.player, alpha, beta));//recursive call
+                //yield return StartCoroutine(MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.player, alpha, beta));//recursive call
+                yield return MinMaxRecursiveCo(recursiveResult, depth - 1, playerToMove.torok, alpha, beta);
 
                 Board.instance.UndoMove();//undo previous move
 
@@ -385,7 +526,9 @@ public class MinMax : MonoBehaviour
     public IEnumerator GetMinMaxMoveCo(DataHolder<Move> resultMove,playerToMove toMove)
     {
         lookingForMove = true;
-
+        float startTime = Time.time;
+        totalNumNodesLookedAt = 0;
+        numFramesSearched = 0;
 
         DataHolder<ScoredMove> finalResult = new DataHolder<ScoredMove>();
         searchCounter = 0;
@@ -399,7 +542,12 @@ public class MinMax : MonoBehaviour
 
         resultMove.data = finalResult.data.move;
         lookingForMove = false;
+        Debug.Log("Search Time: " + (Time.time - startTime));
+        Debug.Log("Num of frames searched " + numFramesSearched);
+        Debug.Log("Searched " + totalNumNodesLookedAt + " nodes");
     }
+
+    //------------
 }
 
 public struct ScoredMove

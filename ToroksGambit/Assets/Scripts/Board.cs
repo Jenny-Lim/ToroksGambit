@@ -1209,7 +1209,7 @@ public class Board : MonoBehaviour
     //repeatedly calling will undo moves until beggining
     public void UndoMove()
     {
-        Debug.Log("Undo called");
+        //Debug.Log("Undo called");
 
         //GameObject startingPiece = null;
         GameObject endPiece = null;
