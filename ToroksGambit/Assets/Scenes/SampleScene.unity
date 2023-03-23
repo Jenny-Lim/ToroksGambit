@@ -14578,7 +14578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70d987e93fb20c41bc7d49e70dcc6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDepth: 2
+  maxDepth: 3
   lookingForMove: 0
   finishedSearch: 0
   maxSearchPerFrame: 500
