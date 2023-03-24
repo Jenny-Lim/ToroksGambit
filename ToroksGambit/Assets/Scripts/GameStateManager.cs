@@ -287,7 +287,7 @@ public class GameStateManager : MonoBehaviour
         Inventory.instance.objectiveArea.SetActive(false);
 
         Currency.instance.ticketsTxt.enabled = true;// remove this once this function gets organized just to see the currency number as the tickets get there
-        ticketParticleSystem.SpawnTickets(10);//<- needs to be abled to get that number from the currency object for how many tickets you got
+        ticketParticleSystem.SpawnTickets((currentLevelNumber + 1) * 6);//<- needs to be abled to get that number from the currency object for how many tickets you got
 
         float counter = 0;
         while (counter < 2000)
@@ -307,7 +307,9 @@ public class GameStateManager : MonoBehaviour
         Debug.Log("Player has won.");
         PhysicalShop.instance.ResetShop();
         Board.instance.ReturnPiecesToInventory();
-        Currency.instance.GetReward(currentLevelNumber + 1);
+
+        //Currency.instance.GetReward(currentLevelNumber + 1);
+
         turnCount = 1;
         isPlayersTurn = true;
         ChangeGameState(GameState.shop);
