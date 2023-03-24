@@ -135,7 +135,7 @@ public class PhysicalShop : MonoBehaviour
             //change price
             priceText[i].text = prices[pieceType[i]].ToString();
             //re activate panels
-            uiSpots[i].SetActive(true);
+            //uiSpots[i].SetActive(true);
             //Currency.instance.ticketsTxt.enabled = true;
         }
     }
@@ -173,7 +173,7 @@ public class PhysicalShop : MonoBehaviour
             //change price
             priceText[i].text = prices[pieceType[i]].ToString();
             //re activate panels
-            uiSpots[i].SetActive(true);
+            //uiSpots[i].SetActive(true);
         }
     }
 
@@ -186,7 +186,7 @@ public class PhysicalShop : MonoBehaviour
         anim.SetBool("EnteredShop", true);
         for (int i = 0; i < shopPieceModels.Length; i++)
         {
-            uiSpots[i].SetActive(true);
+            //uiSpots[i].SetActive(true);
         }
 
     }
