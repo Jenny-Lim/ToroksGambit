@@ -24,7 +24,6 @@ public class InterruptCoroutineHolder : MonoBehaviour
             return;
         }
 
-        StopAllCoroutines();
         switch (coroutineType)
         {
             case Coroutines.AddPiece:
