@@ -10,5 +10,6 @@ public class StartChessGameButton : MonoBehaviour
         Inventory.instance.SlideHideInventoryPanel();
         this.gameObject.SetActive(false);
         Inventory.instance.DisableDeployUI();
+        Inventory.instance.DisableModifiers();
     }
 }

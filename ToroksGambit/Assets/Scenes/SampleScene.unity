@@ -6670,7 +6670,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &448147012
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25148,6 +25148,7 @@ MonoBehaviour:
   deployUIObject: {fileID: 737868337}
   deployPointText: {fileID: 1696845340}
   deployPieceText: {fileID: 1548552744}
+  testModifiers: {fileID: 448147011}
 --- !u!1001 &2099100360
 PrefabInstance:
   m_ObjectHideFlags: 0

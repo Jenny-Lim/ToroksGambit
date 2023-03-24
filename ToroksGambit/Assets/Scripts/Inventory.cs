@@ -78,6 +78,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] private TextMeshProUGUI deployPointText;
     [SerializeField] private TextMeshProUGUI deployPieceText;
 
+    [SerializeField] private GameObject testModifiers;
+
     public void Start()
     {
         if (instance == null)
@@ -124,6 +126,18 @@ public class Inventory : MonoBehaviour
         else
         {
             startButton.SetActive(false);
+        }
+
+        if (Input.GetKeyUp("m"))
+        {
+            if(testModifiers.activeSelf)
+            {
+                testModifiers.SetActive(false);
+            }
+            else
+            {
+                testModifiers.SetActive(true);
+            }
         }
 
         objectiveArea.SetActive(CameraHeadMovements.instance.menuDone);
@@ -575,6 +589,11 @@ public class Inventory : MonoBehaviour
     public void EnableDeployUI()
     {
         deployUIObject.SetActive(true);
+    }
+
+    public void DisableModifiers()
+    {
+        testModifiers.SetActive(false);
     }
 
 }
