@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private TextMeshProUGUI hideShowText;
     [SerializeField] private GameObject hideShowButton;
     private int[] maxHeldPieces = {8,4,4,3,1};//the maximum number of each piece the player can have
-    [SerializeField] private int[] heldPieces = {5,2,2,0,0};//the amount of each piece the player has
+    [SerializeField] private int[] heldPieces = {8,4,4,3,1};//the amount of each piece the player has
     [SerializeField] private float ghostPieceVertOffset = -0.05f;
     private bool infinitePieces = true;
     [SerializeField] public GameObject objectiveArea;
@@ -292,16 +292,53 @@ public class Inventory : MonoBehaviour
                         }
                         //remove piece from inventory of player
                     }
+                    else if (Input.GetMouseButtonDown(1))
+                            {
+                                for(int i = 0;i<8;i++)
+                                {
+                                    for (int j = 0; j < 8; j++)
+                                    {
+                                        //if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j] || hit.transform.gameObject == Board.instance.deployBoard[i,j])
+                                        if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j])
+                                        {
+                                            Debug.Log("BOARDREMOVETESTING");
+                                            if (Board.pieceBoard[i, j] != null)
+                                            {
+                                                Piece removePiece = Board.pieceBoard[i, j].GetComponent<Piece>();
+
+                                                if (!removePiece.isTorok && (int)removePiece.type < 5)
+                                                {
+                                                    AlterPiece((InventoryPieces)removePiece.type, 1);
+                                                    deployPieceCount--;
+                                                    deployPointCount -= deployValues[(int)removePiece.type];
+                                                    SetDeployUI();
+                                                }
+
+                                                if (Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, -1) == true)
+                                                {
+                                                    Debug.Log("REMOVE?");
+                                                    //numPiecesPlaced--;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if (Board.instance.PlacePiece(hit.transform, -1) == true)
+                                {
+                                    //hasPlacedPiece = true;
+                                }
+                                
+                            }
                 }
-                else if (hit.transform.gameObject.CompareTag("Chess Piece") && storedPiece == -1)//if trying to remove player piece
+                else if (hit.transform.gameObject.CompareTag("Chess Piece"))//if trying to remove player piece
                 {
 
                     Piece hitPiece = hit.transform.GetComponent<Piece>();
-                    if (Input.GetMouseButtonDown(0) && hitPiece && !hitPiece.isTorok)
+                    if (Input.GetMouseButtonDown(1) && hitPiece && !hitPiece.isTorok)
                     {
                         //print("inside removePLayer");
                         Debug.Log((int)storedPiece);
-                        if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
+                        if (Board.instance.PlacePiece(hit.transform, -1) == true)
                         {
                             numPiecesPlaced--;
                         }
@@ -450,11 +487,11 @@ public class Inventory : MonoBehaviour
     {
         if (isShowingPanel)
         {
-            hideShowText.text = "Show";
+            hideShowText.text = "show";
         }
         else
         {
-            hideShowText.text = "Hide";
+            hideShowText.text = "hide";
         }
 
         if (isMoving)
@@ -480,7 +517,7 @@ public class Inventory : MonoBehaviour
             StopAllCoroutines();
         }
         isShowingPanel = false;
-        hideShowText.text = "Hide";
+        hideShowText.text = "hide";
         StartCoroutine(ShowHideInventoryPanel());
     }
 
@@ -491,7 +528,7 @@ public class Inventory : MonoBehaviour
             StopAllCoroutines();
         }
         isShowingPanel = true;
-        hideShowText.text = "Show";
+        hideShowText.text = "show";
         StartCoroutine(ShowHideInventoryPanel());
     }
 
