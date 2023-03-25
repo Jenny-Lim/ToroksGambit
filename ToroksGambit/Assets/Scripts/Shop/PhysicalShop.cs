@@ -94,7 +94,7 @@ public class PhysicalShop : MonoBehaviour
                     anim.SetBool("ExitedShop", true);
                     piecePanels.SetActive(false);
                     Inventory.instance.objectiveArea.SetActive(true);
-                    Currency.instance.ticketsTxt.enabled = false;
+                    Currency.instance.ticketTextObject.SetActive(false);
                     SaveManager.instance.SaveGame();
                     c.LookAtBoard();
                     GameStateManager.instance.SetNextLevel();
@@ -181,7 +181,7 @@ public class PhysicalShop : MonoBehaviour
     {
         c.LookAtShop();
         piecePanels.SetActive(true);
-        Currency.instance.ticketsTxt.enabled = true;
+        //Currency.instance.ticketTextObject.enabled = true;
         shopkeeper.SetActive(true);
         anim.SetBool("EnteredShop", true);
         for (int i = 0; i < shopPieceModels.Length; i++)
