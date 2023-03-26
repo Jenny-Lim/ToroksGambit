@@ -111,6 +111,7 @@ public class PhysicalShop : MonoBehaviour
                     piecePanels.SetActive(false);
                     Inventory.instance.objectiveArea.SetActive(true);
                     Currency.instance.ticketTextObject.SetActive(false);
+                    Currency.instance.ticketBackgroundObject.SetActive(false);
                     SaveManager.instance.SaveGame();
                     c.LookAtBoard();
                     GameStateManager.instance.SetNextLevel();

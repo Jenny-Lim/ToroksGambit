@@ -8,6 +8,7 @@ public class Currency : MonoBehaviour
     public int tickets;
     public Text ticketsTxt;
     public GameObject ticketTextObject;
+    public GameObject ticketBackgroundObject;
     public static Currency instance;
     
     void Awake()
@@ -16,9 +17,10 @@ public class Currency : MonoBehaviour
         {
             instance = this;
         }
-        //ticketTextObject = gameObject;
+        ticketTextObject = gameObject;
         ticketsTxt = gameObject.GetComponent<Text>();
         ticketTextObject.SetActive(false);
+        ticketBackgroundObject.SetActive(false);
     }
 
     void Update()
