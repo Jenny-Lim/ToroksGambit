@@ -98,31 +98,26 @@ public class GameStateManager : MonoBehaviour
                 {
                     TorokIsMoving = false;
                     Board.instance.BoardUpdate();
-
-                    //chekc win condition
-                    /*if (currentState == GameState.game)
-                    {
-                        //win condition checks
-                        if (winCondition != null)
-                        {
-                            winCondition.ProgressConditionState();
-                            mostRecentWinCheckResult = winCondition.IsWinCondition();
-                        }
-
-                        if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
-                        {
-                            ChangeGameState(GameState.win);
-                            //reset this state
-                        }
-                        else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
-                        {
-                            Debug.Log("Torok has won.");
-                            //lose logic
-                        }
-                    }*/
                 }
                 else
                 {
+                    //BEHOLD MY GRAVEYARD OF MOVE STUTTER FIXES
+
+                    //**THIS IS THE ONE WHERE THE ITERATIVE VERSION IS USED FOR MULTIPLE FRAMES**
+                    if (!TorokIsMoving)
+                    {
+                        resultingMove = new DataHolder<Move>();
+                        MinMax.instance.GetMinMaxMoveIter(resultingMove);
+                        TorokIsMoving = true;
+                    }
+                    else
+                    {
+                        if (MinMax.instance.finishedSearch == true && Board.instance.canMove)//finished search and can make move
+                        {
+                            Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
+                            Board.instance.canMove = false;
+                        }
+                    }
 
                     //**THIS IS THE ONE THAT USES TASK SYSTEM AND DOESNT WORK RN MAYBE FOREVER CUZ THIS SHIT WACK**
                     /*if (!TorokIsMoving)
@@ -160,7 +155,7 @@ public class GameStateManager : MonoBehaviour
                     */
 
                     //**THIS IS THE ONE THAT USES A SINGLE FRAME SEARCH**
-                    if (!TorokIsMoving)
+                    /*if (!TorokIsMoving)
                     {
                         TorokIsMoving = true;
                         Move resultMove = MinMax.instance.GetMinMaxMove(playerToMove.torok);
@@ -183,7 +178,7 @@ public class GameStateManager : MonoBehaviour
                             EndTurn();//this will eventually be deleted
                         }
                        
-                    }
+                    }*/
                     
                 }
                 break;

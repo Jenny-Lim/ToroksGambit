@@ -50,19 +50,48 @@ public class MinMax : MonoBehaviour
         }
         initDepth = maxDepth;
     }
-    
+
     //-----------Iterative Version
-    public void GetMinMaxMoveIter(Move resultMove)
+    #region "Helpers"
+    private int FindMax(List<ScoredMove> list)
     {
+        if (list.Count <= 0) { return -1; }
+
+        int returnIndex = 0;
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (list[i].score > list[returnIndex].score) { returnIndex = i; }
+        }
+        return returnIndex;
+    }
+    private int FindMin(List<ScoredMove> list)
+    {
+        if (list.Count <= 0) { return -1; }
+
+        int returnIndex = 0;
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (list[i].score < list[returnIndex].score) { returnIndex = i; }
+        }
+        return returnIndex;
+
+    }
+    #endregion
+
+    public void GetMinMaxMoveIter(DataHolder<Move> resultMove)
+    {
+        finishedSearch = false;
         StopAllCoroutines();
 
         StartCoroutine(GetMinMaxMoveIterCoRo(maxDepth, resultMove));
     }
 
-    private IEnumerator GetMinMaxMoveIterCoRo(int maxDepth, Move resultMove)
+
+
+    private IEnumerator GetMinMaxMoveIterCoRo(int maxDepth, DataHolder<Move> resultMove)
     {
         Stack<StateStorage> stack = new Stack<StateStorage>();// the stack
-        stack.Push(new StateStorage(playerToMove.torok, Board.instance.GetAllMoves(true), maxDepth + GameStateManager.GetTurnCount()));//push current state to stack
+        stack.Push(new StateStorage(playerToMove.torok, Board.instance.GetAllMoves(true), maxDepth));//push current state to stack
         StateStorage curState = null;// the currently looked at state
 
         while (stack.Count > 0)//while stack not empty
@@ -83,7 +112,7 @@ public class MinMax : MonoBehaviour
             #region "Leaf Node Reached"
             if (curState.depth <= 0)//leaf node reached
             {
-                StateStorage curStateParent = stack.Pop();
+                /*StateStorage curStateParent = stack.Pop();
 
                 float leafAnalysis = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
                 if (curState.toMove == playerToMove.player)//max
@@ -103,15 +132,20 @@ public class MinMax : MonoBehaviour
                     }
                 }
 
-                stack.Push(curStateParent);
+                stack.Push(curStateParent);*/
 
-                /*StateStorage curStateParent = stack.Pop();//this would be the parent of curState
+                StateStorage curStateParent = stack.Pop();//this would be the parent of curState
 
-                //update parent values to store leaf node
+                ScoredMove leafValue = new ScoredMove();
+                leafValue.score = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
+
+                curStateParent.scoredList.Add(leafValue);
+
+                /*//update parent values to store leaf node
                 float boardScore = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
-                curStateParent.moveValues.Add(boardScore);
+                curStateParent.moveValues.Add(boardScore);*/
 
-                stack.Push(curStateParent);//push parent back to stack*/
+                stack.Push(curStateParent);//push parent back to stack
 
                 Board.instance.UndoMove();
                 continue;
@@ -120,46 +154,49 @@ public class MinMax : MonoBehaviour
 
             #region "Find Next Not Searched Move"
             int indexToLookAt = curState.searchedMoves.IndexOf(false);//the first unsearched move in this state
-            if (indexToLookAt == -1)//there are no new moves left
+            if (curState.lastIndexSearched >= curState.availMoves.Count-1)//there are no new moves left
             {
+
+                //if this is the root state/node
                 if (curState.depth == maxDepth)
                 {
-
+                    //return result from best score from scoredList of root node
+                    if (curState.toMove == playerToMove.player)//max
+                    {
+                        resultMove.data = curState.scoredList[FindMax(curState.scoredList)].move;
+                    }
+                    else//min
+                    {
+                        resultMove.data = curState.scoredList[FindMin(curState.scoredList)].move;
+                    }
+                    finishedSearch = true;
                     break;
                 }
 
-                StateStorage curStateParent = stack.Pop();
-                if (curState.toMove == playerToMove.player)//max
-                {
-                    if (curState.bestMove.score > curStateParent.bestMove.score) 
-                    {
-                        //curStateParent.bestMove
 
-                    }
-                    
-                }
-                else
+                StateStorage curStateParent = stack.Pop();//get the parent state
+
+                int indexOfBest;//find the best value
+                if (curState.toMove == playerToMove.player)//if max state
                 {
-                    
+                    indexOfBest = FindMax(curState.scoredList);
+                }
+                else//if min state
+                {
+                    indexOfBest = FindMin(curState.scoredList);
                 }
 
-                /*StateStorage curStateParent = stack.Pop();//this would be the parent of curState
+                //create scoredMove using the last move the parent made and the best score the curState has
+                ScoredMove curStateResult = new ScoredMove(curStateParent.availMoves[curStateParent.lastIndexSearched], 
+                    curState.scoredList[indexOfBest].score);
 
-                float result;
+                //add to parent scoredlist
+                curStateParent.scoredList.Add(curStateResult);
 
-                if (curState.toMove == playerToMove.player)
-                {
-                    result = curState.moveValues.AsQueryable().Max();
-                }
-                else
-                {
-                    result = curState.moveValues.AsQueryable().Min();
-                }
+                //place parent back on state
+                stack.Push(curStateParent);
 
-                curStateParent.moveValues.Add(result);
-
-                stack.Push(curStateParent);*/
-
+                //undo move that the parent made to get to this position
                 Board.instance.UndoMove();
                 continue;
             }
@@ -167,8 +204,9 @@ public class MinMax : MonoBehaviour
 
             #region "Push Cur State to Stack, Move Piece For Next State"
             stack.Push(curState);
-            Board.instance.MovePiece(curState.availMoves[indexToLookAt].startX, curState.availMoves[indexToLookAt].startY, 
-                curState.availMoves[indexToLookAt].endX, curState.availMoves[indexToLookAt].endY);//make the change to the board for the next pushed state
+            curState.lastIndexSearched++;
+            Board.instance.MovePiece(curState.availMoves[curState.lastIndexSearched].startX, curState.availMoves[curState.lastIndexSearched].startY, 
+                curState.availMoves[curState.lastIndexSearched].endX, curState.availMoves[curState.lastIndexSearched].endY);//make the change to the board for the next pushed state
             #endregion
 
             #region "Get child State Data"
@@ -185,12 +223,9 @@ public class MinMax : MonoBehaviour
             #endregion
 
         }
-
-
-        resultMove = curState.bestMove.move;
     }
 
-    //---------------Iterative Version end
+    //~~~~~~~~~Iterative Version end
 
     //old version
     public Move GetMinMaxMove(playerToMove toMove)
@@ -775,14 +810,18 @@ public class StateStorage
             moveValues.Add(0.0f);
         }
         this.depth = depth;
+
+        scoredList= new List<ScoredMove>();
     }
 
     public List<Move> availMoves;//list of all moves
     public List<bool> searchedMoves;// list of which index of availMoves has been searched, may or may not actually need this
+    public int lastIndexSearched = -1;//the index of availMoves which was searched last
     public ScoredMove bestMove;// the best value that this state has so far
     public playerToMove toMove;//if this state is a min or max state, player = max, torok = min
-    public int depth;
-    public List<float> moveValues;
+    public int depth;//what depth of the tree this state is
+    public List<float> moveValues;//the values of the moves in availMoves i:i
+    public List<ScoredMove> scoredList;
     
 
 }

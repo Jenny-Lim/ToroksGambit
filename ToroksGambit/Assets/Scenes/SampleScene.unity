@@ -11568,19 +11568,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 300207afe76c16a488cbc4caf7458067, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.4988681
+      value: 0.4970213
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 300207afe76c16a488cbc4caf7458067, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5027748
+      value: -0.5009075
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 300207afe76c16a488cbc4caf7458067, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.49674508
+      value: 0.4985957
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 300207afe76c16a488cbc4caf7458067, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.50158995
+      value: 0.50345206
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 300207afe76c16a488cbc4caf7458067, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11588,7 +11588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 300207afe76c16a488cbc4caf7458067, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 96.024
+      value: 96.45
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 300207afe76c16a488cbc4caf7458067, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -15718,7 +15718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tickets: 1000
   ticketsTxt: {fileID: 1231418731}
-  ticketTextObject: {fileID: 701759683}
+  ticketTextObject: {fileID: 0}
 --- !u!114 &1231418731
 MonoBehaviour:
   m_ObjectHideFlags: 0
