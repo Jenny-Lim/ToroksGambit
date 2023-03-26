@@ -15348,10 +15348,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70d987e93fb20c41bc7d49e70dcc6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDepth: 3
+  maxDepth: 4
   lookingForMove: 0
   finishedSearch: 0
-  maxSearchPerFrame: 500
+  maxSearchPerFrame: 200
 --- !u!1 &1220230189
 GameObject:
   m_ObjectHideFlags: 0
@@ -15718,7 +15718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tickets: 1000
   ticketsTxt: {fileID: 1231418731}
-  ticketTextObject: {fileID: 0}
+  ticketTextObject: {fileID: 1231418728}
 --- !u!114 &1231418731
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,6 +25,7 @@ public class MinMax : MonoBehaviour
     [HideInInspector] public bool finishedSearch = false;
     [SerializeField] private int maxSearchPerFrame = 100;
     private int numFramesSearched = 0;
+    private float startTime;
 
 /*
     private class ScoredMove
@@ -81,6 +82,7 @@ public class MinMax : MonoBehaviour
     public void GetMinMaxMoveIter(DataHolder<Move> resultMove)
     {
         finishedSearch = false;
+        startTime = Time.time;
         StopAllCoroutines();
 
         StartCoroutine(GetMinMaxMoveIterCoRo(maxDepth, resultMove));
@@ -170,6 +172,7 @@ public class MinMax : MonoBehaviour
                         resultMove.data = curState.scoredList[FindMin(curState.scoredList)].move;
                     }
                     finishedSearch = true;
+                    Debug.Log("Time took for search: " + (Time.time - startTime) + " sec");
                     break;
                 }
 
