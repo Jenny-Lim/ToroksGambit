@@ -52,183 +52,183 @@ public class MinMax : MonoBehaviour
         initDepth = maxDepth;
     }
 
-    //-----------Iterative Version
-    #region "Helpers"
-    private int FindMax(List<ScoredMove> list)
-    {
-        if (list.Count <= 0) { return -1; }
+    ////-----------Iterative Version
+    //#region "Helpers"
+    //private int FindMax(List<ScoredMove> list)
+    //{
+    //    if (list.Count <= 0) { return -1; }
 
-        int returnIndex = 0;
-        for (int i = 0; i < list.Count; i++)
-        {
-            if (list[i].score > list[returnIndex].score) { returnIndex = i; }
-        }
-        return returnIndex;
-    }
-    private int FindMin(List<ScoredMove> list)
-    {
-        if (list.Count <= 0) { return -1; }
+    //    int returnIndex = 0;
+    //    for (int i = 0; i < list.Count; i++)
+    //    {
+    //        if (list[i].score > list[returnIndex].score) { returnIndex = i; }
+    //    }
+    //    return returnIndex;
+    //}
+    //private int FindMin(List<ScoredMove> list)
+    //{
+    //    if (list.Count <= 0) { return -1; }
 
-        int returnIndex = 0;
-        for (int i = 0; i < list.Count; i++)
-        {
-            if (list[i].score < list[returnIndex].score) { returnIndex = i; }
-        }
-        return returnIndex;
+    //    int returnIndex = 0;
+    //    for (int i = 0; i < list.Count; i++)
+    //    {
+    //        if (list[i].score < list[returnIndex].score) { returnIndex = i; }
+    //    }
+    //    return returnIndex;
 
-    }
-    #endregion
+    //}
+    //#endregion
 
-    public void GetMinMaxMoveIter(DataHolder<Move> resultMove)
-    {
-        finishedSearch = false;
-        startTime = Time.time;
-        StopAllCoroutines();
+    //public void GetMinMaxMoveIter(DataHolder<Move> resultMove)
+    //{
+    //    finishedSearch = false;
+    //    startTime = Time.time;
+    //    StopAllCoroutines();
 
-        StartCoroutine(GetMinMaxMoveIterCoRo(maxDepth, resultMove));
-    }
-
-
-
-    private IEnumerator GetMinMaxMoveIterCoRo(int maxDepth, DataHolder<Move> resultMove)
-    {
-        Stack<StateStorage> stack = new Stack<StateStorage>();// the stack
-        stack.Push(new StateStorage(playerToMove.torok, Board.instance.GetAllMoves(true), maxDepth));//push current state to stack
-        StateStorage curState = null;// the currently looked at state
-
-        while (stack.Count > 0)//while stack not empty
-        {
-            #region "Max Searches Per Frame"
-            if (totalNumNodesLookedAt >= maxSearchPerFrame)//yield for next frame if max searches allowed for this frame reached
-            {
-                totalNumNodesLookedAt = 0;
-                yield return null;
-            }
-            #endregion
-
-            #region "Get Current Stack State"
-            curState = stack.Pop();//get next stack state
-            totalNumNodesLookedAt++;
-            #endregion
-
-            #region "Leaf Node Reached"
-            if (curState.depth <= 0 || curState.availMoves.Count < 1)//leaf node reached
-            {
-                /*StateStorage curStateParent = stack.Pop();
-
-                float leafAnalysis = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
-                if (curState.toMove == playerToMove.player)//max
-                {
-                    if (leafAnalysis > curStateParent.bestMove.score)//max
-                    {
-                        curStateParent.bestMove.score = leafAnalysis;
-                        curStateParent.bestMove.move = null;
-                    }
-                }
-                else
-                {
-                    if (leafAnalysis < curStateParent.bestMove.score)//min
-                    {
-                        curStateParent.bestMove.score = leafAnalysis;
-                        curStateParent.bestMove.move = null;
-                    }
-                }
-
-                stack.Push(curStateParent);*/
-
-                StateStorage curStateParent = stack.Pop();//this would be the parent of curState
-
-                ScoredMove leafValue = new ScoredMove();
-                leafValue.score = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
-                leafValue.move = curStateParent.availMoves[curStateParent.lastIndexSearched];//this was the added thing that might not be correct
-                curStateParent.scoredList.Add(leafValue);
-
-                /*//update parent values to store leaf node
-                float boardScore = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
-                curStateParent.moveValues.Add(boardScore);*/
-
-                stack.Push(curStateParent);//push parent back to stack
-
-                Board.instance.UndoMove();
-                continue;
-            }
-            #endregion
-
-            #region "Find Next Not Searched Move"
-            int indexToLookAt = curState.searchedMoves.IndexOf(false);//the first unsearched move in this state
-            if (curState.lastIndexSearched >= curState.availMoves.Count-1)//there are no new moves left
-            {
-
-                //if this is the root state/node
-                if (curState.depth == maxDepth)
-                {
-                    //return result from best score from scoredList of root node
-                    if (curState.toMove == playerToMove.player)//max
-                    {
-                        resultMove.data = curState.scoredList[FindMax(curState.scoredList)].move;
-                    }
-                    else//min
-                    {
-                        resultMove.data = curState.scoredList[FindMin(curState.scoredList)].move;
-                    }
-                    finishedSearch = true;
-                    Debug.Log("Time took for search: " + (Time.time - startTime) + " sec");
-                    break;
-                }
+    //    StartCoroutine(GetMinMaxMoveIterCoRo(maxDepth, resultMove));
+    //}
 
 
-                StateStorage curStateParent = stack.Pop();//get the parent state
 
-                int indexOfBest;//find the best value
-                if (curState.toMove == playerToMove.player)//if max state
-                {
-                    indexOfBest = FindMax(curState.scoredList);
-                }
-                else//if min state
-                {
-                    indexOfBest = FindMin(curState.scoredList);
-                }
+    //private IEnumerator GetMinMaxMoveIterCoRo(int maxDepth, DataHolder<Move> resultMove)
+    //{
+    //    Stack<StateStorage> stack = new Stack<StateStorage>();// the stack
+    //    stack.Push(new StateStorage(playerToMove.torok, Board.instance.GetAllMoves(true), maxDepth));//push current state to stack
+    //    StateStorage curState = null;// the currently looked at state
 
-                //create scoredMove using the last move the parent made and the best score the curState has
-                ScoredMove curStateResult = new ScoredMove(curStateParent.availMoves[curStateParent.lastIndexSearched], 
-                    curState.scoredList[indexOfBest].score);
+    //    while (stack.Count > 0)//while stack not empty
+    //    {
+    //        #region "Max Searches Per Frame"
+    //        if (totalNumNodesLookedAt >= maxSearchPerFrame)//yield for next frame if max searches allowed for this frame reached
+    //        {
+    //            totalNumNodesLookedAt = 0;
+    //            yield return null;
+    //        }
+    //        #endregion
 
-                //add to parent scoredlist
-                curStateParent.scoredList.Add(curStateResult);
+    //        #region "Get Current Stack State"
+    //        curState = stack.Pop();//get next stack state
+    //        totalNumNodesLookedAt++;
+    //        #endregion
 
-                //place parent back on state
-                stack.Push(curStateParent);
+    //        #region "Leaf Node Reached"
+    //        if (curState.depth <= 0 || curState.availMoves.Count < 1)//leaf node reached
+    //        {
+    //            /*StateStorage curStateParent = stack.Pop();
 
-                //undo move that the parent made to get to this position
-                Board.instance.UndoMove();
-                continue;
-            }
-            #endregion
+    //            float leafAnalysis = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
+    //            if (curState.toMove == playerToMove.player)//max
+    //            {
+    //                if (leafAnalysis > curStateParent.bestMove.score)//max
+    //                {
+    //                    curStateParent.bestMove.score = leafAnalysis;
+    //                    curStateParent.bestMove.move = null;
+    //                }
+    //            }
+    //            else
+    //            {
+    //                if (leafAnalysis < curStateParent.bestMove.score)//min
+    //                {
+    //                    curStateParent.bestMove.score = leafAnalysis;
+    //                    curStateParent.bestMove.move = null;
+    //                }
+    //            }
 
-            #region "Push Cur State to Stack, Move Piece For Next State"
-            stack.Push(curState);
-            curState.lastIndexSearched++;
-            Board.instance.MovePiece(curState.availMoves[curState.lastIndexSearched].startX, curState.availMoves[curState.lastIndexSearched].startY, 
-                curState.availMoves[curState.lastIndexSearched].endX, curState.availMoves[curState.lastIndexSearched].endY);//make the change to the board for the next pushed state
-            #endregion
+    //            stack.Push(curStateParent);*/
 
-            #region "Get child State Data"
-            playerToMove nextPlayerToMove = playerToMove.player;
-            if (curState.toMove == playerToMove.player) { nextPlayerToMove = playerToMove.torok; }
-            List<Move> nextStateMoves = Board.instance.GetAllMoves(nextPlayerToMove == playerToMove.torok);
-            nextStateMoves.Sort(mc);
-            #endregion
+    //            StateStorage curStateParent = stack.Pop();//this would be the parent of curState
 
-            #region "Add Child State To Stack"
-            StateStorage childState = new StateStorage(nextPlayerToMove, nextStateMoves, curState.depth-1);
-            stack.Push(childState);
-            curState.searchedMoves[indexToLookAt] = true;
-            #endregion
+    //            ScoredMove leafValue = new ScoredMove();
+    //            leafValue.score = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
+    //            leafValue.move = curStateParent.availMoves[curStateParent.lastIndexSearched];//this was the added thing that might not be correct
+    //            curStateParent.scoredList.Add(leafValue);
 
-        }
-    }
+    //            /*//update parent values to store leaf node
+    //            float boardScore = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
+    //            curStateParent.moveValues.Add(boardScore);*/
 
-    //~~~~~~~~~Iterative Version end
+    //            stack.Push(curStateParent);//push parent back to stack
+
+    //            Board.instance.UndoMove();
+    //            continue;
+    //        }
+    //        #endregion
+
+    //        #region "Find Next Not Searched Move"
+    //        int indexToLookAt = curState.searchedMoves.IndexOf(false);//the first unsearched move in this state
+    //        if (curState.lastIndexSearched >= curState.availMoves.Count-1)//there are no new moves left
+    //        {
+
+    //            //if this is the root state/node
+    //            if (curState.depth == maxDepth)
+    //            {
+    //                //return result from best score from scoredList of root node
+    //                if (curState.toMove == playerToMove.player)//max
+    //                {
+    //                    resultMove.data = curState.scoredList[FindMax(curState.scoredList)].move;
+    //                }
+    //                else//min
+    //                {
+    //                    resultMove.data = curState.scoredList[FindMin(curState.scoredList)].move;
+    //                }
+    //                finishedSearch = true;
+    //                Debug.Log("Time took for search: " + (Time.time - startTime) + " sec");
+    //                break;
+    //            }
+
+
+    //            StateStorage curStateParent = stack.Pop();//get the parent state
+
+    //            int indexOfBest;//find the best value
+    //            if (curState.toMove == playerToMove.player)//if max state
+    //            {
+    //                indexOfBest = FindMax(curState.scoredList);
+    //            }
+    //            else//if min state
+    //            {
+    //                indexOfBest = FindMin(curState.scoredList);
+    //            }
+
+    //            //create scoredMove using the last move the parent made and the best score the curState has
+    //            ScoredMove curStateResult = new ScoredMove(curStateParent.availMoves[curStateParent.lastIndexSearched], 
+    //                curState.scoredList[indexOfBest].score);
+
+    //            //add to parent scoredlist
+    //            curStateParent.scoredList.Add(curStateResult);
+
+    //            //place parent back on state
+    //            stack.Push(curStateParent);
+
+    //            //undo move that the parent made to get to this position
+    //            Board.instance.UndoMove();
+    //            continue;
+    //        }
+    //        #endregion
+
+    //        #region "Push Cur State to Stack, Move Piece For Next State"
+    //        stack.Push(curState);
+    //        curState.lastIndexSearched++;
+    //        Board.instance.MovePiece(curState.availMoves[curState.lastIndexSearched].startX, curState.availMoves[curState.lastIndexSearched].startY, 
+    //            curState.availMoves[curState.lastIndexSearched].endX, curState.availMoves[curState.lastIndexSearched].endY);//make the change to the board for the next pushed state
+    //        #endregion
+
+    //        #region "Get child State Data"
+    //        playerToMove nextPlayerToMove = playerToMove.player;
+    //        if (curState.toMove == playerToMove.player) { nextPlayerToMove = playerToMove.torok; }
+    //        List<Move> nextStateMoves = Board.instance.GetAllMoves(nextPlayerToMove == playerToMove.torok);
+    //        nextStateMoves.Sort(mc);
+    //        #endregion
+
+    //        #region "Add Child State To Stack"
+    //        StateStorage childState = new StateStorage(nextPlayerToMove, nextStateMoves, curState.depth-1);
+    //        stack.Push(childState);
+    //        curState.searchedMoves[indexToLookAt] = true;
+    //        #endregion
+
+    //    }
+    //}
+
+    ////~~~~~~~~~Iterative Version end
 
     //old version
     public Move GetMinMaxMove(playerToMove toMove)

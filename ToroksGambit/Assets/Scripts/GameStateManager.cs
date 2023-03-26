@@ -107,22 +107,22 @@ public class GameStateManager : MonoBehaviour
                     //BEHOLD MY GRAVEYARD OF MOVE STUTTER FIXES
 
                     //**THIS IS THE ONE WHERE THE ITERATIVE VERSION IS USED FOR MULTIPLE FRAMES**
-                    if (!TorokIsMoving)
-                    {
-                        resultingMove = new DataHolder<Move>();
-                        MinMax.instance.GetMinMaxMoveIter(resultingMove);
-                        TorokIsMoving = true;
-                    }
-                    else
-                    {
-                        moveTimer += Time.deltaTime;
-                        if (MinMax.instance.finishedSearch == true && Board.instance.canMove & moveTimer >= waitTimeToMove)//finished search and can make move
-                        {
-                            Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
-                            moveTimer = 0;
-                            Board.instance.canMove = false;
-                        }
-                    }
+                    //if (!TorokIsMoving)
+                    //{
+                    //    resultingMove = new DataHolder<Move>();
+                    //    MinMax.instance.GetMinMaxMoveIter(resultingMove);
+                    //    TorokIsMoving = true;
+                    //}
+                    //else
+                    //{
+                    //    moveTimer += Time.deltaTime;
+                    //    if (MinMax.instance.finishedSearch == true && Board.instance.canMove & moveTimer >= waitTimeToMove)//finished search and can make move
+                    //    {
+                    //        Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
+                    //        moveTimer = 0;
+                    //        Board.instance.canMove = false;
+                    //    }
+                    //}
 
                     //**THIS IS THE ONE THAT USES TASK SYSTEM AND DOESNT WORK RN MAYBE FOREVER CUZ THIS SHIT WACK**
                     /*if (!TorokIsMoving)
@@ -160,7 +160,7 @@ public class GameStateManager : MonoBehaviour
                     */
 
                     //**THIS IS THE ONE THAT USES A SINGLE FRAME SEARCH IE OLD WORKING METHOD** 
-                    /*if (!TorokIsMoving)
+                    if (!TorokIsMoving)
                     {
                         TorokIsMoving = true;
                         Move resultMove = MinMax.instance.GetMinMaxMove(playerToMove.torok);
@@ -183,7 +183,7 @@ public class GameStateManager : MonoBehaviour
                             EndTurn();//this will eventually be deleted
                         }
 
-                    }*/
+                    }
 
                 }
                 break;
@@ -324,10 +324,10 @@ public class GameStateManager : MonoBehaviour
         //show some type of defeat text or something
 
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
-        yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame));
+        yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame)); // seems like this happens twice
         //yield return new WaitForSeconds(3);
-        PauseMenu.instance.ReturnToMainMenu();
         activeCoRo = null;
+        PauseMenu.instance.ReturnToMainMenu();
     }
 
     public void SetNextLevel()
