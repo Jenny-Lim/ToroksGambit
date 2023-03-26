@@ -46,6 +46,9 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] private UIParticleSystem ticketParticleSystem;
 
+    [SerializeField] private float waitTimeToMove;
+    private float moveTimer = 0;
+
     public GameState GetGameState()
     {
         return currentState;
@@ -112,9 +115,11 @@ public class GameStateManager : MonoBehaviour
                     }
                     else
                     {
-                        if (MinMax.instance.finishedSearch == true && Board.instance.canMove)//finished search and can make move
+                        moveTimer += Time.deltaTime;
+                        if (MinMax.instance.finishedSearch == true && Board.instance.canMove & moveTimer >= waitTimeToMove)//finished search and can make move
                         {
                             Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
+                            moveTimer = 0;
                             Board.instance.canMove = false;
                         }
                     }
@@ -373,6 +378,8 @@ public class GameStateManager : MonoBehaviour
     {
         Board.playerInCheck = Board.instance.IsKingInCheck(false);
         Board.torokInCheck = Board.instance.IsKingInCheck(true);
+
+        moveTimer = 0;
 
         //win condition checks
         if (winCondition != null)

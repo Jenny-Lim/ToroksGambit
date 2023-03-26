@@ -15424,7 +15424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70d987e93fb20c41bc7d49e70dcc6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDepth: 4
+  maxDepth: 2
   lookingForMove: 0
   finishedSearch: 0
   maxSearchPerFrame: 200
@@ -23336,6 +23336,7 @@ MonoBehaviour:
   lookingForMove: 0
   victoryText: {fileID: 144568726}
   ticketParticleSystem: {fileID: 1901676245}
+  waitTimeToMove: 5
 --- !u!4 &1925806816
 Transform:
   m_ObjectHideFlags: 0
