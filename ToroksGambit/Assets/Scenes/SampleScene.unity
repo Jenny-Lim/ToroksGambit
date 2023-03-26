@@ -25135,7 +25135,6 @@ GameObject:
   - component: {fileID: 2045036877}
   - component: {fileID: 2045036876}
   - component: {fileID: 2045036875}
-  - component: {fileID: 2045036874}
   m_Layer: 0
   m_Name: Pathway
   m_TagString: Untagged
@@ -25143,19 +25142,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &2045036874
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2045036873}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2045036875
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -26393,14 +26379,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6588434171376510869}
-  m_LocalRotation: {x: 0.5023453, y: -0.50807816, z: -0.48797324, w: 0.501386}
-  m_LocalPosition: {x: -0.089771815, y: -0.5765503, z: 0.37665853}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: -0.068, y: -0.576, z: 0.373}
   m_LocalScale: {x: 0.99997026, y: 0.9266169, z: 0.48461744}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7495113019692755696}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.452, y: 81.582, z: -88.908}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
 --- !u!137 &495588836196757089
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -27557,14 +27543,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2249601072510392041}
-  m_LocalRotation: {x: -0.60718244, y: 0.6091247, z: -0.35360864, w: 0.36777374}
-  m_LocalPosition: {x: 0.10730886, y: -0.5715965, z: 0.43272024}
+  m_LocalRotation: {x: -0.608168, y: 0.608168, z: -0.36073777, w: 0.36073777}
+  m_LocalPosition: {x: 0.091, y: -0.5715, z: 0.4306}
   m_LocalScale: {x: 0.99997467, y: 0.9358263, z: 0.75785}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5508666928037493856}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -0.907, y: 128.708, z: -89.279}
+  m_LocalEulerAnglesHint: {x: 0, y: 118.651, z: -90}
 --- !u!1001 &2904969081526711412
 PrefabInstance:
   m_ObjectHideFlags: 0
