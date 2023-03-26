@@ -15795,7 +15795,7 @@ MonoBehaviour:
   tickets: 1000
   ticketsTxt: {fileID: 1231418731}
   ticketTextObject: {fileID: 1231418728}
-  ticketBackgroundObject: {fileID: 0}
+  ticketBackgroundObject: {fileID: 1979517374}
 --- !u!114 &1231418731
 MonoBehaviour:
   m_ObjectHideFlags: 0
