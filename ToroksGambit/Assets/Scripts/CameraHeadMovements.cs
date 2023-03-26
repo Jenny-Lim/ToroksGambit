@@ -264,7 +264,6 @@ public class CameraHeadMovements : MonoBehaviour
             yield return null;
         }
         transform.eulerAngles = LookAtTorokRotation;
-        movementInProgress = false;
     }
 
     public IEnumerator LookAtBoardExclusively()
@@ -287,6 +286,5 @@ public class CameraHeadMovements : MonoBehaviour
             yield return null;
         }
         transform.eulerAngles = lookAtBoardRotation;
-        movementInProgress = false;
     }
 }
