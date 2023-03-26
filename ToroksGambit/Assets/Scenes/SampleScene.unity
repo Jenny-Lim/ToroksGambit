@@ -15795,7 +15795,6 @@ MonoBehaviour:
   tickets: 1000
   ticketsTxt: {fileID: 1231418731}
   ticketTextObject: {fileID: 1231418728}
-  ticketBackgroundObject: {fileID: 1979517374}
 --- !u!114 &1231418731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17917,9 +17916,6 @@ MonoBehaviour:
   pieceDescription: {fileID: 1205953928}
   canvas: {fileID: 1981679070}
   anim: {fileID: 1155828369}
-  leaveSignDefaultColor: {r: 0.98039216, g: 0.7019608, b: 0, a: 1}
-  leaveSignMouseHoverColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
-  leaveSignText: {fileID: 1998973423}
 --- !u!1 &1477407502
 GameObject:
   m_ObjectHideFlags: 0
@@ -19393,6 +19389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11ca0031a6ac2d4283e5f4af2980dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startButton: {fileID: 1040230457}
   continueButton: {fileID: 483181921}
   optionsButton: {fileID: 431986569}
   pauseFxn: {fileID: 1944965754}
