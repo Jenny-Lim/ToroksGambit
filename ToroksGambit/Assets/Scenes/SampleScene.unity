@@ -15795,6 +15795,7 @@ MonoBehaviour:
   tickets: 1000
   ticketsTxt: {fileID: 1231418731}
   ticketTextObject: {fileID: 1231418728}
+  ticketBackgroundObject: {fileID: 0}
 --- !u!114 &1231418731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17916,6 +17917,9 @@ MonoBehaviour:
   pieceDescription: {fileID: 1205953928}
   canvas: {fileID: 1981679070}
   anim: {fileID: 1155828369}
+  leaveSignDefaultColor: {r: 0.98039216, g: 0.7019608, b: 0, a: 1}
+  leaveSignMouseHoverColor: {r: 1, g: 1, b: 1, a: 1}
+  leaveSignText: {fileID: 1998973423}
 --- !u!1 &1477407502
 GameObject:
   m_ObjectHideFlags: 0
