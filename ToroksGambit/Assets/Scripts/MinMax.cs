@@ -128,7 +128,20 @@ public class MinMax : MonoBehaviour
                     break;
                 }
 
+                StateStorage curStateParent = stack.Pop();
+                if (curState.toMove == playerToMove.player)//max
+                {
+                    if (curState.bestMove.score > curStateParent.bestMove.score) 
+                    {
+                        //curStateParent.bestMove
 
+                    }
+                    
+                }
+                else
+                {
+                    
+                }
 
                 /*StateStorage curStateParent = stack.Pop();//this would be the parent of curState
 
