@@ -4,6 +4,8 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Jobs;
 using System.Threading.Tasks;
+using System;
+using System.Linq;
 
 public class MinMax : MonoBehaviour
 {
@@ -38,10 +40,7 @@ public class MinMax : MonoBehaviour
 
     }
 */
-    public enum playerToMove
-    {
-        player, torok
-    }
+
 
     public void Awake()
     {
@@ -51,6 +50,135 @@ public class MinMax : MonoBehaviour
         }
         initDepth = maxDepth;
     }
+    
+    //-----------Iterative Version
+    public void GetMinMaxMoveIter(Move resultMove)
+    {
+        StopAllCoroutines();
+
+        StartCoroutine(GetMinMaxMoveIterCoRo(maxDepth, resultMove));
+    }
+
+    private IEnumerator GetMinMaxMoveIterCoRo(int maxDepth, Move resultMove)
+    {
+        Stack<StateStorage> stack = new Stack<StateStorage>();// the stack
+        stack.Push(new StateStorage(playerToMove.torok, Board.instance.GetAllMoves(true), maxDepth + GameStateManager.GetTurnCount()));//push current state to stack
+        StateStorage curState = null;// the currently looked at state
+
+        while (stack.Count > 0)//while stack not empty
+        {
+            #region "Max Searches Per Frame"
+            if (totalNumNodesLookedAt >= maxSearchPerFrame)//yield for next frame if max searches allowed for this frame reached
+            {
+                totalNumNodesLookedAt = 0;
+                yield return null;
+            }
+            #endregion
+
+            #region "Get Current Stack State"
+            curState = stack.Pop();//get next stack state
+            totalNumNodesLookedAt++;
+            #endregion
+
+            #region "Leaf Node Reached"
+            if (curState.depth <= 0)//leaf node reached
+            {
+                StateStorage curStateParent = stack.Pop();
+
+                float leafAnalysis = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
+                if (curState.toMove == playerToMove.player)//max
+                {
+                    if (leafAnalysis > curStateParent.bestMove.score)//max
+                    {
+                        curStateParent.bestMove.score = leafAnalysis;
+                        curStateParent.bestMove.move = null;
+                    }
+                }
+                else
+                {
+                    if (leafAnalysis < curStateParent.bestMove.score)//min
+                    {
+                        curStateParent.bestMove.score = leafAnalysis;
+                        curStateParent.bestMove.move = null;
+                    }
+                }
+
+                stack.Push(curStateParent);
+
+                /*StateStorage curStateParent = stack.Pop();//this would be the parent of curState
+
+                //update parent values to store leaf node
+                float boardScore = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
+                curStateParent.moveValues.Add(boardScore);
+
+                stack.Push(curStateParent);//push parent back to stack*/
+
+                Board.instance.UndoMove();
+                continue;
+            }
+            #endregion
+
+            #region "Find Next Not Searched Move"
+            int indexToLookAt = curState.searchedMoves.IndexOf(false);//the first unsearched move in this state
+            if (indexToLookAt == -1)//there are no new moves left
+            {
+                if (curState.depth == maxDepth)
+                {
+
+                    break;
+                }
+
+
+
+                /*StateStorage curStateParent = stack.Pop();//this would be the parent of curState
+
+                float result;
+
+                if (curState.toMove == playerToMove.player)
+                {
+                    result = curState.moveValues.AsQueryable().Max();
+                }
+                else
+                {
+                    result = curState.moveValues.AsQueryable().Min();
+                }
+
+                curStateParent.moveValues.Add(result);
+
+                stack.Push(curStateParent);*/
+
+                Board.instance.UndoMove();
+                continue;
+            }
+            #endregion
+
+            #region "Push Cur State to Stack, Move Piece For Next State"
+            stack.Push(curState);
+            Board.instance.MovePiece(curState.availMoves[indexToLookAt].startX, curState.availMoves[indexToLookAt].startY, 
+                curState.availMoves[indexToLookAt].endX, curState.availMoves[indexToLookAt].endY);//make the change to the board for the next pushed state
+            #endregion
+
+            #region "Get child State Data"
+            playerToMove nextPlayerToMove = playerToMove.player;
+            if (curState.toMove == playerToMove.player) { nextPlayerToMove = playerToMove.torok; }
+            List<Move> nextStateMoves = Board.instance.GetAllMoves(nextPlayerToMove == playerToMove.torok);
+            nextStateMoves.Sort(mc);
+            #endregion
+
+            #region "Add Child State To Stack"
+            StateStorage childState = new StateStorage(nextPlayerToMove, nextStateMoves, curState.depth-1);
+            stack.Push(childState);
+            curState.searchedMoves[indexToLookAt] = true;
+            #endregion
+
+        }
+
+
+        resultMove = curState.bestMove.move;
+    }
+
+    //---------------Iterative Version end
+
     //old version
     public Move GetMinMaxMove(playerToMove toMove)
     {
@@ -550,6 +678,11 @@ public class MinMax : MonoBehaviour
     //------------
 }
 
+public enum playerToMove
+{
+    player, torok
+}
+
 public struct ScoredMove
 {
     public Move move;
@@ -584,7 +717,6 @@ public class MoveComparer : IComparer<Move> // jenny -- makes it better yippee :
     }
 }
 
-
 public class DataHolder<T>
 {
     
@@ -599,6 +731,47 @@ public class DataHolder<T>
     {
         data = newData;
     }
+}
+
+//this class stores the game state
+public class StateStorage
+{
+    public StateStorage()
+    {
+
+    }
+
+    public StateStorage(playerToMove movingPlayer, List<Move> moves, int depth)
+    {
+        toMove = movingPlayer;
+        availMoves = moves;
+
+        bestMove = new ScoredMove();
+        if (movingPlayer == playerToMove.player) bestMove.score = float.MinValue;
+        else bestMove.score = float.MaxValue;
+
+        searchedMoves = new List<bool>(moves.Count);
+        for (int i = 0; i < availMoves.Count; i++)
+        {
+            searchedMoves.Add(false);
+        }
+
+        moveValues = new List<float>(moves.Count);
+        for (int i = 0; i < availMoves.Count; i++)
+        {
+            moveValues.Add(0.0f);
+        }
+        this.depth = depth;
+    }
+
+    public List<Move> availMoves;//list of all moves
+    public List<bool> searchedMoves;// list of which index of availMoves has been searched, may or may not actually need this
+    public ScoredMove bestMove;// the best value that this state has so far
+    public playerToMove toMove;//if this state is a min or max state, player = max, torok = min
+    public int depth;
+    public List<float> moveValues;
+    
+
 }
 /*
 public struct MinMaxJob : IJob

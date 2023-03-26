@@ -163,7 +163,7 @@ public class GameStateManager : MonoBehaviour
                     if (!TorokIsMoving)
                     {
                         TorokIsMoving = true;
-                        Move resultMove = MinMax.instance.GetMinMaxMove(MinMax.playerToMove.torok);
+                        Move resultMove = MinMax.instance.GetMinMaxMove(playerToMove.torok);
                         if (resultMove != null)
                         {
                             if (lastValidateCheck == false)
