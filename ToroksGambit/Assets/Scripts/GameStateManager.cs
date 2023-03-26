@@ -154,7 +154,7 @@ public class GameStateManager : MonoBehaviour
                     }
                     */
 
-                    //**THIS IS THE ONE THAT USES A SINGLE FRAME SEARCH**
+                    //**THIS IS THE ONE THAT USES A SINGLE FRAME SEARCH IE OLD WORKING METHOD** 
                     /*if (!TorokIsMoving)
                     {
                         TorokIsMoving = true;
