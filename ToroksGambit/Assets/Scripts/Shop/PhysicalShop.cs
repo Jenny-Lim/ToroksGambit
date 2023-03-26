@@ -68,7 +68,26 @@ public class PhysicalShop : MonoBehaviour
             if (hit.transform.CompareTag("Chess Piece"))
             {
                 Debug.Log("Shop Piece HIt");
+                Piece shopPiece = hit.transform.gameObject.GetComponent<Piece>();
+                pieceDescription.text = pieceNames[(int)shopPiece.type];
                 pieceDescriptionObject.SetActive(true);
+                if(Input.GetMouseButtonDown(0))
+                {                
+                   if (prices[(int)shopPiece.type] <= Currency.instance.tickets)
+                   {
+                            for(int i = 0;i < 8;i++)
+                            {
+                                if(hit.transform.gameObject == shopPieceModels[i])
+                                {
+                                    priceText[i].text = "";
+                                }
+                            }
+                    //priceText[i].text = "";
+                    Currency.instance.SubtractFromCurrency(prices[(int)shopPiece.type]);
+                    Inventory.instance.AlterPiece((Inventory.InventoryPieces)shopPiece.type,1);
+                    Destroy(hit.transform.gameObject);
+                   }
+                }
             }
             if (hit.transform.CompareTag("StoreStock"))
             {
@@ -180,7 +199,7 @@ public class PhysicalShop : MonoBehaviour
     public void EnterShop()
     {
         c.LookAtShop();
-        piecePanels.SetActive(true);
+        //piecePanels.SetActive(true);
         //Currency.instance.ticketTextObject.enabled = true;
         shopkeeper.SetActive(true);
         anim.SetBool("EnteredShop", true);
