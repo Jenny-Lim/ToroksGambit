@@ -28,7 +28,7 @@ public class MainMenu : MonoBehaviour
         //}
         //else 
         //{
-            continueButton.interactable = false;
+            //continueButton.interactable = false;
         //}
         //continueButton.interactable = true;
         optionsButton.interactable = false;
@@ -39,6 +39,7 @@ public class MainMenu : MonoBehaviour
     void OnEnable()
     {
         startButton.interactable = false;
+        continueButton.interactable = false;
         print("yeye");
         Invoke("GoBackToTitle", 1.0f); // it was some shit with execution order
         //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
