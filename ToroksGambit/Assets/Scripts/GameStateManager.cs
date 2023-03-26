@@ -282,6 +282,7 @@ public class GameStateManager : MonoBehaviour
         Inventory.instance.objectiveArea.SetActive(false);
 
         Currency.instance.ticketTextObject.SetActive(true);// remove this once this function gets organized just to see the currency number as the tickets get there
+        Currency.instance.ticketBackgroundObject.SetActive(true);
         ticketParticleSystem.SpawnTickets((currentLevelNumber + 1) * 6);//<- needs to be abled to get that number from the currency object for how many tickets you got
 
         float counter = 0;
