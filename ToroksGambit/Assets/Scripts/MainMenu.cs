@@ -21,15 +21,15 @@ public class MainMenu : MonoBehaviour
         //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
 
         // to change once there's stuff
-        if(SaveManager.instance.hasSaveGame)
-        {
-            continueButton.interactable = true;
+        //if(SaveManager.instance.hasSaveGame)
+        //{
+        //    continueButton.interactable = true;
 
-        }
-        else 
-        {
+        //}
+        //else 
+        //{
             continueButton.interactable = false;
-        }
+        //}
         //continueButton.interactable = true;
         optionsButton.interactable = false;
         pauseFxn.enabled = false;
@@ -48,6 +48,10 @@ public class MainMenu : MonoBehaviour
     void GoBackToTitle()
     {
         startButton.interactable = true; //sometimes intro doesnt play -- if you press play when not in the title coro. so heres a bandaid fix
+        if (SaveManager.instance.hasSaveGame)
+        {
+            continueButton.interactable = true;
+        }
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
     }
 
