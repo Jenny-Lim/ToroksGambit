@@ -291,15 +291,16 @@ public class GameStateManager : MonoBehaviour
         ticketParticleSystem.SpawnTickets((currentLevelNumber + 1) * 6);//<- needs to be abled to get that number from the currency object for how many tickets you got
 
         float counter = 0;
+        victoryText.SetActive(true);
         while (counter < 2000)
         {
             if (Mathf.Sin(counter * 0.02f) > 0)
             {
-                victoryText.SetActive(true);
+                victoryText.transform.GetChild(0).gameObject.SetActive(true);
             }
             else
             {
-                victoryText.SetActive(false);
+                victoryText.transform.GetChild(0).gameObject.SetActive(false);
             }
             counter++;
             yield return null;
