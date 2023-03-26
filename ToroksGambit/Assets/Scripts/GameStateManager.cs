@@ -173,7 +173,7 @@ public class GameStateManager : MonoBehaviour
                                 //Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
                                 Board.instance.MoveValidatorCoRo(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
                             }
-                            
+
                             //EndTurn();//take out, move to coro
                         }
                         else
@@ -182,9 +182,9 @@ public class GameStateManager : MonoBehaviour
                             Debug.Log("Switching back to player's turn for convenience");
                             EndTurn();//this will eventually be deleted
                         }
-                       
+
                     }*/
-                    
+
                 }
                 break;
             case GameState.shop:
@@ -327,6 +327,7 @@ public class GameStateManager : MonoBehaviour
         yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame));
         //yield return new WaitForSeconds(3);
         PauseMenu.instance.ReturnToMainMenu();
+        activeCoRo = null;
     }
 
     public void SetNextLevel()
