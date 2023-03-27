@@ -13,6 +13,11 @@ public class PauseMenu : MonoBehaviour
         if (instance == null) { instance = this; }
     }
 
+    void OnEnable()
+    {
+        CameraHeadMovements.canScroll = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -44,7 +49,7 @@ public class PauseMenu : MonoBehaviour
         CameraHeadMovements.canScroll = false;
         Inventory.instance.objectiveArea.SetActive(false);
         Inventory.instance.DisableDeployUI();
-        //Inventory.instance.HideInventoryPanel();
+        Inventory.instance.HideInventoryPanel();
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
         CameraHeadMovements.instance.GetOutPlayArea();
         MainMenu.instance.gameObject.SetActive(true);

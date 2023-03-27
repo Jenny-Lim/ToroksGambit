@@ -209,6 +209,7 @@ public class GameStateManager : MonoBehaviour
             case GameState.win:
                 //put up some text that says you wont
                 //add tickets
+                MainMenu.instance.pauseFxn.enabled = false;
                 if (activeCoRo == null)
                 {
                     activeCoRo = StartCoroutine(WinAnimCoro());
