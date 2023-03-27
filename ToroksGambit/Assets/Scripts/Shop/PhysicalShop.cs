@@ -164,7 +164,7 @@ public class PhysicalShop : MonoBehaviour
 
             //place model at spot
             shopPieceModels[i] = Instantiate(pieceModels[pieceType[i]], pieceSpots[i].position, Quaternion.identity, gameObject.transform);
-            shopPieceModels[i].transform.Rotate(0.0f,-90.0f,0.0f, Space.Self);
+            //shopPieceModels[i].transform.localRotation = Quaternion.Euler(0, 90, 180);
             //change price
             priceText[i].text = prices[pieceType[i]].ToString();
             //re activate panels
