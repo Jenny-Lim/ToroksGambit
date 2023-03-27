@@ -234,6 +234,7 @@ public class CameraHeadMovements : MonoBehaviour
     private IEnumerator GetOutPlayAreaCoRo()
     {
         Debug.Log("get out LookAtPlay");
+        canScroll = false;
         movementInProgress = true;
         /*while (Vector3.Distance(transform.position, titleScreenPosition) > 0.1f)
         {
