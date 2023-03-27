@@ -84,26 +84,29 @@ public class InterruptCoroutineHolder : MonoBehaviour
         float rand = Random.Range(0,1);
         //**    THE COMMENTED CODE BELOW IS FOR USE WHEN VFX CAN BE USED**
 
-        if (rand <= 0.5 || (int)holderType.piece > (int)BaseInterrupt.PieceType.Queen)//use smoke effect
-        {
+        //if (rand <= 0.5 || (int)holderType.piece > (int)BaseInterrupt.PieceType.Queen)//use smoke effect
+        //{
+            ParticlePoolParticle smokeFX = ParticleEffectObjectPool.instance.GetParticleEffectGO(ParticleEffects.Smoke);
+            smokeFX.Initialize(3f, finalPos, Quaternion.identity);
+            smokeFX.transform.position = finalPos;
             placedPiece.transform.position = finalPos;
-        }
-        else//use fall effect
-        {
-            float percentMoved = 0;
-            float desiredTime = 1.3f;
-            float elapsedTime = 0;
-            float fallSpeed = 1.5f;
-            float fallRate = 0.1f;
-            while (percentMoved < 1.0)
-            {
-                fallSpeed += fallRate;
-                elapsedTime += Time.deltaTime * fallSpeed;
-                percentMoved = elapsedTime / desiredTime;
-                placedPiece.transform.position = Vector3.Lerp(initPos, finalPos, percentMoved);
-                yield return null;
-            }
-        }
+        //}
+        //else//use fall effect
+        //{
+        //    float percentMoved = 0;
+        //    float desiredTime = 1.3f;
+        //    float elapsedTime = 0;
+        //    float fallSpeed = 1.5f;
+        //    float fallRate = 0.1f;
+        //    while (percentMoved < 1.0)
+        //    {
+        //        fallSpeed += fallRate;
+        //        elapsedTime += Time.deltaTime * fallSpeed;
+        //        percentMoved = elapsedTime / desiredTime;
+        //        placedPiece.transform.position = Vector3.Lerp(initPos, finalPos, percentMoved);
+        //        yield return null;
+        //    }
+        //}
 
         //return camera to board can be placed here for after effect 
 
