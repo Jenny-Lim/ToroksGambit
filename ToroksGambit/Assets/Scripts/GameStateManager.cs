@@ -338,7 +338,8 @@ public class GameStateManager : MonoBehaviour
         //show some type of defeat text or something
         CameraHeadMovements.canScroll = false;
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
-        yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame));
+        yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.WinGame));//meaning torok won
+        yield return new WaitForSeconds(1.5f);
         //yield return new WaitForSeconds(3);
         activeCoRo = null;
         ChangeGameState(GameState.title);
