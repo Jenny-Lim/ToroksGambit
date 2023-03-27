@@ -94,6 +94,11 @@ public class GameStateManager : MonoBehaviour
         {
             case GameState.deployment:
                 Inventory.instance.InventoryUpdate();
+                if (!CameraHeadMovements.instance.GetIsMoving())
+                {
+                    CameraHeadMovements.canScroll = true;
+                }
+                
                 break;
 
             case GameState.game:
@@ -284,6 +289,7 @@ public class GameStateManager : MonoBehaviour
 
     public IEnumerator WinAnimCoro()
     {
+        CameraHeadMovements.canScroll = false;
         Inventory.instance.HideInventoryPanel();
         Inventory.instance.objectiveArea.SetActive(false);
 

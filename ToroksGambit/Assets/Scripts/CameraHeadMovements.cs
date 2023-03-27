@@ -14,6 +14,14 @@ public class CameraHeadMovements : MonoBehaviour
     [SerializeField] private Vector3 lookAtShopPosition;
     [SerializeField] private Vector3 titleScreenPosition;
     public static CameraHeadMovements instance;
+
+    [SerializeField] private Vector3 maxScrollPos;
+    private Vector3 minScrollPos;
+    [SerializeField] private float scrollSpeed = 1;
+    public float scrollPercent = 0.0f;
+    public static bool canScroll = false;
+    
+
     //private Animator ani;
     public bool menuDone = false;
 
@@ -23,6 +31,7 @@ public class CameraHeadMovements : MonoBehaviour
         titleScreenPosition = transform.position;
         //ani = gameObject.GetComponent<Animator>();
         if (instance == null ) { instance = this; }
+        minScrollPos = lookAtBoardPosition;
     }
 
     private void Update()
@@ -31,6 +40,15 @@ public class CameraHeadMovements : MonoBehaviour
         {
             LookAtTorok(2);
         }
+
+
+        if (!movementInProgress && canScroll)//if not moving by coro
+        {
+            scrollPercent += Input.mouseScrollDelta.y * Time.deltaTime * scrollSpeed;
+            scrollPercent = Mathf.Clamp01(scrollPercent);
+            transform.position = Vector3.Lerp(minScrollPos, maxScrollPos, scrollPercent);
+        }
+
     }
 
     //calls the coro for looking at torok, but checks if it can beforehand

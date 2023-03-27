@@ -12310,6 +12310,9 @@ MonoBehaviour:
   lookAtBoardRotation: {x: 40.302, y: 0, z: 0}
   lookAtShopPosition: {x: 6.09, y: 6.26, z: -7.77}
   titleScreenPosition: {x: 3.46, y: 6.1, z: -50}
+  maxScrollPos: {x: 4.72, y: 6.895, z: -0.107}
+  scrollSpeed: 20
+  scrollPercent: 0
   menuDone: 0
 --- !u!95 &963194230
 Animator:
@@ -16347,12 +16350,12 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252258563}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.9433962, g: 0.47915486, b: 0.084549636, a: 1}
-  m_Intensity: 0.09
+  m_Intensity: 1.01
   m_Range: 30.58815
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -16389,7 +16392,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 759
+    m_Bits: 1015
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -16410,7 +16413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252258563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.01, y: 7.33, z: -8.42}
+  m_LocalPosition: {x: 4.4, y: 7.33, z: -8.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

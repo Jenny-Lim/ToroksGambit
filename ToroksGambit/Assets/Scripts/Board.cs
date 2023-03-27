@@ -112,6 +112,8 @@ public class Board : MonoBehaviour
     [SerializeField] private float lastAnalyzedBoardScore = 0;
     [SerializeField] private float goodBadMoveThreshold = 700;
 
+
+
     // brought them up here
     //private static int clickedX;
     //private static int clickedY;
