@@ -37,7 +37,7 @@ public class CameraHeadMovements : MonoBehaviour
 
     private void Update()
     {
-        print("canScroll: " + canScroll);
+        //print("canScroll: " + canScroll);
         if (Input.GetButtonDown("Jump"))// just for testing purposes
         {
             LookAtTorok(2);

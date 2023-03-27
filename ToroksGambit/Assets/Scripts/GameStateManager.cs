@@ -236,7 +236,7 @@ public class GameStateManager : MonoBehaviour
 
     public IEnumerator titleCoRo()
     {
-        Debug.Log("insdie titleCoRo");
+        //Debug.Log("insdie titleCoRo");
         CameraHeadMovements.canScroll = false;
         //if (MainMenu.instance.menuDone) {
         while (!CameraHeadMovements.instance.menuDone)
@@ -294,6 +294,11 @@ public class GameStateManager : MonoBehaviour
         Inventory.instance.HideInventoryPanel();
         Inventory.instance.objectiveArea.SetActive(false);
 
+        yield return CameraHeadMovements.instance.LookAtTorokExclusively();
+        yield return TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame);
+        yield return CameraHeadMovements.instance.LookAtBoardExclusively();
+        
+
         Currency.instance.ticketTextObject.SetActive(true);// remove this once this function gets organized just to see the currency number as the tickets get there
         Currency.instance.ticketBackgroundObject.SetActive(true);
         ticketParticleSystem.SpawnTickets((currentLevelNumber + 1) * 6);//<- needs to be abled to get that number from the currency object for how many tickets you got
@@ -302,14 +307,14 @@ public class GameStateManager : MonoBehaviour
         victoryText.SetActive(true);
         while (time < 5)
         {
-            if (Mathf.Sin(time) > 0)
-            {
-                victoryText.transform.GetChild(0).gameObject.SetActive(true);
-            }
-            else
-            {
-                victoryText.transform.GetChild(0).gameObject.SetActive(false);
-            }
+            //if (Mathf.Sin(time) > 0)
+            //{
+            //    victoryText.transform.GetChild(0).gameObject.SetActive(true);
+            //}
+            //else
+            //{
+            //    victoryText.transform.GetChild(0).gameObject.SetActive(false);
+            //}
             time += Time.deltaTime;
             yield return null;
         }

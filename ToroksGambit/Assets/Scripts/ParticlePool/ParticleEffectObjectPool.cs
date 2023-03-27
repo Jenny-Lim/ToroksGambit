@@ -26,7 +26,7 @@ public class ParticleEffectObjectPool : MonoBehaviour
 
     private void Initialize()
     {
-        Debug.Log("inside init");
+        //Debug.Log("inside init");
         int enumLength = Enum.GetNames(typeof(ParticleEffects)).Length;
         objectPools = new List<List<GameObject>>(enumLength);
 

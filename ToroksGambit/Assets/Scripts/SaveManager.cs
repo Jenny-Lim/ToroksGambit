@@ -17,18 +17,18 @@ public class SaveManager : MonoBehaviour
     private void Awake()
     {
 
-        Debug.Log(Application.persistentDataPath);
+        //Debug.Log(Application.persistentDataPath);
         saveGameFilePath = Application.persistentDataPath + "/SaveData.dat";
         instance = this;
 
         if(File.Exists(saveGameFilePath))
         {
-            Debug.Log("FILE");
+            //Debug.Log("FILE");
             hasSaveGame = true;
         }
         else
         {
-            Debug.Log("NO FILE");
+            //Debug.Log("NO FILE");
         }
 
     }

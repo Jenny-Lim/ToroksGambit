@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
     {
         startButton.interactable = false;
         continueButton.interactable = false;
-        print("yeye");
+        //print("yeye");
         Invoke("GoBackToTitle", 1.0f); // it was some shit with execution order
         //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
         CameraHeadMovements.instance.menuDone = false;
