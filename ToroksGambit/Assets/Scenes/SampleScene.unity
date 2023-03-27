@@ -18021,7 +18021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1480075906
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18029,13 +18029,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480075905}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1981679071}
-  m_RootOrder: 3
+  m_Father: {fileID: 2138344906}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -19342,7 +19342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11ca0031a6ac2d4283e5f4af2980dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButton: {fileID: 0}
+  startButton: {fileID: 1040230457}
   continueButton: {fileID: 483181921}
   optionsButton: {fileID: 431986569}
   pauseFxn: {fileID: 1944965754}
@@ -23338,7 +23338,7 @@ MonoBehaviour:
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
   currentState: 0
   lookingForMove: 0
-  victoryText: {fileID: 1480075905}
+  victoryText: {fileID: 2138344905}
   ticketParticleSystem: {fileID: 1901676245}
   waitTimeToMove: 0
 --- !u!4 &1925806816
@@ -23904,7 +23904,7 @@ RectTransform:
   - {fileID: 1969337868}
   - {fileID: 448147012}
   - {fileID: 701759684}
-  - {fileID: 1480075906}
+  - {fileID: 2138344906}
   - {fileID: 1912380706}
   - {fileID: 2078189507}
   - {fileID: 737868338}
@@ -25846,6 +25846,83 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5957427424637607141, guid: 01c8ad64c023b6f4890b35b94980bfc4, type: 3}
   m_PrefabInstance: {fileID: 2125050320}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2138344905
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2138344906}
+  - component: {fileID: 2138344908}
+  - component: {fileID: 2138344907}
+  m_Layer: 5
+  m_Name: VictoryBoard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &2138344906
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138344905}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1480075906}
+  m_Father: {fileID: 1981679071}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2138344907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138344905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2138344908
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138344905}
+  m_CullTransparentMesh: 1
 --- !u!1001 &2142598312
 PrefabInstance:
   m_ObjectHideFlags: 0
