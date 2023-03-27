@@ -341,6 +341,7 @@ public class GameStateManager : MonoBehaviour
         yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame));
         //yield return new WaitForSeconds(3);
         activeCoRo = null;
+        ChangeGameState(GameState.title);
         PauseMenu.instance.ReturnToMainMenu();
     }
 

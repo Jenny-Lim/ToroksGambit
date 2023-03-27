@@ -43,9 +43,10 @@ public class CameraHeadMovements : MonoBehaviour
             LookAtTorok(2);
         }
 
-
+        
         if (!movementInProgress && canScroll)//if not moving by coro
         {
+            Debug.Log(canScroll);
             scrollPercent += Input.mouseScrollDelta.y * Time.deltaTime * scrollSpeed;
             scrollPercent = Mathf.Clamp01(scrollPercent);
             transform.position = Vector3.Lerp(minScrollPos, maxScrollPos, scrollPercent);
@@ -245,7 +246,7 @@ public class CameraHeadMovements : MonoBehaviour
 
 
         float elapsedTime = 0f;
-        float desiredTime = 1.5f;
+        float desiredTime = 2f;
         float percentDone = 0f;
 
         Vector3 initPos = transform.position;
