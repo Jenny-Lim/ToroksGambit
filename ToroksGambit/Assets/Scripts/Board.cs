@@ -446,14 +446,17 @@ public class Board : MonoBehaviour
             if (toughPlacer)
             {
                 piece.isTough = true;
+                piece.toughIcon.SetActive(true);
             }
             if (lastChancePlacer)
             {
                 piece.lastChance = true;
+                piece.lastChanceIcon.SetActive(true);
             }
             if (promotePlacer)
             {
                 piece.promote = true;
+                piece.promoteIcon.SetActive(true);
             }
 
             piece.pieceX = placeX; 
@@ -602,14 +605,17 @@ public class Board : MonoBehaviour
             if (toughPlacer)
             {
                 piece.isTough = true;
+                piece.toughIcon.SetActive(true);
             }
             if (lastChancePlacer)
             {
                 piece.lastChance = true;
+                piece.lastChanceIcon.SetActive(true);
             }
             if (promotePlacer)
             {
                 piece.promote = true;
+                piece.promoteIcon.SetActive(true);
             }
 
             piece.pieceX = placeX;
@@ -1158,6 +1164,7 @@ public class Board : MonoBehaviour
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
             PlacePiece(endX, endY, 4);
+            pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
             //piece.pawnPromote = true;
             //PlacePiece(endX, endY, 4);
 
@@ -1168,6 +1175,7 @@ public class Board : MonoBehaviour
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
             PlacePieceTorok(endX, endY, 4);
+            pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
         }
 
     }
