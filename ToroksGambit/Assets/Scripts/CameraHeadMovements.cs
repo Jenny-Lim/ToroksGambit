@@ -277,7 +277,7 @@ public class CameraHeadMovements : MonoBehaviour
 
         float timeElapsed = 0f;
         float percentDone = 0f;
-        float desiredTime = 1.5f;
+        float desiredTime = 2f;
 
         Vector3 startAngle = transform.eulerAngles;
         eulerBeforeExlusiveCall = transform.eulerAngles;
@@ -301,7 +301,7 @@ public class CameraHeadMovements : MonoBehaviour
 
         float timeElapsed = 0f;
         float percentDone = 0f;
-        float desiredTime = 1.5f;
+        float desiredTime = 2f;
 
         Vector3 startAngle = transform.eulerAngles;
 
