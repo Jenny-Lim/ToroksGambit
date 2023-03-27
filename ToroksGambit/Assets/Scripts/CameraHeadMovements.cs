@@ -37,15 +37,16 @@ public class CameraHeadMovements : MonoBehaviour
 
     private void Update()
     {
-        print("canScroll: " + canScroll);
+        //print("canScroll: " + canScroll);
         if (Input.GetButtonDown("Jump"))// just for testing purposes
         {
             LookAtTorok(2);
         }
 
-
+        
         if (!movementInProgress && canScroll)//if not moving by coro
         {
+            Debug.Log(canScroll);
             scrollPercent += Input.mouseScrollDelta.y * Time.deltaTime * scrollSpeed;
             scrollPercent = Mathf.Clamp01(scrollPercent);
             transform.position = Vector3.Lerp(minScrollPos, maxScrollPos, scrollPercent);
@@ -234,6 +235,7 @@ public class CameraHeadMovements : MonoBehaviour
     private IEnumerator GetOutPlayAreaCoRo()
     {
         Debug.Log("get out LookAtPlay");
+        canScroll = false;
         movementInProgress = true;
         /*while (Vector3.Distance(transform.position, titleScreenPosition) > 0.1f)
         {
@@ -244,7 +246,7 @@ public class CameraHeadMovements : MonoBehaviour
 
 
         float elapsedTime = 0f;
-        float desiredTime = 1.5f;
+        float desiredTime = 2f;
         float percentDone = 0f;
 
         Vector3 initPos = transform.position;
@@ -259,7 +261,7 @@ public class CameraHeadMovements : MonoBehaviour
             yield return null;
         }
         transform.eulerAngles = initialRotation;
-        transform.position = titleScreenPosition; // for whatever reason it seems like this is set to the board pos ?
+        transform.position = titleScreenPosition; // for whatever reason it seems like this is set to the board pos ? -- works fine in shop tho lmao
 
         movementInProgress = false;
     }

@@ -42,7 +42,6 @@ public class TorokPersonalityAI : MonoBehaviour
             //doing it like this without the return overrides the last call, which might be the best solution rn but is a little jarring when it happens
         }
 
-        Debug.Log("Played sound clip");
         audioPlayer.clip = library.GetAudioClip(from);
         audioPlayer.Play();
         return audioPlayer.clip.length;
@@ -88,7 +87,6 @@ public class TorokPersonalityAI : MonoBehaviour
 
     public IEnumerator PlayAnimationAndSoundCoRo(SoundLibrary.Categories category)
     {
-        print("playanimationandsoundcoro");
         anim.SetBool("Talk", true);
         PlayAnimation();
         float clipLength = PlaySoundFromCategory(category);

@@ -8,28 +8,36 @@ public class UIParticle : MonoBehaviour
     private Vector2 velocity;
     private bool moveToTicketCounter = false;
     public float scaleSpeed;
+    public float timeAt100Scale = 1;
+    private float timeElapsedAt100Scale = 0;
 
     public void UpdateParticle(float deltaTime, Transform moveTowards)
     {
         UpdateScale(deltaTime);
 
+        if (transform.localScale.x == 1)
+        {
+            timeElapsedAt100Scale += Time.deltaTime;
+            if (timeElapsedAt100Scale >= timeAt100Scale)
+            {
+                moveToTicketCounter = true;
+            }
+        }
+
         if (moveToTicketCounter)
         {
             MovePosition(deltaTime, moveTowards);
-        //UpdateVelocity(deltaTime, moveTowards);
         }
     }
 
     private void UpdateScale(float deltaTime)
     {
         transform.localScale = Vector3.MoveTowards(transform.localScale, Vector3.one, deltaTime * scaleSpeed);
-        moveToTicketCounter = transform.localScale == Vector3.one;
     }
 
     private void MovePosition(float deltaTime, Transform moveTowards)
     {
         transform.localPosition = Vector3.MoveTowards(transform.localPosition, moveTowards.localPosition, velocity.magnitude * deltaTime);
-        //transform.localPosition += (Vector3)velocity * deltaTime;
     }
 
     public Vector2 GetVelocity()

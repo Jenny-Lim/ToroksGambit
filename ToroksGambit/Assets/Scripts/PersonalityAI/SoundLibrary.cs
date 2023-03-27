@@ -22,8 +22,9 @@ public class SoundLibrary
         MakesGoodMove,//hooked up (i think)
         MakesBadMove,//hooked up (i think)
         Idle,//hooked up
-        Interrupt,
-        LoseGame
+        Interrupt,//hooked up
+        LoseGame,//torok loses, or player wins
+        WinGame//torok wins, or player loses
     }
 
     private List<AudioClip>[] masterDialogueList;
