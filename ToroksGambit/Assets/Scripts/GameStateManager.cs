@@ -330,7 +330,7 @@ public class GameStateManager : MonoBehaviour
     public IEnumerator LoseCoRo()
     {
         //show some type of defeat text or something
-
+        CameraHeadMovements.canScroll = false;
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
         yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame));
         //yield return new WaitForSeconds(3);
@@ -477,5 +477,10 @@ public class GameStateManager : MonoBehaviour
         turnCount = 1;
         isPlayersTurn = true;
         InterruptManager.instance.ResetInterruptListTriggers();
+    }
+
+    public GameState GetCurrentState()
+    {
+        return currentState;
     }
 }

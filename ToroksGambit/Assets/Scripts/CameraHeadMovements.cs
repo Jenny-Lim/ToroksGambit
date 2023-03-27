@@ -20,7 +20,8 @@ public class CameraHeadMovements : MonoBehaviour
     [SerializeField] private float scrollSpeed = 1;
     public float scrollPercent = 0.0f;
     public static bool canScroll = false;
-    
+
+    private Vector3 eulerBeforeExlusiveCall;
 
     //private Animator ani;
     public bool menuDone = false;
@@ -272,6 +273,7 @@ public class CameraHeadMovements : MonoBehaviour
         float desiredTime = 1.5f;
 
         Vector3 startAngle = transform.eulerAngles;
+        eulerBeforeExlusiveCall = transform.eulerAngles;
 
         while (percentDone < 1.0f)
         {

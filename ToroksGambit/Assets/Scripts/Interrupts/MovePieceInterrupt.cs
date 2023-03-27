@@ -30,6 +30,7 @@ public class MovePieceInterrupt : BaseInterrupt
             }
         }
 
+        CameraHeadMovements.canScroll = false;
         if (coroutineHolder != null) { Destroy(coroutineHolder); }
         coroutineHolder =  InterruptManager.instance.CreateCoRoHolder();
         InterruptCoroutineHolder holder = coroutineHolder.AddComponent<InterruptCoroutineHolder>();
