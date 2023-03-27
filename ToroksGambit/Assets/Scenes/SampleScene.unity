@@ -16171,7 +16171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 554.09375, y: 498.07892}
+  m_AnchoredPosition: {x: 748.26807, y: 520.2}
   m_SizeDelta: {x: 322.7964, y: 66.3318}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1231418730
@@ -17902,11 +17902,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac734757ce72e74bb1d20c873a0f24a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxIntensity: 15
-  minIntensity: 10
-  maxFlickerFrequency: 1
+  maxIntensity: 17
+  minIntensity: 13
+  maxFlickerFrequency: 0.5
   minFlickerFrequency: 0.01
-  strength: 5
+  strength: 3
 --- !u!1001 &1436666232
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24232,7 +24232,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 553.0257, y: 471.7}
+  m_AnchoredPosition: {x: 747.2, y: 503.9}
   m_SizeDelta: {x: 369.183, y: 144.7187}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1979517376
