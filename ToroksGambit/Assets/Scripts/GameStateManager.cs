@@ -237,6 +237,7 @@ public class GameStateManager : MonoBehaviour
     public IEnumerator titleCoRo()
     {
         Debug.Log("insdie titleCoRo");
+        CameraHeadMovements.canScroll = false;
         //if (MainMenu.instance.menuDone) {
         while (!CameraHeadMovements.instance.menuDone)
         {

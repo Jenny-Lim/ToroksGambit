@@ -100,7 +100,7 @@ public class Inventory : MonoBehaviour
         rectTrans = GetComponent<RectTransform>();
         cam = Camera.main;
         objectiveArea.SetActive(false);
-        hideShowButton.SetActive(false);
+        //hideShowButton.SetActive(false);
 
         //initialize the max number of each puece can be held in inventory
         //placeholder values

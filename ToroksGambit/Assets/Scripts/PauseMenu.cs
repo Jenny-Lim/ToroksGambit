@@ -40,6 +40,9 @@ public class PauseMenu : MonoBehaviour
     public void ReturnToMainMenu()
     {
         //Time.timeScale = 1;
+        Inventory.instance.objectiveArea.SetActive(false);
+        Inventory.instance.DisableDeployUI();
+        //Inventory.instance.HideInventoryPanel();
         CameraHeadMovements.instance.GetOutPlayArea();
         MainMenu.instance.gameObject.SetActive(true);
         pauseMenu.SetActive(false);

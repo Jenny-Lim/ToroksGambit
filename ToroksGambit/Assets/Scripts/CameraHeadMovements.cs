@@ -89,14 +89,20 @@ public class CameraHeadMovements : MonoBehaviour
     // below -- jenny added
     public void LookAtShop()
     {
-            StopAllCoroutines();
+        //StopAllCoroutines();
+        if (!movementInProgress)
+        {
             StartCoroutine(LookAtShopCoRo());
+        }
     }
 
     public void LookAtBoard()
     {
-        StopAllCoroutines();
-        StartCoroutine(LookAtBoardCoRo());
+            //StopAllCoroutines();
+            if (!movementInProgress)
+            {
+                StartCoroutine(LookAtBoardCoRo());
+            }
     }
 
     private IEnumerator LookAtShopCoRo()
@@ -216,7 +222,7 @@ public class CameraHeadMovements : MonoBehaviour
 
     public void GetOutPlayArea()
     {
-        Inventory.instance.DisableDeployUI();
+        //Inventory.instance.DisableDeployUI();
         StopAllCoroutines();
         //if (!movementInProgress)
         //{
