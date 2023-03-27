@@ -259,7 +259,7 @@ public class CameraHeadMovements : MonoBehaviour
             yield return null;
         }
         transform.eulerAngles = initialRotation;
-        transform.position = titleScreenPosition; // for whatever reason it seems like this is set to the board pos ?
+        transform.position = titleScreenPosition; // for whatever reason it seems like this is set to the board pos ? -- works fine in shop tho lmao
 
         movementInProgress = false;
     }

@@ -194,6 +194,7 @@ public class GameStateManager : MonoBehaviour
                 }
                 break;
             case GameState.shop:
+                MainMenu.instance.pauseFxn.enabled = true;
                 PhysicalShop.instance.PhysicalShopUpdate();
                 break;
             case GameState.intro:
@@ -237,7 +238,7 @@ public class GameStateManager : MonoBehaviour
     public IEnumerator titleCoRo()
     {
         Debug.Log("insdie titleCoRo");
-        CameraHeadMovements.canScroll = false;
+        //CameraHeadMovements.canScroll = false;
         //if (MainMenu.instance.menuDone) {
         while (!CameraHeadMovements.instance.menuDone)
         {
@@ -291,6 +292,7 @@ public class GameStateManager : MonoBehaviour
     public IEnumerator WinAnimCoro()
     {
         CameraHeadMovements.canScroll = false;
+        MainMenu.instance.pauseFxn.enabled = false;
         Inventory.instance.HideInventoryPanel();
         Inventory.instance.objectiveArea.SetActive(false);
 
@@ -331,7 +333,7 @@ public class GameStateManager : MonoBehaviour
     public IEnumerator LoseCoRo()
     {
         //show some type of defeat text or something
-        CameraHeadMovements.canScroll = false;
+        //CameraHeadMovements.canScroll = false;
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
         yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame));
         //yield return new WaitForSeconds(3);
