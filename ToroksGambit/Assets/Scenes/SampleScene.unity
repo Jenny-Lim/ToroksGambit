@@ -17866,9 +17866,9 @@ MonoBehaviour:
   pieceDescription: {fileID: 1205953928}
   canvas: {fileID: 1981679070}
   anim: {fileID: 1155828369}
-  leaveSignDefaultColor: {r: 0, g: 0, b: 0, a: 0}
-  leaveSignMouseHoverColor: {r: 0, g: 0, b: 0, a: 0}
-  leaveSignText: {fileID: 0}
+  leaveSignDefaultColor: {r: 0.9150943, g: 0.7565519, b: 0.18560876, a: 1}
+  leaveSignMouseHoverColor: {r: 1, g: 1, b: 1, a: 1}
+  leaveSignText: {fileID: 1998973423}
 --- !u!1 &1477407502
 GameObject:
   m_ObjectHideFlags: 0
