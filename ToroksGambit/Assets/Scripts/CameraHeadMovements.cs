@@ -130,6 +130,7 @@ public class CameraHeadMovements : MonoBehaviour
         }
         transform.eulerAngles = LookAtShopRotation;
         transform.position = lookAtShopPosition;
+        TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.ShopEnter);
 
         movementInProgress = false;
     }

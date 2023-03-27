@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using TMPro;
 using System.Threading.Tasks;
+using UnityEngine.UIElements;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -303,21 +304,8 @@ public class GameStateManager : MonoBehaviour
         Currency.instance.ticketBackgroundObject.SetActive(true);
         ticketParticleSystem.SpawnTickets((currentLevelNumber + 1) * 6);//<- needs to be abled to get that number from the currency object for how many tickets you got
 
-        float time = 0;
         victoryText.SetActive(true);
-        while (time < 5)
-        {
-            //if (Mathf.Sin(time) > 0)
-            //{
-            //    victoryText.transform.GetChild(0).gameObject.SetActive(true);
-            //}
-            //else
-            //{
-            //    victoryText.transform.GetChild(0).gameObject.SetActive(false);
-            //}
-            time += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(5);
         victoryText.SetActive(false);
         Debug.Log("Player has won.");
         PhysicalShop.instance.ResetShop();

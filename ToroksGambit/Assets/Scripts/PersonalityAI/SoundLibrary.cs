@@ -24,7 +24,10 @@ public class SoundLibrary
         Idle,//hooked up
         Interrupt,//hooked up
         LoseGame,//torok loses, or player wins
-        WinGame//torok wins, or player loses
+        WinGame,//torok wins, or player loses
+        ShopEnter,
+        ShopExit,
+        ShopBuy
     }
 
     private List<AudioClip>[] masterDialogueList;
