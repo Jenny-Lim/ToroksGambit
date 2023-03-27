@@ -13,7 +13,7 @@ public class AddPieceInterrupt : BaseInterrupt
             Debug.LogError("Piece detected at " + placeAt + " replacing with interrupt piece");
             return;
         }*/
-
+        CameraHeadMovements.canScroll= false;
         if (coroutineHolder != null) { Destroy(coroutineHolder); }
         coroutineHolder = InterruptManager.instance.CreateCoRoHolder();
         InterruptCoroutineHolder holder = coroutineHolder.AddComponent<InterruptCoroutineHolder>();

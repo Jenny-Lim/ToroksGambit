@@ -102,7 +102,7 @@ boardend
 boardstart
 Level3
 WinCondition,0
-Limit,5,21
+Limit,6,-1
 DeploymentZone,0,0,1,0,2,0,3,0,4,0,5,0,6,0,7,0
 Piece,0,0,6,True,False,False,False
 Piece,0,1,5,True,False,False,False
@@ -124,7 +124,7 @@ boardend
 boardstart
 Level5
 WinCondition,3,4,3,3,4,7
-Limit,5,21
+Limit,-1,28
 DeploymentZone,0,0,1,0,2,0,3,0,0,1,1,1,2,1
 Piece,6,2,5,False,False,False,False
 Piece,6,3,3,False,False,False,False

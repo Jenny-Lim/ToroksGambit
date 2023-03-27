@@ -14,6 +14,15 @@ public class CameraHeadMovements : MonoBehaviour
     [SerializeField] private Vector3 lookAtShopPosition;
     [SerializeField] private Vector3 titleScreenPosition;
     public static CameraHeadMovements instance;
+
+    [SerializeField] private Vector3 maxScrollPos;
+    private Vector3 minScrollPos;
+    [SerializeField] private float scrollSpeed = 1;
+    public float scrollPercent = 0.0f;
+    public static bool canScroll = false;
+
+    private Vector3 eulerBeforeExlusiveCall;
+
     //private Animator ani;
     public bool menuDone = false;
 
@@ -23,14 +32,25 @@ public class CameraHeadMovements : MonoBehaviour
         titleScreenPosition = transform.position;
         //ani = gameObject.GetComponent<Animator>();
         if (instance == null ) { instance = this; }
+        minScrollPos = lookAtBoardPosition;
     }
 
     private void Update()
     {
+        print("canScroll: " + canScroll);
         if (Input.GetButtonDown("Jump"))// just for testing purposes
         {
             LookAtTorok(2);
         }
+
+
+        if (!movementInProgress && canScroll)//if not moving by coro
+        {
+            scrollPercent += Input.mouseScrollDelta.y * Time.deltaTime * scrollSpeed;
+            scrollPercent = Mathf.Clamp01(scrollPercent);
+            transform.position = Vector3.Lerp(minScrollPos, maxScrollPos, scrollPercent);
+        }
+
     }
 
     //calls the coro for looking at torok, but checks if it can beforehand
@@ -70,14 +90,20 @@ public class CameraHeadMovements : MonoBehaviour
     // below -- jenny added
     public void LookAtShop()
     {
-            StopAllCoroutines();
+        //StopAllCoroutines();
+        if (!movementInProgress)
+        {
             StartCoroutine(LookAtShopCoRo());
+        }
     }
 
     public void LookAtBoard()
     {
-        StopAllCoroutines();
-        StartCoroutine(LookAtBoardCoRo());
+            //StopAllCoroutines();
+            if (!movementInProgress)
+            {
+                StartCoroutine(LookAtBoardCoRo());
+            }
     }
 
     private IEnumerator LookAtShopCoRo()
@@ -197,7 +223,7 @@ public class CameraHeadMovements : MonoBehaviour
 
     public void GetOutPlayArea()
     {
-        Inventory.instance.DisableDeployUI();
+        //Inventory.instance.DisableDeployUI();
         StopAllCoroutines();
         //if (!movementInProgress)
         //{
@@ -233,7 +259,7 @@ public class CameraHeadMovements : MonoBehaviour
             yield return null;
         }
         transform.eulerAngles = initialRotation;
-        transform.position = titleScreenPosition;
+        transform.position = titleScreenPosition; // for whatever reason it seems like this is set to the board pos ?
 
         movementInProgress = false;
     }
@@ -251,9 +277,10 @@ public class CameraHeadMovements : MonoBehaviour
 
         float timeElapsed = 0f;
         float percentDone = 0f;
-        float desiredTime = 1.5f;
+        float desiredTime = 2f;
 
         Vector3 startAngle = transform.eulerAngles;
+        eulerBeforeExlusiveCall = transform.eulerAngles;
 
         while (percentDone < 1.0f)
         {
@@ -264,6 +291,7 @@ public class CameraHeadMovements : MonoBehaviour
             yield return null;
         }
         transform.eulerAngles = LookAtTorokRotation;
+        movementInProgress = false;
     }
 
     public IEnumerator LookAtBoardExclusively()
@@ -273,7 +301,7 @@ public class CameraHeadMovements : MonoBehaviour
 
         float timeElapsed = 0f;
         float percentDone = 0f;
-        float desiredTime = 1.5f;
+        float desiredTime = 2f;
 
         Vector3 startAngle = transform.eulerAngles;
 
@@ -286,5 +314,6 @@ public class CameraHeadMovements : MonoBehaviour
             yield return null;
         }
         transform.eulerAngles = lookAtBoardRotation;
+        movementInProgress = false;
     }
 }

@@ -22,14 +22,6 @@ public class InterruptManager : MonoBehaviour
         ResetInterruptListTriggers();
     }
 
-    public void Update()//for testing purposes
-    {
-        if (Input.GetKeyDown("p"))
-        {
-            EnactInterrupts(InterruptTrigger.GameStart);
-        }
-    }
-
     public List<BaseInterrupt> GetActiveInterrupts()
     {
         return levelInterrupts;

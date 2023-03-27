@@ -65,8 +65,11 @@ public class Inventory : MonoBehaviour
 
     private bool deployCapReached;
 
-    public int deployPointCap = 21;
-    public int deployPieceCap = 5;
+    public int deployPointCap = 0;
+    public int deployPieceCap = 0;
+
+    private int visualPointCap = 0;
+    private int visualPieceCap = 0;
 
     private int deployPointCount = 0;
     private int deployPieceCount = 0;
@@ -75,8 +78,16 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private GameObject deployUIObject;
 
+    [SerializeField] private GameObject dualDeployLimits;
+    [SerializeField] private GameObject pieceDeployLimit;
+    [SerializeField] private GameObject pointDeployLimit;
+
     [SerializeField] private TextMeshProUGUI deployPointText;
     [SerializeField] private TextMeshProUGUI deployPieceText;
+
+    [SerializeField] private TextMeshProUGUI soloDeployPointText;
+    [SerializeField] private TextMeshProUGUI soloDeployPieceText;
+
 
     [SerializeField] private GameObject testModifiers;
 
@@ -89,7 +100,7 @@ public class Inventory : MonoBehaviour
         rectTrans = GetComponent<RectTransform>();
         cam = Camera.main;
         objectiveArea.SetActive(false);
-        hideShowButton.SetActive(false);
+        //hideShowButton.SetActive(false);
 
         //initialize the max number of each puece can be held in inventory
         //placeholder values
@@ -108,7 +119,7 @@ public class Inventory : MonoBehaviour
     public void InventoryUpdate()
     {
 
-        if((deployPointCount >= deployPointCap) || (deployPieceCount >= deployPieceCap))
+        if((deployPointCount >= visualPointCap) || (deployPieceCount >= visualPieceCap))
         {
             Debug.Log("CAP REACHED");
             deployCapReached = true;
@@ -213,7 +224,7 @@ public class Inventory : MonoBehaviour
                                         {
                                              if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j] && i == location.x && j == location.y)
                                              {
-                                                 if (heldPieces[storedPiece] > 0 && !deployCapReached && (deployPointCount + deployValues[storedPiece]) <= deployPointCap)
+                                                 if (heldPieces[storedPiece] > 0 && !deployCapReached && (deployPointCount + deployValues[storedPiece]) <= visualPointCap)
                                                  {
                                                      //AlterPiece((InventoryPieces)storedPiece, -1);
                                                      //deployPieceCount++;
@@ -491,7 +502,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            hideShowText.text = "hide";
+            hideShowText.text = "ide";
         }
 
         if (isMoving)
@@ -545,8 +556,41 @@ public class Inventory : MonoBehaviour
 
     public void SetDeployUI()
     {
-        deployPieceText.text = "Piece Limit: "+deployPieceCount+"/"+deployPieceCap;
-        deployPointText.text = "Point Limit: "+deployPointCount+"/"+deployPointCap;
+        if(deployPieceCap < 0)//using point cap
+        {
+            visualPointCap = deployPointCap;
+            visualPieceCap = 100000;
+
+            dualDeployLimits.SetActive(false);
+            pieceDeployLimit.SetActive(false);
+            pointDeployLimit.SetActive(true);
+
+            soloDeployPointText.text = "Point Limit: "+deployPointCount+"/"+visualPointCap;
+        }
+        else if(deployPointCap < 0)//using piece cap
+        {
+            visualPieceCap = deployPieceCap;
+            visualPointCap = 100000;
+
+            dualDeployLimits.SetActive(false);
+            pieceDeployLimit.SetActive(true);
+            pointDeployLimit.SetActive(false);
+
+            soloDeployPieceText.text = "Piece Limit: "+deployPieceCount+"/"+visualPieceCap;
+        }
+        else//using both
+        {
+            visualPointCap = deployPointCap;
+            visualPieceCap = deployPieceCap;
+
+            dualDeployLimits.SetActive(true);
+            pieceDeployLimit.SetActive(false);
+            pointDeployLimit.SetActive(false);
+
+            deployPieceText.text = "Piece Limit: "+deployPieceCount+"/"+visualPieceCap;
+            deployPointText.text = "Point Limit: "+deployPointCount+"/"+visualPointCap;
+        }
+
     }
 
     private IEnumerator ShowHideInventoryPanel()

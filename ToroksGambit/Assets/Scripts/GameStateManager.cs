@@ -94,6 +94,11 @@ public class GameStateManager : MonoBehaviour
         {
             case GameState.deployment:
                 Inventory.instance.InventoryUpdate();
+                if (!CameraHeadMovements.instance.GetIsMoving())
+                {
+                    CameraHeadMovements.canScroll = true;
+                }
+                
                 break;
 
             case GameState.game:
@@ -232,6 +237,7 @@ public class GameStateManager : MonoBehaviour
     public IEnumerator titleCoRo()
     {
         Debug.Log("insdie titleCoRo");
+        CameraHeadMovements.canScroll = false;
         //if (MainMenu.instance.menuDone) {
         while (!CameraHeadMovements.instance.menuDone)
         {
@@ -284,6 +290,7 @@ public class GameStateManager : MonoBehaviour
 
     public IEnumerator WinAnimCoro()
     {
+        CameraHeadMovements.canScroll = false;
         Inventory.instance.HideInventoryPanel();
         Inventory.instance.objectiveArea.SetActive(false);
 
@@ -291,11 +298,11 @@ public class GameStateManager : MonoBehaviour
         Currency.instance.ticketBackgroundObject.SetActive(true);
         ticketParticleSystem.SpawnTickets((currentLevelNumber + 1) * 6);//<- needs to be abled to get that number from the currency object for how many tickets you got
 
-        float counter = 0;
+        float time = 0;
         victoryText.SetActive(true);
-        while (counter < 2000)
+        while (time < 5)
         {
-            if (Mathf.Sin(counter * 0.02f) > 0)
+            if (Mathf.Sin(time) > 0)
             {
                 victoryText.transform.GetChild(0).gameObject.SetActive(true);
             }
@@ -303,7 +310,7 @@ public class GameStateManager : MonoBehaviour
             {
                 victoryText.transform.GetChild(0).gameObject.SetActive(false);
             }
-            counter++;
+            time += Time.deltaTime;
             yield return null;
         }
         victoryText.SetActive(false);
@@ -324,12 +331,12 @@ public class GameStateManager : MonoBehaviour
     public IEnumerator LoseCoRo()
     {
         //show some type of defeat text or something
-
+        CameraHeadMovements.canScroll = false;
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
         yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame));
         //yield return new WaitForSeconds(3);
-        PauseMenu.instance.ReturnToMainMenu();
         activeCoRo = null;
+        PauseMenu.instance.ReturnToMainMenu();
     }
 
     public void SetNextLevel()
@@ -471,5 +478,10 @@ public class GameStateManager : MonoBehaviour
         turnCount = 1;
         isPlayersTurn = true;
         InterruptManager.instance.ResetInterruptListTriggers();
+    }
+
+    public GameState GetCurrentState()
+    {
+        return currentState;
     }
 }

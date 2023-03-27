@@ -74,7 +74,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
         GameObject placedPiece = Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y];// manipulate piece GO for animation effect thingy
         //print(placedPiece == true);
         Vector3 finalPos = placedPiece.transform.position;
-        placedPiece.transform.position += Vector3.up * 6;
+        placedPiece.transform.position += Vector3.up * 8;
         Vector3 initPos = placedPiece.transform.position;
 
         //return camera to board can be placed here for before effect 
@@ -86,7 +86,9 @@ public class InterruptCoroutineHolder : MonoBehaviour
 
         if (rand <= 0.5 || (int)holderType.piece > (int)BaseInterrupt.PieceType.Queen)//use smoke effect
         {
-            print(placedPiece == true);
+            ParticlePoolParticle smokeFX = ParticleEffectObjectPool.instance.GetParticleEffectGO(ParticleEffects.Smoke);
+            smokeFX.Initialize(3f, finalPos, Quaternion.identity);
+            smokeFX.transform.position = finalPos;
             placedPiece.transform.position = finalPos;
         }
         else//use fall effect
@@ -121,6 +123,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
         MovePieceInterrupt holderType = (MovePieceInterrupt)holder;
         if (!Piece.InBoundsCheck(holderType.moveFrom.x, holderType.moveFrom.y) || !Piece.InBoundsCheck(holderType.moveTo.x, holderType.moveTo.y))
         {
+            
             yield break;
         }
         if (Board.pieceBoard[holderType.moveFrom.x, holderType.moveFrom.y] == null)
@@ -150,4 +153,12 @@ public class InterruptCoroutineHolder : MonoBehaviour
 
     }
 
+
+    private void OnDestroy()
+    {
+        if (InterruptManager.instance.transform.childCount <= 1)
+        {
+            CameraHeadMovements.canScroll = true;
+        }
+    }
 }
