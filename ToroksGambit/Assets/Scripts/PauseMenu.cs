@@ -45,6 +45,7 @@ public class PauseMenu : MonoBehaviour
         Inventory.instance.objectiveArea.SetActive(false);
         Inventory.instance.DisableDeployUI();
         //Inventory.instance.HideInventoryPanel();
+        GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
         CameraHeadMovements.instance.GetOutPlayArea();
         MainMenu.instance.gameObject.SetActive(true);
         pauseMenu.SetActive(false);
