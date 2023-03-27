@@ -328,8 +328,8 @@ public class GameStateManager : MonoBehaviour
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
         yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame));
         //yield return new WaitForSeconds(3);
-        PauseMenu.instance.ReturnToMainMenu();
         activeCoRo = null;
+        PauseMenu.instance.ReturnToMainMenu();
     }
 
     public void SetNextLevel()
