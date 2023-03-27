@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-
+    [SerializeField] private Button startButton;
     [SerializeField] private Button continueButton;
     [SerializeField] private Button optionsButton; // to change once there's stuff
     [SerializeField] public PauseMenu pauseFxn;
@@ -21,15 +21,15 @@ public class MainMenu : MonoBehaviour
         //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
 
         // to change once there's stuff
-        if(SaveManager.instance.hasSaveGame)
-        {
-            continueButton.interactable = true;
+        //if(SaveManager.instance.hasSaveGame)
+        //{
+        //    continueButton.interactable = true;
 
-        }
-        else 
-        {
-            continueButton.interactable = false;
-        }
+        //}
+        //else 
+        //{
+            //continueButton.interactable = false;
+        //}
         //continueButton.interactable = true;
         optionsButton.interactable = false;
         pauseFxn.enabled = false;
@@ -38,6 +38,8 @@ public class MainMenu : MonoBehaviour
 
     void OnEnable()
     {
+        startButton.interactable = false;
+        continueButton.interactable = false;
         print("yeye");
         Invoke("GoBackToTitle", 1.0f); // it was some shit with execution order
         //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
@@ -46,6 +48,11 @@ public class MainMenu : MonoBehaviour
 
     void GoBackToTitle()
     {
+        startButton.interactable = true; //sometimes intro doesnt play -- if you press play when not in the title coro. so heres a bandaid fix
+        if (SaveManager.instance.hasSaveGame)
+        {
+            continueButton.interactable = true;
+        }
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
     }
 
@@ -78,7 +85,11 @@ public class MainMenu : MonoBehaviour
         SaveManager.instance.StartNew();
 
         // move to proper area
-        CameraHeadMovements.instance.LookAtPlayArea();
+        //if (GameStateManager.instance.currentState == GameStateManager.GameState.title)
+        //{
+            //print("sup");
+            CameraHeadMovements.instance.LookAtPlayArea();
+        //}
 
         gameObject.SetActive(false); // hide main menu
     }

@@ -41,6 +41,10 @@ public class PhysicalShop : MonoBehaviour
 
     [SerializeField] private Animator anim;
 
+    [SerializeField] private Color leaveSignDefaultColor;
+    [SerializeField] private Color leaveSignMouseHoverColor;
+    [SerializeField] private TextMeshPro leaveSignText;
+
     private void Awake()
     {
         instance = this;
@@ -63,8 +67,10 @@ public class PhysicalShop : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 25f))
+        bool rayHit = Physics.Raycast(ray, out hit, 25f);
+        if (rayHit)
         {
+            //jordan -> idk if these need to be separate ifs or not so ima just leave em as separate
             if (hit.transform.CompareTag("Chess Piece"))
             {
                 Debug.Log("Shop Piece HIt");
@@ -93,21 +99,12 @@ public class PhysicalShop : MonoBehaviour
             {
                 Debug.Log("HONK");
             }
-        }
-        else
-        {
-            Debug.Log("OFF PIECE");
-            pieceDescriptionObject.SetActive(false);
-        }
-
-                if (Input.GetMouseButtonDown(0))
-        {
-            //RaycastHit hit;
-           //Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit ,25f))
+            if (hit.transform.CompareTag("LeaveShopSign"))
             {
-                if (hit.transform.CompareTag("LeaveShopSign"))
+                leaveSignText.color = leaveSignMouseHoverColor;
+                Debug.Log("set to hover color");
+                //change leave sign color text to "scrolled over"
+                if (Input.GetMouseButtonDown(0))
                 {
                     //leave shop function
                     anim.SetBool("ExitedShop", true);
@@ -122,8 +119,24 @@ public class PhysicalShop : MonoBehaviour
                     Invoke("ShopkeeperInactive", 1.0f);
                     //shopkeeper.SetActive(false);
                 }
+
+            }
+            else
+            {
+                //change leave sign color text to default
+                leaveSignText.color = leaveSignDefaultColor;
+                Debug.Log("set to default color");
             }
         }
+        else
+        {
+            Debug.Log("OFF PIECE");
+            pieceDescriptionObject.SetActive(false);
+            leaveSignText.color = leaveSignDefaultColor;
+        }
+
+
+       
 
         for(int i = 0; i < inventoryShopCount.Length;i++)
         {

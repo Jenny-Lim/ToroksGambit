@@ -46,6 +46,9 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] private UIParticleSystem ticketParticleSystem;
 
+    [SerializeField] private float waitTimeToMove;
+    private float moveTimer = 0;
+
     public GameState GetGameState()
     {
         return currentState;
@@ -104,7 +107,7 @@ public class GameStateManager : MonoBehaviour
                     //BEHOLD MY GRAVEYARD OF MOVE STUTTER FIXES
 
                     //**THIS IS THE ONE WHERE THE ITERATIVE VERSION IS USED FOR MULTIPLE FRAMES**
-                    if (!TorokIsMoving)
+                    /*if (!TorokIsMoving)
                     {
                         resultingMove = new DataHolder<Move>();
                         MinMax.instance.GetMinMaxMoveIter(resultingMove);
@@ -112,12 +115,15 @@ public class GameStateManager : MonoBehaviour
                     }
                     else
                     {
-                        if (MinMax.instance.finishedSearch == true && Board.instance.canMove)//finished search and can make move
+                        moveTimer += Time.deltaTime;
+                        if (MinMax.instance.finishedSearch == true && Board.instance.canMove & moveTimer >= waitTimeToMove)//finished search and can make move
                         {
                             Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
+                            moveTimer = 0;
                             Board.instance.canMove = false;
                         }
                     }
+                    /*
 
                     //**THIS IS THE ONE THAT USES TASK SYSTEM AND DOESNT WORK RN MAYBE FOREVER CUZ THIS SHIT WACK**
                     /*if (!TorokIsMoving)
@@ -154,8 +160,8 @@ public class GameStateManager : MonoBehaviour
                     }
                     */
 
-                    //**THIS IS THE ONE THAT USES A SINGLE FRAME SEARCH**
-                    /*if (!TorokIsMoving)
+                    //**THIS IS THE ONE THAT USES A SINGLE FRAME SEARCH IE OLD WORKING METHOD** 
+                    if (!TorokIsMoving)
                     {
                         TorokIsMoving = true;
                         Move resultMove = MinMax.instance.GetMinMaxMove(playerToMove.torok);
@@ -168,7 +174,7 @@ public class GameStateManager : MonoBehaviour
                                 //Board.instance.MoveValidator(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
                                 Board.instance.MoveValidatorCoRo(resultMove.startX, resultMove.startY, resultMove.endX, resultMove.endY);
                             }
-                            
+
                             //EndTurn();//take out, move to coro
                         }
                         else
@@ -177,9 +183,9 @@ public class GameStateManager : MonoBehaviour
                             Debug.Log("Switching back to player's turn for convenience");
                             EndTurn();//this will eventually be deleted
                         }
-                       
-                    }*/
-                    
+
+                    }
+
                 }
                 break;
             case GameState.shop:
@@ -286,15 +292,16 @@ public class GameStateManager : MonoBehaviour
         ticketParticleSystem.SpawnTickets((currentLevelNumber + 1) * 6);//<- needs to be abled to get that number from the currency object for how many tickets you got
 
         float counter = 0;
+        victoryText.SetActive(true);
         while (counter < 2000)
         {
             if (Mathf.Sin(counter * 0.02f) > 0)
             {
-                victoryText.SetActive(true);
+                victoryText.transform.GetChild(0).gameObject.SetActive(true);
             }
             else
             {
-                victoryText.SetActive(false);
+                victoryText.transform.GetChild(0).gameObject.SetActive(false);
             }
             counter++;
             yield return null;
@@ -322,6 +329,7 @@ public class GameStateManager : MonoBehaviour
         yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame));
         //yield return new WaitForSeconds(3);
         PauseMenu.instance.ReturnToMainMenu();
+        activeCoRo = null;
     }
 
     public void SetNextLevel()
@@ -373,6 +381,8 @@ public class GameStateManager : MonoBehaviour
     {
         Board.playerInCheck = Board.instance.IsKingInCheck(false);
         Board.torokInCheck = Board.instance.IsKingInCheck(true);
+
+        moveTimer = 0;
 
         //win condition checks
         if (winCondition != null)

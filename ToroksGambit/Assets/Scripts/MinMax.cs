@@ -112,7 +112,7 @@ public class MinMax : MonoBehaviour
             #endregion
 
             #region "Leaf Node Reached"
-            if (curState.depth <= 0)//leaf node reached
+            if (curState.depth <= 0 || curState.availMoves.Count < 1)//leaf node reached
             {
                 /*StateStorage curStateParent = stack.Pop();
 
@@ -140,7 +140,7 @@ public class MinMax : MonoBehaviour
 
                 ScoredMove leafValue = new ScoredMove();
                 leafValue.score = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
-
+                leafValue.move = curStateParent.availMoves[curStateParent.lastIndexSearched];//this was the added thing that might not be correct
                 curStateParent.scoredList.Add(leafValue);
 
                 /*//update parent values to store leaf node
