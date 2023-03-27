@@ -37,6 +37,7 @@ public class CameraHeadMovements : MonoBehaviour
 
     private void Update()
     {
+        print("canScroll: " + canScroll);
         if (Input.GetButtonDown("Jump"))// just for testing purposes
         {
             LookAtTorok(2);
@@ -258,7 +259,7 @@ public class CameraHeadMovements : MonoBehaviour
             yield return null;
         }
         transform.eulerAngles = initialRotation;
-        transform.position = titleScreenPosition;
+        transform.position = titleScreenPosition; // for whatever reason it seems like this is set to the board pos ?
 
         movementInProgress = false;
     }
