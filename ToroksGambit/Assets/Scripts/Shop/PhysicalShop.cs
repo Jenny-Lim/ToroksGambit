@@ -44,6 +44,7 @@ public class PhysicalShop : MonoBehaviour
     [SerializeField] private Color leaveSignDefaultColor;
     [SerializeField] private Color leaveSignMouseHoverColor;
     [SerializeField] private TextMeshPro leaveSignText;
+    private Coroutine activeCoRo;
 
     private void Awake()
     {
@@ -104,20 +105,11 @@ public class PhysicalShop : MonoBehaviour
                 leaveSignText.color = leaveSignMouseHoverColor;
                 Debug.Log("set to hover color");
                 //change leave sign color text to "scrolled over"
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && activeCoRo == null)
                 {
                     //leave shop function
-                    anim.SetBool("ExitedShop", true);
-                    piecePanels.SetActive(false);
-                    Inventory.instance.objectiveArea.SetActive(true);
-                    Currency.instance.ticketTextObject.SetActive(false);
-                    Currency.instance.ticketBackgroundObject.SetActive(false);
-                    SaveManager.instance.SaveGame();
-                    c.LookAtBoard();
-                    GameStateManager.instance.SetNextLevel();
-                    pieceDescriptionObject.SetActive(false);
-                    Invoke("ShopkeeperInactive", 1.0f);
-                    //shopkeeper.SetActive(false);
+                    StopAllCoroutines();
+                    StartCoroutine(LeaveShopCoRo());
                 }
 
             }
@@ -245,6 +237,25 @@ public class PhysicalShop : MonoBehaviour
                 Debug.Log("expensive");
             }
         }
+    }
+    
+    public IEnumerator LeaveShopCoRo()
+    {
+        anim.SetBool("ExitedShop", true);
+        piecePanels.SetActive(false);
+        Inventory.instance.objectiveArea.SetActive(true);
+        Currency.instance.ticketTextObject.SetActive(false);
+        Currency.instance.ticketBackgroundObject.SetActive(false);
+        SaveManager.instance.SaveGame();
+
+        yield return TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.ShopExit);
+
+        //c.LookAtBoard();
+        yield return CameraHeadMovements.instance.LookAtPlayAreaCoRo();
+        GameStateManager.instance.SetNextLevel();
+        pieceDescriptionObject.SetActive(false);
+        Invoke("ShopkeeperInactive", 1.0f);
+        //shopkeeper.SetActive(false);
     }
 
     //void Update()
