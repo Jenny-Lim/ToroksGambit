@@ -352,10 +352,10 @@ public class GameStateManager : MonoBehaviour
 
         MinMax.instance.ResetDepth();
 
-        if (currentLevelNumber != -1)
+        /*if (currentLevelNumber != -1)
         {
             TorokPersonalityAI.instance.IncreaseAngerLevel();
-        }
+        }*/
         
 
         if (currentLevelNumber + 1 < LevelNames.Count)
