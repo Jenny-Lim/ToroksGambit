@@ -278,7 +278,7 @@ public class GameStateManager : MonoBehaviour
         }
 
         //needs to wait for sound to end
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
 
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardExclusively());
         ChangeGameState(GameState.deployment);

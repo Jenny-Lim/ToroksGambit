@@ -63,16 +63,18 @@ public class TorokPersonalityAI : MonoBehaviour
     }
 
     //plays an animation
-    private void PlayAnimation(int which = -1)
+    private float PlayAnimation(int which = -1)
     {
         if (which <= -1)
         {
-            //play random animation
+            anim.SetFloat("SelectedAnimation", 1);
         }
         else
         {
 
         }
+        AnimatorStateInfo state = anim.GetCurrentAnimatorStateInfo(0);
+        return state.length;
     }
 
     public void PlayAnimationAndSound(SoundLibrary.Categories category)
@@ -88,11 +90,12 @@ public class TorokPersonalityAI : MonoBehaviour
     public IEnumerator PlayAnimationAndSoundCoRo(SoundLibrary.Categories category)
     {
         anim.SetBool("Talk", true);
-        PlayAnimation();
-        float clipLength = PlaySoundFromCategory(category);
-        Debug.Log("ClipLenth " + clipLength);
+        float animClipLength = PlayAnimation();
+        float audioClipLength = PlaySoundFromCategory(category);
+        Debug.Log("ClipLenth " + audioClipLength);
         isPlaying = true;
-        yield return new WaitForSeconds(clipLength);
+        yield return new WaitForSeconds(Mathf.Max(audioClipLength, animClipLength));
+        anim.SetFloat("SelectedAnimation", 0);
         anim.SetBool("Talk", false);
         CloseMouth();
         isPlaying = false;
