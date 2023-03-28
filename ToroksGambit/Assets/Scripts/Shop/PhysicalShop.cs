@@ -110,7 +110,7 @@ public class PhysicalShop : MonoBehaviour
                 {
                     //leave shop function
                     StopAllCoroutines();
-                    StartCoroutine(LeaveShopCoRo());
+                    activeCoRo = StartCoroutine(LeaveShopCoRo());
                 }
 
             }
@@ -244,7 +244,7 @@ public class PhysicalShop : MonoBehaviour
     {
         
         piecePanels.SetActive(false);
-        Inventory.instance.objectiveArea.SetActive(true);
+        //Inventory.instance.objectiveArea.SetActive(true);
         Currency.instance.ticketTextObject.SetActive(false);
         Currency.instance.ticketBackgroundObject.SetActive(false);
         SaveManager.instance.SaveGame();
@@ -252,11 +252,15 @@ public class PhysicalShop : MonoBehaviour
         yield return TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.ShopExit);
         anim.SetBool("ExitedShop", true);
         //c.LookAtBoard();
-        CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtPlayAreaCoRo());
         GameStateManager.instance.SetNextLevel();
+        yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardCoRo());
+        Inventory.instance.objectiveArea.SetActive(true);
+        Debug.Log(GameStateManager.instance.GetCurrentState());
         pieceDescriptionObject.SetActive(false);
         Invoke("ShopkeeperInactive", 1.0f);
         //shopkeeper.SetActive(false);
+        activeCoRo = null;
+        GameStateManager.instance.ChangeGameState(GameStateManager.GameState.intro);
     }
 
     //void Update()
