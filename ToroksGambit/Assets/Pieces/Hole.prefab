@@ -58,6 +58,9 @@ MonoBehaviour:
   promote: 0
   isInvulnerable: 0
   pawnPromote: 0
+  promoteIcon: {fileID: 0}
+  toughIcon: {fileID: 0}
+  lastChanceIcon: {fileID: 0}
 --- !u!65 &3136819794884300674
 BoxCollider:
   m_ObjectHideFlags: 0
