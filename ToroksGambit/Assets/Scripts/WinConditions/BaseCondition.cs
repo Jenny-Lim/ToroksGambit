@@ -19,7 +19,7 @@ public class BaseCondition: ScriptableObject
     public int scoreToWin = 3;
     public int conditionType;
 
-
+    //aIDAN WAS HERE & TOOK CONTROL OF THE GAME
     public virtual Condition IsWinCondition()
     {
         return Condition.None;
