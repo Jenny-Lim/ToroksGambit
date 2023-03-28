@@ -93,6 +93,7 @@ public class PhysicalShop : MonoBehaviour
                     Currency.instance.SubtractFromCurrency(prices[(int)shopPiece.type]);
                     Inventory.instance.AlterPiece((Inventory.InventoryPieces)shopPiece.type,1);
                     Destroy(hit.transform.gameObject);
+                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.ShopBuy);
                    }
                 }
             }
