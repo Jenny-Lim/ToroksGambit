@@ -44330,16 +44330,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 413271215353149817, guid: 49bf0851092741b4ab0bb4bebbbc0307, type: 3}
+      propertyPath: m_Range
+      value: 9.470339
+      objectReference: {fileID: 0}
+    - target: {fileID: 413271215353149817, guid: 49bf0851092741b4ab0bb4bebbbc0307, type: 3}
       propertyPath: m_Intensity
-      value: 7
+      value: 4.69
       objectReference: {fileID: 0}
     - target: {fileID: 413271215353149818, guid: 49bf0851092741b4ab0bb4bebbbc0307, type: 3}
       propertyPath: maxIntensity
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 413271215353149818, guid: 49bf0851092741b4ab0bb4bebbbc0307, type: 3}
       propertyPath: minIntensity
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 683793062118374777, guid: 49bf0851092741b4ab0bb4bebbbc0307, type: 3}
       propertyPath: m_Name

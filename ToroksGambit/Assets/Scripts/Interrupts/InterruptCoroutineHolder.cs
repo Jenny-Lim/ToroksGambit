@@ -110,11 +110,10 @@ public class InterruptCoroutineHolder : MonoBehaviour
 
         //return camera to board can be placed here for after effect 
 
+        yield return new WaitForSeconds(3f);
 
         GameStateManager.instance.ChangeGameState(returnState);//change game state back to what it was before this ran
         isRunning = false;//set coro running to false
-        yield return null;
-
     }
 
     private IEnumerator InterruptCoroutineMovePiece()
@@ -123,7 +122,6 @@ public class InterruptCoroutineHolder : MonoBehaviour
         MovePieceInterrupt holderType = (MovePieceInterrupt)holder;
         if (!Piece.InBoundsCheck(holderType.moveFrom.x, holderType.moveFrom.y) || !Piece.InBoundsCheck(holderType.moveTo.x, holderType.moveTo.y))
         {
-            
             yield break;
         }
         if (Board.pieceBoard[holderType.moveFrom.x, holderType.moveFrom.y] == null)
@@ -147,10 +145,10 @@ public class InterruptCoroutineHolder : MonoBehaviour
 
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardExclusively());
 
+        yield return new WaitForSeconds(3f);
+
         GameStateManager.instance.ChangeGameState(returnState);//change game state back to what it was before this ran
         isRunning = false;//set coro running to false
-        yield return null;
-
     }
 
 
