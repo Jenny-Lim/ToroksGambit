@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
     private bool escPressed = false;
     public static PauseMenu instance;
+    [SerializeField] private Button optionsButton;
 
     private void Awake()
     {
         if (instance == null) { instance = this; }
+        optionsButton.interactable = false;
     }
 
     void OnEnable()
