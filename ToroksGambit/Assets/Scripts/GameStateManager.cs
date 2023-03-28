@@ -308,7 +308,7 @@ public class GameStateManager : MonoBehaviour
         ticketParticleSystem.SpawnTickets(numOfTickets);//<- needs to be abled to get that number from the currency object for how many tickets you got
 
         victoryText.SetActive(true);
-        yield return new WaitForSeconds((float)numOfTickets/4.0f);
+        yield return new WaitForSeconds(Mathf.Max(((float)numOfTickets / 4.0f), 5.0f));
         victoryText.SetActive(false);
         Debug.Log("Player has won.");
         PhysicalShop.instance.ResetShop();
