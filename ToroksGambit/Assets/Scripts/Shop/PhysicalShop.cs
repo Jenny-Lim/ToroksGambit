@@ -244,7 +244,7 @@ public class PhysicalShop : MonoBehaviour
     {
         
         piecePanels.SetActive(false);
-        Inventory.instance.objectiveArea.SetActive(true);
+        //Inventory.instance.objectiveArea.SetActive(true);
         Currency.instance.ticketTextObject.SetActive(false);
         Currency.instance.ticketBackgroundObject.SetActive(false);
         SaveManager.instance.SaveGame();
@@ -254,6 +254,7 @@ public class PhysicalShop : MonoBehaviour
         //c.LookAtBoard();
         GameStateManager.instance.SetNextLevel();
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardCoRo());
+        Inventory.instance.objectiveArea.SetActive(true);
         Debug.Log(GameStateManager.instance.GetCurrentState());
         pieceDescriptionObject.SetActive(false);
         Invoke("ShopkeeperInactive", 1.0f);
