@@ -502,7 +502,7 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            hideShowText.text = "ide";
+            hideShowText.text = "hide";
         }
 
         if (isMoving)
