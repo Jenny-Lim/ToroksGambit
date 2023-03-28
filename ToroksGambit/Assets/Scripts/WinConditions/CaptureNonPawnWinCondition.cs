@@ -31,7 +31,7 @@ public class CaptureNonPawnWinCondition : BaseCondition
 
                 Piece targetPiece = Board.pieceBoard[i, j].GetComponent<Piece>();//get piece
 
-                if ((int)targetPiece.type < 6 && (int)targetPiece.type >= 0)//is not an obstacle or pawn
+                if ((int)targetPiece.type < 6 && (int)targetPiece.type > 0)//is not an obstacle or pawn
                 {
                     if (targetPiece.isTorok)
                     {
@@ -45,6 +45,9 @@ public class CaptureNonPawnWinCondition : BaseCondition
                 
             }
         }
+
+        Debug.Log("P" + foundPlayerPiece);
+        Debug.Log("T" + foundTorokPiece);
 
         if (foundPlayerPiece && foundTorokPiece)
             return Condition.None;
