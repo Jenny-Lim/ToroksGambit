@@ -452,9 +452,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: wall_fixed
       objectReference: {fileID: 0}
+    - target: {fileID: 5525012490133568323, guid: 89310b4bbb13fa7469e1487515a42f20, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6317483641143188118, guid: 89310b4bbb13fa7469e1487515a42f20, type: 3}
       propertyPath: m_CastShadows
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6317483641143188118, guid: 89310b4bbb13fa7469e1487515a42f20, type: 3}
       propertyPath: m_ReceiveShadows
