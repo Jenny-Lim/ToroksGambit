@@ -20823,7 +20823,7 @@ GameObject:
   - component: {fileID: 1650180070}
   - component: {fileID: 1650180069}
   m_Layer: 0
-  m_Name: BGAmbiantSound
+  m_Name: BGAmbientSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
