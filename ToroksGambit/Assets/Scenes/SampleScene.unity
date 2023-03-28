@@ -3005,6 +3005,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2c9e90bc4ea05c468fa6afe5095ba68, type: 3}
+--- !u!1 &145984202 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c2c9e90bc4ea05c468fa6afe5095ba68, type: 3}
+  m_PrefabInstance: {fileID: 145984201}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &145984203
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145984202}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 386d4eed847cb434ab3c6400e67b7d57, type: 2}
+  - {fileID: 7400000, guid: 4d661f9e99a6bcc4bbd5c9e52dd80153, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &145984204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145984202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 487b0f81b056b5d4e98716f168e5fd95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &149789420
 GameObject:
   m_ObjectHideFlags: 0
@@ -29673,6 +29707,7 @@ MonoBehaviour:
   continueButton: {fileID: 483181921}
   optionsButton: {fileID: 431986569}
   pauseFxn: {fileID: 1944965754}
+  curtainOpen: {fileID: 145984203}
 --- !u!114 &1582766830
 MonoBehaviour:
   m_ObjectHideFlags: 0

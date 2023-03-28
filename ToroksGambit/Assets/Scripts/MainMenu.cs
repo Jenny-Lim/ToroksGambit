@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button optionsButton; // to change once there's stuff
     [SerializeField] public PauseMenu pauseFxn;
 
+    [SerializeField] private Animation curtainOpen;
+
     public static MainMenu instance;
     //public bool startPressed;
 
@@ -35,6 +37,8 @@ public class MainMenu : MonoBehaviour
         pauseFxn.enabled = false;
         //startPressed = false;
     }
+
+
 
     void OnEnable()
     {
@@ -88,7 +92,9 @@ public class MainMenu : MonoBehaviour
         //if (GameStateManager.instance.currentState == GameStateManager.GameState.title)
         //{
             //print("sup");
-            CameraHeadMovements.instance.LookAtPlayArea();
+
+            curtainOpen.Play("Curtain_Open");
+            //CameraHeadMovements.instance.LookAtPlayArea();
         //}
 
         gameObject.SetActive(false); // hide main menu
