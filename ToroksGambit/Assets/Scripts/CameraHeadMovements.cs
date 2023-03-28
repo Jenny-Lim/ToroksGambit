@@ -135,7 +135,7 @@ public class CameraHeadMovements : MonoBehaviour
         movementInProgress = false;
     }
 
-    private IEnumerator LookAtBoardCoRo()
+    public IEnumerator LookAtBoardCoRo()
     {
         movementInProgress = true;
         /*while (Vector3.Distance(transform.eulerAngles, initialRotation) > 0.1f)// move to look at initial position

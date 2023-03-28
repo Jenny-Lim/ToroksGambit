@@ -253,7 +253,7 @@ public class PhysicalShop : MonoBehaviour
         anim.SetBool("ExitedShop", true);
         //c.LookAtBoard();
         GameStateManager.instance.SetNextLevel();
-        yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtPlayAreaCoRo());
+        yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardCoRo());
         Debug.Log(GameStateManager.instance.GetCurrentState());
         pieceDescriptionObject.SetActive(false);
         Invoke("ShopkeeperInactive", 1.0f);
