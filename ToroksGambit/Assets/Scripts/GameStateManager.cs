@@ -304,10 +304,11 @@ public class GameStateManager : MonoBehaviour
 
         Currency.instance.ticketTextObject.SetActive(true);// remove this once this function gets organized just to see the currency number as the tickets get there
         Currency.instance.ticketBackgroundObject.SetActive(true);
-        ticketParticleSystem.SpawnTickets((currentLevelNumber + 1) * 6);//<- needs to be abled to get that number from the currency object for how many tickets you got
+        int numOfTickets = (currentLevelNumber + 1) * 6;
+        ticketParticleSystem.SpawnTickets(numOfTickets);//<- needs to be abled to get that number from the currency object for how many tickets you got
 
         victoryText.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds((float)numOfTickets/4.0f);
         victoryText.SetActive(false);
         Debug.Log("Player has won.");
         PhysicalShop.instance.ResetShop();
