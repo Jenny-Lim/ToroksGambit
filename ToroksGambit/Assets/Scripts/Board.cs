@@ -1164,8 +1164,8 @@ public class Board : MonoBehaviour
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
             PlacePiece(endX, endY, 4);
-            pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
-            print("icon active: " + pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.activeInHierarchy); // ?????
+            //pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
+            //print("icon active: " + pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.activeInHierarchy); // ?????
             //piece.pawnPromote = true;
             //PlacePiece(endX, endY, 4);
 
@@ -1176,7 +1176,7 @@ public class Board : MonoBehaviour
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
             PlacePieceTorok(endX, endY, 4);
-            pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
+            //pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
         }
 
     }
