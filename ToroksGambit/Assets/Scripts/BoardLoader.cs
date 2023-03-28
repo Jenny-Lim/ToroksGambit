@@ -195,8 +195,10 @@ public class BoardLoader : MonoBehaviour
                 }
                 else if (splitLines[0].CompareTo("DeploymentZone") == 0)
                 {
+                    Debug.Log("inside load zone");
                     List<Vector2Int> deployList = Board.instance.deploymentZoneList;
                     deployList.Clear();
+                    Debug.Log(splitLines.Length);
 
                     for (int i = 1; i < splitLines.Length; i += 2)
                     {
