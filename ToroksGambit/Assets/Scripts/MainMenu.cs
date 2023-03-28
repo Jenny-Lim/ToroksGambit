@@ -104,7 +104,8 @@ public class MainMenu : MonoBehaviour
     {
         SaveManager.instance.LoadSave();
         GameStateManager.instance.SetNextLevel(); // bug possibly here
-        CameraHeadMovements.instance.LookAtPlayArea();
+        curtainOpen.Play("Curtain_Open");
+        //CameraHeadMovements.instance.LookAtPlayArea();
         gameObject.SetActive(false); // hide main menu
 
         // nothing atm -- should save level, angerlvl, interrupt thing??, inventory, currency
