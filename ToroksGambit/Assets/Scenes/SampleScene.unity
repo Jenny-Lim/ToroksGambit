@@ -18849,7 +18849,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 5
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -42781,10 +42781,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelNames:
   - DeploySaveTest
-  - Level5
-  - Level3
-  - Level4
   - Level1
+  - Level3
+  - Level5
+  - Level4
   - InterruptsV2Test
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
@@ -45639,7 +45639,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hideShowText: {fileID: 1477407504}
   hideShowButton: {fileID: 882856025}
-  heldPieces: 0400000004000000040000000300000001000000
+  heldPieces: 0400000001000000010000000000000000000000
   ghostPieceVertOffset: 0.05
   objectiveArea: {fileID: 1912380705}
   inventoryUI: {fileID: 2078189506}

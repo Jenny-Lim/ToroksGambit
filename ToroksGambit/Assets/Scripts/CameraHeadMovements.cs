@@ -36,14 +36,14 @@ public class CameraHeadMovements : MonoBehaviour
     private void Update()
     {
         //print("canScroll: " + canScroll);
-        if (Input.GetButtonDown("Jump"))// just for testing purposes
-        {
-            LookAtTorok(2);
-        }
+        //if (Input.GetButtonDown("Jump"))// just for testing purposes
+        //{
+        //    LookAtTorok(2);
+        //}
 
         if (!movementInProgress && canScroll)//if not moving by coro
         {
-            Debug.Log(canScroll);
+            //Debug.Log(canScroll);
             scrollPercent += Input.mouseScrollDelta.y * Time.deltaTime * scrollSpeed;
             scrollPercent = Mathf.Clamp01(scrollPercent);
             transform.position = Vector3.Lerp(minScrollPos, maxScrollPos, scrollPercent);

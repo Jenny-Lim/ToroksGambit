@@ -46,8 +46,8 @@ public class CaptureNonPawnWinCondition : BaseCondition
             }
         }
 
-        Debug.Log("P" + foundPlayerPiece);
-        Debug.Log("T" + foundTorokPiece);
+        //Debug.Log("P" + foundPlayerPiece);
+        //Debug.Log("T" + foundTorokPiece);
 
         if (foundPlayerPiece && foundTorokPiece)
             return Condition.None;

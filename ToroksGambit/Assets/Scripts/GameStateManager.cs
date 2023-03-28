@@ -195,6 +195,7 @@ public class GameStateManager : MonoBehaviour
                 }
                 break;
             case GameState.shop:
+                MainMenu.instance.pauseFxn.enabled = true;
                 PhysicalShop.instance.PhysicalShopUpdate();
                 break;
             case GameState.intro:
