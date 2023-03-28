@@ -241,7 +241,7 @@ public class PhysicalShop : MonoBehaviour
     
     public IEnumerator LeaveShopCoRo()
     {
-        anim.SetBool("ExitedShop", true);
+        
         piecePanels.SetActive(false);
         Inventory.instance.objectiveArea.SetActive(true);
         Currency.instance.ticketTextObject.SetActive(false);
@@ -249,9 +249,9 @@ public class PhysicalShop : MonoBehaviour
         SaveManager.instance.SaveGame();
 
         yield return TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.ShopExit);
-
+        anim.SetBool("ExitedShop", true);
         //c.LookAtBoard();
-        yield return CameraHeadMovements.instance.LookAtPlayAreaCoRo();
+        CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtPlayAreaCoRo());
         GameStateManager.instance.SetNextLevel();
         pieceDescriptionObject.SetActive(false);
         Invoke("ShopkeeperInactive", 1.0f);
