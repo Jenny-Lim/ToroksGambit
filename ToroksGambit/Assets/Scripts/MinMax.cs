@@ -137,18 +137,18 @@ public class MinMax : MonoBehaviour
                 StateStorage curStateParent = stack.Pop();//this would be the parent of curState
 
                 ScoredMove leafValue = new ScoredMove();
-                leafValue.score = BoardAnalyzer.instance.Analyze(Board.pieceBoard, maxDepth + GameStateManager.GetTurnCount());
+                leafValue.score = BoardAnalyzer.instance.Analyze(Board.pieceBoard, curState.depth + GameStateManager.GetTurnCount());
                 leafValue.move = curStateParent.availMoves[curStateParent.lastIndexSearched];//this was the added thing that might not be correct
                 curStateParent.scoredList.Add(leafValue);
 
                 //update alpha-beta values
                 if (curStateParent.toMove == playerToMove.player)//max, update alpha
                 {
-                    curStateParent.alpha = Mathf.Max(curStateParent.beta, leafValue.score);
+                    curStateParent.alpha = Mathf.Max(curStateParent.alpha, leafValue.score);
                 }
                 else//min, update beta
                 {
-                    curStateParent.beta = Mathf.Min(curStateParent.alpha, leafValue.score);
+                    curStateParent.beta = Mathf.Min(curStateParent.beta, leafValue.score);
                 }
 
                 stack.Push(curStateParent);//push parent back to stack
@@ -160,7 +160,7 @@ public class MinMax : MonoBehaviour
 
             #region "Find Next Not Searched Move"
             int indexToLookAt = curState.searchedMoves.IndexOf(false);//the first unsearched move in this state
-            if (curState.lastIndexSearched >= curState.availMoves.Count-1)//there are no new moves left
+            if (curState.lastIndexSearched >= curState.availMoves.Count- 1 || curState.beta <= curState.alpha)//there are no new moves left
             {
 
                 //if this is the root state/node
@@ -179,7 +179,6 @@ public class MinMax : MonoBehaviour
                     Debug.Log("Time took for search: " + (Time.time - startTime) + " sec");
                     break;
                 }
-
 
                 StateStorage curStateParent = stack.Pop();//get the parent state
 
@@ -200,11 +199,11 @@ public class MinMax : MonoBehaviour
                 //update parent alpha-beta values
                 if (curStateParent.toMove == playerToMove.player)//max
                 {
-                    curStateParent.alpha = Mathf.Max(curStateParent.alpha, curState.beta);
+                    curStateParent.alpha = Mathf.Max(curStateParent.alpha, curState.scoredList[indexOfBest].score);
                 }
                 else//min
                 {
-                    curStateParent.beta = Mathf.Min(curStateParent.beta, curState.alpha);
+                    curStateParent.beta = Mathf.Min(curStateParent.beta, curState.scoredList[indexOfBest].score);
                 }
 
                 //add to parent scoredlist
@@ -361,134 +360,6 @@ public class MinMax : MonoBehaviour
     {
         maxDepth = initDepth;
     }
-    //---------async version
-    /*
-    public async Task GetMinMaxMoveAsync(DataHolder<Move> resultHolder ,playerToMove toMove)
-    {
-        finishedSearch = false;
-        totalNumNodesLookedAt = 0;
-        float startTime = Time.realtimeSinceStartup;
-        //Debug.Log("AI: Looking for move...");
-
-        
-        return await MinMaxRecursiveAsync(maxDepth, toMove, float.MinValue, float.MaxValue);
-        resultHolder.data = resultMove.move;
-        finishedSearch = true;
-    }
-
-    private async Task<ScoredMove> MinMaxRecursiveAsync(int depth, playerToMove whosMoving, float alpha, float beta)
-    {
-
-        //recursive termination
-        if (depth == 0)
-        {
-            //print("Move List count: " + Board.instance.moveList.Count);
-            totalNumNodesLookedAt++;
-            return new ScoredMove(null, analyzer.Analyze(Board.pieceBoard, GameStateManager.turnCount + maxDepth));
-        }
-
-        ScoredMove bestMove;//holder for the best/most likely move to make
-
-        if (whosMoving == playerToMove.player)//max
-        {
-
-            List<Move> allAvailableMoves = Board.instance.GetAllMoves(false);//get list of all possible moves
-
-            //check if allavailableMoves has no moves
-            if (allAvailableMoves.Count < 1)
-            {
-                return new ScoredMove(null, float.NegativeInfinity);
-            }
-
-            allAvailableMoves.Sort(mc); // jenny
-
-            bestMove = new ScoredMove(allAvailableMoves[0], float.NegativeInfinity);//set best move score to be as low as possible);
-            //resultHolder.data = new ScoredMove(allAvailableMoves[0], float.NegativeInfinity);
-
-            //print("Amount of moves player moves available: " + allAvailableMoves.Count);
-            foreach (Move move in allAvailableMoves)
-            {
-                searchCounter++;
-                if (searchCounter >= maxSearchPerFrame)
-                {
-                    searchCounter = 0;
-                    await Task.Yield();
-                }
-
-                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
-
-                ScoredMove recursiveResult = await MinMaxRecursiveAsync(depth - 1, playerToMove.torok, alpha, beta);//recursive call
-
-                Board.instance.UndoMove();//undo previous move
-
-                if (recursiveResult.score > bestMove.score)//if subtree result is better make best move equal to that
-                {
-                    bestMove.move = move;
-                    bestMove.score = recursiveResult.score;
-                }
-
-                alpha = Mathf.Max(alpha, bestMove.score);//update alpha value if needed
-
-                if (alpha >= beta)
-                {
-                    //print("broke in max");
-                    break;
-                }
-            }
-        }
-        else//min
-        {
-            List<Move> allAvailableMoves = Board.instance.GetAllMoves(true);// get list of all possible moves
-
-            //check if allavailableMoves has no moves
-            if (allAvailableMoves.Count < 1)
-            {
-                return new ScoredMove(null, float.PositiveInfinity);
-            }
-
-            allAvailableMoves.Sort(mc); // jenny
-
-            bestMove = new ScoredMove(allAvailableMoves[0], float.PositiveInfinity);
-            
-            //print("Amount of moves torok moves available: " + allAvailableMoves.Count);
-            foreach (Move move in allAvailableMoves)
-            {
-                searchCounter++;
-                if (searchCounter >= maxSearchPerFrame)
-                {
-                    searchCounter = 0;
-                    await Task.Yield();
-                }
-
-                Board.instance.MovePiece(move.startX, move.startY, move.endX, move.endY);//move piece
-
-                ScoredMove recursiveResult = await MinMaxRecursiveAsync(depth - 1, playerToMove.player, alpha, beta);//recursive call
-
-                Board.instance.UndoMove();//undo previous move
-
-                if (recursiveResult.score < bestMove.score)// if subtree is better make best move equal to that
-                {
-                    bestMove.move = move;
-                    bestMove.score = recursiveResult.score;
-                }
-
-                beta = Mathf.Min(beta, bestMove.score);//update beta if needed
-
-                if (alpha >= beta)
-                {
-                    //print("broke in main");
-                    break;
-                }
-
-            }
-        }
-
-
-        //return resulting move
-        return bestMove;
-    }
-    */
-    //-----------
 
     public void SetNewDepth(int newDepth)
     {
