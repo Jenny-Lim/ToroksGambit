@@ -10,10 +10,11 @@ public class TorokPersonalityAI : MonoBehaviour
     [SerializeField] private int currentAngerLevel = 1;
     [Range(0f, 1f)]
     [SerializeField] private float[] dialogLikelyhoodByCategory = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; // 17 total 
+    private int[] categoryPriorities = { 3, 3, 3, 3, 2, 2, 2, 2, 2, 1, 1, 1, 3, 3, 3, 2, 2, 2 };
     public float minTimeBetweenIdleBark = 12;
     public float maxTimeBetweenIdleBark = 25;
 
-
+    private SoundLibrary.Categories lastCatPlayed;
     private SoundLibrary library;
     private AudioSource audioPlayer;
 
@@ -32,26 +33,19 @@ public class TorokPersonalityAI : MonoBehaviour
         library.LoadDialogue(currentAngerLevel);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown("g"))
-        {
-            PlaySoundFromCategory(SoundLibrary.Categories.LosesPiece);
-        }
-    }
-
     public float PlaySoundFromCategory(SoundLibrary.Categories from)
     {
-        if (audioPlayer.isPlaying)
+        if (audioPlayer.isPlaying && categoryPriorities[(int)from] < categoryPriorities[(int)lastCatPlayed])
         {
-            Debug.Log("audio was already playing");
-            //return 0; //<-this causes some weirdness as when u/him captues a piece
+            
+            return 0; //<-this causes some weirdness as when u/him captues a piece
             //it could play dialogue but if the game is over after that move then it kinda clashes with the dialogue that should play when you lose for example
             //doing it like this without the return overrides the last call, which might be the best solution rn but is a little jarring when it happens
         }
 
         audioPlayer.clip = library.GetAudioClip(from);
         audioPlayer.Play();
+        lastCatPlayed = from;
         return audioPlayer.clip.length;
     }
 

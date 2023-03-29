@@ -8,13 +8,11 @@ public class SoundLibrary
     
     public enum Categories//15
     {
-        //LevelIntro,
         LevelIntroNonPawn,//hooked up
         LevelIntroCTF,//hooked up
         LevelIntroKOTH,//hooked up
         LevelIntroCheckmate,//hooked up
         LosesPiece,//hooked up
-        //TakesPiece,
         TakesKnight,//hooked up (i think)
         TakesBishop,//hooked up (i think)
         TakesRook,//hooked up (i think)
@@ -29,6 +27,7 @@ public class SoundLibrary
         ShopExit,
         ShopBuy
     }
+
 
     private List<AudioClip>[] masterDialogueList;
     public const int maxAngerLevels = 5;
@@ -58,6 +57,8 @@ public class SoundLibrary
         {
             angerLevelFilePath[i] = "AngerLevel" + (i+1);
         }
+
+
     }
 
     public void LoadDialogue(int angerLevel)
