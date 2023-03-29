@@ -1390,7 +1390,7 @@ MonoBehaviour:
   clickedPiece: {fileID: 0}
   canMove: 1
   inventoryScript: {fileID: 2078189510}
-  pieceMoveSpeed: 6
+  pieceMoveSpeed: 4
   piecePrefabs:
   - {fileID: 8310640034951653734, guid: 51879a188a24d99439e757f03eb47c19, type: 3}
   - {fileID: 5957427424637607141, guid: 158d9d3cc26221649b68653101162a69, type: 3}
@@ -19462,7 +19462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookAtTorokRotation: {x: 11.041613, y: 0, z: 0}
-  speed: 4
+  speed: 3
   LookAtShopRotation: {x: 8.933286, y: 91.481606, z: 359.07385}
   lookAtBoardPosition: {x: 4.72, y: 6.895, z: -4.26}
   lookAtBoardRotation: {x: 40.302, y: 0, z: 0}

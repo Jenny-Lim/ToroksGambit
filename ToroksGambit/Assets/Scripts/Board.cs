@@ -800,6 +800,7 @@ public class Board : MonoBehaviour
 
         pieceScript.UpdateMoves();
 
+        //Debug.Log("move piece coro");
         foreach (Move move in pieceScript.moves)
         {
             if ((move.endX == endX) && (move.endY == endY))

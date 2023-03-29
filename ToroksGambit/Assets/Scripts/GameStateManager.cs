@@ -113,7 +113,7 @@ public class GameStateManager : MonoBehaviour
                     //BEHOLD MY GRAVEYARD OF MOVE STUTTER FIXES
 
                     //**THIS IS THE ONE WHERE THE ITERATIVE VERSION IS USED FOR MULTIPLE FRAMES**
-                    /*if (!TorokIsMoving)
+                    if (!TorokIsMoving)
                     {
                         resultingMove = new DataHolder<Move>();
                         MinMax.instance.GetMinMaxMoveIter(resultingMove);
@@ -129,7 +129,7 @@ public class GameStateManager : MonoBehaviour
                             Board.instance.canMove = false;
                         }
                     }
-                    /*
+                    
 
                     //**THIS IS THE ONE THAT USES TASK SYSTEM AND DOESNT WORK RN MAYBE FOREVER CUZ THIS SHIT WACK**
                     /*if (!TorokIsMoving)
@@ -167,7 +167,7 @@ public class GameStateManager : MonoBehaviour
                     */
 
                     //**THIS IS THE ONE THAT USES A SINGLE FRAME SEARCH IE OLD WORKING METHOD** 
-                    if (!TorokIsMoving)
+                    /*if (!TorokIsMoving)
                     {
                         TorokIsMoving = true;
                         Move resultMove = MinMax.instance.GetMinMaxMove(playerToMove.torok);
@@ -191,7 +191,7 @@ public class GameStateManager : MonoBehaviour
                         }
 
                     }
-
+                    */
                 }
                 break;
             case GameState.shop:
