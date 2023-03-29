@@ -35,6 +35,8 @@ public class SoundLibrary
     private string[] angerLevelFilePath = new string[maxAngerLevels];
     private string[] categoryNames;
 
+    private int lastPlayedIndex = 1;
+
     public SoundLibrary()
     {
         InitLibrary();
@@ -92,6 +94,14 @@ public class SoundLibrary
     public AudioClip GetAudioClip(Categories from)
     {
         int rand = (int)UnityEngine.Random.Range(0, masterDialogueList[(int)from].Count-0.01f);
+        if (masterDialogueList[(int)from].Count > 1)
+        {
+            while (rand == lastPlayedIndex)
+            {
+                rand = (int)UnityEngine.Random.Range(0, masterDialogueList[(int)from].Count - 0.01f);
+            }
+        }
+        lastPlayedIndex = rand;
         return masterDialogueList[(int)from][rand];
     }
 }

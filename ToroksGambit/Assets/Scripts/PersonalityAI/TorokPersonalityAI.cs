@@ -31,7 +31,15 @@ public class TorokPersonalityAI : MonoBehaviour
 
         library.LoadDialogue(currentAngerLevel);
     }
-    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("g"))
+        {
+            PlaySoundFromCategory(SoundLibrary.Categories.LosesPiece);
+        }
+    }
+
     public float PlaySoundFromCategory(SoundLibrary.Categories from)
     {
         if (audioPlayer.isPlaying)
