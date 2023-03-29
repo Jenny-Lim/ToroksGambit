@@ -1,10 +1,7 @@
-//using OpenCover.Framework.Model;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using TMPro;
-using System.Threading.Tasks;
-using UnityEngine.UIElements;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -42,8 +39,6 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private static TextMeshProUGUI objectiveText;
 
     private DataHolder<Move> resultingMove;
-
-    private Task moveSearchTask;
 
     [SerializeField] private UIParticleSystem ticketParticleSystem;
 
@@ -129,8 +124,8 @@ public class GameStateManager : MonoBehaviour
                             Board.instance.canMove = false;
                         }
                     }
-                    
 
+                    #region "Task System Not Used"
                     //**THIS IS THE ONE THAT USES TASK SYSTEM AND DOESNT WORK RN MAYBE FOREVER CUZ THIS SHIT WACK**
                     /*if (!TorokIsMoving)
                     {
@@ -148,7 +143,9 @@ public class GameStateManager : MonoBehaviour
                         }
                     }
                     */
+                    #endregion
 
+                    #region "Multi Frame Multi Coroutines Not Used"
                     //**THIS IS THE ONE THAT USES A MULTIPLE FRAME SEARCH**
                     /*if (!TorokIsMoving)//if not currently looking for a move
                     {
@@ -165,7 +162,9 @@ public class GameStateManager : MonoBehaviour
                         }
                     }
                     */
+                    #endregion
 
+                    #region "Single Frame Search Not Used"
                     //**THIS IS THE ONE THAT USES A SINGLE FRAME SEARCH IE OLD WORKING METHOD** 
                     /*if (!TorokIsMoving)
                     {
@@ -192,6 +191,7 @@ public class GameStateManager : MonoBehaviour
 
                     }
                     */
+                    #endregion
                 }
                 break;
             case GameState.shop:
@@ -199,8 +199,6 @@ public class GameStateManager : MonoBehaviour
                 PhysicalShop.instance.PhysicalShopUpdate();
                 break;
             case GameState.intro:
-                //make camera look at torok
-                //play animation
                 if (activeCoRo == null)
                 {
                     activeCoRo = StartCoroutine(IntroCoRo());
@@ -209,8 +207,6 @@ public class GameStateManager : MonoBehaviour
 
                 break;
             case GameState.win:
-                //put up some text that says you wont
-                //add tickets
                 MainMenu.instance.pauseFxn.enabled = false;
                 if (activeCoRo == null)
                 {
