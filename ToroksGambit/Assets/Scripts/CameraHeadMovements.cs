@@ -121,7 +121,7 @@ public class CameraHeadMovements : MonoBehaviour
         Vector3 initRot = transform.eulerAngles;
         while (percentDone <= 1.0f)
         {
-            elapsedTime += Time.deltaTime * speed;
+            elapsedTime += Time.deltaTime * speed * 0.5f;//<- just to make it a litte slower
             percentDone = elapsedTime / desiredTime;
             //transform.eulerAngles = Vector3.Slerp(initRot, lookAtBoardRotation, percentDone);
             transform.eulerAngles = AngleLerp(initRot, LookAtShopRotation, percentDone);
@@ -162,6 +162,8 @@ public class CameraHeadMovements : MonoBehaviour
         }
         transform.eulerAngles = lookAtBoardRotation;
         transform.position = lookAtBoardPosition;
+
+        yield return new WaitForSeconds(1.5f);
 
         movementInProgress = false;
     }
