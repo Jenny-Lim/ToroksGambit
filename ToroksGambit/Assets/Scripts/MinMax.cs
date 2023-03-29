@@ -160,7 +160,7 @@ public class MinMax : MonoBehaviour
 
             #region "Find Next Not Searched Move"
             int indexToLookAt = curState.searchedMoves.IndexOf(false);//the first unsearched move in this state
-            if (curState.lastIndexSearched >= curState.availMoves.Count-1 || curState.beta <= curState.alpha)//there are no new moves left
+            if (curState.lastIndexSearched >= curState.availMoves.Count-1)//there are no new moves left
             {
 
                 //if this is the root state/node
