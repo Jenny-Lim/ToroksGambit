@@ -53,9 +53,9 @@ public class Piece : MonoBehaviour
         //isTaken = false;
         pieceBoard = Board.GetPieceBoard();
         moves = new List<Move>();
-        //toughIcon.SetActive(false);
-        //promoteIcon.SetActive(false);
-        //lastChanceIcon.SetActive(false);
+        toughIcon.SetActive(false);
+        promoteIcon.SetActive(false);
+        lastChanceIcon.SetActive(false);
     }
 
     public void Start()
@@ -64,9 +64,9 @@ public class Piece : MonoBehaviour
         //{
         //  value *= -1;
         //}
-        toughIcon.SetActive(false);
-        promoteIcon.SetActive(false);
-        lastChanceIcon.SetActive(false);
+        //toughIcon.GetComponentSetActive(false);
+        //promoteIcon.SetActive(false);
+        //lastChanceIcon.SetActive(false);
     }
 
     public virtual void UpdateMoves()
