@@ -29230,9 +29230,9 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.9433962, g: 0.47915486, b: 0.084549636, a: 1}
-  m_Intensity: 0.06
-  m_Range: 17.317503
+  m_Color: {r: 1, g: 0.89491254, b: 0.8066038, a: 1}
+  m_Intensity: 0.8
+  m_Range: 38.69
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
