@@ -21,6 +21,7 @@ public class TorokPersonalityAI : MonoBehaviour
     public static TorokPersonalityAI instance;
 
     private Animator anim;
+    [SerializeField] private Animator shopAnim;
     private bool isPlaying = false;
 
     private void Awake()
@@ -65,18 +66,25 @@ public class TorokPersonalityAI : MonoBehaviour
     }
 
     //plays an animation
-    private float PlayAnimation(int which = -1)
+    private float PlayAnimation(SoundLibrary.Categories category, int which = -1)
     {
-        if (which <= -1)
+        if (which <= -1)//use random anim
         {
-            anim.SetFloat("SelectedAnimation", 1);
+            if ((int)category >= (int)SoundLibrary.Categories.ShopEnter)
+            {
+                anim.SetFloat("SelectedAnimation", 1);
+            }
+            else
+            {
+                shopAnim.SetFloat("SelectedAnimation", 1);
+            }
+            
         }
-        else
+        else// use certain animation, probably wont be used idk
         {
 
         }
-        AnimatorStateInfo state = anim.GetCurrentAnimatorStateInfo(0);
-        return state.length;
+        return anim.GetCurrentAnimatorStateInfo(0).length;
     }
 
     public void PlayAnimationAndSound(SoundLibrary.Categories category)
@@ -92,7 +100,7 @@ public class TorokPersonalityAI : MonoBehaviour
     public IEnumerator PlayAnimationAndSoundCoRo(SoundLibrary.Categories category)
     {
         anim.SetBool("Talk", true);
-        float animClipLength = PlayAnimation();
+        float animClipLength = PlayAnimation(category);
         float audioClipLength = PlaySoundFromCategory(category);
         Debug.Log("ClipLenth " + audioClipLength);
         isPlaying = true;
