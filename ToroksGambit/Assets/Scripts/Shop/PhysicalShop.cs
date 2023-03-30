@@ -46,6 +46,8 @@ public class PhysicalShop : MonoBehaviour
     [SerializeField] private TextMeshPro leaveSignText;
     private Coroutine activeCoRo;
 
+    private int queenLevelOpen = 1;
+
     private void Awake()
     {
         instance = this;
@@ -61,11 +63,17 @@ public class PhysicalShop : MonoBehaviour
         canvasWidth = canvasRect.rect.width;
         canvasHeight = canvasRect.rect.height;
 
-        InitializeShop();
+        //SetShopDisplay();
     }
 
     public void PhysicalShopUpdate()// created by jordan to allow for raycasts to use exit button/sign whatever
     {
+
+        if (Input.GetKeyUp("m"))
+        {
+            SetShopDisplay();
+        }
+
         RaycastHit hit;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         bool rayHit = Physics.Raycast(ray, out hit, 25f);
@@ -148,11 +156,13 @@ public class PhysicalShop : MonoBehaviour
         shopkeeper.SetActive(false);
     }
 
-    public void InitializeShop()
+
+    public void InitializeShop() //not in use anymore - use SetShopDisplay() 
     {
+        //Array.Clear(pieceType, -1, pieceType.Length);
         for (int i = 0; i < pieceSpots.Length; i++)
         {
-            pieceType[i] = (int)(Random.Range(0, 4));
+            pieceType[i] = (int)(Random.Range(0, 5));
             //Debug.Log("piecetype" + i + " is " + pieceType[i]);
 
             //place model at spot
@@ -183,17 +193,41 @@ public class PhysicalShop : MonoBehaviour
         pieceDescriptionObject.SetActive(false);
     }
 
-    public void ResetShop()
+    public void SetShopDisplay()
     {
         for(int i = 0;i < pieceSpots.Length;i++)
         {
             Destroy(shopPieceModels[i]);
+            pieceType[i] = -1;
+        }
+
+        int shopMaxRange = 5;
+
+        int[] inventory = new int[5];
+        inventory = Inventory.instance.GetInventoryCount();
+
+
+        if(inventory[4] > 0)
+        {
+                    //Debug.Log("QUEEN INVENTORY COUNT ="+inventory[4]);
+            shopMaxRange = 4;
+        }
+        if(GameStateManager.instance.currentLevelNumber < queenLevelOpen)
+        {
+                    //Debug.Log("LEVEL IS "+GameStateManager.instance.currentLevelNumber);
+            shopMaxRange = 4;
         }
 
         for (int i = 0; i < pieceSpots.Length; i++)
         {
-            pieceType[i] = (int)(Random.Range(0, 4));
+            pieceType[i] = (int)(Random.Range(0, shopMaxRange));
             //place model at spot
+
+            if(pieceType[i] == 4)//cant generate more than 1 queen
+            {
+                shopMaxRange = 4;
+            }
+
             shopPieceModels[i] = Instantiate(pieceModels[pieceType[i]], pieceSpots[i].position,Quaternion.identity, gameObject.transform);
             shopPieceModels[i].transform.Rotate(0.0f,-90.0f,0.0f, Space.Self);
             //change price

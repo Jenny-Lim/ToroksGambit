@@ -20,7 +20,7 @@ public class GoToShopButton : MonoBehaviour
 
     public void GoToShop()
     {
-        PhysicalShop.instance.ResetShop();
+        PhysicalShop.instance.SetShopDisplay();
         if (!c.GetIsMoving())
         {
             if (canShop)

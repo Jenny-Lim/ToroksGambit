@@ -307,7 +307,7 @@ public class GameStateManager : MonoBehaviour
         yield return new WaitForSeconds(Mathf.Max(((float)numOfTickets / 4.0f), 5.0f));
         victoryText.SetActive(false);
         Debug.Log("Player has won.");
-        PhysicalShop.instance.ResetShop();
+        PhysicalShop.instance.SetShopDisplay();
         Board.instance.ReturnPiecesToInventory();
 
         //Currency.instance.GetReward(currentLevelNumber + 1);
