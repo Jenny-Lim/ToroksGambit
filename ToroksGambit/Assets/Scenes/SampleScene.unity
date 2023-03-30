@@ -50814,6 +50814,7 @@ MonoBehaviour:
   - 0.3
   minTimeBetweenIdleBark: 12
   maxTimeBetweenIdleBark: 25
+  shopAnim: {fileID: 1991393281}
 --- !u!95 &2107500676
 Animator:
   serializedVersion: 4
