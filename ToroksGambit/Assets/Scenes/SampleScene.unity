@@ -29226,13 +29226,13 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252258563}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.9433962, g: 0.47915486, b: 0.084549636, a: 1}
-  m_Intensity: 0.54
-  m_Range: 30.58815
+  m_Intensity: 0.06
+  m_Range: 17.317503
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
