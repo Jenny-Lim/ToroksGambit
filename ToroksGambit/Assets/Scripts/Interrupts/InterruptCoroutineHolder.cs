@@ -49,6 +49,11 @@ public class InterruptCoroutineHolder : MonoBehaviour
         holder.hasTriggered = true;//tell the interrupt it has triggered
         isRunning = true;//set this coroholder to be runnning
         GameStateManager.GameState returnState = GameStateManager.instance.GetGameState();//get what state game was in before coro runs
+        if (returnState == GameStateManager.GameState.Interrupt)//if return state is interrupt means that 2+ interrupts are happening at the same time so return state should be game
+        {
+            returnState = GameStateManager.GameState.game;
+        }
+
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.Interrupt);//set game state to interrupt
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
 
@@ -114,6 +119,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
 
         GameStateManager.instance.ChangeGameState(returnState);//change game state back to what it was before this ran
         isRunning = false;//set coro running to false
+        Destroy(this.gameObject);
     }
 
     private IEnumerator InterruptCoroutineMovePiece()
@@ -132,6 +138,11 @@ public class InterruptCoroutineHolder : MonoBehaviour
         holder.hasTriggered = true;//tell the interrupt it has triggered
         isRunning = true;//set this coroholder to be runnning
         GameStateManager.GameState returnState = GameStateManager.instance.GetGameState();//get what state game was in before coro runs
+        if (returnState == GameStateManager.GameState.Interrupt)//if return state is interrupt means that 2+ interrupts are happening at the same time so return state should be game
+        {
+            returnState = GameStateManager.GameState.game;
+        }
+
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.Interrupt);//set game state to interrupt
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
 
@@ -149,6 +160,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
 
         GameStateManager.instance.ChangeGameState(returnState);//change game state back to what it was before this ran
         isRunning = false;//set coro running to false
+        Destroy(this.gameObject);
     }
 
 
