@@ -624,7 +624,7 @@ public class Board : MonoBehaviour
                 piece.promote = true;
                 piece.traitCount++;
                 piece.promoteIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.promoteIcon.transform.localPosition.y *0.5f, 0);
-                piece.promoteIcon.SetActive(true);
+                piece.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
             }
 
             piece.pieceX = placeX;
@@ -1174,7 +1174,11 @@ public class Board : MonoBehaviour
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
             PlacePiece(endX, endY, 4);
+
+            piece.traitCount++;
+            piece.promoteIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.promoteIcon.transform.localPosition.y * 0.5f, 0);
             pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
+
             //piece.pawnPromote = true;
             //PlacePiece(endX, endY, 4);
 
