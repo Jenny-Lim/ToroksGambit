@@ -446,16 +446,19 @@ public class Board : MonoBehaviour
             if (toughPlacer)
             {
                 piece.isTough = true;
+                //piece.traitCount++;
                 piece.toughIcon.SetActive(true);
             }
             if (lastChancePlacer)
             {
                 piece.lastChance = true;
+                //piece.traitCount++;
                 piece.lastChanceIcon.SetActive(true);
             }
             if (promotePlacer)
             {
                 piece.promote = true;
+                //piece.traitCount++;
                 piece.promoteIcon.SetActive(true);
             }
 
@@ -605,16 +608,22 @@ public class Board : MonoBehaviour
             if (toughPlacer)
             {
                 piece.isTough = true;
+                piece.traitCount++;
+                piece.toughIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.toughIcon.transform.localPosition.y *0.5f, 0);
                 piece.toughIcon.SetActive(true);
             }
             if (lastChancePlacer)
             {
                 piece.lastChance = true;
+                piece.traitCount++;
+                piece.lastChanceIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.lastChanceIcon.transform.localPosition.y *0.5f, 0);
                 piece.lastChanceIcon.SetActive(true);
             }
             if (promotePlacer)
             {
                 piece.promote = true;
+                piece.traitCount++;
+                piece.promoteIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.promoteIcon.transform.localPosition.y *0.5f, 0);
                 piece.promoteIcon.SetActive(true);
             }
 

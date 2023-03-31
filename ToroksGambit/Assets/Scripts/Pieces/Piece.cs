@@ -48,6 +48,8 @@ public class Piece : MonoBehaviour
     public GameObject toughIcon;
     public GameObject lastChanceIcon;
 
+    public int traitCount;
+
     void Awake()
     {
         //isTaken = false;
