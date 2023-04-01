@@ -621,9 +621,12 @@ public class Board : MonoBehaviour
                 piece.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
             }
 
-            piece.toughIcon.transform.localScale = piece.toughIcon.transform.localScale / piece.traitCount;
-            piece.lastChanceIcon.transform.localScale = piece.lastChanceIcon.transform.localScale / piece.traitCount;
-            piece.promoteIcon.transform.localScale = piece.promoteIcon.transform.localScale / piece.traitCount;
+            if (piece.traitCount > 0)
+            {
+                piece.toughIcon.transform.localScale = piece.toughIcon.transform.localScale / piece.traitCount;
+                piece.lastChanceIcon.transform.localScale = piece.lastChanceIcon.transform.localScale / piece.traitCount;
+                piece.promoteIcon.transform.localScale = piece.promoteIcon.transform.localScale / piece.traitCount;
+            }
 
             piece.pieceX = placeX;
             piece.pieceY = placeY;
