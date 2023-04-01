@@ -43730,6 +43730,7 @@ MonoBehaviour:
   - Level5
   - Level4
   - InterruptsV2Test
+  - TraitLevel1
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
   currentState: 0
