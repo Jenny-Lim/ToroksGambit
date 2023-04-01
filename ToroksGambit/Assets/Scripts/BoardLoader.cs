@@ -146,9 +146,9 @@ public class BoardLoader : MonoBehaviour
                         placedPiece.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
                     }
 
-                    placedPiece.toughIcon.transform.localScale = placedPiece.toughIcon.transform.localScale / placedPiece.traitCount;
-                    placedPiece.lastChanceIcon.transform.localScale = placedPiece.lastChanceIcon.transform.localScale / placedPiece.traitCount;
-                    placedPiece.promoteIcon.transform.localScale = placedPiece.promoteIcon.transform.localScale / placedPiece.traitCount;
+                    //placedPiece.toughIcon.transform.localScale = placedPiece.toughIcon.transform.localScale / placedPiece.traitCount;
+                    //placedPiece.lastChanceIcon.transform.localScale = placedPiece.lastChanceIcon.transform.localScale / placedPiece.traitCount;
+                    //placedPiece.promoteIcon.transform.localScale = placedPiece.promoteIcon.transform.localScale / placedPiece.traitCount;
 
                 }
                 else if (splitLines[0].CompareTo("Interrupt") == 0)
