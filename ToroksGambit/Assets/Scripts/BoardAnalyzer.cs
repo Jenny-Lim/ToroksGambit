@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BoardAnalyzer
@@ -111,13 +112,56 @@ public class BoardAnalyzer
 
     public float Analyze(GameObject[,] board, int turnNum)
     {
-        float result = (materialWeight * MaterialCount(board)) + //material value count
+        /*float result = (materialWeight * MaterialCount(board)) + //material value count
             (mobilityWeight * CalcMobility()) + //how mobile the pieces are
             (positionWeight * CalcPositioning(board) + //how good the positioning of pieces are
             (turnNum * lateGamePieceSackWeight * LateGamePieceSack(board)))// bias towards the player having less pieces as the game goes on
-            ;
+            ;*/
         //Debug.Log("Analyzing Board got: " + result);
-        return result;
+        return AnalyzeNew(board, turnNum);
+    }
+
+    public float AnalyzeNew(GameObject[,] board, int turnNum)
+    {
+        float materialCountScore = 0;
+        float positioningScore = 0;
+        float lateGameSackScore = 0;
+
+        for (int col = 0; col < board.GetLength(0)-1; col++)
+        {
+            for (int row = 0; row < board.GetLength(0) - 1; row++)
+            {
+                if (board[col, row] == null) continue;
+
+                Piece targetPiece = board[col, row].GetComponent<Piece>();
+
+                if (targetPiece.type == Piece.PieceType.wall || targetPiece.type == Piece.PieceType.wall) continue;
+
+                //score material
+                float pieceMatScore = targetPiece.value;
+                if (targetPiece.isTorok) pieceMatScore *= -1;
+                materialCountScore += pieceMatScore;
+
+                //score position
+                if (targetPiece.isTorok)
+                {
+                    positioningScore -= posPST[(int)targetPiece.type][(row * Board.boardSize) + col];
+                }
+                else
+                {
+                    lateGameSackScore += targetPiece.value;
+                    positioningScore += posPST[(int)targetPiece.type][((Board.boardSize - row) * Board.boardSize) - (Board.boardSize - col)];//((bs - y) * bs) - (bs - x) = arrayIndex, bs - boardsize, x - xPos, y - yPos
+                }
+
+
+            }
+        }
+
+
+        return (materialWeight * materialCountScore) + //score for material amounts
+            (mobilityWeight * CalcMobility()) + //scoer for piece mobility
+            (positionWeight * positioningScore) + //score for piece positioning
+            (lateGamePieceSackWeight * -turnNum * (Mathf.Pow(2, -0.001f * (lateGameSackScore - 7000))));//bias later in game to sack pieces so player has less
     }
 
     public float LateGamePieceSack(GameObject[,] board)
