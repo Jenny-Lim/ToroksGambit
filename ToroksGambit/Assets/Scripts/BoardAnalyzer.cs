@@ -135,7 +135,7 @@ public class BoardAnalyzer
 
                 Piece targetPiece = board[col, row].GetComponent<Piece>();
 
-                if (targetPiece.type == Piece.PieceType.wall || targetPiece.type == Piece.PieceType.wall) continue;
+                if (targetPiece.type == Piece.PieceType.wall || targetPiece.type == Piece.PieceType.hole) continue;
 
                 //score material
                 float pieceMatScore = targetPiece.value;
@@ -150,9 +150,9 @@ public class BoardAnalyzer
                 else
                 {
                     lateGameSackScore += targetPiece.value;
+                    Debug.Log(targetPiece.type);
                     positioningScore += posPST[(int)targetPiece.type][((Board.boardSize - row) * Board.boardSize) - (Board.boardSize - col)];//((bs - y) * bs) - (bs - x) = arrayIndex, bs - boardsize, x - xPos, y - yPos
                 }
-
 
             }
         }
