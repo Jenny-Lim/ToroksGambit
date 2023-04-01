@@ -124,7 +124,32 @@ public class BoardLoader : MonoBehaviour
                     placedPiece.isTough = Convert.ToBoolean(splitLines[5]);
                     placedPiece.lastChance = Convert.ToBoolean(splitLines[6]);
                     placedPiece.promote = Convert.ToBoolean(splitLines[7]);
-                   
+                    Debug.Log("piece is tough: " + placedPiece.isTough); // bruh
+                    Debug.Log("piece is lastChance: " + placedPiece.lastChance);
+                    Debug.Log("piece is promote: " + placedPiece.promote);
+                    if (placedPiece.isTough)
+                    {
+                        placedPiece.traitCount++;
+                        placedPiece.toughIcon.transform.localPosition = new Vector3(0.35f, placedPiece.traitCount * placedPiece.toughIcon.transform.localPosition.y * 0.5f, 0);
+                        placedPiece.toughIcon.SetActive(true);
+                    }
+                    if (placedPiece.lastChance)
+                    {
+                        placedPiece.traitCount++;
+                        placedPiece.lastChanceIcon.transform.localPosition = new Vector3(0.35f, placedPiece.traitCount * placedPiece.lastChanceIcon.transform.localPosition.y * 0.5f, 0);
+                        placedPiece.lastChanceIcon.SetActive(true);
+                    }
+                    if (placedPiece.promote)
+                    {
+                        placedPiece.traitCount++;
+                        placedPiece.promoteIcon.transform.localPosition = new Vector3(0.35f, placedPiece.traitCount * placedPiece.promoteIcon.transform.localPosition.y * 0.5f, 0);
+                        placedPiece.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
+                    }
+
+                    placedPiece.toughIcon.transform.localScale = placedPiece.toughIcon.transform.localScale / placedPiece.traitCount;
+                    placedPiece.lastChanceIcon.transform.localScale = placedPiece.lastChanceIcon.transform.localScale / placedPiece.traitCount;
+                    placedPiece.promoteIcon.transform.localScale = placedPiece.promoteIcon.transform.localScale / placedPiece.traitCount;
+
                 }
                 else if (splitLines[0].CompareTo("Interrupt") == 0)
                 {

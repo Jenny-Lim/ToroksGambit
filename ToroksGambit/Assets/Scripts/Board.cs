@@ -446,20 +446,14 @@ public class Board : MonoBehaviour
             if (toughPlacer)
             {
                 piece.isTough = true;
-                //piece.traitCount++;
-                piece.toughIcon.SetActive(true);
             }
             if (lastChancePlacer)
             {
                 piece.lastChance = true;
-                //piece.traitCount++;
-                piece.lastChanceIcon.SetActive(true);
             }
             if (promotePlacer)
             {
                 piece.promote = true;
-                //piece.traitCount++;
-                piece.promoteIcon.SetActive(true);
             }
 
             piece.pieceX = placeX; 
@@ -626,6 +620,10 @@ public class Board : MonoBehaviour
                 piece.promoteIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.promoteIcon.transform.localPosition.y *0.5f, 0);
                 piece.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
             }
+
+            piece.toughIcon.transform.localScale = piece.toughIcon.transform.localScale / piece.traitCount;
+            piece.lastChanceIcon.transform.localScale = piece.lastChanceIcon.transform.localScale / piece.traitCount;
+            piece.promoteIcon.transform.localScale = piece.promoteIcon.transform.localScale / piece.traitCount;
 
             piece.pieceX = placeX;
             piece.pieceY = placeY;

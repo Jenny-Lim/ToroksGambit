@@ -10915,6 +10915,8 @@ MonoBehaviour:
   - Level5
   - KOTH_Next
   - QueenBoss
+  - TraitLevel1
+  - TraitTest
 --- !u!4 &269598401
 Transform:
   m_ObjectHideFlags: 0
@@ -43724,13 +43726,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
+  - TraitTest
+  - TraitLevel1
   - DeploySaveTest
   - Level1
   - Level3
   - Level5
   - Level4
   - InterruptsV2Test
-  - TraitLevel1
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
   currentState: 0
