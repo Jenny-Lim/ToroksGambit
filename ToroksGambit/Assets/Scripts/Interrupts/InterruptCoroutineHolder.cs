@@ -69,11 +69,11 @@ public class InterruptCoroutineHolder : MonoBehaviour
 
         if ((int)holderType.piece >= (int)Piece.PieceType.king)
         {
-            Board.instance.PlaceObstacle(holderType.placeAt.x, holderType.placeAt.y, (int)holderType.piece-5);
+            Board.instance.PlaceObstacle(holderType.placeAt.x, holderType.placeAt.y, (int)holderType.piece-5,0);
         }
         else
         {
-            Board.instance.PlacePieceTorok(holderType.placeAt.x, holderType.placeAt.y, (int)holderType.piece);
+            Board.instance.PlacePieceTorok(holderType.placeAt.x, holderType.placeAt.y, (int)holderType.piece,0);
         }
 
         GameObject placedPiece = Board.pieceBoard[holderType.placeAt.x, holderType.placeAt.y];// manipulate piece GO for animation effect thingy

@@ -206,7 +206,7 @@ public class Inventory : MonoBehaviour
                                 }
                             }
                             if (!(coords.x < 0 || coords.y < 0)) {
-                                Board.instance.PlaceObstacle(coords.x, coords.y, storedPiece - 6);
+                                Board.instance.PlaceObstacle(coords.x, coords.y, storedPiece - 6,0);
                             }
 
                         }

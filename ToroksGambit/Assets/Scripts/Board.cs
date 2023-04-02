@@ -13,7 +13,11 @@ public class Board : MonoBehaviour
 
     public GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
+    public GameObject[,] AIVisualBoard;
+
     public static GameObject[,] pieceBoard;//array for storing pieces and piece location -- made static (jenny)
+
+    public static GameObject[,] AIPieceBoard;
 
     private GameObject[,] winSpotBoard;
 
@@ -112,6 +116,9 @@ public class Board : MonoBehaviour
     [SerializeField] private float lastAnalyzedBoardScore = 0;
     [SerializeField] private float goodBadMoveThreshold = 700;
 
+    [SerializeField] private GameObject PlayerBoardParent;
+    [SerializeField] private GameObject AIBoardParent;
+
 
 
     // brought them up here
@@ -125,12 +132,15 @@ public class Board : MonoBehaviour
         boardPosition = transform.position;
         cam = Camera.main;
         hitBoxBoard = new GameObject[boardSize,boardSize];
+        AIVisualBoard = new GameObject[boardSize,boardSize];
         pieceBoard = new GameObject[boardSize, boardSize];
+        AIPieceBoard = new GameObject[boardSize, boardSize];
         moveTileBoard = new GameObject[boardSize, boardSize];
         winSpotBoard = new GameObject[boardSize, boardSize];
         deployBoard = new GameObject[boardSize, boardSize];
         idleDialogueCounter = Random.Range(TorokPersonalityAI.instance.maxTimeBetweenIdleBark,TorokPersonalityAI.instance.maxTimeBetweenIdleBark);
-        BuildBoard();
+        BuildBoard(AIBoardParent.transform.position, AIVisualBoard, AIBoardParent);
+        BuildBoard(boardPosition, hitBoxBoard, PlayerBoardParent);
     }
 
     //**Place anything were that needs to be reset when a new level is loaded**
@@ -165,6 +175,11 @@ public class Board : MonoBehaviour
         if (Input.GetKeyUp("q")) {
             print(IsKingInCheck(false));
         }
+
+                if (Input.GetKeyUp("k")) 
+                {
+                    SwapBoard();
+                }
 
         if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
         {
@@ -432,7 +447,7 @@ public class Board : MonoBehaviour
 
         if (pieceId >= 0 && pieceId < 6)
         {
-            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate piece and place in pieceBoard location
             //newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
             Piece piece = newPiece.GetComponent<Piece>();
 
@@ -461,7 +476,7 @@ public class Board : MonoBehaviour
         }
         else if(pieceId > 5)
         {
-            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(obstaclePrefabs[pieceId-6], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(obstaclePrefabs[pieceId-6], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate piece and place in pieceBoard location
         }
         else 
         {
@@ -473,46 +488,105 @@ public class Board : MonoBehaviour
         return true;
     }
 
-    public bool PlacePiece(int xPos, int yPos, int pieceId)
+    public bool PlacePiece(int xPos, int yPos, int pieceId, int boardNum) //movepiece one
     {
         //int pieceId = inventoryScript.GetStoredPiece();
-
-        if (pieceBoard[xPos, yPos] != null && pieceId != -1)
+        if(boardNum == 0)
         {
-            Debug.LogError("Error trying to place piece where piece already is.");
-            return false;
-        }
+            if (pieceBoard[xPos, yPos] != null && pieceId != -1)
+            {
+                Debug.LogError("Error trying to place piece where piece already is.");
+                return false;
+            }
 
-        if (pieceId >= 0)
-        {
-            GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos,yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
-            //newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
-            Piece piece = newPiece.GetComponent<Piece>();
-            piece.pieceX = xPos;
-            piece.pieceY = yPos;
+            if (pieceId >= 0)
+            {
+                GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos,yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate piece and place in pieceBoard location
+                //newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
+                Piece piece = newPiece.GetComponent<Piece>();
+                piece.pieceX = xPos;
+                piece.pieceY = yPos;
 
+            }
+            else
+            {
+                //remove piece functionality
+                Destroy(pieceBoard[xPos, yPos]);
+                pieceBoard[xPos, yPos] = null;
+            }
+            return true;
         }
-        else
+        else if(boardNum == 1)
         {
-            //remove piece functionality
-            Destroy(pieceBoard[xPos, yPos]);
-            pieceBoard[xPos, yPos] = null;
+            if (AIPieceBoard[xPos, yPos] != null && pieceId != -1)
+            {
+                Debug.LogError("Error trying to place piece where piece already is. on ai board");
+                return false;
+            }
+
+            if (pieceId >= 0)
+            {
+                GameObject newPiece = AIPieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], AIVisualBoard[xPos,yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate piece and place in pieceBoard location
+                //newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
+                Piece piece = newPiece.GetComponent<Piece>();
+                piece.pieceX = xPos;
+                piece.pieceY = yPos;
+
+            }
+            else
+            {
+                //remove piece functionality
+                Destroy(pieceBoard[xPos, yPos]);
+                pieceBoard[xPos, yPos] = null;
+            }
+            return true;
         }
-        return true;
+        return false;
     }
 
-    public bool PlacePieceTorok(int xPos, int yPos, int pieceId)
+    public bool PlacePieceTorok(int xPos, int yPos, int pieceId, int boardNum)// movepiece one - 0 = player 1 = AI
     {
-        if (pieceBoard[xPos, yPos] != null)
+        if(boardNum == 0) //placing on player board
+        {
+            if (pieceBoard[xPos, yPos] != null)
+            {
+                //Debug.Log("Trace Stack for ");
+                Debug.LogError("Error trying to place piece where piece already is.");
+                return false;
+            }
+
+            if (pieceId >= 0)
+            {
+                GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate piece and place in pieceBoard location
+                Piece piece = newPiece.GetComponent<Piece>();
+                newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = TorokPieceMats[(int)piece.type];
+                if ((int)piece.type <= (int)Piece.PieceType.king)
+                {
+                    newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
+                }
+
+                piece.pieceX = xPos;
+                piece.pieceY = yPos;
+                piece.isTorok = true;
+            }
+            else
+            {
+                Debug.LogError("Couldn't place piece: unrecognized pieceId");
+            }
+            return true;
+        }
+        else if(boardNum == 1)
+        {
+        if (AIPieceBoard[xPos, yPos] != null)
         {
             //Debug.Log("Trace Stack for ");
-            Debug.LogError("Error trying to place piece where piece already is.");
+            Debug.LogError("Error trying to place piece where piece already is. ON AI BOARD");
             return false;
         }
 
         if (pieceId >= 0)
         {
-            GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            GameObject newPiece = AIPieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], AIVisualBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate piece and place in pieceBoard location
             Piece piece = newPiece.GetComponent<Piece>();
             newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = TorokPieceMats[(int)piece.type];
             if ((int)piece.type <= (int)Piece.PieceType.king)
@@ -526,9 +600,11 @@ public class Board : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Couldn't place piece: unrecognized pieceId");
+            Debug.LogError("Couldn't place piece: unrecognized pieceId ON AI BOARD WHOA");
         }
         return true;
+        }
+        return false;
     }
 
     public bool PlacePieceTorok(Transform boardSpot, int pieceId)
@@ -582,7 +658,7 @@ public class Board : MonoBehaviour
 
         if (pieceId >= 0)
         {
-            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate piece and place in pieceBoard location
+            GameObject newPiece = pieceBoard[placeX, placeY] = Instantiate(piecePrefabs[pieceId], boardSpot.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate piece and place in pieceBoard location
             Piece piece = newPiece.GetComponent<Piece>();
             newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = TorokPieceMats[(int)piece.type];
             if (piece.type == Piece.PieceType.knight)
@@ -640,28 +716,50 @@ public class Board : MonoBehaviour
         return true;
     }
 
-    public void PlaceObstacle(int xPos, int yPos, int obstacleId)
+    public void PlaceObstacle(int xPos, int yPos, int obstacleId, int boardNum)
     {
-        //Debug.Log("obstacle id is " + obstacleId);
-        if (obstacleId >= 0 && obstacleId < obstaclePrefabs.Length)
+        if(boardNum == 0)
         {
-            GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(obstaclePrefabs[obstacleId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, gameObject.transform);//instantiate obstacle and place in pieceBoard location
-            Piece piece = newPiece.GetComponent<Piece>();
-            piece.pieceX = xPos;
-            piece.pieceY = yPos;
-            if (obstacleId == 1)//if its a hole, remove renderer of that tile
+            if (obstacleId >= 0 && obstacleId < obstaclePrefabs.Length)
             {
-                hitBoxBoard[xPos, yPos].GetComponent<MeshRenderer>().enabled = false;
-            } 
+                GameObject newPiece = pieceBoard[xPos, yPos] = Instantiate(obstaclePrefabs[obstacleId], hitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate obstacle and place in pieceBoard location
+                Piece piece = newPiece.GetComponent<Piece>();
+                piece.pieceX = xPos;
+                piece.pieceY = yPos;
+                if (obstacleId == 1)//if its a hole, remove renderer of that tile
+                {
+                    hitBoxBoard[xPos, yPos].GetComponent<MeshRenderer>().enabled = false;
+                } 
 
+            }
+            else
+            {
+                Debug.Log("Place Error| Could not place obstacle: obstacle ID not recognized");
+            }
         }
-        else
+        else if(boardNum == 1)
         {
-            Debug.Log("Place Error| Could not place obstacle: obstacle ID not recognized");
+            if (obstacleId >= 0 && obstacleId < obstaclePrefabs.Length)
+            {
+                GameObject newPiece = AIPieceBoard[xPos, yPos] = Instantiate(obstaclePrefabs[obstacleId], AIVisualBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate obstacle and place in pieceBoard location
+                Piece piece = newPiece.GetComponent<Piece>();
+                piece.pieceX = xPos;
+                piece.pieceY = yPos;
+                if (obstacleId == 1)//if its a hole, remove renderer of that tile
+                {
+                    AIVisualBoard[xPos, yPos].GetComponent<MeshRenderer>().enabled = false;
+                } 
+
+            }
+            else
+            {
+                Debug.Log("Place Error| Could not place obstacle: obstacle ID not recognized");
+            }
         }
+
     }
 
-    private void BuildBoard()//generates hitbox for chess board
+    private void BuildBoard(Vector3 boardSpawnPoint, GameObject[,] boardArray, GameObject parent)//generates hitbox for chess board
     {
         float boardOffset = ((float)boardSize)/2;
         for(int i=0;i<boardSize;i++)
@@ -672,26 +770,26 @@ public class Board : MonoBehaviour
                 if ( (i+j) % 2 == 0)
                 {
  
-                    newTile = Instantiate(boardTiles[0], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset) , Quaternion.Euler(new Vector3(-90f,0f,90f)), gameObject.transform);
+                    newTile = Instantiate(boardTiles[0], (boardSpawnPoint + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset) , Quaternion.Euler(new Vector3(-90f,0f,90f)), parent.transform);
                 }
                 else
                 {
-                    newTile = Instantiate(boardTiles[1], (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset), Quaternion.Euler(new Vector3(-90f, 0f, 90f)), gameObject.transform);
+                    newTile = Instantiate(boardTiles[1], (boardSpawnPoint + new Vector3(i - boardOffset, 0, j - boardOffset)) + (Vector3.up * boardVerticalOffset), Quaternion.Euler(new Vector3(-90f, 0f, 90f)), parent.transform);
                 }
 
                 newTile.gameObject.name = i + "_" + j;
-                hitBoxBoard[i, j] = newTile;
-                GameObject moveTileObject = Instantiate(moveTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(0f, 0f, 0f)), gameObject.transform);
+                boardArray[i, j] = newTile;
+                GameObject moveTileObject = Instantiate(moveTile, (boardSpawnPoint + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(0f, 0f, 0f)), gameObject.transform);
                 moveTileObject.gameObject.name = i + "_" + j + "_MoveTile";
                 moveTileBoard[i,j] = moveTileObject;
                 moveTileObject.SetActive(false);
 
-                GameObject winTileObject = Instantiate(winSpotTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(0f, 0f, 0f)), gameObject.transform);
+                GameObject winTileObject = Instantiate(winSpotTile, (boardSpawnPoint + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(0f, 0f, 0f)), gameObject.transform);
                 winTileObject.gameObject.name = i + "_" + j + "_WinSpot";
                 winSpotBoard[i,j] = winTileObject;
                 winTileObject.SetActive(false);
 
-                GameObject deployTileObject = Instantiate(deployTile, (boardPosition + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(0f, 0f, 0f)), gameObject.transform);
+                GameObject deployTileObject = Instantiate(deployTile, (boardSpawnPoint + new Vector3(i - boardOffset, 0, j - boardOffset)) + ((Vector3.up * 0.149f)), Quaternion.Euler(new Vector3(0f, 0f, 0f)), gameObject.transform);
                 deployTileObject.gameObject.name = i + "_" + j + "_DeploySpot";
                 deployBoard[i, j] = deployTileObject;
                 deployTileObject.SetActive(false);
@@ -1116,7 +1214,7 @@ public class Board : MonoBehaviour
             Debug.Log("PROMOTE PIECE");
             if(piece.type != Piece.PieceType.queen)
             {
-                PlacePiece(endX,endY,pieceIdMoving);
+                PlacePieceTorok(endX,endY,pieceIdMoving,0);
 
                 Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
                 
@@ -1174,7 +1272,7 @@ public class Board : MonoBehaviour
             Debug.Log("PLAYER PAWN REACHED END");
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
-            PlacePiece(endX, endY, 4);
+            PlacePiece(endX, endY, 4,0);
 
             piece.traitCount++;
             piece.promoteIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.promoteIcon.transform.localPosition.y * 0.5f, 0);
@@ -1189,7 +1287,7 @@ public class Board : MonoBehaviour
             Debug.Log("TOROK PAWN REACHED END");
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
-            PlacePieceTorok(endX, endY, 4);
+            PlacePieceTorok(endX, endY, 4,0);
             pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
         }
 
@@ -1247,13 +1345,13 @@ public class Board : MonoBehaviour
 
         if (moveList[moveList.Count - 1].takenLastChance)
         {
-            PlacePiece(moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY, moveList[moveList.Count - 1].pieceMoving - 1);
+            PlacePiece(moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY, moveList[moveList.Count - 1].pieceMoving - 1,0);
         }
         else if (moveList[moveList.Count - 1].promoted)
         {
             Destroy(pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]);
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
-            PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceMoving - 1);
+            PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceMoving - 1,0);
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;            
@@ -1264,9 +1362,9 @@ public class Board : MonoBehaviour
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
             if(moveList[moveList.Count - 1].movingTorok)
             {
-                PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0);
+                PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0,0);
             }
-            PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0);
+            PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0,0);
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
@@ -1289,11 +1387,11 @@ public class Board : MonoBehaviour
         {
             if (!moveList[moveList.Count - 1].takenTorok)
             {
-                PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceTaken - 1);
+                PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceTaken - 1,0);
             }
             else if (moveList[moveList.Count - 1].takenTorok)
             {
-                PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceTaken - 1);
+                PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceTaken - 1,0);
             }
         }
         
@@ -1767,6 +1865,62 @@ public class Board : MonoBehaviour
             }
         }
         return kingPos;
+    }
+
+    public void CopyBoard()//copies player board to AI board
+    {
+        for(int i =0;i<boardSize;i++)
+        {
+            for(int j=0;j<boardSize;j++)
+            {
+                Destroy(AIPieceBoard[i,j]);
+                AIPieceBoard[i,j] = null;
+            }
+        }
+        for(int i =0;i<boardSize;i++)
+        {
+            for(int j=0;j<boardSize;j++)
+            {
+
+                if(pieceBoard[i,j])
+                {
+                Piece realPiece = pieceBoard[i,j].GetComponent<Piece>();
+
+                if((int)realPiece.type > 5)
+                {
+                    PlaceObstacle(i,j,(int)realPiece.type -6,1);
+                    AIPieceBoard[i,j].transform.parent = AIBoardParent.transform;
+                }
+
+                if(realPiece.isTorok)
+                {
+                    PlacePieceTorok(i,j,(int)realPiece.type,1);
+                    AIPieceBoard[i,j].transform.parent = AIBoardParent.transform;
+                    //add traits
+                }
+                else
+                {
+                    PlacePiece(i,j,(int)realPiece.type,1);
+                    AIPieceBoard[i,j].transform.parent = AIBoardParent.transform;
+                }
+                }
+            }
+        }
+    }
+
+    public void SwapBoard()
+    {
+        Vector3 boardVector = new Vector3(-10,0,0);
+        if(AIBoardParent.transform.position != gameObject.transform.position)
+        {
+            AIBoardParent.transform.position = gameObject.transform.position;
+            PlayerBoardParent.transform.position = new Vector3(-10,0,0);
+        }
+        else
+        {
+            AIBoardParent.transform.position = new Vector3(-10,0,0);
+            PlayerBoardParent.transform.position = gameObject.transform.position;
+        }
     }
 
 

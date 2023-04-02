@@ -99,11 +99,11 @@ public class BoardLoader : MonoBehaviour
                     {
                         if (int.Parse(splitLines[1]) < 6)
                         {
-                            Board.instance.PlacePieceTorok(pos.x, pos.y, int.Parse(splitLines[1]));
+                            Board.instance.PlacePieceTorok(pos.x, pos.y, int.Parse(splitLines[1]),0);
                         }
                         else
                         {
-                            Board.instance.PlaceObstacle(pos.x, pos.y, int.Parse(splitLines[1]) - 6);
+                            Board.instance.PlaceObstacle(pos.x, pos.y, int.Parse(splitLines[1]) - 6,0);
                         }
                         
                     }
@@ -111,11 +111,11 @@ public class BoardLoader : MonoBehaviour
                     {
                         if (int.Parse(splitLines[1]) < 6)
                         {
-                            Board.instance.PlacePiece(pos.x, pos.y, int.Parse(splitLines[1]));
+                            Board.instance.PlacePiece(pos.x, pos.y, int.Parse(splitLines[1]),0);
                         }
                         else
                         {
-                            Board.instance.PlaceObstacle(pos.x, pos.y, int.Parse(splitLines[1]) - 6);
+                            Board.instance.PlaceObstacle(pos.x, pos.y, int.Parse(splitLines[1]) - 6,0);
                         }
                     }
 

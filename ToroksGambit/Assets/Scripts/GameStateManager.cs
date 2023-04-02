@@ -112,6 +112,7 @@ public class GameStateManager : MonoBehaviour
                     {
                         resultingMove = new DataHolder<Move>();
                         MinMax.instance.GetMinMaxMoveIter(resultingMove);
+                        Board.instance.SwapBoard();
                         TorokIsMoving = true;
                     }
                     else
@@ -119,6 +120,7 @@ public class GameStateManager : MonoBehaviour
                         moveTimer += Time.deltaTime;
                         if (MinMax.instance.finishedSearch == true && Board.instance.canMove & moveTimer >= waitTimeToMove)//finished search and can make move
                         {
+                            Board.instance.SwapBoard();
                             Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
                             moveTimer = 0;
                             Board.instance.canMove = false;
@@ -439,6 +441,7 @@ public class GameStateManager : MonoBehaviour
         {
             MinMax.instance.SetNewDepth(1);
         }
+        Board.instance.CopyBoard();
     }
 
     public static int GetTurnCount()
