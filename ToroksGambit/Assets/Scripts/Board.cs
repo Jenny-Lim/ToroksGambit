@@ -1914,11 +1914,11 @@ public class Board : MonoBehaviour
         if(AIBoardParent.transform.position != gameObject.transform.position)
         {
             AIBoardParent.transform.position = gameObject.transform.position;
-            PlayerBoardParent.transform.position = new Vector3(-10,0,0);
+            PlayerBoardParent.transform.position = new Vector3(0,0,25);
         }
         else
         {
-            AIBoardParent.transform.position = new Vector3(-10,0,0);
+            AIBoardParent.transform.position = new Vector3(0,0,25);
             PlayerBoardParent.transform.position = gameObject.transform.position;
         }
     }
