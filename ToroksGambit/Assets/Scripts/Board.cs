@@ -565,31 +565,8 @@ public class Board : MonoBehaviour
                     newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
                 }
 
-                //if (piece.isTough)
-                //{
-                //    piece.traitCount++;
-                //    piece.toughIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.toughIcon.transform.localPosition.y * 0.5f, 0);
-                //    piece.toughIcon.SetActive(true);
-                //}
-                //if (piece.lastChance)
-                //{
-                //    piece.traitCount++;
-                //    piece.lastChanceIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.lastChanceIcon.transform.localPosition.y * 0.5f, 0);
-                //    piece.lastChanceIcon.SetActive(true);
-                //}
-                //if (piece.promote)
-                //{
-                //    piece.traitCount++;
-                //    piece.promoteIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.promoteIcon.transform.localPosition.y * 0.5f, 0);
-                //    piece.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
-                //}
+                //ActivateTraitIcons(piece);
 
-                //if (piece.traitCount > 0)
-                //{
-                //    piece.toughIcon.transform.localScale = piece.toughIcon.transform.localScale / piece.traitCount;
-                //    piece.lastChanceIcon.transform.localScale = piece.lastChanceIcon.transform.localScale / piece.traitCount;
-                //    piece.promoteIcon.transform.localScale = piece.promoteIcon.transform.localScale / piece.traitCount;
-                //}
                 piece.pieceX = xPos;
                 piece.pieceY = yPos;
                 piece.isTorok = true;
@@ -703,31 +680,33 @@ public class Board : MonoBehaviour
             if (toughPlacer)
             {
                 piece.isTough = true;
-                piece.traitCount++;
-                piece.toughIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.toughIcon.transform.localPosition.y *0.5f, 0);
-                piece.toughIcon.SetActive(true);
+                //piece.traitCount++;
+                //piece.toughIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.toughIcon.transform.localPosition.y *0.5f, 0);
+                //piece.toughIcon.SetActive(true);
             }
             if (lastChancePlacer)
             {
                 piece.lastChance = true;
-                piece.traitCount++;
-                piece.lastChanceIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.lastChanceIcon.transform.localPosition.y *0.5f, 0);
-                piece.lastChanceIcon.SetActive(true);
+                //piece.traitCount++;
+                //piece.lastChanceIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.lastChanceIcon.transform.localPosition.y *0.5f, 0);
+                //piece.lastChanceIcon.SetActive(true);
             }
             if (promotePlacer)
             {
                 piece.promote = true;
-                piece.traitCount++;
-                piece.promoteIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.promoteIcon.transform.localPosition.y *0.5f, 0);
-                piece.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
+                //piece.traitCount++;
+                //piece.promoteIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.promoteIcon.transform.localPosition.y *0.5f, 0);
+                //piece.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
             }
 
-            if (piece.traitCount > 0)
-            {
-                piece.toughIcon.transform.localScale = piece.toughIcon.transform.localScale / piece.traitCount;
-                piece.lastChanceIcon.transform.localScale = piece.lastChanceIcon.transform.localScale / piece.traitCount;
-                piece.promoteIcon.transform.localScale = piece.promoteIcon.transform.localScale / piece.traitCount;
-            }
+            //if (piece.traitCount > 0)
+            //{
+            //    piece.toughIcon.transform.localScale = piece.toughIcon.transform.localScale / piece.traitCount;
+            //    piece.lastChanceIcon.transform.localScale = piece.lastChanceIcon.transform.localScale / piece.traitCount;
+            //    piece.promoteIcon.transform.localScale = piece.promoteIcon.transform.localScale / piece.traitCount;
+            //}
+
+            ActivateTraitIcons(piece);
 
             piece.pieceX = placeX;
             piece.pieceY = placeY;
@@ -1430,31 +1409,7 @@ public class Board : MonoBehaviour
             endScript.promote = moveList[moveList.Count -1].takenPromote;
             endScript.lastChance = moveList[moveList.Count -1].takenLastChance;
 
-            if (endScript.isTough)
-            {
-                endScript.traitCount++;
-                endScript.toughIcon.transform.localPosition = new Vector3(0.35f, endScript.traitCount * endScript.toughIcon.transform.localPosition.y * 0.5f, 0);
-                endScript.toughIcon.SetActive(true);
-            }
-            if (endScript.lastChance)
-            {
-                endScript.traitCount++;
-                endScript.lastChanceIcon.transform.localPosition = new Vector3(0.35f, endScript.traitCount * endScript.lastChanceIcon.transform.localPosition.y * 0.5f, 0);
-                endScript.lastChanceIcon.SetActive(true);
-            }
-            if (endScript.promote)
-            {
-                endScript.traitCount++;
-                endScript.promoteIcon.transform.localPosition = new Vector3(0.35f, endScript.traitCount * endScript.promoteIcon.transform.localPosition.y * 0.5f, 0);
-                endScript.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
-            }
-
-            if (endScript.traitCount > 0)
-            {
-                endScript.toughIcon.transform.localScale = endScript.toughIcon.transform.localScale / endScript.traitCount;
-                endScript.lastChanceIcon.transform.localScale = endScript.lastChanceIcon.transform.localScale / endScript.traitCount;
-                endScript.promoteIcon.transform.localScale = endScript.promoteIcon.transform.localScale / endScript.traitCount;
-            }
+            ActivateTraitIcons(endScript);
 
             endScript.moved = moveList[moveList.Count -1].takenPieceSetFirstMove;
         }
@@ -1466,31 +1421,8 @@ public class Board : MonoBehaviour
             startPosPiece.isTough = moveList[moveList.Count -1].movingTough;
             startPosPiece.promote = moveList[moveList.Count -1].movingPromote;
             startPosPiece.lastChance = moveList[moveList.Count -1].movingLastChance;
-            if (startPosPiece.isTough)
-            {
-                startPosPiece.traitCount++;
-                startPosPiece.toughIcon.transform.localPosition = new Vector3(0.35f, startPosPiece.traitCount * startPosPiece.toughIcon.transform.localPosition.y * 0.5f, 0);
-                startPosPiece.toughIcon.SetActive(true);
-            }
-            if (startPosPiece.lastChance)
-            {
-                startPosPiece.traitCount++;
-                startPosPiece.lastChanceIcon.transform.localPosition = new Vector3(0.35f, startPosPiece.traitCount * startPosPiece.lastChanceIcon.transform.localPosition.y * 0.5f, 0);
-                startPosPiece.lastChanceIcon.SetActive(true);
-            }
-            if (startPosPiece.promote)
-            {
-                startPosPiece.traitCount++;
-                startPosPiece.promoteIcon.transform.localPosition = new Vector3(0.35f, startPosPiece.traitCount * startPosPiece.promoteIcon.transform.localPosition.y * 0.5f, 0);
-                startPosPiece.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
-            }
 
-            if (startPosPiece.traitCount > 0)
-            {
-                startPosPiece.toughIcon.transform.localScale = startPosPiece.toughIcon.transform.localScale / startPosPiece.traitCount;
-                startPosPiece.lastChanceIcon.transform.localScale = startPosPiece.lastChanceIcon.transform.localScale / startPosPiece.traitCount;
-                startPosPiece.promoteIcon.transform.localScale = startPosPiece.promoteIcon.transform.localScale / startPosPiece.traitCount;
-            }
+            ActivateTraitIcons(startPosPiece);
         }
 
         startPosPiece.moved = moveList[moveList.Count - 1].setFirstMove;
@@ -2001,6 +1933,34 @@ public class Board : MonoBehaviour
         }
     }
 
+    public void ActivateTraitIcons(Piece p) // so i can change these values easier
+    {
+        if (p.isTough)
+        {
+            p.traitCount++;
+            p.toughIcon.transform.localPosition = new Vector3(0.35f, p.traitCount * p.toughIcon.transform.localPosition.y * 0.5f, 0);
+            p.toughIcon.SetActive(true);
+        }
+        if (p.lastChance)
+        {
+            p.traitCount++;
+            p.lastChanceIcon.transform.localPosition = new Vector3(0.35f, p.traitCount * p.lastChanceIcon.transform.localPosition.y * 0.5f, 0);
+            p.lastChanceIcon.SetActive(true);
+        }
+        if (p.promote)
+        {
+            p.traitCount++;
+            p.promoteIcon.transform.localPosition = new Vector3(0.35f, p.traitCount * p.promoteIcon.transform.localPosition.y * 0.5f, 0);
+            p.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
+        }
+
+        if (p.traitCount > 0)
+        {
+            p.toughIcon.transform.localScale = p.toughIcon.transform.localScale / p.traitCount;
+            p.lastChanceIcon.transform.localScale = p.lastChanceIcon.transform.localScale / p.traitCount;
+            p.promoteIcon.transform.localScale = p.promoteIcon.transform.localScale / p.traitCount;
+        }
+    }
 
 }
 
