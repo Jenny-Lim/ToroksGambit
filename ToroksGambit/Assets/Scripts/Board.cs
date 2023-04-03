@@ -1148,7 +1148,7 @@ public class Board : MonoBehaviour
         movingTough = piece.isTough;
         movingPromote = piece.promote;
         movingLastChance = piece.lastChance;
-
+        //ActivateTraitIcons(piece); // ?????
         pieceIdMoving = (int)(piece.type) + 1;
         if(piece.isTorok)
         {
@@ -1166,6 +1166,9 @@ public class Board : MonoBehaviour
             takenTough = pieceForCaptureId.isTough;
             takenPromote = pieceForCaptureId.promote;
             takenLastChance = pieceForCaptureId.lastChance;
+
+            //ActivateTraitIcons(pieceForCaptureId); // ?????
+
             takenPieceMoved = pieceForCaptureId.moved;
 
             pieceIdTaken = (int)(pieceForCaptureId.type) + 1;
@@ -1203,6 +1206,7 @@ public class Board : MonoBehaviour
         bool oldIsTough = piece.isTough;
         bool oldLastChance = piece.lastChance;
 
+
         bool pawnWillPromote = false;
 
         if (((!piece.isTorok && endY == boardSize - 1 && piece.type == Piece.PieceType.pawn) || (piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)))
@@ -1234,6 +1238,8 @@ public class Board : MonoBehaviour
                 endPiece.isTorok = oldIsTorok;
                 endPiece.isTough = oldIsTough;
                 endPiece.lastChance = oldLastChance;
+
+                ActivateTraitIcons(endPiece); // this is ok
 
                 endPiece.moved = true;// changes piece to say has moved
                 endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
