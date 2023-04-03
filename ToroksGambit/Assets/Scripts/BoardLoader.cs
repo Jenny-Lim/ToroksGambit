@@ -60,6 +60,7 @@ public class BoardLoader : MonoBehaviour
         Debug.Log("Attempt loading board with name " + boardName);
 
         Board.instance.ClearBoard();
+        Board.instance.ResetTiles();
         FileStream fs = null;
         StreamReader reader = null;
         try
