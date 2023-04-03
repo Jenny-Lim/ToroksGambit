@@ -8311,7 +8311,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168612480}
   m_LocalRotation: {x: -0, y: -0.43965936, z: -0, w: 0.89816463}
-  m_LocalPosition: {x: 1.063, y: -0.26600003, z: 2.633}
+  m_LocalPosition: {x: 1.032, y: -0.26600003, z: 2.578}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43793,12 +43793,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelNames:
   - Level1
-  - DeploySaveTest
   - TraitLevel1
   - Level3
   - Level5
   - Level4
-  - InterruptsV2Test
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
   currentState: 0
