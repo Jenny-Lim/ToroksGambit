@@ -1293,7 +1293,7 @@ public class Board : MonoBehaviour
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
             PlacePieceTorok(endX, endY, 4,0);
-            pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
+            //pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
         }
 
     }
