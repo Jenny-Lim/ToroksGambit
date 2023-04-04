@@ -13,6 +13,9 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private Animation curtainOpen;
 
+    [SerializeField] private GameObject MainMenuButtons;
+    [SerializeField] private GameObject OptionsButtons;
+
     public static MainMenu instance;
     //public bool startPressed;
 
@@ -33,7 +36,7 @@ public class MainMenu : MonoBehaviour
             //continueButton.interactable = false;
         //}
         //continueButton.interactable = true;
-        optionsButton.interactable = false;
+        //optionsButton.interactable = false;
         pauseFxn.enabled = false;
         //startPressed = false;
     }
@@ -108,9 +111,16 @@ public class MainMenu : MonoBehaviour
         // nothing atm -- should save level, angerlvl, interrupt thing??, inventory, currency
     }
 
+    public void Save()
+    {
+        OptionsButtons.SetActive(false);
+        MainMenuButtons.SetActive(true);
+    }
+
     public void Options()
     {
-        // nothing atm -- probably difficulty settings, audio, dialogue / cutscenes
+        MainMenuButtons.SetActive(false);
+        OptionsButtons.SetActive(true);
     }
 
     public void ExitGame()
