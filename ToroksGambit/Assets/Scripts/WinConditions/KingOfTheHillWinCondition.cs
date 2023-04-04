@@ -59,7 +59,7 @@ public class KingOfTheHillWinCondition : BaseCondition
 
                     if (targetLocationPiece.isTorok)
                     {
-                        IncreasePlayerScore();
+                        IncreaseTorokScore();
                     }
                 }
             }
