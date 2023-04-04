@@ -119,7 +119,8 @@ public class Board : MonoBehaviour
     [SerializeField] private GameObject PlayerBoardParent;
     [SerializeField] private GameObject AIBoardParent;
 
-
+    [SerializeField] private AudioClip[] boardAudioClips;
+    
 
     // brought them up here
     //private static int clickedX;
@@ -938,6 +939,7 @@ public class Board : MonoBehaviour
                 //sound effect of torok taking a piece
                 if (pieceAtEndLocation)
                 {
+                    SoundObjectPool.instance.GetPoolObject().Play(boardAudioClips[(int)BoardSounds.CapturePiece]);
                     float rand = Random.Range(0, 1);
                     if (!pieceScript.isTorok)//the piece moving is not torok, ie torok is being taken
                     {
@@ -998,7 +1000,11 @@ public class Board : MonoBehaviour
                     }
                    
                 }
-
+                else
+                {
+                    SoundObjectPool.instance.GetPoolObject().Play(boardAudioClips[(int)BoardSounds.MovePieceEnd]);
+                }
+                
                 GameStateManager.lastValidateCheck = true;
                 canMove = true;
                 GameStateManager.instance.EndTurn();
@@ -1104,6 +1110,7 @@ public class Board : MonoBehaviour
             yield return null;
         }
         piece.transform.position = targetPos;
+        
         //Debug.Log("Finished moving");
     }
 
@@ -1605,6 +1612,7 @@ public class Board : MonoBehaviour
                 pieceBoard[i,j] = null;
             }
         }
+        ResetTiles();
 
     }
 
@@ -1970,3 +1978,9 @@ public class Board : MonoBehaviour
 
 }
 
+public enum BoardSounds
+{
+    CapturePiece,
+    MovePiece,
+    MovePieceEnd,
+}

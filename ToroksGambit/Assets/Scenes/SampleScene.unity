@@ -1430,6 +1430,10 @@ MonoBehaviour:
   goodBadMoveThreshold: 700
   PlayerBoardParent: {fileID: 243677817}
   AIBoardParent: {fileID: 163887701}
+  boardAudioClips:
+  - {fileID: 8300000, guid: f5813fe4d5eb78046ab03ae237c057b2, type: 3}
+  - {fileID: 8300000, guid: f5813fe4d5eb78046ab03ae237c057b2, type: 3}
+  - {fileID: 8300000, guid: f5813fe4d5eb78046ab03ae237c057b2, type: 3}
 --- !u!4 &61773102
 Transform:
   m_ObjectHideFlags: 0
@@ -20475,6 +20479,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c48162595520ca64ebd4b69ff4b02c66, type: 3}
   m_PrefabInstance: {fileID: 983596941}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &984853494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 984853496}
+  - component: {fileID: 984853495}
+  m_Layer: 0
+  m_Name: SoundGOPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &984853495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984853494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b75f8509c566e7440a9488ecfd053b4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  POOL_SIZE: 6
+  prefab: {fileID: 998543043322150868, guid: 1b57a40786c0e8d42ac2852b8835d662, type: 3}
+--- !u!4 &984853496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984853494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 43
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &990783261
 PrefabInstance:
   m_ObjectHideFlags: 0
