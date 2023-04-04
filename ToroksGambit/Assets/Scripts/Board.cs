@@ -596,6 +596,8 @@ public class Board : MonoBehaviour
                 newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
             }
 
+            //ActivateTraitIcons(piece);
+
             piece.pieceX = xPos;
             piece.pieceY = yPos;
             piece.isTorok = true;
@@ -1296,6 +1298,7 @@ public class Board : MonoBehaviour
         if (piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)
         {
             Debug.Log("TOROK PAWN REACHED END");
+            // check what thingies are on the pawn, apply them to new piece
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
             PlacePieceTorok(endX, endY, 4,0);
@@ -1911,8 +1914,13 @@ public class Board : MonoBehaviour
                 if(realPiece.isTorok)
                 {
                     PlacePieceTorok(i,j,(int)realPiece.type,1);
+                    Piece AIPiece = AIPieceBoard[i, j].GetComponent<Piece>();
+                    AIPiece.isTough = realPiece.isTough;
+                    AIPiece.lastChance = realPiece.lastChance;
+                    AIPiece.promote = realPiece.promote;
                     AIPieceBoard[i,j].transform.parent = AIBoardParent.transform;
                     //add traits
+                    ActivateTraitIcons(AIPiece);
                 }
                 else
                 {
