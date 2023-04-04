@@ -201,14 +201,15 @@ public class BoardLoader : MonoBehaviour
                 }
                 else if (splitLines[0].CompareTo("DeploymentZone") == 0)
                 {
-                    List<Vector2Int> deployList = Board.instance.deploymentZoneList;
-                    deployList.Clear();
+                    
+                   Board.instance.deploymentZoneList.Clear();
                     //Debug.Log(splitLines.Length);
 
                     for (int i = 1; i < splitLines.Length; i += 2)
                     {
-                        deployList.Add( new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i+1])) );
+                        Board.instance.deploymentZoneList.Add( new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i+1])) );
                     }
+                    
                 }
                 else if (splitLines[0].CompareTo("Limit") == 0)
                 {
