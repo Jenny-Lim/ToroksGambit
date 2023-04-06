@@ -1956,28 +1956,45 @@ public class Board : MonoBehaviour
         if (p.isTough)
         {
             p.traitCount++;
-            p.toughIcon.transform.localPosition = new Vector3(0.35f, p.traitCount * p.toughIcon.transform.localPosition.y * 0.5f, 0);
+            p.toughIcon.transform.localPosition = new Vector3(0.35f, p.traitCount * p.toughIcon.transform.localPosition.y * 0.75f, 0);
+            if (p.traitCount == 1)
+            {
+                p.toughIcon.transform.localScale = p.toughIcon.transform.localScale * 0.75f;
+            }
             p.toughIcon.SetActive(true);
         }
         if (p.lastChance)
         {
             p.traitCount++;
-            p.lastChanceIcon.transform.localPosition = new Vector3(0.35f, p.traitCount * p.lastChanceIcon.transform.localPosition.y * 0.5f, 0);
+            p.lastChanceIcon.transform.localPosition = new Vector3(0.35f, p.traitCount * p.lastChanceIcon.transform.localPosition.y * 0.75f, 0);
+            if (p.traitCount == 1)
+            {
+                p.lastChanceIcon.transform.localScale = p.lastChanceIcon.transform.localScale * 0.75f;
+            }
             p.lastChanceIcon.SetActive(true);
         }
         if (p.promote)
         {
             p.traitCount++;
-            p.promoteIcon.transform.localPosition = new Vector3(0.35f, p.traitCount * p.promoteIcon.transform.localPosition.y * 0.5f, 0);
-            p.promoteIcon.SetActive(true); // the icon for this should be different, also need to track the piece throughout its tranformations
+            p.promoteIcon.transform.localPosition = new Vector3(0.35f, p.traitCount * p.promoteIcon.transform.localPosition.y * 0.75f, 0);
+            if (p.traitCount == 1)
+            {
+                p.promoteIcon.transform.localScale = p.promoteIcon.transform.localScale * 0.75f;
+            }
+            p.promoteIcon.SetActive(true);
         }
 
-        if (p.traitCount > 0)
+        if (p.traitCount > 1)
         {
-            p.toughIcon.transform.localScale = p.toughIcon.transform.localScale / p.traitCount;
-            p.lastChanceIcon.transform.localScale = p.lastChanceIcon.transform.localScale / p.traitCount;
-            p.promoteIcon.transform.localScale = p.promoteIcon.transform.localScale / p.traitCount;
+            p.toughIcon.transform.localScale = (p.toughIcon.transform.localScale) / p.traitCount;
+            p.lastChanceIcon.transform.localScale = (p.lastChanceIcon.transform.localScale) / p.traitCount;
+            p.promoteIcon.transform.localScale = (p.promoteIcon.transform.localScale) / p.traitCount;
+
+            p.toughIcon.transform.localPosition = new Vector3(0.35f, p.toughIcon.transform.localPosition.y/ p.traitCount, 0);
+            p.lastChanceIcon.transform.localPosition = new Vector3(0.35f, p.lastChanceIcon.transform.localPosition.y / p.traitCount, 0);
+            p.promoteIcon.transform.localPosition = new Vector3(0.35f, p.promoteIcon.transform.localPosition.y / p.traitCount, 0);
         }
+
     }
 
 }
