@@ -8,6 +8,11 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     private bool escPressed = false;
     public static PauseMenu instance;
+    [SerializeField] private GameObject PauseMenuButtons;
+    [SerializeField] private GameObject PauseOptionsButtons;
+
+    [SerializeField] public Slider pauseVolumeSlider;
+
     //[SerializeField] private Button optionsButton;
 
     private void Awake()
@@ -28,6 +33,7 @@ public class PauseMenu : MonoBehaviour
         {
             escPressed = true;
             pauseMenu.SetActive(true);
+            pauseVolumeSlider.value = SaveManager.instance.savedVolume;
             //Time.timeScale = 0;
 
         }
@@ -48,9 +54,17 @@ public class PauseMenu : MonoBehaviour
 
     public void Options() // this is kind of iffy
     {
-        SaveManager.instance.SaveGame();
-        ReturnToMainMenu();
-        MainMenu.instance.Options();
+        PauseMenuButtons.SetActive(false);
+        PauseOptionsButtons.SetActive(true);
+        //SaveManager.instance.SaveGame();
+        //ReturnToMainMenu();
+        //MainMenu.instance.Options();
+    }
+
+    public void SavePauseOptions()
+    {
+        PauseOptionsButtons.SetActive(false);
+        PauseMenuButtons.SetActive(true);
     }
 
     public void ReturnToMainMenu()
