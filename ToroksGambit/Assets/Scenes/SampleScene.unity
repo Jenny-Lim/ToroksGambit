@@ -34509,7 +34509,7 @@ MonoBehaviour:
   - {fileID: 1360170052}
   - {fileID: 805089303}
   - {fileID: 494754912}
-  shopkeeper: {fileID: 1991393279}
+  shopkeeper: {fileID: 1846520612}
   pieceNames:
   - Pawn
   - Knight
@@ -34527,7 +34527,7 @@ MonoBehaviour:
   pieceDescriptionObject: {fileID: 426320056}
   pieceDescription: {fileID: 1205953928}
   canvas: {fileID: 1981679070}
-  anim: {fileID: 1991393281}
+  anim: {fileID: 1846520614}
   leaveSignDefaultColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
   leaveSignMouseHoverColor: {r: 1, g: 1, b: 1, a: 1}
   leaveSignText: {fileID: 1998973423}
@@ -47688,6 +47688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
+  - DeploySaveTest
   - CTFTest
   - KOTH_Next
   - QueenBoss
