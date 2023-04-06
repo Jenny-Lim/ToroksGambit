@@ -8,12 +8,12 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     private bool escPressed = false;
     public static PauseMenu instance;
-    [SerializeField] private Button optionsButton;
+    //[SerializeField] private Button optionsButton;
 
     private void Awake()
     {
         if (instance == null) { instance = this; }
-        optionsButton.interactable = false;
+        //optionsButton.interactable = false;
     }
 
     void OnEnable()
@@ -44,6 +44,13 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         CameraHeadMovements.canScroll = true;
         //Time.timeScale = 1;
+    }
+
+    public void Options() // this is kind of iffy
+    {
+        SaveManager.instance.SaveGame();
+        ReturnToMainMenu();
+        MainMenu.instance.Options();
     }
 
     public void ReturnToMainMenu()

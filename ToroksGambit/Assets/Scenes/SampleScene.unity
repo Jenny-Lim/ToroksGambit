@@ -30624,7 +30624,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1944965754}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: Options
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -47084,7 +47084,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 29685712}
-  optionsButton: {fileID: 1220230191}
 --- !u!1 &1949226158
 GameObject:
   m_ObjectHideFlags: 0
