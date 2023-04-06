@@ -16,6 +16,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject MainMenuButtons;
     [SerializeField] private GameObject OptionsButtons;
 
+    [SerializeField] public Slider volumeSlider;
+
     public static MainMenu instance;
     //public bool startPressed;
 
@@ -39,6 +41,8 @@ public class MainMenu : MonoBehaviour
         //optionsButton.interactable = false;
         pauseFxn.enabled = false;
         //startPressed = false;
+        volumeSlider.value = SaveManager.instance.savedVolume;
+
     }
 
 
@@ -113,6 +117,9 @@ public class MainMenu : MonoBehaviour
 
     public void Save()
     {
+        AudioManager.instance.SetVolume(volumeSlider.value);
+        SaveManager.instance.SaveVolume(volumeSlider.value);
+
         OptionsButtons.SetActive(false);
         MainMenuButtons.SetActive(true);
     }

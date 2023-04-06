@@ -177,11 +177,6 @@ public class Board : MonoBehaviour
             print(IsKingInCheck(false));
         }
 
-                if (Input.GetKeyUp("k")) 
-                {
-                    SwapBoard();
-                }
-
         if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
         {
             print("printing selected piece moves...");

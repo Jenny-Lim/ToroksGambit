@@ -10,8 +10,10 @@ public class SaveManager : MonoBehaviour
     public static SaveManager instance;
 
     private string saveGameFilePath;
+    private string saveVolumePath;
 
     public bool hasSaveGame;
+    public float savedVolume;
 
 
     private void Awake()
@@ -19,7 +21,9 @@ public class SaveManager : MonoBehaviour
 
         //Debug.Log(Application.persistentDataPath);
         saveGameFilePath = Application.persistentDataPath + "/SaveData.dat";
+        saveVolumePath = Application.persistentDataPath + "/VolumeData.dat";
         instance = this;
+        LoadVolume();
 
         if(File.Exists(saveGameFilePath))
         {
@@ -57,6 +61,38 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    public void LoadVolume()//continue game button
+    {
+        if(File.Exists(saveVolumePath))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(saveVolumePath, FileMode.Open);
+            SaveVolume data = (SaveVolume)bf.Deserialize(file);
+            file.Close();
+
+            savedVolume = data.volumeLevel;
+
+        }
+        else
+        {
+            savedVolume = 0;
+        }
+    }
+
+    public void SaveVolume(float newVolume)
+    {
+        savedVolume = newVolume;
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(saveVolumePath);
+
+        SaveVolume data = new SaveVolume();
+        data.volumeLevel = savedVolume;
+        bf.Serialize(file, data);
+        file.Close();
+
+        Debug.Log("SAVE Volume");
+    }
+
     public void SaveGame()//after every board
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -81,5 +117,10 @@ class SaveData
     public int[] savedPieces {get; set;}
     public int savedCurrency {get; set;}
 
+}
+[Serializable]
+class SaveVolume
+{
+    public float volumeLevel {get; set;}
 }
 
