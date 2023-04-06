@@ -258,7 +258,7 @@ public class PhysicalShop : MonoBehaviour
             if(buttonObject == uiSpots[i] && prices[pieceType[i]] <= Currency.instance.tickets)
             {
                 //Debug.Log(i);
-                anim.SetBool("BoughtPiece", true);
+                anim.SetBool("PieceSold", true);
                 Destroy(shopPieceModels[i]);
                 priceText[i].text = "";
                 Currency.instance.SubtractFromCurrency(prices[pieceType[i]]);
