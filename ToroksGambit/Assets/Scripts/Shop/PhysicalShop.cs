@@ -97,12 +97,14 @@ public class PhysicalShop : MonoBehaviour
                                     priceText[i].text = "";
                                 }
                             }
-                    //priceText[i].text = "";
+                        //priceText[i].text = "";
+                    anim.SetBool("PieceSold", true);
                     Currency.instance.SubtractFromCurrency(prices[(int)shopPiece.type]);
                     Inventory.instance.AlterPiece((Inventory.InventoryPieces)shopPiece.type,1);
                     Destroy(hit.transform.gameObject);
                     TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.ShopBuy);
-                   }
+                    anim.SetBool("PieceSold", false); // needs to be set somewhere or make a trigger
+                    }
                 }
             }
             if (hit.transform.CompareTag("StoreStock"))
@@ -253,12 +255,11 @@ public class PhysicalShop : MonoBehaviour
 
     public void PanelPressed(GameObject buttonObject)
     {
-        for(int i = 0;i < uiSpots.Length;i++)
+        for (int i = 0;i < uiSpots.Length;i++)
         {
             if(buttonObject == uiSpots[i] && prices[pieceType[i]] <= Currency.instance.tickets)
             {
                 //Debug.Log(i);
-                anim.SetBool("PieceSold", true);
                 Destroy(shopPieceModels[i]);
                 priceText[i].text = "";
                 Currency.instance.SubtractFromCurrency(prices[pieceType[i]]);
