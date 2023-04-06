@@ -63,6 +63,9 @@ public class PauseMenu : MonoBehaviour
 
     public void SavePauseOptions()
     {
+        AudioManager.instance.SetVolume(pauseVolumeSlider.value);
+        SaveManager.instance.SaveVolume(pauseVolumeSlider.value);
+        MainMenu.instance.volumeSlider.value = SaveManager.instance.savedVolume;
         PauseOptionsButtons.SetActive(false);
         PauseMenuButtons.SetActive(true);
     }

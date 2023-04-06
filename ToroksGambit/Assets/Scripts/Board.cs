@@ -1897,7 +1897,7 @@ public class Board : MonoBehaviour
             {
                 Destroy(AIPieceBoard[i,j]);
                 AIPieceBoard[i,j] = null;
-                AIPieceBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
+                AIVisualBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
             }
         }
         for(int i =0;i<boardSize;i++)
