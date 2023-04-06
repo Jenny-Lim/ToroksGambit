@@ -1430,9 +1430,11 @@ MonoBehaviour:
   PlayerBoardParent: {fileID: 243677817}
   AIBoardParent: {fileID: 163887701}
   boardAudioClips:
+  - {fileID: 8300000, guid: 969cb3000dbede6418df5639c6965f49, type: 3}
+  - {fileID: 8300000, guid: 05e2e1116df7d0b48836d3a171ef3158, type: 3}
   - {fileID: 8300000, guid: f5813fe4d5eb78046ab03ae237c057b2, type: 3}
-  - {fileID: 8300000, guid: f5813fe4d5eb78046ab03ae237c057b2, type: 3}
-  - {fileID: 8300000, guid: f5813fe4d5eb78046ab03ae237c057b2, type: 3}
+  - {fileID: 8300000, guid: f9df4cfc68db94e47a96db5c2d2bb9d1, type: 3}
+  - {fileID: 8300000, guid: f9df4cfc68db94e47a96db5c2d2bb9d1, type: 3}
 --- !u!4 &61773102
 Transform:
   m_ObjectHideFlags: 0

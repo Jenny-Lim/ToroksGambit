@@ -2004,4 +2004,8 @@ public enum BoardSounds
     CapturePiece,
     MovePiece,
     MovePieceEnd,
+    KingInCheck,
+    PieceCaptured,
+    PieceSlide,
+    WinLevel
 }
