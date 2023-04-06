@@ -305,3 +305,10 @@ public class PhysicalShop : MonoBehaviour
     //}
 
 }
+
+public enum ShopSounds
+{
+    EnterShop,
+    ExitShop,
+    BuyPiece
+}

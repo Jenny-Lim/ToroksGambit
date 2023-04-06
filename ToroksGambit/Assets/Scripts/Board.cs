@@ -119,7 +119,7 @@ public class Board : MonoBehaviour
     [SerializeField] private GameObject PlayerBoardParent;
     [SerializeField] private GameObject AIBoardParent;
 
-    [SerializeField] private AudioClip[] boardAudioClips;
+    public AudioClip[] boardAudioClips;
     
 
     // brought them up here
@@ -964,33 +964,41 @@ public class Board : MonoBehaviour
                                 }
                                 break;
                             case 2://taken bishop
-                                if (animChance < percentAnimPlays)
-                                {
-                                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesBishop);
-                                }
-                                else
-                                {
-                                    TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesBishop);
+                                if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.TakesBishop, rand)) { 
+                                    if (animChance < percentAnimPlays)
+                                    {
+                                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesBishop);
+                                    }
+                                    else
+                                    {
+                                        TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesBishop);
+                                    }
                                 }
                                 break;
                             case 3://taken rook
-                                if (animChance < percentAnimPlays)
+                                if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.TakesRook, rand))
                                 {
-                                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesRook);
-                                }
-                                else
-                                {
-                                    TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesRook);
+                                    if (animChance < percentAnimPlays)
+                                    {
+                                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesRook);
+                                    }
+                                    else
+                                    {
+                                        TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesRook);
+                                    }
                                 }
                                 break;
                             case 4://taken queen
-                                if (animChance < percentAnimPlays)
+                                if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.TakesQueen, rand))
                                 {
-                                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesQueen);
-                                }
-                                else
-                                {
-                                    TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesQueen);
+                                    if (animChance < percentAnimPlays)
+                                    {
+                                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.TakesQueen);
+                                    }
+                                    else
+                                    {
+                                        TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.TakesQueen);
+                                    }
                                 }
                                 break;
                         }
@@ -1096,6 +1104,9 @@ public class Board : MonoBehaviour
         Vector3 startPos = hitBoxBoard[startX, startY].transform.position;
         startPos.y += verticalPlaceOffset;
 
+        SoundObject SGO = SoundObjectPool.instance.GetPoolObject();
+        SGO.Play(boardAudioClips[(int)BoardSounds.SlidePiece]);
+
         while (percentMoved < 1.0f)
         {
             //Debug.Log("Moving");
@@ -1106,6 +1117,7 @@ public class Board : MonoBehaviour
             //Debug.Log(percentMoved);
             yield return null;
         }
+        SGO.Deactivate();
         piece.transform.position = targetPos;
         
         //Debug.Log("Finished moving");
@@ -2002,10 +2014,8 @@ public class Board : MonoBehaviour
 public enum BoardSounds
 {
     CapturePiece,
-    MovePiece,
+    SlidePiece,
     MovePieceEnd,
     KingInCheck,
-    PieceCaptured,
-    PieceSlide,
     WinLevel
 }

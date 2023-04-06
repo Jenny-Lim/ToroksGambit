@@ -385,6 +385,11 @@ public class GameStateManager : MonoBehaviour
         Board.playerInCheck = Board.instance.IsKingInCheck(false);
         Board.torokInCheck = Board.instance.IsKingInCheck(true);
 
+        if (Board.playerInCheck || Board.torokInCheck)
+        {
+            SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.KingInCheck]);
+        }
+
         moveTimer = 0;
 
         //win condition checks
@@ -401,6 +406,7 @@ public class GameStateManager : MonoBehaviour
 
         if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
         {
+            SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.WinLevel]);
             ChangeGameState(GameState.win);
             return;
             //reset this state
