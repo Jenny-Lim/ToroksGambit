@@ -48,6 +48,8 @@ public class PhysicalShop : MonoBehaviour
 
     private int queenLevelOpen = 1;
 
+    public AudioClip[] shopAudioClips;
+
     private void Awake()
     {
         instance = this;
@@ -90,21 +92,24 @@ public class PhysicalShop : MonoBehaviour
                 {                
                    if (prices[(int)shopPiece.type] <= Currency.instance.tickets)
                    {
-                            for(int i = 0;i < 8;i++)
+                        for(int i = 0;i < 8;i++)
+                        {
+                            if(hit.transform.gameObject == shopPieceModels[i])
                             {
-                                if(hit.transform.gameObject == shopPieceModels[i])
-                                {
-                                    priceText[i].text = "";
-                                }
+                                priceText[i].text = "";
                             }
+                        }
                         //priceText[i].text = "";
-                    anim.SetBool("PieceSold", true);
-                    Currency.instance.SubtractFromCurrency(prices[(int)shopPiece.type]);
-                    Inventory.instance.AlterPiece((Inventory.InventoryPieces)shopPiece.type,1);
-                    Destroy(hit.transform.gameObject);
-                    TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.ShopBuy);
-                    anim.SetBool("PieceSold", false); // needs to be set somewhere or make a trigger
-                    }
+                        anim.SetBool("PieceSold", true);
+
+                        SoundObjectPool.instance.GetPoolObject().Play(shopAudioClips[(int)ShopSounds.BuyPiece]);
+
+                        Currency.instance.SubtractFromCurrency(prices[(int)shopPiece.type]);
+                        Inventory.instance.AlterPiece((Inventory.InventoryPieces)shopPiece.type,1);
+                        Destroy(hit.transform.gameObject);
+                        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.ShopBuy);
+                        anim.SetBool("PieceSold", false); // needs to be set somewhere or make a trigger
+                   }
                 }
             }
             if (hit.transform.CompareTag("StoreStock"))
@@ -284,11 +289,12 @@ public class PhysicalShop : MonoBehaviour
         Currency.instance.ticketTextObject.SetActive(false);
         Currency.instance.ticketBackgroundObject.SetActive(false);
         SaveManager.instance.SaveGame();
-
+        SoundObjectPool.instance.GetPoolObject().Play(shopAudioClips[(int)ShopSounds.ExitShop]);
         yield return TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.ShopExit);
         anim.SetBool("ExitedShop", true);
         //c.LookAtBoard();
         GameStateManager.instance.SetNextLevel();
+
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardCoRo());
         Inventory.instance.objectiveArea.SetActive(true);
         Debug.Log(GameStateManager.instance.GetCurrentState());

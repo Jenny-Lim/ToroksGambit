@@ -128,6 +128,9 @@ public class CameraHeadMovements : MonoBehaviour
             transform.position = Vector3.Lerp(initPos, lookAtShopPosition, percentDone);
             yield return null;
         }
+
+        SoundObjectPool.instance.GetPoolObject().Play(PhysicalShop.instance.shopAudioClips[(int)ShopSounds.EnterShop]);
+
         transform.eulerAngles = LookAtShopRotation;
         transform.position = lookAtShopPosition;
         TorokPersonalityAI.instance.PlaySoundFromCategory(SoundLibrary.Categories.ShopEnter);
