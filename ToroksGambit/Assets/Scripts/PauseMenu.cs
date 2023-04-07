@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject PauseOptionsButtons;
 
     [SerializeField] public Slider pauseVolumeSlider;
+    [SerializeField] AudioClip buttonAudioClip;
 
     //[SerializeField] private Button optionsButton;
 
@@ -47,6 +48,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         pauseMenu.SetActive(false);
         CameraHeadMovements.canScroll = true;
         //Time.timeScale = 1;
@@ -54,6 +56,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Options() // this is kind of iffy
     {
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         PauseMenuButtons.SetActive(false);
         PauseOptionsButtons.SetActive(true);
         //SaveManager.instance.SaveGame();
@@ -63,6 +66,7 @@ public class PauseMenu : MonoBehaviour
 
     public void SavePauseOptions()
     {
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         AudioManager.instance.SetVolume(pauseVolumeSlider.value);
         SaveManager.instance.SaveVolume(pauseVolumeSlider.value);
         MainMenu.instance.volumeSlider.value = SaveManager.instance.savedVolume;
@@ -73,6 +77,7 @@ public class PauseMenu : MonoBehaviour
     public void ReturnToMainMenu()
     {
         //Time.timeScale = 1;
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         CameraHeadMovements.canScroll = false;
         Inventory.instance.objectiveArea.SetActive(false);
         Inventory.instance.DisableDeployUI();

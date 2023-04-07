@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject OptionsButtons;
 
     [SerializeField] public Slider volumeSlider;
+    [SerializeField] AudioClip buttonAudioClip;
 
     public static MainMenu instance;
     //public bool startPressed;
@@ -75,6 +76,7 @@ public class MainMenu : MonoBehaviour
         //startPressed = true;
 
         // reset torok
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         TorokPersonalityAI.instance.SetAngerLevel(1);
         InterruptManager.instance.ResetInterruptListTriggers();
 
@@ -106,6 +108,7 @@ public class MainMenu : MonoBehaviour
 
     public void ContinueGame()
     {
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         SaveManager.instance.LoadSave();
         GameStateManager.instance.SetNextLevel(); // bug possibly here
         curtainOpen.Play("Curtain_Open");
@@ -117,6 +120,7 @@ public class MainMenu : MonoBehaviour
 
     public void Save()
     {
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         AudioManager.instance.SetVolume(volumeSlider.value);
         SaveManager.instance.SaveVolume(volumeSlider.value);
 
@@ -126,12 +130,14 @@ public class MainMenu : MonoBehaviour
 
     public void Options()
     {
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         MainMenuButtons.SetActive(false);
         OptionsButtons.SetActive(true);
     }
 
     public void ExitGame()
     {
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         #if UNITY_STANDALONE
         Application.Quit();
         #endif

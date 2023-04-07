@@ -36725,6 +36725,7 @@ MonoBehaviour:
   MainMenuButtons: {fileID: 2103555088}
   OptionsButtons: {fileID: 1847346857}
   volumeSlider: {fileID: 849789528}
+  buttonAudioClip: {fileID: 8300000, guid: 0f91aaabe1ba551418055f4f84f3111f, type: 3}
 --- !u!114 &1582766830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48004,6 +48005,7 @@ MonoBehaviour:
   PauseMenuButtons: {fileID: 886516363}
   PauseOptionsButtons: {fileID: 1563317396}
   pauseVolumeSlider: {fileID: 427691473}
+  buttonAudioClip: {fileID: 8300000, guid: 0f91aaabe1ba551418055f4f84f3111f, type: 3}
 --- !u!1 &1949226158
 GameObject:
   m_ObjectHideFlags: 0
