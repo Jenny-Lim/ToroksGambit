@@ -39,7 +39,7 @@ public class PhysicalShop : MonoBehaviour
     private float canvasWidth;
     private float canvasHeight;
 
-    [SerializeField] private Animator anim;
+    [SerializeField] public Animator anim;
 
     [SerializeField] private Color leaveSignDefaultColor;
     [SerializeField] private Color leaveSignMouseHoverColor;
@@ -108,7 +108,7 @@ public class PhysicalShop : MonoBehaviour
                         Inventory.instance.AlterPiece((Inventory.InventoryPieces)shopPiece.type,1);
                         Destroy(hit.transform.gameObject);
                         TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.ShopBuy);
-                        anim.SetBool("PieceSold", false); // needs to be set somewhere or make a trigger
+                        //anim.SetBool("PieceSold", false); // needs to be set somewhere or make a trigger
                    }
                 }
             }

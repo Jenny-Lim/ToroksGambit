@@ -36721,7 +36721,7 @@ MonoBehaviour:
   continueButton: {fileID: 483181921}
   optionsButton: {fileID: 431986569}
   pauseFxn: {fileID: 1944965754}
-  curtainOpen: {fileID: 0}
+  curtainOpen: {fileID: 145984203}
   MainMenuButtons: {fileID: 2103555088}
   OptionsButtons: {fileID: 1847346857}
   volumeSlider: {fileID: 849789528}
@@ -46830,6 +46830,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1846520615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846520612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6addc11ba0eef4347869182fded68f11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1847346857
 GameObject:
   m_ObjectHideFlags: 0
