@@ -10,6 +10,7 @@ public class Currency : MonoBehaviour
     public GameObject ticketTextObject;
     public GameObject ticketBackgroundObject;
     public static Currency instance;
+    [SerializeField] private AudioClip ticketAddSound;
     
     void Awake()
     {
@@ -53,11 +54,13 @@ public class Currency : MonoBehaviour
     //add by jordan so that when a ticket touches this thing it will add to the counter and get rid of the ticket
     public void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("got collision");
+        
         if (collision.gameObject.CompareTag("Ticket"))
         {
             AddToCurrency(1);
+            SoundObjectPool.instance.GetPoolObject().Play(ticketAddSound);
             UIParticleSystem.instance.DeleteParticle(collision.gameObject);
+            
         }
     }
 }

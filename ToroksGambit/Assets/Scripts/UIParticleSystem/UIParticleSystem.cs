@@ -47,6 +47,8 @@ public class UIParticleSystem : MonoBehaviour
     [SerializeField] private float minParticleSpeed = 1;
     [SerializeField] private float scaleSpeed;
 
+    [SerializeField] private AudioClip ticketPopSound;
+
     private int particleCount { get { return particles.Count; } }//returns the number of active particles 
 
 
@@ -136,6 +138,7 @@ public class UIParticleSystem : MonoBehaviour
         UIParticle particle = Instantiate(particlePrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<UIParticle>();
         InitParticle(ref particle);
         particles.Add(particle);
+        SoundObjectPool.instance.GetPoolObject().Play(ticketPopSound);
     }
 
     private Vector3 FindSpawnLocation()
@@ -181,14 +184,21 @@ public class UIParticleSystem : MonoBehaviour
 
     private IEnumerator SpawnTicketsCoRo(int amount)
     {
-        while (particleCount < amount)
+        for (int i = 0; i < amount; i++)
+        {
+            SpawnParticle();
+            yield return new WaitForSeconds(spawnDelay);
+        }
+
+        /*while (particleCount < amount)
         {
             int rand = (int)Random.Range(minSpawnAmount, maxSpawnAmount + 0.99f);
             for (int i = 0; i < rand; i++)
             {
                 SpawnParticle();
+                yield return new WaitForSeconds(spawnDelay);
             }
-            yield return new WaitForSeconds(spawnDelay);
-        }
+            
+        }*/
     }
 }

@@ -22628,7 +22628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75f8509c566e7440a9488ecfd053b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  POOL_SIZE: 6
+  POOL_SIZE: 40
   prefab: {fileID: 998543043322150868, guid: 1b57a40786c0e8d42ac2852b8835d662, type: 3}
 --- !u!4 &984853496
 Transform:
@@ -32066,6 +32066,7 @@ MonoBehaviour:
   ticketsTxt: {fileID: 1231418731}
   ticketTextObject: {fileID: 1231418728}
   ticketBackgroundObject: {fileID: 1979517374}
+  ticketAddSound: {fileID: 8300000, guid: 74c513feccaf96648af18c064b70a938, type: 3}
 --- !u!114 &1231418731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48199,7 +48200,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 648281790688435363, guid: baab36c3fc37fa541b181f2ab816d7c9, type: 3}
   isEmitting: 0
   maxParticles: 35
-  spawnDelay: 0.1
+  spawnDelay: 0.2
   spawnAreaCenter: {x: 0, y: 0, z: 0}
   spawnAreaBounds: {x: 600, y: 400, z: 1}
   minSpawnAmount: 2
@@ -48207,6 +48208,7 @@ MonoBehaviour:
   maxParticleSpeed: 800
   minParticleSpeed: 650
   scaleSpeed: 2
+  ticketPopSound: {fileID: 0}
 --- !u!1 &1907121237
 GameObject:
   m_ObjectHideFlags: 0
