@@ -93,7 +93,8 @@ public class MainMenu : MonoBehaviour
         // reset currency
         Currency.instance.SetCurrency(0);
         SaveManager.instance.StartNew();
-
+        Inventory.instance.updateCountText();
+        Board.instance.ResetBoardPositions();
         // move to proper area
         //if (GameStateManager.instance.currentState == GameStateManager.GameState.title)
         //{

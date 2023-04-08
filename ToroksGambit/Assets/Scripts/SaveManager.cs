@@ -43,6 +43,7 @@ public class SaveManager : MonoBehaviour
         {
             File.Delete(saveGameFilePath);
         }
+        hasSaveGame = false;
     }
 
     public void LoadSave()//continue game button
@@ -104,6 +105,8 @@ public class SaveManager : MonoBehaviour
         data.savedCurrency = Currency.instance.tickets;
         bf.Serialize(file, data);
         file.Close();
+
+        hasSaveGame = true;
 
         Debug.Log("SAVE SUCCESFUL");
 

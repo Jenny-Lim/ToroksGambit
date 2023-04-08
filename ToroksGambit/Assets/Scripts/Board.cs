@@ -1976,6 +1976,12 @@ public class Board : MonoBehaviour
         }
     }
 
+    public void ResetBoardPositions()
+    {
+        AIBoardParent.transform.position = new Vector3(0,0,25);
+        PlayerBoardParent.transform.position = gameObject.transform.position;
+    }
+
     public void ActivateTraitIcons(Piece p) // so i can change these values easier
     {
         if (p.isTough)
