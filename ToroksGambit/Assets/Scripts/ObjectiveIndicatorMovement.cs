@@ -14,22 +14,17 @@ public class ObjectiveIndicatorMovement : MonoBehaviour
     void Start()
     {
         originalScale = transform.localScale;
-        newScale = 0.08f;
-        scaleLength = 0.01f;
+        //newScale = 0.08f;
+        //scaleLength = 0.01f;
     }
 
     // Update is called once per frame
     void Update()
     {
         scaledTime = Time.time * speed;
-        // scale in, scale out
-        //if (GameStateManager.instance.GetGameState() == GameStateManager.GameState.deployment)
         {
             transform.localScale = new Vector3(Mathf.PingPong(scaledTime, scaleLength) + newScale, Mathf.PingPong(scaledTime, scaleLength) + newScale, Mathf.PingPong(scaledTime, scaleLength) + newScale);
         }
-        //else
-        //{
-        //    transform.localScale = originalScale;
-        //}
+       
     }
 }
