@@ -809,7 +809,9 @@ public class Board : MonoBehaviour
             for (int j = 0; j < boardSize; j++)
             {
                 hitBoxBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
+                winSpotBoard[i, j].transform.GetChild(1).gameObject.SetActive(true);
             }
+           
         }
     }
 
@@ -1106,6 +1108,11 @@ public class Board : MonoBehaviour
 
         SoundObject SGO = SoundObjectPool.instance.GetPoolObject();
         SGO.Play(boardAudioClips[(int)BoardSounds.SlidePiece]);
+        if (winSpotBoard[startX, startY].activeInHierarchy)
+        {
+            winSpotBoard[startX, startY].transform.GetChild(1).gameObject.SetActive(true);
+        }
+        
 
         while (percentMoved < 1.0f)
         {
@@ -1117,6 +1124,12 @@ public class Board : MonoBehaviour
             //Debug.Log(percentMoved);
             yield return null;
         }
+       
+        if (winSpotBoard[endX, endY].activeInHierarchy)
+        {
+            winSpotBoard[endX, endY].transform.GetChild(1).gameObject.SetActive(false);
+        }
+
         SGO.Deactivate();
         piece.transform.position = targetPos;
         
