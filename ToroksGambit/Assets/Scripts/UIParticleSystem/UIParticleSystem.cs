@@ -138,7 +138,7 @@ public class UIParticleSystem : MonoBehaviour
         UIParticle particle = Instantiate(particlePrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<UIParticle>();
         InitParticle(ref particle);
         particles.Add(particle);
-        SoundObjectPool.instance.GetPoolObject().Play(ticketPopSound);
+        //SoundObjectPool.instance.GetPoolObject().Play(ticketPopSound);
     }
 
     private Vector3 FindSpawnLocation()

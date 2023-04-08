@@ -379,13 +379,10 @@ public class GameStateManager : MonoBehaviour
 
     public void EndTurn()
     {
+        Board.playerInCheck = false;
+        Board.torokInCheck = false;
         Board.playerInCheck = Board.instance.IsKingInCheck(false);
         Board.torokInCheck = Board.instance.IsKingInCheck(true);
-
-        if (Board.playerInCheck || Board.torokInCheck)
-        {
-            SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.KingInCheck]);
-        }
 
         moveTimer = 0;
 
@@ -416,6 +413,10 @@ public class GameStateManager : MonoBehaviour
             //lose logic
         }
 
+        if (Board.playerInCheck || Board.torokInCheck)
+        {
+            SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.KingInCheck]);
+        }
 
         lastValidateCheck = false;
         InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.AfterTurn);

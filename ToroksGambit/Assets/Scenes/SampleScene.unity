@@ -1508,6 +1508,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f5813fe4d5eb78046ab03ae237c057b2, type: 3}
   - {fileID: 8300000, guid: f9df4cfc68db94e47a96db5c2d2bb9d1, type: 3}
   - {fileID: 8300000, guid: f9df4cfc68db94e47a96db5c2d2bb9d1, type: 3}
+  - {fileID: 8300000, guid: c8f60dabae6b6df45a385a8de14636ca, type: 3}
+  - {fileID: 8300000, guid: 692b99f24dde58b48a7d038ca33e4942, type: 3}
 --- !u!4 &61773102
 Transform:
   m_ObjectHideFlags: 0
@@ -48781,7 +48783,7 @@ MonoBehaviour:
   maxParticleSpeed: 800
   minParticleSpeed: 650
   scaleSpeed: 2
-  ticketPopSound: {fileID: 0}
+  ticketPopSound: {fileID: 8300000, guid: a0ce0c0960b6af94585e72cbbb196eb3, type: 3}
 --- !u!1 &1907121237
 GameObject:
   m_ObjectHideFlags: 0

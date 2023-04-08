@@ -2030,5 +2030,7 @@ public enum BoardSounds
     SlidePiece,
     MovePieceEnd,
     KingInCheck,
-    WinLevel
+    WinLevel,
+    RemovePiece,
+    PlaceFail
 }

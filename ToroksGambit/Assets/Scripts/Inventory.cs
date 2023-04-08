@@ -233,12 +233,17 @@ public class Inventory : MonoBehaviour
                                                      //SetDeployUI();
                                                      if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
                                                      {
+                                                        SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.MovePieceEnd]);
                                                         AlterPiece((InventoryPieces)storedPiece, -1);
                                                         deployPieceCount++;
                                                         deployPointCount += deployValues[storedPiece];
                                                         SetDeployUI();
                                                         numPiecesPlaced++;
                                                      }
+                                                     else
+                                                     {
+                                                        SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.PlaceFail]);
+                                                    }
                                                  }
                                              }
                                         }
@@ -249,6 +254,7 @@ public class Inventory : MonoBehaviour
                             {
                                 if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
                                 {
+                                    //SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.MovePieceEnd]);
                                     hasPlacedPiece = true;
                                 }
                             }
@@ -328,6 +334,7 @@ public class Inventory : MonoBehaviour
 
                                                 if (Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, -1) == true)
                                                 {
+                                                    SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.RemovePiece]);
                                                     Debug.Log("REMOVE?");
                                                     //numPiecesPlaced--;
                                                 }
@@ -352,10 +359,12 @@ public class Inventory : MonoBehaviour
                         Debug.Log((int)storedPiece);
                         if (Board.instance.PlacePiece(hit.transform, -1) == true)
                         {
+                            SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.RemovePiece]);
                             numPiecesPlaced--;
                         }
                         if ((int)hitPiece.type < 5)
                         {
+
                             AlterPiece((InventoryPieces)hitPiece.type, 1);
                             deployPieceCount--;
                             deployPointCount -= deployValues[(int)hitPiece.type];
