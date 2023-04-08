@@ -7,12 +7,15 @@ public class TorokPersonalityAI : MonoBehaviour
 
     //1 + (index/2) -> angerlevel from level index 
 
+    [SerializeField] private float numRandAnimations;
+
     [SerializeField] private int currentAngerLevel = 1;
     [Range(0f, 1f)]
     [SerializeField] private float[] dialogLikelyhoodByCategory = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; // 17 total 
     private int[] categoryPriorities = { 3, 3, 3, 3, 2, 2, 2, 2, 2, 1, 1, 1, 3, 3, 3, 2, 2, 2 };
     public float minTimeBetweenIdleBark = 12;
     public float maxTimeBetweenIdleBark = 25;
+    
 
     private SoundLibrary.Categories lastCatPlayed;
     private SoundLibrary library;
@@ -66,25 +69,37 @@ public class TorokPersonalityAI : MonoBehaviour
     }
 
     //plays an animation
-    private float PlayAnimation(SoundLibrary.Categories category, int which = -1)
+    private void PlayAnimation(SoundLibrary.Categories category, int which = -1)
     {
         if (which <= -1)//use random anim
         {
             if ((int)category >= (int)SoundLibrary.Categories.ShopEnter)
             {
-                anim.SetFloat("SelectedAnimation", 1);
+                shopAnim.SetFloat("SelectedAnimation", 1);
             }
             else
             {
-                shopAnim.SetFloat("SelectedAnimation", 1);
+                anim.SetBool("PlayAnim", true);
+                int randInt = (int)Random.Range(0, numRandAnimations - 0.01f);
+                print(randInt);
+                anim.SetFloat("SelectedAnimation", randInt * (1/numRandAnimations));
             }
             
         }
         else// use certain animation, probably wont be used idk
         {
+            if ((int)category >= (int)SoundLibrary.Categories.ShopEnter)
+            {
+                shopAnim.SetFloat("SelectedAnimation", which);
+            }
+            else
+            {
+                anim.SetBool("PlayAnim", true);
+                anim.SetFloat("SelectedAnimation", which);
+            }
 
         }
-        return anim.GetCurrentAnimatorStateInfo(0).length;
+        
     }
 
     public void PlayAnimationAndSound(SoundLibrary.Categories category)
@@ -99,15 +114,26 @@ public class TorokPersonalityAI : MonoBehaviour
 
     public IEnumerator PlayAnimationAndSoundCoRo(SoundLibrary.Categories category)
     {
-        anim.SetBool("Talk", true);
-        float animClipLength = PlayAnimation(category);
+        //anim.SetBool("Talk", true);
+        PlayAnimation(category);
+        float animClipLength;
+        if (category >= SoundLibrary.Categories.ShopEnter)
+        {
+            animClipLength = shopAnim.GetCurrentAnimatorClipInfo(0).Length;
+        }
+        else
+        {
+            animClipLength = anim.GetCurrentAnimatorClipInfo(0).Length;
+        }
+
         float audioClipLength = PlaySoundFromCategory(category);
         Debug.Log("ClipLenth " + audioClipLength);
         isPlaying = true;
+        print(audioClipLength + "," + animClipLength);
         yield return new WaitForSeconds(Mathf.Max(audioClipLength, animClipLength));
         anim.SetFloat("SelectedAnimation", 0);
         anim.SetBool("Talk", false);
-        CloseMouth();
+        //CloseMouth();
         isPlaying = false;
     }
 
@@ -120,5 +146,11 @@ public class TorokPersonalityAI : MonoBehaviour
     public void SetAngerLevel(int level) // jenny
     {
         currentAngerLevel = level;
+    }
+
+    public void ResetGameAnimationParameter()
+    {
+        anim.SetFloat("SelectedAnimation", -1);
+        anim.SetBool("PlayAnim", false);
     }
 }

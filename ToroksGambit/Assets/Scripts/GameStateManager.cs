@@ -261,23 +261,20 @@ public class GameStateManager : MonoBehaviour
         
         if (winCondition.conditionType == 0)//nonpawn condition
         {
-            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroNonPawn);
+            yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LevelIntroNonPawn));
         }
         else if (winCondition.conditionType == 1)//capture the flag condition
         {
-            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroCTF);
+            yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LevelIntroCTF));
         }
         else if (winCondition.conditionType == 2)//checkmate condition
         {
-            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroCheckmate); 
+            yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LevelIntroCheckmate));
         }
         else if (winCondition.conditionType == 3)//king of the hill condition
         {
-            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LevelIntroKOTH);
+            yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LevelIntroKOTH));
         }
-
-        //needs to wait for sound to end
-        yield return new WaitForSeconds(4f);
 
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardExclusively());
         ChangeGameState(GameState.deployment);
