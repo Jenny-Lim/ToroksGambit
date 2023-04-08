@@ -51516,6 +51516,7 @@ MonoBehaviour:
   ghostPieceVertOffset: 0.05
   objectiveArea: {fileID: 1912380705}
   inventoryUI: {fileID: 2078189506}
+  buttonAudioClip: {fileID: 8300000, guid: 0f91aaabe1ba551418055f4f84f3111f, type: 3}
   travelSpeed: 7
   showLocation: {x: -800, y: 130, z: 0}
   hideLocation: {x: -1113, y: 130, z: 0}

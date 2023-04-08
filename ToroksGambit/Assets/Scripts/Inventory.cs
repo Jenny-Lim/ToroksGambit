@@ -25,6 +25,7 @@ public class Inventory : MonoBehaviour
     private bool infinitePieces = true;
     [SerializeField] public GameObject objectiveArea;
     [SerializeField] public GameObject inventoryUI;
+    [SerializeField] AudioClip buttonAudioClip;
 
     public void ShowInventoryPanel()
     {
@@ -417,6 +418,7 @@ public class Inventory : MonoBehaviour
     {
         if(heldPieces[0] > 0 || infinitePieces)
         {
+            SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
             storedPiece = 0;
         }
         else
@@ -430,6 +432,7 @@ public class Inventory : MonoBehaviour
     {
         if(heldPieces[1] > 0 || infinitePieces)
         {
+            SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
             storedPiece = 1;
         }
         else
@@ -442,6 +445,7 @@ public class Inventory : MonoBehaviour
     {
         if(heldPieces[2] > 0 || infinitePieces)
         {
+            SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
             storedPiece = 2;
         }
         else
@@ -454,6 +458,7 @@ public class Inventory : MonoBehaviour
     {
         if(heldPieces[3] > 0 || infinitePieces)
         {
+            SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
             storedPiece = 3;
         }
         else
@@ -466,6 +471,7 @@ public class Inventory : MonoBehaviour
     {
         if(heldPieces[4] > 0 || infinitePieces)
         {
+            SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
             storedPiece = 4;
         }
         else
@@ -476,6 +482,7 @@ public class Inventory : MonoBehaviour
 
     public void KingButtonClicked()
     {
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         storedPiece = 5;
     }
 
@@ -496,6 +503,7 @@ public class Inventory : MonoBehaviour
 
     public void HideShowButtonClicked()
     {
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         if (isShowingPanel)
         {
             hideShowText.text = "show";
@@ -623,6 +631,7 @@ public class Inventory : MonoBehaviour
 
     public void OnStartChessGameButtonPressed()
     {
+        SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.game);
         startButton.SetActive(false);
     }
