@@ -9386,7 +9386,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e383233d5ca74094d8923f6edfb80a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numRandAnimations: 5
+  numGeneralAnimsGame: 3
+  numInterruptAnimsGame: 1
+  numWinAnimsGame: 0
+  numLoseAnimsGame: 2
   currentAngerLevel: 1
   dialogLikelyhoodByCategory:
   - 1
@@ -57795,7 +57798,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e383233d5ca74094d8923f6edfb80a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numRandAnimations: 0
+  numGeneralAnimsGame: 0
+  numInterruptAnimsGame: 0
+  numWinAnimsGame: 0
+  numLoseAnimsGame: 0
   currentAngerLevel: 1
   dialogLikelyhoodByCategory:
   - 1
