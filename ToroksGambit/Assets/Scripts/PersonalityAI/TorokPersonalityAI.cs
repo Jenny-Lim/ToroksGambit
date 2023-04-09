@@ -98,7 +98,6 @@ public class TorokPersonalityAI : MonoBehaviour
             anim.SetInteger("SelectedAnimation", (int)Random.Range(1, numGeneralAnimsGame + 0.99f));
         }
 
-        print("Played animation");
 
         /*
         if (which <= -1)//use random anim
