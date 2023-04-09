@@ -7,7 +7,10 @@ public class TorokPersonalityAI : MonoBehaviour
 
     //1 + (index/2) -> angerlevel from level index 
 
-    [SerializeField] private float numRandAnimations;
+    [SerializeField] private float numGeneralAnimsGame;
+    [SerializeField] private float numInterruptAnimsGame;
+    [SerializeField] private float numWinAnimsGame;
+    [SerializeField] private float numLoseAnimsGame;
 
     [SerializeField] private int currentAngerLevel = 1;
     [Range(0f, 1f)]
@@ -68,6 +71,36 @@ public class TorokPersonalityAI : MonoBehaviour
     //plays an animation
     private void PlayAnimation(SoundLibrary.Categories category, int which = -1)
     {
+        //assuming all animations will be randomized within there category
+        //select category
+        if (category == SoundLibrary.Categories.Interrupt)//Interrupt
+        {
+            anim.SetBool("PlayAnim", true);
+            anim.SetInteger("SelectedAnimCategory", 2);
+            anim.SetInteger("SelectedAnimation", (int)Random.Range(1,numInterruptAnimsGame + 0.99f));
+        }
+        else if (category == SoundLibrary.Categories.LoseGame)//torok wins i think
+        {
+            anim.SetBool("PlayAnim", true);
+            anim.SetInteger("SelectedAnimCategory", 3);
+            anim.SetInteger("SelectedAnimation", (int)Random.Range(1, numLoseAnimsGame + 0.99f));
+        }
+        else if (category == SoundLibrary.Categories.WinGame)//torok loses i think
+        {
+            anim.SetBool("PlayAnim", true);
+            anim.SetInteger("SelectedAnimCategory", 4);
+            anim.SetInteger("SelectedAnimation", (int)Random.Range(1, numWinAnimsGame + 0.99f));
+        }
+        else//general animation
+        {
+            anim.SetBool("PlayAnim", true);
+            anim.SetInteger("SelectedAnimCategory", 1);
+            anim.SetInteger("SelectedAnimation", (int)Random.Range(1, numGeneralAnimsGame + 0.99f));
+        }
+
+        print("Played animation");
+
+        /*
         if (which <= -1)//use random anim
         {
             if ((int)category >= (int)SoundLibrary.Categories.ShopEnter)
@@ -96,7 +129,7 @@ public class TorokPersonalityAI : MonoBehaviour
             }
 
         }
-        
+        */
     }
 
     public void PlayAnimationAndSound(SoundLibrary.Categories category)
@@ -125,7 +158,23 @@ public class TorokPersonalityAI : MonoBehaviour
         }
         float audioClipLength = PlaySoundFromCategory(category);
         print(audioClipLength + "," + animClipLength);
-        yield return new WaitForSeconds(Mathf.Max(audioClipLength, animClipLength));
+
+        float counter = 0f;//time counter for while loop
+        float maxTime = Mathf.Max(audioClipLength, animClipLength);//how long to stay in while loop
+        while (counter < maxTime)
+        {
+            if (counter >= audioClipLength)//stop doing talk when audio ends
+            {
+                anim.SetBool("Talk", false);//might case issues with repeated calling 
+            }
+
+            counter += Time.deltaTime;
+            yield return null;
+        }
+
+        //might need this just in case
+        //ResetGameAnimationParameter();
+
         anim.SetBool("Talk", false);
         isPlaying = false;
     }
@@ -143,7 +192,8 @@ public class TorokPersonalityAI : MonoBehaviour
 
     public void ResetGameAnimationParameter()
     {
-        anim.SetFloat("SelectedAnimation", -1);
+        anim.SetInteger("SelectedAnimation", -1);
+        anim.SetInteger("SelectedAnimCategory", 0);
         anim.SetBool("PlayAnim", false);
     }
 }
