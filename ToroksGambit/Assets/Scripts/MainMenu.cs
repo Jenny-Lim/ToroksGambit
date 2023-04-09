@@ -11,7 +11,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button optionsButton; // to change once there's stuff
     [SerializeField] public PauseMenu pauseFxn;
 
-    [SerializeField] private Animation curtainOpen;
+    [SerializeField] private Animation curtainOpenOne;
+    [SerializeField] private Animation curtainOpenTwo;
 
     [SerializeField] private GameObject MainMenuButtons;
     [SerializeField] private GameObject OptionsButtons;
@@ -100,8 +101,10 @@ public class MainMenu : MonoBehaviour
         //{
             //print("sup");
 
-            curtainOpen.Play("Curtain_Open");
-            //CameraHeadMovements.instance.LookAtPlayArea();
+        curtainOpenOne.Play("CurtainOpenFinal");
+        curtainOpenTwo.Play("CurtainOpenFinal");
+            
+            CameraHeadMovements.instance.LookAtPlayArea();
         //}
 
         gameObject.SetActive(false); // hide main menu
@@ -112,7 +115,10 @@ public class MainMenu : MonoBehaviour
         SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         SaveManager.instance.LoadSave();
         GameStateManager.instance.SetNextLevel(); // bug possibly here
-        curtainOpen.Play("Curtain_Open");
+        
+        curtainOpenOne.Play("CurtainOpenFinal");
+        curtainOpenTwo.Play("CurtainOpenFinal");
+        
         //CameraHeadMovements.instance.LookAtPlayArea();
         gameObject.SetActive(false); // hide main menu
 
