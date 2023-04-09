@@ -95,7 +95,7 @@ public class TorokPersonalityAI : MonoBehaviour
         {
             anim.SetBool("PlayAnim", true);
             anim.SetInteger("SelectedAnimCategory", 1);
-            anim.SetInteger("SelectedAnimation", (int)Random.Range(1, numGeneralAnimsGame + 0.99f));
+            anim.SetInteger("SelectedAnimation", 1);//(int)Random.Range(1, numGeneralAnimsGame + 0.99f)
         }
 
 
@@ -156,10 +156,10 @@ public class TorokPersonalityAI : MonoBehaviour
             animClipLength = anim.GetCurrentAnimatorClipInfo(0).Length;
         }
         float audioClipLength = PlaySoundFromCategory(category);
-        print(audioClipLength + "," + animClipLength);
 
         float counter = 0f;//time counter for while loop
         float maxTime = Mathf.Max(audioClipLength, animClipLength);//how long to stay in while loop
+        
         while (counter < maxTime)
         {
             if (counter >= audioClipLength)//stop doing talk when audio ends
