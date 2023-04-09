@@ -41,10 +41,7 @@ public class TorokPersonalityAI : MonoBehaviour
     {
         if (audioPlayer.isPlaying && categoryPriorities[(int)from] < categoryPriorities[(int)lastCatPlayed])
         {
-            
-            return 0; //<-this causes some weirdness as when u/him captues a piece
-            //it could play dialogue but if the game is over after that move then it kinda clashes with the dialogue that should play when you lose for example
-            //doing it like this without the return overrides the last call, which might be the best solution rn but is a little jarring when it happens
+            return 0; 
         }
 
         audioPlayer.clip = library.GetAudioClip(from);
@@ -127,11 +124,9 @@ public class TorokPersonalityAI : MonoBehaviour
         }
 
         float audioClipLength = PlaySoundFromCategory(category);
-        Debug.Log("ClipLenth " + audioClipLength);
         isPlaying = true;
         print(audioClipLength + "," + animClipLength);
         yield return new WaitForSeconds(Mathf.Max(audioClipLength, animClipLength));
-        anim.SetFloat("SelectedAnimation", 0);
         anim.SetBool("Talk", false);
         //CloseMouth();
         isPlaying = false;

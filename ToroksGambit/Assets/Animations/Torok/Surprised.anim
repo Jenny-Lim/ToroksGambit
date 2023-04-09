@@ -6227,7 +6227,7 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.8333333
+  - time: 1.1666666
     functionName: ResetGameAnimationParameter
     data: 
     objectReferenceParameter: {fileID: 0}
