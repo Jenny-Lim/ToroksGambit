@@ -234,7 +234,8 @@ public class GameStateManager : MonoBehaviour
                 }
                 break;
             case GameState.winWholeGame:
-                if(activeCoRo == null)
+                MainMenu.instance.pauseFxn.enabled = false;
+                if (activeCoRo == null)
                 {
                     activeCoRo = StartCoroutine(WinWholeGameCoRo());
                 }
@@ -342,6 +343,8 @@ public class GameStateManager : MonoBehaviour
 
     public IEnumerator WinWholeGameCoRo()
     {
+        print("in win whole game coro");
+        TorokPersonalityAI.instance.anim.SetBool("InTitle", false);
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
         yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.WinWholeGame));
         yield return new WaitForSeconds(1.5f);
