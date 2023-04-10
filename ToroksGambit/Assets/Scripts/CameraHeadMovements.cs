@@ -232,7 +232,7 @@ public class CameraHeadMovements : MonoBehaviour
         //if (!movementInProgress)
         //{
         StartCoroutine(GetOutPlayAreaCoRo());
-        Curtain.instance.CloseCurtains();
+        CurtainManager.instance.CloseCurtains();
         //}
     }
 

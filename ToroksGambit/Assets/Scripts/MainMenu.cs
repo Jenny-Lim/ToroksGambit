@@ -98,7 +98,7 @@ public class MainMenu : MonoBehaviour
         //{
             //print("sup");
 
-        Curtain.instance.OpenCurtains();
+        CurtainManager.instance.OpenCurtains();
 
             
             //CameraHeadMovements.instance.LookAtPlayArea(); - CALLED IN CURTAIN OPEN ANIMATION AS AN EVENT!!
@@ -114,7 +114,7 @@ public class MainMenu : MonoBehaviour
         SaveManager.instance.LoadSave();
         GameStateManager.instance.SetNextLevel(); // bug possibly here
         
-        Curtain.instance.OpenCurtains();
+        CurtainManager.instance.OpenCurtains();
         
         //CameraHeadMovements.instance.LookAtPlayArea(); - CALLED IN CURTAIN OPEN ANIMATION AS VENT!!
         gameObject.SetActive(false); // hide main menu

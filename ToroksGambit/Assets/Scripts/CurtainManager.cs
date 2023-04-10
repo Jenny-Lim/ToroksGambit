@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Curtain : MonoBehaviour
+public class CurtainManager : MonoBehaviour
 {
 
-    public static Curtain instance;
+    public static CurtainManager instance;
 
-    [SerializeField] private Animation curtainAnim;
+    private Animation curtainAnim;
 
     public void Start()
     {
         instance = this;
-        //curtainAnim = GetComponent<Animation>();
+        curtainAnim = GetComponent<Animation>();
     }
 
     public void OpenCurtains()
