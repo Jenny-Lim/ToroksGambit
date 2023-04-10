@@ -1323,7 +1323,7 @@ public class Board : MonoBehaviour
             // check what thingies are on the pawn, apply them to new piece
             Piece promotedPawn = pieceBoard[endX, endY].GetComponent<Piece>();
             bool newTough = promotedPawn.isTough;
-            bool newPromote = promotedPawn.promote
+            bool newPromote = promotedPawn.promote;
             bool newLC = promotedPawn.lastChance;
 
             Destroy(pieceBoard[endX, endY]);
