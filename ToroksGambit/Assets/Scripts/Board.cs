@@ -664,7 +664,7 @@ public class Board : MonoBehaviour
             if (piece.type == Piece.PieceType.knight)
             {
                 print("get rotated nerd");
-                newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
+                //newPiece.transform.rotation = Quaternion.Euler(0, 180, 0);
             }
             piece.isTorok = true;
 
@@ -1313,11 +1313,6 @@ public class Board : MonoBehaviour
             pieceBoard[endX, endY] = null;
             PlacePiece(endX, endY, 4,0);
 
-            // commented for now
-            //piece.traitCount++;
-            //piece.promoteIcon.transform.localPosition = new Vector3(0.35f, piece.traitCount * piece.promoteIcon.transform.localPosition.y * 0.5f, 0);
-            //pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
-
             //piece.pawnPromote = true;
             //PlacePiece(endX, endY, 4);
 
@@ -1326,10 +1321,20 @@ public class Board : MonoBehaviour
         {
             Debug.Log("TOROK PAWN REACHED END");
             // check what thingies are on the pawn, apply them to new piece
+            Piece promotedPawn = pieceBoard[endX, endY].GetComponent<Piece>();
+            bool newTough = promotedPawn.isTough;
+            bool newPromote = promotedPawn.promote
+            bool newLC = promotedPawn.lastChance;
+
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
-            PlacePieceTorok(endX, endY, 4,0);
-            //pieceBoard[endX, endY].GetComponent<Piece>().promoteIcon.SetActive(true);
+            PlacePieceTorok(endX, endY, 4, 0);
+
+            Piece newPiece = pieceBoard[endX, endY].GetComponent<Piece>();
+            newPiece.isTough = newTough;
+            newPiece.promote = newPromote;
+            newPiece.lastChance = newLC;
+            ActivateTraitIcons(newPiece);
         }
 
     }
