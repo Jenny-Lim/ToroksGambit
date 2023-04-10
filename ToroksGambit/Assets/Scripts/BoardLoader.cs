@@ -209,7 +209,9 @@ public class BoardLoader : MonoBehaviour
                     {
                         Board.instance.deploymentZoneList.Add( new Vector2Int(int.Parse(splitLines[i]), int.Parse(splitLines[i+1])) );
                     }
-                    
+
+                    Board.instance.ActivateDeployTiles();
+
                 }
                 else if (splitLines[0].CompareTo("Limit") == 0)
                 {
