@@ -119,6 +119,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
 
         GameStateManager.instance.ChangeGameState(returnState);//change game state back to what it was before this ran
         isRunning = false;//set coro running to false
+        Board.instance.CopyBoard();
         Destroy(this.gameObject);
     }
 
@@ -160,6 +161,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
 
         GameStateManager.instance.ChangeGameState(returnState);//change game state back to what it was before this ran
         isRunning = false;//set coro running to false
+        Board.instance.CopyBoard();
         Destroy(this.gameObject);
     }
 
