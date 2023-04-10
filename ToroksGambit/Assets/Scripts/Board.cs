@@ -1408,7 +1408,8 @@ public class Board : MonoBehaviour
             Destroy(pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]);
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
             PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceMoving - 1,0);
-
+            Piece oldPiece = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY].GetComponent<Piece>();
+            ActivateTraitIcons(oldPiece);
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
@@ -1420,6 +1421,8 @@ public class Board : MonoBehaviour
             if(moveList[moveList.Count - 1].movingTorok)
             {
                 PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0,0);
+                Piece oldPiece = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY].GetComponent<Piece>();
+                ActivateTraitIcons(oldPiece);
             }
             PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0,0);
 
@@ -1450,6 +1453,8 @@ public class Board : MonoBehaviour
             else if (moveList[moveList.Count - 1].takenTorok)
             {
                 PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceTaken - 1,0);
+                Piece oldPiece = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY].GetComponent<Piece>();
+                ActivateTraitIcons(oldPiece);
             }
         }
         
@@ -1462,7 +1467,7 @@ public class Board : MonoBehaviour
             endScript.promote = moveList[moveList.Count -1].takenPromote;
             endScript.lastChance = moveList[moveList.Count -1].takenLastChance;
 
-            ActivateTraitIcons(endScript);
+            //ActivateTraitIcons(endScript);
 
             endScript.moved = moveList[moveList.Count -1].takenPieceSetFirstMove;
         }
@@ -1482,7 +1487,7 @@ public class Board : MonoBehaviour
         //    startPosPiece.promote = oldPromote;
         //    startPosPiece.lastChance = oldLastChance;
         //}
-        ActivateTraitIcons(startPosPiece);
+        //ActivateTraitIcons(startPosPiece);
 
         startPosPiece.moved = moveList[moveList.Count - 1].setFirstMove;
 
