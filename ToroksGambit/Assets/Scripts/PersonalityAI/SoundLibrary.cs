@@ -25,7 +25,8 @@ public class SoundLibrary
         WinGame,//torok wins, or player loses
         ShopEnter,
         ShopExit,
-        ShopBuy
+        ShopBuy,
+        WinWholeGame//player wins entire game
     }
 
 

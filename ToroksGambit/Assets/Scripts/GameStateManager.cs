@@ -18,7 +18,8 @@ public class GameStateManager : MonoBehaviour
         win,
         shop,
         Interrupt,
-        lose
+        lose,
+        winWholeGame
     }
 
     public BaseCondition winCondition;
@@ -232,8 +233,15 @@ public class GameStateManager : MonoBehaviour
                     activeCoRo = StartCoroutine(LoseCoRo());
                 }
                 break;
+            case GameState.winWholeGame:
+                if(activeCoRo == null)
+                {
+                    activeCoRo = StartCoroutine(WinWholeGameCoRo());
+                }
+                break;
         }
     }
+
 
     public IEnumerator titleCoRo()
     {
@@ -332,6 +340,16 @@ public class GameStateManager : MonoBehaviour
         PauseMenu.instance.ReturnToMainMenu();
     }
 
+    public IEnumerator WinWholeGameCoRo()
+    {
+        yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
+        yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.WinWholeGame));
+        yield return new WaitForSeconds(1.5f);
+        activeCoRo = null;
+        ChangeGameState(GameState.title);
+        PauseMenu.instance.ReturnToMainMenu();
+    }
+
     public void SetNextLevel()
     {
         Inventory.instance.resetDeployCount();
@@ -400,6 +418,12 @@ public class GameStateManager : MonoBehaviour
 
         if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
         {
+            if (currentLevelNumber == LevelNames.Count-1) // max number of levels
+            {
+                ChangeGameState(GameState.winWholeGame); // if player wins bring them to this game state instead
+                return;
+            }
+
             SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.WinLevel]);
             ChangeGameState(GameState.win);
             return;
