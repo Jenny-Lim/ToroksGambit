@@ -121,7 +121,10 @@ public class GameStateManager : MonoBehaviour
                         moveTimer += Time.deltaTime;
                         if (MinMax.instance.finishedSearch == true && Board.instance.canMove & moveTimer >= waitTimeToMove)//finished search and can make move
                         {
+                            //setting board visually
                             Board.instance.SwapBoard();
+                            Board.instance.ActivateTraitIconsAllPieces();
+                            //end of visual setting
                             Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
                             moveTimer = 0;
                             Board.instance.canMove = false;
