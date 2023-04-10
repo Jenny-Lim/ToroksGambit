@@ -61,9 +61,6 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: 9031392045175778980}
-    second:
-    - {fileID: 3512522094470660263}
   - first: {fileID: -3406232703837533941}
     second:
     - {fileID: 2366525419389501638}
@@ -73,6 +70,9 @@ AnimatorStateMachine:
   - first: {fileID: -8250676227974550714}
     second:
     - {fileID: -1852916281347906004}
+  - first: {fileID: 9031392045175778980}
+    second:
+    - {fileID: 3512522094470660263}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 100, y: 130, z: 0}
   m_EntryPosition: {x: 100, y: 240, z: 0}
@@ -639,43 +639,43 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: RaiseEyeBrows
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Frown
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Talk
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: PlayAnim
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: SelectedAnimCategory
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: SelectedAnimation
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: -1
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Body
