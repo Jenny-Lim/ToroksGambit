@@ -95,7 +95,7 @@ public class TorokPersonalityAI : MonoBehaviour
         {
             anim.SetBool("PlayAnim", true);
             anim.SetInteger("SelectedAnimCategory", 1);
-            anim.SetInteger("SelectedAnimation", 1);//(int)Random.Range(1, numGeneralAnimsGame + 0.99f)
+            anim.SetInteger("SelectedAnimation", (int)Random.Range(1, numGeneralAnimsGame + 0.99f));//
         }
 
 
@@ -157,8 +157,8 @@ public class TorokPersonalityAI : MonoBehaviour
         }
         float audioClipLength = PlaySoundFromCategory(category);
 
-        float counter = 0f;//time counter for while loop
-        float maxTime = Mathf.Max(audioClipLength, animClipLength);//how long to stay in while loop
+        float counter = 0f;//time counter for while loop              V- buffer room
+        float maxTime = Mathf.Max(audioClipLength, animClipLength) + 0.5f;//how long to stay in while loop
         
         while (counter < maxTime)
         {
