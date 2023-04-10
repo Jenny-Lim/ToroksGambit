@@ -1392,11 +1392,11 @@ public class Board : MonoBehaviour
         }
 
         // old in terms of undo, so technically the newer position
-        //Piece oldPiece = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY].GetComponent<Piece>();
-        //bool oldPromote = oldPiece.promote;
-        //bool oldLastChance = oldPiece.lastChance;
-        //bool oldTough = oldPiece.isTough;
-        
+        Piece oldPiece = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY].GetComponent<Piece>();
+        bool oldPromote = oldPiece.promote;
+        bool oldLastChance = oldPiece.lastChance;
+        bool oldTough = oldPiece.isTough;
+
 
         if (moveList[moveList.Count - 1].takenLastChance)
         {
@@ -1408,12 +1408,6 @@ public class Board : MonoBehaviour
             Destroy(pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]);
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
             PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceMoving - 1,0);
-
-            //Piece p = pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY].GetComponent<Piece>();
-            //p.isTough = oldTough;
-            //p.promote = oldPromote;
-            //p.lastChance = oldLastChance;
-            //ActivateTraitIcons(p);
 
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
@@ -1428,12 +1422,6 @@ public class Board : MonoBehaviour
                 PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0,0);
             }
             PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0,0);
-
-            //Piece p = pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY].GetComponent<Piece>();
-            //p.isTough = oldTough;
-            //p.promote = oldPromote;
-            //p.lastChance = oldLastChance;
-            //ActivateTraitIcons(p);
 
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]; // come back here
@@ -1486,17 +1474,23 @@ public class Board : MonoBehaviour
             startPosPiece.isTough = moveList[moveList.Count -1].movingTough;
             startPosPiece.promote = moveList[moveList.Count -1].movingPromote;
             startPosPiece.lastChance = moveList[moveList.Count -1].movingLastChance;
-            ActivateTraitIcons(startPosPiece);
+            //ActivateTraitIcons(startPosPiece);
         }
-        //else
-        //{
-        //    startPosPiece.isTough = moveList[moveList.Count - 1].movingTough;
-        //    startPosPiece.promote = moveList[moveList.Count - 1].movingPromote;
-        //    startPosPiece.lastChance = moveList[moveList.Count - 1].movingLastChance;
-        //}
-        //ActivateTraitIcons(startPosPiece);
+        else
+        {
+            startPosPiece.isTough = oldTough;
+            startPosPiece.promote = oldPromote;
+            startPosPiece.lastChance = oldLastChance;
+        }
+        ActivateTraitIcons(startPosPiece);
 
         startPosPiece.moved = moveList[moveList.Count - 1].setFirstMove;
+
+        //Piece p = pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY].GetComponent<Piece>();
+        //p.isTough = oldTough;
+        //p.promote = oldPromote;
+        //p.lastChance = oldLastChance;
+        //ActivateTraitIcons(p);
 
         moveList.RemoveAt(moveList.Count -1);
 
