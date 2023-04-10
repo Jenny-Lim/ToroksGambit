@@ -164,6 +164,7 @@ MonoBehaviour:
   promoteIcon: {fileID: 7325144674998697127}
   toughIcon: {fileID: 8528638769366880604}
   lastChanceIcon: {fileID: 1911008840836033739}
+  traitCount: 0
 --- !u!65 &6999778746268111162
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -175,8 +176,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.42839387, y: 1.0981385, z: 0.54504985}
-  m_Center: {x: 0.0009582937, y: 0.5004137, z: -0.028513819}
+  m_Size: {x: 0.42839387, y: 0.9395584, z: 0.54504985}
+  m_Center: {x: 0.0009582937, y: 0.42112362, z: -0.028513819}
 --- !u!1001 &37639396681550427
 PrefabInstance:
   m_ObjectHideFlags: 0

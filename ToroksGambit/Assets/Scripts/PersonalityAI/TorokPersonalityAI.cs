@@ -164,7 +164,7 @@ public class TorokPersonalityAI : MonoBehaviour
         float audioClipLength = PlaySoundFromCategory(category);
 
         float counter = 0f;//time counter for while loop              V- buffer room
-        float maxTime = Mathf.Max(audioClipLength, animClipLength) + 0.5f;//how long to stay in while loop
+        float maxTime = Mathf.Max(audioClipLength, animClipLength) + 2;//how long to stay in while loop
         
         while (counter < maxTime)
         {
