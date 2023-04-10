@@ -49631,7 +49631,7 @@ MonoBehaviour:
   lookingForMove: 0
   victoryText: {fileID: 2138344905}
   ticketParticleSystem: {fileID: 1901676245}
-  waitTimeToMove: 5
+  waitTimeToMove: 3
 --- !u!4 &1925806816
 Transform:
   m_ObjectHideFlags: 0
