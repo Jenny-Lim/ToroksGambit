@@ -204,12 +204,12 @@ public class CameraHeadMovements : MonoBehaviour
             elapsedTime += Time.deltaTime;
             percentDone = elapsedTime / desiredTime;
             //transform.eulerAngles = Vector3.Slerp(initRot, lookAtBoardRotation, percentDone);
-            transform.eulerAngles = AngleLerp(initRot, lookAtBoardRotation, percentDone);
+            transform.eulerAngles = AngleLerp(initRot, LookAtTorokRotation, percentDone); //changed from lookAtBordRotation to LookAtTorok - Patrick
             transform.position = Vector3.Lerp(initPos, lookAtBoardPosition, percentDone);
             yield return null;
         }
         transform.position = lookAtBoardPosition;
-        transform.eulerAngles = lookAtBoardRotation;
+        transform.eulerAngles = LookAtTorokRotation;//changed from lookatboard to lookatTorok - Patrick
 
         //yield return new WaitUntil(delegate { return ani.GetCurrentAnimatorStateInfo(0).IsName("CameraIdle"); });
         menuDone = true;
@@ -232,6 +232,7 @@ public class CameraHeadMovements : MonoBehaviour
         //if (!movementInProgress)
         //{
         StartCoroutine(GetOutPlayAreaCoRo());
+        Curtain.instance.CloseCurtains();
         //}
     }
 

@@ -11,9 +11,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button optionsButton; // to change once there's stuff
     [SerializeField] public PauseMenu pauseFxn;
 
-    [SerializeField] private Animation curtainOpenOne;
-    [SerializeField] private Animation curtainOpenTwo;
-
     [SerializeField] private GameObject MainMenuButtons;
     [SerializeField] private GameObject OptionsButtons;
 
@@ -101,10 +98,11 @@ public class MainMenu : MonoBehaviour
         //{
             //print("sup");
 
-        curtainOpenOne.Play("CurtainOpenFinal");
-        curtainOpenTwo.Play("CurtainOpenFinal");
+        Curtain.instance.OpenCurtains();
+
             
-            CameraHeadMovements.instance.LookAtPlayArea();
+            //CameraHeadMovements.instance.LookAtPlayArea(); - CALLED IN CURTAIN OPEN ANIMATION AS AN EVENT!!
+            //CHECK CURTAIN CALLCAMERAMOVE IF ANY CHANGE NEEDS TO BE DONE TO LookAtPlayArea() !!!
         //}
 
         gameObject.SetActive(false); // hide main menu
@@ -116,10 +114,9 @@ public class MainMenu : MonoBehaviour
         SaveManager.instance.LoadSave();
         GameStateManager.instance.SetNextLevel(); // bug possibly here
         
-        curtainOpenOne.Play("CurtainOpenFinal");
-        curtainOpenTwo.Play("CurtainOpenFinal");
+        Curtain.instance.OpenCurtains();
         
-        //CameraHeadMovements.instance.LookAtPlayArea();
+        //CameraHeadMovements.instance.LookAtPlayArea(); - CALLED IN CURTAIN OPEN ANIMATION AS VENT!!
         gameObject.SetActive(false); // hide main menu
 
         // nothing atm -- should save level, angerlvl, interrupt thing??, inventory, currency
