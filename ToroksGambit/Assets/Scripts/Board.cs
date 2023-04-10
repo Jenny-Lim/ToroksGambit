@@ -1392,10 +1392,10 @@ public class Board : MonoBehaviour
         }
 
         // old in terms of undo, so technically the newer position
-        Piece oldPiece = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY].GetComponent<Piece>();
-        bool oldPromote = oldPiece.promote;
-        bool oldLastChance = oldPiece.lastChance;
-        bool oldTough = oldPiece.isTough;
+        //Piece oldPiece = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY].GetComponent<Piece>();
+        //bool oldPromote = oldPiece.promote;
+        //bool oldLastChance = oldPiece.lastChance;
+        //bool oldTough = oldPiece.isTough;
 
 
         if (moveList[moveList.Count - 1].takenLastChance)
@@ -1476,12 +1476,12 @@ public class Board : MonoBehaviour
             startPosPiece.lastChance = moveList[moveList.Count -1].movingLastChance;
             //ActivateTraitIcons(startPosPiece);
         }
-        else
-        {
-            startPosPiece.isTough = oldTough;
-            startPosPiece.promote = oldPromote;
-            startPosPiece.lastChance = oldLastChance;
-        }
+        //else
+        //{
+        //    startPosPiece.isTough = oldTough;
+        //    startPosPiece.promote = oldPromote;
+        //    startPosPiece.lastChance = oldLastChance;
+        //}
         ActivateTraitIcons(startPosPiece);
 
         startPosPiece.moved = moveList[moveList.Count - 1].setFirstMove;
