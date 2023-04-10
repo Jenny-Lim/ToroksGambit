@@ -1177,7 +1177,7 @@ public class Board : MonoBehaviour
         movingTough = piece.isTough;
         movingPromote = piece.promote;
         movingLastChance = piece.lastChance;
-        //ActivateTraitIcons(piece); // ?????
+
         pieceIdMoving = (int)(piece.type) + 1;
         if(piece.isTorok)
         {
@@ -1195,8 +1195,6 @@ public class Board : MonoBehaviour
             takenTough = pieceForCaptureId.isTough;
             takenPromote = pieceForCaptureId.promote;
             takenLastChance = pieceForCaptureId.lastChance;
-
-            //ActivateTraitIcons(pieceForCaptureId); // ?????
 
             takenPieceMoved = pieceForCaptureId.moved;
 
@@ -1289,10 +1287,12 @@ public class Board : MonoBehaviour
 
             Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
                 
-            //endPiece.promote = willPromote;
-            //endPiece.isTorok = oldIsTorok;
-            //endPiece.isTough = oldIsTough;
-            //endPiece.lastChance = oldLastChance;
+            endPiece.promote = willPromote;
+            endPiece.isTorok = oldIsTorok;
+            endPiece.isTough = oldIsTough;
+            endPiece.lastChance = oldLastChance;
+
+            ActivateTraitIcons(endPiece);
 
             endPiece.moved = true;// changes piece to say has moved
             endPiece.pieceX = endX;//alter x pos to new x pos for moved piece
@@ -1398,6 +1398,7 @@ public class Board : MonoBehaviour
         if (moveList[moveList.Count - 1].takenLastChance)
         {
             PlacePiece(moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY, moveList[moveList.Count - 1].pieceMoving - 1,0);
+
         }
         else if (moveList[moveList.Count - 1].promoted)
         {
@@ -1427,6 +1428,9 @@ public class Board : MonoBehaviour
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
+            //Piece p = pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY].GetComponent<Piece>();
+            //p.isTough = oldTough;
+            
         }
 
 
@@ -1468,16 +1472,9 @@ public class Board : MonoBehaviour
             startPosPiece.isTough = moveList[moveList.Count -1].movingTough;
             startPosPiece.promote = moveList[moveList.Count -1].movingPromote;
             startPosPiece.lastChance = moveList[moveList.Count -1].movingLastChance;
-            //ActivateTraitIcons(startPosPiece);
-        }
-        else
-        {
-            startPosPiece.isTough = oldTough;
-            startPosPiece.promote = oldPromote;
-            startPosPiece.lastChance = oldLastChance;
+            ActivateTraitIcons(startPosPiece);
         }
 
-        ActivateTraitIcons(startPosPiece);
         startPosPiece.moved = moveList[moveList.Count - 1].setFirstMove;
 
         moveList.RemoveAt(moveList.Count -1);
