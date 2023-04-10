@@ -573,7 +573,20 @@ public class Inventory : MonoBehaviour
 
     public void SetDeployUI()
     {
-        if(deployPieceCap < 0)//using point cap
+        if(deployPieceCap < 0 && deployPointCap < 0)//no cap
+        {
+            visualPointCap = deployPointCap;
+            visualPieceCap = 100000;
+            visualPointCap = 100000;
+
+            dualDeployLimits.SetActive(false);
+            pieceDeployLimit.SetActive(false);
+            pointDeployLimit.SetActive(true);
+
+            soloDeployPointText.text = "No limits";
+
+        }
+        else if(deployPieceCap < 0)//using point cap
         {
             visualPointCap = deployPointCap;
             visualPieceCap = 100000;
