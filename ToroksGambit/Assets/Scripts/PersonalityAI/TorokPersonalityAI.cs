@@ -91,6 +91,12 @@ public class TorokPersonalityAI : MonoBehaviour
             anim.SetInteger("SelectedAnimCategory", 4);
             anim.SetInteger("SelectedAnimation", (int)Random.Range(1, numWinAnimsGame + 0.99f));
         }
+        else if (category == SoundLibrary.Categories.WinWholeGame)
+        {
+            anim.SetBool("PlayAnim", true);
+            anim.SetInteger("SelectedAnimCategory", 5);
+            anim.SetInteger("SelectedAnimation", 1);
+        }
         else//general animation
         {
             anim.SetBool("PlayAnim", true);
