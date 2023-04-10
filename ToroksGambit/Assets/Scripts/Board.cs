@@ -1232,7 +1232,7 @@ public class Board : MonoBehaviour
         bool oldIsTorok = piece.isTorok;
         bool oldIsTough = piece.isTough;
         bool oldLastChance = piece.lastChance;
-
+        //bool oldPromote = piece.promote;
 
         bool pawnWillPromote = false;
 
@@ -1264,6 +1264,7 @@ public class Board : MonoBehaviour
 
                 endPiece.isTorok = oldIsTorok;
                 endPiece.isTough = oldIsTough;
+                //endPiece.promote = willPromote;
                 endPiece.lastChance = oldLastChance;
 
                 ActivateTraitIcons(endPiece); // this is ok
@@ -1321,10 +1322,10 @@ public class Board : MonoBehaviour
         {
             Debug.Log("TOROK PAWN REACHED END");
             // check what thingies are on the pawn, apply them to new piece
-            Piece promotedPawn = pieceBoard[endX, endY].GetComponent<Piece>();
-            bool newTough = promotedPawn.isTough;
-            bool newPromote = promotedPawn.promote;
-            bool newLC = promotedPawn.lastChance;
+            bool newTough = piece.isTough;
+            bool newPromote = piece.promote;
+            bool newLC = piece.lastChance;
+            Debug.Log("oldpiece promote; " + piece.promote); // this is staying false
 
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
@@ -1334,6 +1335,7 @@ public class Board : MonoBehaviour
             newPiece.isTough = newTough;
             newPiece.promote = newPromote;
             newPiece.lastChance = newLC;
+            Debug.Log("newpiece promote; " + newPiece.promote);
             ActivateTraitIcons(newPiece);
         }
 
@@ -1421,16 +1423,17 @@ public class Board : MonoBehaviour
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]; // come back here
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
-
+            //Piece p = pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY].GetComponent<Piece>();
+            //p.isTough = oldTough;
+            //p.promote = oldPromote;
+            //p.lastChance = oldLastChance;
+            //ActivateTraitIcons(p);
         }
         else
         {
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
-            pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
-            //Piece p = pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY].GetComponent<Piece>();
-            //p.isTough = oldTough;
-            
+            pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;     
         }
 
 
@@ -1472,8 +1475,15 @@ public class Board : MonoBehaviour
             startPosPiece.isTough = moveList[moveList.Count -1].movingTough;
             startPosPiece.promote = moveList[moveList.Count -1].movingPromote;
             startPosPiece.lastChance = moveList[moveList.Count -1].movingLastChance;
-            ActivateTraitIcons(startPosPiece);
+            //ActivateTraitIcons(startPosPiece);
         }
+        else
+        {
+            startPosPiece.isTough = moveList[moveList.Count - 1].movingTough;
+            startPosPiece.promote = moveList[moveList.Count - 1].movingPromote;
+            startPosPiece.lastChance = moveList[moveList.Count - 1].movingLastChance;
+        }
+        ActivateTraitIcons(startPosPiece);
 
         startPosPiece.moved = moveList[moveList.Count - 1].setFirstMove;
 
