@@ -7,12 +7,12 @@ public class Curtain : MonoBehaviour
 
     public static Curtain instance;
 
-    private Animation curtainAnim;
+    [SerializeField] private Animation curtainAnim;
 
     public void Start()
     {
         instance = this;
-        curtainAnim = GetComponent<Animation>();
+        //curtainAnim = GetComponent<Animation>();
     }
 
     public void OpenCurtains()
