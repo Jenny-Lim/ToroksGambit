@@ -254,8 +254,12 @@ public class Inventory : MonoBehaviour
                             {
                                 if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
                                 {
-                                    //SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.MovePieceEnd]);
+                                    SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.MovePieceEnd]);
                                     hasPlacedPiece = true;
+                                }
+                                else
+                                {
+                                    SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.PlaceFail]);
                                 }
                             }
                             else if (storedPiece == -1)// if on remove
@@ -372,6 +376,10 @@ public class Inventory : MonoBehaviour
 
                         }
                         updateCountText();
+                    }
+                    else if (Input.GetMouseButtonDown(0))
+                    {
+                        SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.PlaceFail]);
                     }
                 }
                 else

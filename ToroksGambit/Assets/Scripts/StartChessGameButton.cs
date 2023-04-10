@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class StartChessGameButton : MonoBehaviour
 {
+
+    [SerializeField] private AudioClip clip;
     public void OnStartChessGameButtonPressed()
     {
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.game);
         Inventory.instance.SlideHideInventoryPanel();
-        this.gameObject.SetActive(false);
         Inventory.instance.DisableDeployUI();
         Inventory.instance.DisableModifiers();
+        SoundObjectPool.instance.GetPoolObject().Play(clip);
+        this.gameObject.SetActive(false);
+
     }
 }
