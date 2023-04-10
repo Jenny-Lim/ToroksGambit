@@ -48,6 +48,7 @@ public class MainMenu : MonoBehaviour
 
     void OnEnable()
     {
+        TorokPersonalityAI.instance.anim.SetBool("InTitle", true); // just for torok
         startButton.interactable = false;
         continueButton.interactable = false;
         //print("yeye");

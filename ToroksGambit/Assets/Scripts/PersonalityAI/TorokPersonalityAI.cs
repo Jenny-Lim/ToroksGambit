@@ -26,7 +26,7 @@ public class TorokPersonalityAI : MonoBehaviour
 
     public static TorokPersonalityAI instance;
 
-    private Animator anim;
+    public Animator anim;
     [SerializeField] private Animator shopAnim;
     private bool isPlaying = false;
 
