@@ -11382,6 +11382,11 @@ MonoBehaviour:
   - TraitTest
   - RoundTable
   - Level1(P)
+  - Level4
+  - Level4
+  - Level4
+  - Level4
+  - Level1(Start)
 --- !u!4 &269598401
 Transform:
   m_ObjectHideFlags: 0
@@ -49534,15 +49539,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
-  - DeploySaveTest
-  - CTFTest
+  - Level1(Start)
+  - Level3
+  - TraitLevel1
   - KOTH_Next
   - QueenBoss
-  - Level1
-  - TraitLevel1
-  - Level3
-  - Level5
-  - Level4
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
   currentState: 0
