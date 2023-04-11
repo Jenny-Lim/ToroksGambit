@@ -1966,8 +1966,8 @@ public class Board : MonoBehaviour
             for(int j=0;j<boardSize;j++)
             {
                 Destroy(AIPieceBoard[i,j]);
-                AIPieceBoard[i,j] = null;
                 AIVisualBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
+                AIPieceBoard[i,j] = null;
             }
         }
         for(int i =0;i<boardSize;i++)
@@ -1984,8 +1984,7 @@ public class Board : MonoBehaviour
                     PlaceObstacle(i,j,(int)realPiece.type -6,1);
                     AIPieceBoard[i,j].transform.parent = AIBoardParent.transform;
                 }
-
-                if(realPiece.isTorok)
+                else if(realPiece.isTorok)
                 {
                     PlacePieceTorok(i,j,(int)realPiece.type,1);
                     Piece AIPiece = AIPieceBoard[i, j].GetComponent<Piece>();
