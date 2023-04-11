@@ -84,7 +84,7 @@ public class MainMenu : MonoBehaviour
 
         // reset inventory
         Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)0, 4); // pawns
-        for (int i = 1; i < 2; i++)
+        for (int i = 1; i < 3; i++)
         {
             Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)i, 1); // bishop + knight
         } // no king / queen / rook
