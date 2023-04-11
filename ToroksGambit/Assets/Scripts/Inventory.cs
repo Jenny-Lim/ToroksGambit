@@ -181,9 +181,25 @@ public class Inventory : MonoBehaviour
                     //show desired visual
                     if (storedPiece >= 0 && storedPiece < 5)
                     {
-                        if(heldPieces[storedPiece] > 0)
+                        for(int i = 0; i<Board.boardSize;i++)
                         {
-                            PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
+                            for(int j = 0;j<Board.boardSize;j++)
+                            {
+                                if(hit.transform.gameObject == Board.instance.hitBoxBoard[i,j])
+                                {
+                                    for(int k = 0;k<Board.instance.deploymentZoneList.Count;k++)
+                                    {
+                                        if(Board.instance.deploymentZoneList[k].x == i && Board.instance.deploymentZoneList[k].y == j)
+                                        {
+                                            Debug.Log("IN THE DEPLOY ZONE");
+                                            if(heldPieces[storedPiece] > 0)
+                                            {
+                                                PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 
