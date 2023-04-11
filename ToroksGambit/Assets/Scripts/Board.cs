@@ -1326,7 +1326,7 @@ public class Board : MonoBehaviour
             //PlacePiece(endX, endY, 4);
 
         }
-        if (piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)
+        if (piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)//torok ppawn promotion
         {
             Debug.Log("TOROK PAWN REACHED END");
             // check what thingies are on the pawn, apply them to new piece
@@ -1430,6 +1430,9 @@ public class Board : MonoBehaviour
             {
                 PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0,0);
                 Piece oldPiece = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY].GetComponent<Piece>();
+                oldPiece.isTough = moveList[moveList.Count - 1].movingTough;
+                oldPiece.lastChance = moveList[moveList.Count - 1].movingLastChance;
+                oldPiece.promote = moveList[moveList.Count - 1].movingPromote;
                 //ActivateTraitIcons(oldPiece);
             }
             PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0,0);
