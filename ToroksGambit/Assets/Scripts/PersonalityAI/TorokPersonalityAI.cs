@@ -29,6 +29,7 @@ public class TorokPersonalityAI : MonoBehaviour
     public Animator anim;
     [SerializeField] private Animator shopAnim;
     private bool isPlaying = false;
+    [SerializeField] AudioClip[] audioClips;
 
     private void Awake()
     {
@@ -200,5 +201,18 @@ public class TorokPersonalityAI : MonoBehaviour
         anim.SetInteger("SelectedAnimation", -1);
         anim.SetInteger("SelectedAnimCategory", 0);
         anim.SetBool("PlayAnim", false);
+    }
+
+    public void PlaySteam1() // animation event
+    {
+        SoundObjectPool.instance.GetPoolObject().Play(audioClips[0]);
+    }
+    public void PlaySteam2() // animation event
+    {
+        SoundObjectPool.instance.GetPoolObject().Play(audioClips[1]);
+    }
+    public void PlayImpact() // animation event
+    {
+        SoundObjectPool.instance.GetPoolObject().Play(audioClips[2]);
     }
 }

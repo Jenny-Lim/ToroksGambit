@@ -8357,6 +8357,10 @@ MonoBehaviour:
   maxTimeBetweenIdleBark: 25
   anim: {fileID: 0}
   shopAnim: {fileID: 1846520614}
+  audioClips:
+  - {fileID: 8300000, guid: 1f0461a27a3a689459618d5395d5734e, type: 3}
+  - {fileID: 8300000, guid: 08d0cc14072162043965ff07c5f6920d, type: 3}
+  - {fileID: 8300000, guid: a98590626726a5240b66d238b17cad70, type: 3}
 --- !u!82 &193385561
 AudioSource:
   m_ObjectHideFlags: 0
@@ -45157,6 +45161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
+  - DeploySaveTest
   - Level1(Start)
   - Level3
   - TraitLevel1
@@ -53179,6 +53184,7 @@ MonoBehaviour:
   maxTimeBetweenIdleBark: 25
   anim: {fileID: 0}
   shopAnim: {fileID: 1991393281}
+  audioClips: []
 --- !u!95 &2107500676
 Animator:
   serializedVersion: 4
