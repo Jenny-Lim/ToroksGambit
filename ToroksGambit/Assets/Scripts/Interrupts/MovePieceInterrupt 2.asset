@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06b160ff1cf46044091759d88162d351, type: 3}
-  m_Name: KingHill
+  m_Script: {fileID: 11500000, guid: aa723e3728fd5ee42ab512235b6a651e, type: 3}
+  m_Name: MovePieceInterrupt 2
   m_EditorClassIdentifier: 
-  playerScore: 0
-  torokScore: 0
-  scoreToWin: 5
-  conditionType: 3
-  locations:
-  - {x: 5, y: 4}
-  - {x: 6, y: 4}
-  - {x: 0, y: 3}
+  hasTriggered: 0
+  triggerType: 1
+  piece: 5
+  placeAt: {x: 0, y: 0}
+  afterTurn: 2
+  moveFrom: {x: 4, y: 2}
+  moveTo: {x: 7, y: 2}
