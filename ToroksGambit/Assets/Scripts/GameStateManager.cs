@@ -348,6 +348,7 @@ public class GameStateManager : MonoBehaviour
     {
         print("in win whole game coro");
         TorokPersonalityAI.instance.anim.SetBool("InTitle", false);
+        CameraHeadMovements.canScroll = false;
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
         yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.WinWholeGame));
         yield return new WaitForSeconds(1.5f);
