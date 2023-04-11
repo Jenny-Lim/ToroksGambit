@@ -7,6 +7,6 @@ public class Wheel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, 0, 2.5f * Time.deltaTime);
+        transform.Rotate(0, 2.5f * Time.deltaTime, 0);
     }
 }
