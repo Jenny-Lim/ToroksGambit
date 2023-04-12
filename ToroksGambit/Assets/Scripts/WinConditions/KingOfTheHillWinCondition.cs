@@ -70,6 +70,7 @@ public class KingOfTheHillWinCondition : BaseCondition
 
     public override string GetObjectiveText()
     {
-        return "Have a piece on the marked tile(s) for " + playerScore + "/" + scoreToWin + " turns.";
+        return "Have a piece on the marked tile(s) for " + scoreToWin + " turns. Player: "+playerScore+"/"+scoreToWin+" Torok: "+torokScore+"/"+scoreToWin;
+        //return "Have a piece on the marked tile(s) for " + playerScore + "/" + scoreToWin + " turns.";
     }
 }
