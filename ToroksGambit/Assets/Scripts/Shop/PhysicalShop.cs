@@ -84,7 +84,7 @@ public class PhysicalShop : MonoBehaviour
             //jordan -> idk if these need to be separate ifs or not so ima just leave em as separate
             if (hit.transform.CompareTag("Chess Piece"))
             {
-                Debug.Log("Shop Piece HIt");
+                //Debug.Log("Shop Piece HIt");
                 Piece shopPiece = hit.transform.gameObject.GetComponent<Piece>();
                 pieceDescription.text = pieceNames[(int)shopPiece.type];
                 pieceDescriptionObject.SetActive(true);
@@ -114,12 +114,12 @@ public class PhysicalShop : MonoBehaviour
             }
             if (hit.transform.CompareTag("StoreStock"))
             {
-                Debug.Log("HONK");
+                //Debug.Log("HONK");
             }
             if (hit.transform.CompareTag("LeaveShopSign"))
             {
                 leaveSignText.color = leaveSignMouseHoverColor;
-                Debug.Log("set to hover color");
+                //Debug.Log("set to hover color");
                 //change leave sign color text to "scrolled over"
                 if (Input.GetMouseButtonDown(0) && activeCoRo == null)
                 {
@@ -133,12 +133,12 @@ public class PhysicalShop : MonoBehaviour
             {
                 //change leave sign color text to default
                 leaveSignText.color = leaveSignDefaultColor;
-                Debug.Log("set to default color");
+                //Debug.Log("set to default color");
             }
         }
         else
         {
-            Debug.Log("OFF PIECE");
+            //Debug.Log("OFF PIECE");
             pieceDescriptionObject.SetActive(false);
             leaveSignText.color = leaveSignDefaultColor;
         }
@@ -276,7 +276,7 @@ public class PhysicalShop : MonoBehaviour
             }
             else if((buttonObject == uiSpots[i] && prices[pieceType[i]] >= Currency.instance.tickets))
             {
-                Debug.Log("expensive");
+                //Debug.Log("expensive");
             }
         }
     }
@@ -297,7 +297,7 @@ public class PhysicalShop : MonoBehaviour
 
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardCoRo());
         Inventory.instance.objectiveArea.SetActive(true);
-        Debug.Log(GameStateManager.instance.GetCurrentState());
+        //Debug.Log(GameStateManager.instance.GetCurrentState());
         pieceDescriptionObject.SetActive(false);
         Invoke("ShopkeeperInactive", 1.0f);
         //shopkeeper.SetActive(false);

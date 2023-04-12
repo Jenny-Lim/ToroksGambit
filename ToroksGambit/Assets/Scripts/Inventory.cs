@@ -122,7 +122,7 @@ public class Inventory : MonoBehaviour
 
         if((deployPointCount >= visualPointCap) || (deployPieceCount >= visualPieceCap))
         {
-            Debug.Log("CAP REACHED");
+            //Debug.Log("CAP REACHED");
             deployCapReached = true;
         }
         else
@@ -191,7 +191,7 @@ public class Inventory : MonoBehaviour
                                     {
                                         if(Board.instance.deploymentZoneList[k].x == i && Board.instance.deploymentZoneList[k].y == j)
                                         {
-                                            Debug.Log("IN THE DEPLOY ZONE");
+                                            //Debug.Log("IN THE DEPLOY ZONE");
                                                 if(heldPieces[storedPiece] > 0)
                                             {
                                                 PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
@@ -229,7 +229,7 @@ public class Inventory : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log("PLACEPLAYERPIECE: "+(InventoryPieces)storedPiece);
+                            //Debug.Log("PLACEPLAYERPIECE: "+(InventoryPieces)storedPiece);
                             //if(storedPiece < 5 && storedPiece > -1 && hit.transform.gameObject.name.Contains("_DeploySpot"))
                             if (storedPiece < 5 && storedPiece > -1)
                             {
@@ -287,7 +287,7 @@ public class Inventory : MonoBehaviour
                                         //if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j] || hit.transform.gameObject == Board.instance.deployBoard[i,j])
                                         if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j])
                                         {
-                                            Debug.Log("BOARDREMOVETESTING");
+                                            //Debug.Log("BOARDREMOVETESTING");
                                             if (Board.pieceBoard[i, j] != null)
                                             {
                                                 Piece removePiece = Board.pieceBoard[i, j].GetComponent<Piece>();
@@ -302,7 +302,7 @@ public class Inventory : MonoBehaviour
 
                                                 if (Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, storedPiece) == true)
                                                 {
-                                                    Debug.Log("REMOVE?");
+                                                    //Debug.Log("REMOVE?");
                                                     //numPiecesPlaced--;
                                                 }
                                             }
@@ -339,7 +339,7 @@ public class Inventory : MonoBehaviour
                                         //if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j] || hit.transform.gameObject == Board.instance.deployBoard[i,j])
                                         if (hit.transform.gameObject == Board.instance.hitBoxBoard[i, j])
                                         {
-                                            Debug.Log("BOARDREMOVETESTING");
+                                            //Debug.Log("BOARDREMOVETESTING");
                                             if (Board.pieceBoard[i, j] != null)
                                             {
                                                 Piece removePiece = Board.pieceBoard[i, j].GetComponent<Piece>();
@@ -355,7 +355,7 @@ public class Inventory : MonoBehaviour
                                                 if (Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, -1) == true)
                                                 {
                                                     SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.RemovePiece]);
-                                                    Debug.Log("REMOVE?");
+                                                    //Debug.Log("REMOVE?");
                                                     //numPiecesPlaced--;
                                                 }
                                             }
@@ -376,7 +376,7 @@ public class Inventory : MonoBehaviour
                     if (Input.GetMouseButtonDown(1) && hitPiece && !hitPiece.isTorok)
                     {
                         //print("inside removePLayer");
-                        Debug.Log((int)storedPiece);
+                        //Debug.Log((int)storedPiece);
                         if (Board.instance.PlacePiece(hit.transform, -1) == true)
                         {
                             SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.RemovePiece]);

@@ -125,9 +125,9 @@ public class BoardLoader : MonoBehaviour
                     placedPiece.isTough = Convert.ToBoolean(splitLines[5]);
                     placedPiece.lastChance = Convert.ToBoolean(splitLines[6]);
                     placedPiece.promote = Convert.ToBoolean(splitLines[7]);
-                    Debug.Log("piece is tough: " + placedPiece.isTough); // bruh
-                    Debug.Log("piece is lastChance: " + placedPiece.lastChance);
-                    Debug.Log("piece is promote: " + placedPiece.promote);
+                    //Debug.Log("piece is tough: " + placedPiece.isTough); // bruh
+                    //Debug.Log("piece is lastChance: " + placedPiece.lastChance);
+                    //Debug.Log("piece is promote: " + placedPiece.promote);
 
                     Board.instance.ActivateTraitIcons(placedPiece);
 
