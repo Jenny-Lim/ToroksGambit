@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour
     private RectTransform rectTrans;
     [SerializeField] private TextMeshProUGUI hideShowText;
     [SerializeField] private GameObject hideShowButton;
-    private int[] maxHeldPieces = {8,4,4,3,1};//the maximum number of each piece the player can have
+    private int[] maxHeldPieces = {100,100,100,100,100};//the maximum number of each piece the player can have - 8,4,4,3,1
     [SerializeField] private int[] heldPieces = {8,4,4,3,1};//the amount of each piece the player has
     [SerializeField] private float ghostPieceVertOffset = -0.05f;
     private bool infinitePieces = true;
@@ -192,7 +192,7 @@ public class Inventory : MonoBehaviour
                                         if(Board.instance.deploymentZoneList[k].x == i && Board.instance.deploymentZoneList[k].y == j)
                                         {
                                             Debug.Log("IN THE DEPLOY ZONE");
-                                            if(heldPieces[storedPiece] > 0)
+                                                if(heldPieces[storedPiece] > 0)
                                             {
                                                 PiecePrefabs[storedPiece].transform.localPosition = hit.transform.position + (Vector3.up * ghostPieceVertOffset);
                                             }
