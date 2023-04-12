@@ -341,6 +341,7 @@ public class GameStateManager : MonoBehaviour
         //yield return new WaitForSeconds(3);
         activeCoRo = null;
         ChangeGameState(GameState.title);
+        SaveManager.instance.StartNew();
         PauseMenu.instance.ReturnToMainMenu();
     }
 
