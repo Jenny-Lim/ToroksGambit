@@ -149,6 +149,7 @@ MonoBehaviour:
   promoteIcon: {fileID: 7726087641768915762}
   toughIcon: {fileID: 7164633984978865671}
   lastChanceIcon: {fileID: 4745767066080682825}
+  traitCount: 0
 --- !u!1001 &1096707461540236270
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -512,6 +513,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8725837ea6fb67e47aa29c7cf4abbf77, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 8725837ea6fb67e47aa29c7cf4abbf77, type: 3}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 8725837ea6fb67e47aa29c7cf4abbf77, type: 3}
