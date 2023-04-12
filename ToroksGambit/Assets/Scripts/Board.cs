@@ -206,7 +206,7 @@ public class Board : MonoBehaviour
             
             if((hit.transform.CompareTag("Chess Board") || hit.transform.CompareTag("Chess Piece")) && clickedPiece)//if a piece is stored and another spot is chosen
             {
-                Debug.Log("hit piece");
+                //Debug.Log("hit piece");
                 //Debug.Log("TEST");
                 int clickedX = 0;
                 int clickedY = 0;
@@ -372,7 +372,7 @@ public class Board : MonoBehaviour
                         }
                     }
 
-            Debug.Log("no piece and picked board");
+            //Debug.Log("no piece and picked board");
         }
         }
 
@@ -676,7 +676,7 @@ public class Board : MonoBehaviour
             }
             piece.isTorok = true;
 
-            Debug.Log("placed piece type: " + piece.type);
+            //Debug.Log("placed piece type: " + piece.type);
 
             if (torokPiece)
             {
@@ -744,7 +744,7 @@ public class Board : MonoBehaviour
             }
             else
             {
-                Debug.Log("Place Error| Could not place obstacle: obstacle ID not recognized");
+                //Debug.Log("Place Error| Could not place obstacle: obstacle ID not recognized");
             }
         }
         else if(boardNum == 1)
@@ -763,7 +763,7 @@ public class Board : MonoBehaviour
             }
             else
             {
-                Debug.Log("Place Error| Could not place obstacle: obstacle ID not recognized");
+                //Debug.Log("Place Error| Could not place obstacle: obstacle ID not recognized");
             }
         }
 
@@ -1254,7 +1254,7 @@ public class Board : MonoBehaviour
 
         if(willPromote && !lastChanceCheck)//if this piece captured another piece and has promotion
         {
-            Debug.Log("PROMOTE PIECE");
+            //Debug.Log("PROMOTE PIECE");
             if(piece.type != Piece.PieceType.queen)
             {
                 PlacePieceTorok(endX,endY,pieceIdMoving,0);
@@ -1309,7 +1309,7 @@ public class Board : MonoBehaviour
         }
         else
         {
-            Debug.Log("LAST CHANCE ACTIVATE");
+            //Debug.Log("LAST CHANCE ACTIVATE");
             Destroy(pieceBoard[startX, startY]);
             pieceBoard[startX, startY] = null;
         }
@@ -1317,7 +1317,7 @@ public class Board : MonoBehaviour
         if (!piece.isTorok && endY == boardSize - 1 && piece.type == Piece.PieceType.pawn)
         {
             //PlacePiece(endX, endY, 4);
-            Debug.Log("PLAYER PAWN REACHED END");
+            //Debug.Log("PLAYER PAWN REACHED END");
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
             PlacePiece(endX, endY, 4,0);
@@ -1328,12 +1328,12 @@ public class Board : MonoBehaviour
         }
         if (piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)//torok ppawn promotion
         {
-            Debug.Log("TOROK PAWN REACHED END");
+            //Debug.Log("TOROK PAWN REACHED END");
             // check what thingies are on the pawn, apply them to new piece
             bool newTough = piece.isTough;
             bool newPromote = piece.promote;
             bool newLC = piece.lastChance;
-            Debug.Log("oldpiece promote; " + piece.promote); // this is staying false
+            //Debug.Log("oldpiece promote; " + piece.promote); // this is staying false
 
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
@@ -1343,7 +1343,7 @@ public class Board : MonoBehaviour
             newPiece.isTough = newTough;
             newPiece.promote = newPromote;
             newPiece.lastChance = newLC;
-            Debug.Log("newpiece promote; " + newPiece.promote);
+            //Debug.Log("newpiece promote; " + newPiece.promote);
             ActivateTraitIcons(newPiece);
         }
 
@@ -1549,7 +1549,7 @@ public class Board : MonoBehaviour
 
             while (Vector3.Distance(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset)) > 0.1f)
             {
-                Debug.Log("running");
+                //Debug.Log("running");
                 piece.transform.position = Vector3.MoveTowards(piece.transform.position, hitBoxBoard[endX, endY].transform.position + (Vector3.up * verticalPlaceOffset), pieceMoveSpeed * Time.deltaTime);
                 yield return null;
             }
