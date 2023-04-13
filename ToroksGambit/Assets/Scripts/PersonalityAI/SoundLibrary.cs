@@ -23,10 +23,10 @@ public class SoundLibrary
         Interrupt,//hooked up
         LoseGame,//torok loses, or player wins
         WinGame,//torok wins, or player loses
+        WinWholeGame,//player wins entire game
         ShopEnter,
         ShopExit,
         ShopBuy,
-        WinWholeGame//player wins entire game
     }
 
 

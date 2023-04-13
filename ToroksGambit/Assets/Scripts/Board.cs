@@ -449,7 +449,7 @@ public class Board : MonoBehaviour
             }
         }
 
-        if (pieceBoard[placeX, placeY] != null && pieceId != -1)
+        if (placeX <= 7 && placeY <= 7 && placeX > -1 && placeY > -1 && pieceBoard[placeX, placeY] != null && pieceId != -1)  // bug fix
         {
             Debug.LogError("Did not place piece because piece was already there");
             return false;
@@ -491,8 +491,11 @@ public class Board : MonoBehaviour
         else 
         {
             //do any inventory stuff here
-            Destroy(pieceBoard[placeX, placeY]);
-            pieceBoard[placeX, placeY] = null;
+            if (placeX <= 7 && placeY <= 7 && placeX > -1 && placeY > -1) // bug fix
+            {
+                Destroy(pieceBoard[placeX, placeY]);
+                pieceBoard[placeX, placeY] = null;
+            }
         }
 
         return true;

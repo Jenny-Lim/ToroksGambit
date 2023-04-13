@@ -100,7 +100,7 @@ public class PhysicalShop : MonoBehaviour
                             }
                         }
                         //priceText[i].text = "";
-                        anim.SetBool("PieceSold", true);
+                        //anim.SetBool("PieceSold", true);
 
                         SoundObjectPool.instance.GetPoolObject().Play(shopAudioClips[(int)ShopSounds.BuyPiece]);
 
@@ -250,11 +250,12 @@ public class PhysicalShop : MonoBehaviour
         //piecePanels.SetActive(true);
         //Currency.instance.ticketTextObject.enabled = true;
         shopkeeper.SetActive(true);
-        anim.SetBool("EnteredShop", true);
-        for (int i = 0; i < shopPieceModels.Length; i++)
-        {
-            //uiSpots[i].SetActive(true);
-        }
+        //anim.SetBool("EnteredShop", true);
+        TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.ShopEnter);
+        //for (int i = 0; i < shopPieceModels.Length; i++)
+        //{
+        //    //uiSpots[i].SetActive(true);
+        //}
 
     }
 
@@ -291,11 +292,12 @@ public class PhysicalShop : MonoBehaviour
         SaveManager.instance.SaveGame();
         SoundObjectPool.instance.GetPoolObject().Play(shopAudioClips[(int)ShopSounds.ExitShop]);
         yield return TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.ShopExit);
-        anim.SetBool("ExitedShop", true);
+        //anim.SetBool("ExitedShop", true);
         //c.LookAtBoard();
         GameStateManager.instance.SetNextLevel();
 
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtBoardCoRo());
+        anim.SetBool("inGame", true);
         Inventory.instance.objectiveArea.SetActive(true);
         //Debug.Log(GameStateManager.instance.GetCurrentState());
         pieceDescriptionObject.SetActive(false);

@@ -98,6 +98,18 @@ public class TorokPersonalityAI : MonoBehaviour
             anim.SetInteger("SelectedAnimCategory", 5);
             anim.SetInteger("SelectedAnimation", 1);
         }
+        else if (category == SoundLibrary.Categories.ShopEnter)
+        {
+            shopAnim.SetBool("EnteredShop", true);
+        }
+        else if (category == SoundLibrary.Categories.ShopExit)
+        {
+            shopAnim.SetBool("ExitedShop", true);
+        }
+        else if (category == SoundLibrary.Categories.ShopBuy)
+        {
+            shopAnim.SetBool("PieceSold", true);
+        }
         else//general animation
         {
             anim.SetBool("PlayAnim", true);
