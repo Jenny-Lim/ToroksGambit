@@ -91,6 +91,12 @@ public class MinMax : MonoBehaviour
 
     private IEnumerator GetMinMaxMoveIterCoRo(int maxDepth, DataHolder<Move> resultMove)
     {
+        if (Board.instance.GetAllMoves(true).Count < 1)
+        {
+            finishedSearch= true;
+            yield break;
+        }
+
         Stack<StateStorage> stack = new Stack<StateStorage>(maxDepth);// the stack
         stack.Push(new StateStorage(playerToMove.torok, Board.instance.GetAllMoves(true), maxDepth));//push current state to stack
         StateStorage curState = null;// the currently looked at state

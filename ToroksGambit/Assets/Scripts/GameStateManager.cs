@@ -132,7 +132,14 @@ public class GameStateManager : MonoBehaviour
                             Board.instance.SwapBoard();
                             Board.instance.ActivateTraitIconsAllPieces();
                             //end of visual setting
-                            Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
+                            if (resultingMove.data != null)
+                            {
+                                Board.instance.MoveValidatorCoRo(resultingMove.data.startX, resultingMove.data.startY, resultingMove.data.endX, resultingMove.data.endY);
+                            }
+                            else
+                            {
+                                EndTurn();
+                            }
                             moveTimer = 0;
                             Board.instance.canMove = false;
                         }
