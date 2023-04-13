@@ -71,10 +71,10 @@ public class PhysicalShop : MonoBehaviour
     public void PhysicalShopUpdate()// created by jordan to allow for raycasts to use exit button/sign whatever
     {
 
-        if (Input.GetKeyUp("m"))
-        {
-            SetShopDisplay();
-        }
+        //if (Input.GetKeyUp("m"))
+        //{
+        //    SetShopDisplay();
+        //}
 
         RaycastHit hit;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);

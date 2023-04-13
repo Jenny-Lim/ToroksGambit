@@ -346,26 +346,26 @@ public class Inventory : MonoBehaviour
 
                                                 if (!removePiece.isTorok && (int)removePiece.type < 5)
                                                 {
+
+                                                    if (Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, -1) == true)
+                                                    {
+                                                        SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.RemovePiece]);
+                                                    }
                                                     AlterPiece((InventoryPieces)removePiece.type, 1);
                                                     deployPieceCount--;
                                                     deployPointCount -= deployValues[(int)removePiece.type];
                                                     SetDeployUI();
                                                 }
 
-                                                if (Board.instance.PlacePiece(Board.pieceBoard[i, j].transform, -1) == true)
-                                                {
-                                                    SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.RemovePiece]);
-                                                    //Debug.Log("REMOVE?");
-                                                    //numPiecesPlaced--;
-                                                }
                                             }
                                         }
                                     }
                                 }
-                                if (Board.instance.PlacePiece(hit.transform, -1) == true)
-                                {
+                                //if (Board.instance.PlacePiece(hit.transform, -1) == true)
+                                //{
+                                //    Debug.Log("TESTETEST");
                                     //hasPlacedPiece = true;
-                                }
+                                //}
                                 
                             }
                 }
@@ -373,7 +373,7 @@ public class Inventory : MonoBehaviour
                 {
 
                     Piece hitPiece = hit.transform.GetComponent<Piece>();
-                    if (Input.GetMouseButtonDown(1) && hitPiece && !hitPiece.isTorok)
+                    if (Input.GetMouseButtonDown(1) && hitPiece && !hitPiece.isTorok && (int)hitPiece.type < 5)
                     {
                         //print("inside removePLayer");
                         //Debug.Log((int)storedPiece);
