@@ -49,7 +49,7 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private int storedPiece = -1;//pawn - 0, knight - 1, bishop - 2, rook - 3, queen - 4, remove - -1
 
-    [SerializeField] private GameObject startButton;
+    [SerializeField] public GameObject startButton;
 
     public static Inventory instance;
 
@@ -164,7 +164,7 @@ public class Inventory : MonoBehaviour
         }
 
         hideShowButton.SetActive(CameraHeadMovements.instance.menuDone);
-        startButton.SetActive(CameraHeadMovements.instance.menuDone); // ???
+        //startButton.SetActive(CameraHeadMovements.instance.menuDone); // ???
 
         //print("in invenotry update");
         //if in deploy mode

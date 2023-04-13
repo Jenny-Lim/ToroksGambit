@@ -80,6 +80,7 @@ public class PauseMenu : MonoBehaviour
         SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         CameraHeadMovements.canScroll = false;
         Inventory.instance.objectiveArea.SetActive(false);
+        Inventory.instance.startButton.SetActive(false);
         Inventory.instance.DisableDeployUI();
         Inventory.instance.HideInventoryPanel();
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
