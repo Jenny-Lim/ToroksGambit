@@ -164,6 +164,7 @@ public class Inventory : MonoBehaviour
         }
 
         hideShowButton.SetActive(CameraHeadMovements.instance.menuDone);
+        startButton.SetActive(CameraHeadMovements.instance.menuDone); // ???
 
         //print("in invenotry update");
         //if in deploy mode
