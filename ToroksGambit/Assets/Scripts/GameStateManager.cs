@@ -302,6 +302,8 @@ public class GameStateManager : MonoBehaviour
         MainMenu.instance.pauseFxn.enabled = true;
         
         Inventory.instance.EnableDeployUI();
+        LegendUI.instance.ActivateLegendObject();
+        Inventory.instance.ResetStoredPiece();
         activeCoRo = null;
     }
 

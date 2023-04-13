@@ -738,4 +738,9 @@ public class Inventory : MonoBehaviour
         testModifiers.SetActive(false);
     }
 
+    public void ResetStoredPiece()
+    {
+        storedPiece = -1;
+    }
+
 }
