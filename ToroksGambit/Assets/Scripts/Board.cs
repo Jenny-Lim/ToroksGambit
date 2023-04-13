@@ -1793,7 +1793,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    private void ClearMoveTiles()
+    public void ClearMoveTiles()
     {
                 for(int i = 0;i < boardSize;i++)
                 {

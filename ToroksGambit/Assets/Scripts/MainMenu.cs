@@ -95,6 +95,7 @@ public class MainMenu : MonoBehaviour
         SaveManager.instance.StartNew();
         Inventory.instance.updateCountText();
         Board.instance.ResetBoardPositions();
+        Board.instance.ClearMoveTiles();
         // move to proper area
         //if (GameStateManager.instance.currentState == GameStateManager.GameState.title)
         //{
@@ -115,6 +116,7 @@ public class MainMenu : MonoBehaviour
         SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         SaveManager.instance.LoadSave();
         GameStateManager.instance.SetNextLevel(); // bug possibly here
+        Board.instance.ClearMoveTiles();
         
         CurtainManager.instance.OpenCurtains();
         
