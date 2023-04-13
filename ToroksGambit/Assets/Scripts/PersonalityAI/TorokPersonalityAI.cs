@@ -14,8 +14,8 @@ public class TorokPersonalityAI : MonoBehaviour
 
     [SerializeField] private int currentAngerLevel = 1;
     [Range(0f, 1f)]
-    [SerializeField] private float[] dialogLikelyhoodByCategory = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; // 17 total 
-    private int[] categoryPriorities = { 3, 3, 3, 3, 2, 2, 2, 2, 2, 1, 1, 1, 3, 3, 3, 2, 2, 2 };
+    [SerializeField] private float[] dialogLikelyhoodByCategory = { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}; // 17 total (19 now -jenny)
+    private int[] categoryPriorities = { 3, 3, 3, 3, 2, 2, 2, 2, 2, 1, 1, 1, 3, 3, 3, 3, 2, 2, 2 };
     public float minTimeBetweenIdleBark = 12;
     public float maxTimeBetweenIdleBark = 25;
     

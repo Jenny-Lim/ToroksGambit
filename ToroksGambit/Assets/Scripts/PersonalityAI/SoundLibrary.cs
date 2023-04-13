@@ -6,7 +6,7 @@ using UnityEngine;
 public class SoundLibrary
 {
     
-    public enum Categories//15
+    public enum Categories//19
     {
         LevelIntroNonPawn,//hooked up
         LevelIntroCTF,//hooked up
