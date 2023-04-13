@@ -152,6 +152,11 @@ public class Inventory : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyUp("l"))
+        {
+            GameStateManager.instance.ChangeGameState(GameStateManager.GameState.win);
+        }
+
         objectiveArea.SetActive(CameraHeadMovements.instance.menuDone);
 
         if (!CameraHeadMovements.instance.menuDone) {

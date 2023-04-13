@@ -303,6 +303,7 @@ public class GameStateManager : MonoBehaviour
         CameraHeadMovements.canScroll = false;
         Inventory.instance.HideInventoryPanel();
         Inventory.instance.objectiveArea.SetActive(false);
+        Inventory.instance.DisableDeployUI();
 
         yield return CameraHeadMovements.instance.LookAtTorokExclusively();
         yield return TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame);
