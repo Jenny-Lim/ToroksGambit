@@ -183,13 +183,13 @@ public class Board : MonoBehaviour
             print(IsKingInCheck(false));
         }
 
-        if (Input.GetKeyUp("u")) {
-            UndoMove();
-        }
+        //if (Input.GetKeyUp("u")) {
+        //    UndoMove();
+        //}
 
-        if (Input.GetKeyUp("p")) {
-            ActivateTraitIconsAllPieces();
-        }
+        //if (Input.GetKeyUp("p")) {
+        //    ActivateTraitIconsAllPieces();
+        //}
 
         if (Input.GetKeyDown(KeyCode.B) && clickedPiece != null)//***Testing move generating
         {
@@ -390,10 +390,10 @@ public class Board : MonoBehaviour
         }
         }
 
-        if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
-        {
-            UndoMove();
-        }
+        //if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
+        //{
+        //    UndoMove();
+        //}
 
         if (clickedPiece != null)//added by jordan to indicate what piece is clicked
         {
