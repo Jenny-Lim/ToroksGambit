@@ -150,8 +150,18 @@ public class TorokPersonalityAI : MonoBehaviour
 
     public IEnumerator PlayAnimationAndSoundCoRo(SoundLibrary.Categories category)
     {
+        Debug.Log("in coro");
         isPlaying = true;
-        anim.SetBool("Talk", true);
+        if (category >= SoundLibrary.Categories.ShopEnter)
+        {
+            shopAnim.SetBool("Talking", true);
+            Debug.Log("shop naim test");
+        }
+        else
+        {
+            anim.SetBool("Talk", true);
+            Debug.Log("shop naim test");
+        }
         PlayAnimation(category);
         float animClipLength;
         if (category >= SoundLibrary.Categories.ShopEnter)
@@ -182,6 +192,7 @@ public class TorokPersonalityAI : MonoBehaviour
         //ResetGameAnimationParameter();
 
         anim.SetBool("Talk", false);
+        shopAnim.SetBool("Talking", false);
         isPlaying = false;
     }
 
