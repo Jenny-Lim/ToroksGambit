@@ -238,7 +238,7 @@ public class PhysicalShop : MonoBehaviour
             shopPieceModels[i] = Instantiate(pieceModels[pieceType[i]], pieceSpots[i].position,Quaternion.identity, gameObject.transform);
             shopPieceModels[i].transform.Rotate(0.0f,-90.0f,0.0f, Space.Self);
             //change price
-            priceText[i].text = prices[pieceType[i]].ToString();
+            priceText[i].text = prices[pieceType[i]].ToString() + " Tickets";
             //re activate panels
             //uiSpots[i].SetActive(true);
         }

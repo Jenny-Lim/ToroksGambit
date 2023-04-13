@@ -15,11 +15,13 @@ public class SaveManager : MonoBehaviour
     public bool hasSaveGame;
     public float savedVolume;
 
+    [SerializeField] GameObject saveGameText;
 
     private void Awake()
     {
 
         //Debug.Log(Application.persistentDataPath);
+        saveGameText.SetActive(false);
         saveGameFilePath = Application.persistentDataPath + "/SaveData.dat";
         saveVolumePath = Application.persistentDataPath + "/VolumeData.dat";
         instance = this;
@@ -108,8 +110,15 @@ public class SaveManager : MonoBehaviour
 
         hasSaveGame = true;
 
+        StartCoroutine(SaveTextCoRo());
         Debug.Log("SAVE SUCCESFUL");
 
+    }
+    private IEnumerator SaveTextCoRo()
+    {
+        saveGameText.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        saveGameText.SetActive(false);
     }
 }
 
