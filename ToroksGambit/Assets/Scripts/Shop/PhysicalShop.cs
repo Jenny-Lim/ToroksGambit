@@ -23,9 +23,9 @@ public class PhysicalShop : MonoBehaviour
     [SerializeField] private CameraHeadMovements c;
     private Camera cam;
 
-    [SerializeField] private GameObject pieceDescriptionObject;
+    [SerializeField] public GameObject pieceDescriptionObject;
 
-    [SerializeField] private TextMeshProUGUI pieceDescription;
+    [SerializeField] public TextMeshProUGUI pieceDescription;
 
     [SerializeField] private Canvas canvas;
 
@@ -151,10 +151,7 @@ public class PhysicalShop : MonoBehaviour
             inventoryShopCount[i].text = Inventory.instance.pieceCountText[i].text;
         }
 
-        Vector2 mousePos = Input.mousePosition / canvas.scaleFactor;
-        mousePos.x = (float)(mousePos.x - (canvasWidth * 0.5));
-        mousePos.y = (float)(mousePos.y - (canvasHeight * 0.5));
-        descriptionRect.anchoredPosition = mousePos;
+        SetTextPosition();
 
     }
 
@@ -242,6 +239,14 @@ public class PhysicalShop : MonoBehaviour
             //re activate panels
             //uiSpots[i].SetActive(true);
         }
+    }
+
+    public void SetTextPosition()
+    {
+        Vector2 mousePos = Input.mousePosition / canvas.scaleFactor;
+        mousePos.x = (float)(mousePos.x - (canvasWidth * 0.5));
+        mousePos.y = (float)(mousePos.y - (canvasHeight * 0.5));
+        descriptionRect.anchoredPosition = mousePos;
     }
 
     public void EnterShop()

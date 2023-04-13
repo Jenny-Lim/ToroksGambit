@@ -120,6 +120,8 @@ public class Inventory : MonoBehaviour
     public void InventoryUpdate()
     {
 
+        PhysicalShop.instance.SetTextPosition();
+
         if((deployPointCount >= visualPointCap) || (deployPieceCount >= visualPieceCap))
         {
             //Debug.Log("CAP REACHED");
@@ -177,6 +179,7 @@ public class Inventory : MonoBehaviour
             {
                 if (hit.transform.gameObject.CompareTag("Chess Board"))//if you hit a board tile -- AND the tile is deployment tile if player
                 {
+                    PhysicalShop.instance.pieceDescriptionObject.SetActive(false);
 
                     //remove other visuals
                     foreach (GameObject obj in PiecePrefabs)
@@ -379,6 +382,10 @@ public class Inventory : MonoBehaviour
                 {
 
                     Piece hitPiece = hit.transform.GetComponent<Piece>();
+
+                    PhysicalShop.instance.pieceDescription.text = hitPiece.type.ToString();
+                    PhysicalShop.instance.pieceDescriptionObject.SetActive(true);
+
                     if (Input.GetMouseButtonDown(1) && hitPiece && !hitPiece.isTorok && (int)hitPiece.type < 5)
                     {
                         //print("inside removePLayer");
@@ -415,6 +422,8 @@ public class Inventory : MonoBehaviour
             }
             else
             {
+                PhysicalShop.instance.pieceDescriptionObject.SetActive(false);
+
                 //remove other visuals
                 foreach (GameObject obj in PiecePrefabs)
                 {
