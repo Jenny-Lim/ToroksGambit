@@ -46,6 +46,8 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private float waitTimeToMove;
     private float moveTimer = 0;
 
+    private bool usOldTickets = false;
+
     public GameState GetGameState()
     {
         return currentState;
@@ -86,6 +88,11 @@ public class GameStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Input.GetKeyUp("t"))
+        {
+            usOldTickets = !usOldTickets;
+        }
 
         switch (currentState)
         {
@@ -312,7 +319,20 @@ public class GameStateManager : MonoBehaviour
 
         Currency.instance.ticketTextObject.SetActive(true);// remove this once this function gets organized just to see the currency number as the tickets get there
         Currency.instance.ticketBackgroundObject.SetActive(true);
-        int numOfTickets = (currentLevelNumber + 1) * 6;
+
+        //calc num of tickets
+        int numOfTickets = 0;
+        if (usOldTickets)
+        {
+            numOfTickets = (currentLevelNumber + 1) * 6;
+        }
+        else
+        {
+            numOfTickets = Mathf.FloorToInt(2 * Mathf.Sqrt(currentLevelNumber + 1) + 4);
+        }
+        
+
+
         ticketParticleSystem.SpawnTickets(numOfTickets);//<- needs to be abled to get that number from the currency object for how many tickets you got
 
         victoryText.SetActive(true);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.PlasticSCM.Editor.WebApi;
 
 public class Board : MonoBehaviour
 {
@@ -157,6 +158,11 @@ public class Board : MonoBehaviour
 
     public void BoardUpdate()
     {
+        if (Input.GetKeyUp("l") && GameStateManager.instance.GetGameState() != GameStateManager.GameState.win)
+        {
+            GameStateManager.instance.ChangeGameState(GameStateManager.GameState.win);
+        }
+
         //print("in bvoard update");
         DeactivateDeployTiles();
 
