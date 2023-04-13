@@ -249,12 +249,9 @@ public class Inventory : MonoBehaviour
                                              {
                                                  if (heldPieces[storedPiece] > 0 && !deployCapReached && (deployPointCount + deployValues[storedPiece]) <= visualPointCap)
                                                  {
-                                                     //AlterPiece((InventoryPieces)storedPiece, -1);
-                                                     //deployPieceCount++;
-                                                     //deployPointCount += deployValues[storedPiece];
-                                                     //SetDeployUI();
                                                      if (Board.instance.PlacePiece(hit.transform, storedPiece) == true)
                                                      {
+                                                        
                                                         SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.MovePieceEnd]);
                                                         AlterPiece((InventoryPieces)storedPiece, -1);
                                                         deployPieceCount++;
@@ -284,6 +281,7 @@ public class Inventory : MonoBehaviour
                                     SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.PlaceFail]);
                                 }
                             }
+                            /*
                             else if (storedPiece == -1)// if on remove
                             {
                                 for(int i = 0;i<8;i++)
@@ -321,6 +319,7 @@ public class Inventory : MonoBehaviour
                                 }
                                 
                             }
+                            */
                         }
 
                         if(!Board.instance.torokPiece && storedPiece == -1)//place peice nd remove form inevtory
