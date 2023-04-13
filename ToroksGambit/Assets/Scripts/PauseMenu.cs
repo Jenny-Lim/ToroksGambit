@@ -81,6 +81,7 @@ public class PauseMenu : MonoBehaviour
         CameraHeadMovements.canScroll = false;
         Inventory.instance.objectiveArea.SetActive(false);
         Inventory.instance.startButton.SetActive(false);
+        LegendUI.instance.DisableLegendObject();
         Inventory.instance.DisableDeployUI();
         Inventory.instance.HideInventoryPanel();
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
