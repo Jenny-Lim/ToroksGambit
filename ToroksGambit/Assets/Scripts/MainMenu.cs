@@ -89,6 +89,9 @@ public class MainMenu : MonoBehaviour
         {
             Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)i, 1); // bishop + knight
         } // no king / queen / rook
+        Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)3, 0); // bishop + knight
+        Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)4, 0); // bishop + knight
+
 
         // reset currency
         Currency.instance.SetCurrency(0);
