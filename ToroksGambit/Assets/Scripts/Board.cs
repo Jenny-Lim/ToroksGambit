@@ -14,11 +14,11 @@ public class Board : MonoBehaviour
 
     public GameObject[,] hitBoxBoard;//array for hitboxes for raycasting
 
-    public GameObject[,] AIVisualBoard;
+    public GameObject[,] SwappedHitBoxBoard;
 
     public static GameObject[,] pieceBoard;//array for storing pieces and piece location -- made static (jenny)
 
-    public static GameObject[,] AIPieceBoard;
+    public static GameObject[,] CopiedPieceBoard;
 
     private GameObject[,] winSpotBoard;
 
@@ -134,14 +134,14 @@ public class Board : MonoBehaviour
         boardPosition = transform.position;
         cam = Camera.main;
         hitBoxBoard = new GameObject[boardSize,boardSize];
-        AIVisualBoard = new GameObject[boardSize,boardSize];
+        SwappedHitBoxBoard = new GameObject[boardSize,boardSize];
         pieceBoard = new GameObject[boardSize, boardSize];
-        AIPieceBoard = new GameObject[boardSize, boardSize];
+        CopiedPieceBoard = new GameObject[boardSize, boardSize];
         moveTileBoard = new GameObject[boardSize, boardSize];
         winSpotBoard = new GameObject[boardSize, boardSize];
         deployBoard = new GameObject[boardSize, boardSize];
         idleDialogueCounter = Random.Range(TorokPersonalityAI.instance.maxTimeBetweenIdleBark,TorokPersonalityAI.instance.maxTimeBetweenIdleBark);
-        BuildBoard(AIBoardParent.transform.position, AIVisualBoard, AIBoardParent);
+        BuildBoard(AIBoardParent.transform.position, SwappedHitBoxBoard, AIBoardParent);
         BuildBoard(boardPosition, hitBoxBoard, PlayerBoardParent);
     }
 
@@ -531,7 +531,7 @@ public class Board : MonoBehaviour
         }
         else if(boardNum == 1)
         {
-            if (AIPieceBoard[xPos, yPos] != null && pieceId != -1)
+            if (CopiedPieceBoard[xPos, yPos] != null && pieceId != -1)
             {
                 Debug.LogError("Error trying to place piece where piece already is. on ai board");
                 return false;
@@ -539,7 +539,7 @@ public class Board : MonoBehaviour
 
             if (pieceId >= 0)
             {
-                GameObject newPiece = AIPieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], AIVisualBoard[xPos,yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate piece and place in pieceBoard location
+                GameObject newPiece = CopiedPieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], SwappedHitBoxBoard[xPos,yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate piece and place in pieceBoard location
                 //newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = pieceMats[0];//ik this is bad but whatever
                 Piece piece = newPiece.GetComponent<Piece>();
                 piece.pieceX = xPos;
@@ -592,7 +592,7 @@ public class Board : MonoBehaviour
         }
         else if(boardNum == 1)
         {
-        if (AIPieceBoard[xPos, yPos] != null)
+        if (CopiedPieceBoard[xPos, yPos] != null)
         {
             //Debug.Log("Trace Stack for ");
             Debug.LogError("Error trying to place piece where piece already is. ON AI BOARD");
@@ -601,7 +601,7 @@ public class Board : MonoBehaviour
 
         if (pieceId >= 0)
         {
-            GameObject newPiece = AIPieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], AIVisualBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate piece and place in pieceBoard location
+            GameObject newPiece = CopiedPieceBoard[xPos, yPos] = Instantiate(piecePrefabs[pieceId], SwappedHitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate piece and place in pieceBoard location
             Piece piece = newPiece.GetComponent<Piece>();
             newPiece.transform.GetChild(1).GetComponent<MeshRenderer>().material = TorokPieceMats[(int)piece.type];
             if ((int)piece.type <= (int)Piece.PieceType.king)
@@ -760,13 +760,13 @@ public class Board : MonoBehaviour
         {
             if (obstacleId >= 0 && obstacleId < obstaclePrefabs.Length)
             {
-                GameObject newPiece = AIPieceBoard[xPos, yPos] = Instantiate(obstaclePrefabs[obstacleId], AIVisualBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate obstacle and place in pieceBoard location
+                GameObject newPiece = CopiedPieceBoard[xPos, yPos] = Instantiate(obstaclePrefabs[obstacleId], SwappedHitBoxBoard[xPos, yPos].transform.position + (Vector3.up * verticalPlaceOffset), Quaternion.identity, PlayerBoardParent.transform);//instantiate obstacle and place in pieceBoard location
                 Piece piece = newPiece.GetComponent<Piece>();
                 piece.pieceX = xPos;
                 piece.pieceY = yPos;
                 if (obstacleId == 1)//if its a hole, remove renderer of that tile
                 {
-                    AIVisualBoard[xPos, yPos].GetComponent<MeshRenderer>().enabled = false;
+                    SwappedHitBoxBoard[xPos, yPos].GetComponent<MeshRenderer>().enabled = false;
                 } 
 
             }
@@ -1253,8 +1253,45 @@ public class Board : MonoBehaviour
 
         bool pawnWillPromote = false;
 
-        if (((!piece.isTorok && endY == boardSize - 1 && piece.type == Piece.PieceType.pawn) || (piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)))
+        bool playerPawnPromote = false;
+        bool torokPawnPromote = false;
+
+        if(!piece.isTorok && piece.type == Piece.PieceType.pawn)//if player pawn reaches end of board
+        {
+
+            bool isAtEnd = true;
+            int holeTracker = 0;
+
+            for(int i = endY;i<boardSize;i++)
+            {
+                Debug.Log(i);
+                if(pieceBoard[endX,i])
+                {
+                Piece nextPiece = pieceBoard[endX,i].GetComponent<Piece>();
+                Debug.Log(nextPiece.type);
+                if(nextPiece.type != Piece.PieceType.hole)
+                {
+                    holeTracker++;
+                }
+                }
+                else
+                {
+                    holeTracker++;
+                    Debug.Log("empty");
+                }
+            }
+            if(holeTracker <= 1)
+            {
+                playerPawnPromote = true;
+            }
+        }
+        else if (((piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)))
         { 
+            torokPawnPromote = true;
+        }
+
+        if(playerPawnPromote || torokPawnPromote)
+        {
             pawnWillPromote = true;
         }
 
@@ -1323,7 +1360,8 @@ public class Board : MonoBehaviour
             pieceBoard[startX, startY] = null;
         }
 
-        if (!piece.isTorok && endY == boardSize - 1 && piece.type == Piece.PieceType.pawn)
+        //if (!piece.isTorok && endY == boardSize - 1 && piece.type == Piece.PieceType.pawn)
+        if(playerPawnPromote)
         {
             //PlacePiece(endX, endY, 4);
             //Debug.Log("PLAYER PAWN REACHED END");
@@ -1335,7 +1373,8 @@ public class Board : MonoBehaviour
             //PlacePiece(endX, endY, 4);
 
         }
-        if (piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)//torok ppawn promotion
+        //if (piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)//torok ppawn promotion
+        if(torokPawnPromote)
         {
             //Debug.Log("TOROK PAWN REACHED END");
             // check what thingies are on the pawn, apply them to new piece
@@ -1974,9 +2013,9 @@ public class Board : MonoBehaviour
         {
             for(int j=0;j<boardSize;j++)
             {
-                Destroy(AIPieceBoard[i,j]);
-                AIVisualBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
-                AIPieceBoard[i,j] = null;
+                Destroy(CopiedPieceBoard[i,j]);
+                SwappedHitBoxBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
+                CopiedPieceBoard[i,j] = null;
             }
         }
         for(int i =0;i<boardSize;i++)
@@ -1991,23 +2030,23 @@ public class Board : MonoBehaviour
                 if((int)realPiece.type > 5)
                 {
                     PlaceObstacle(i,j,(int)realPiece.type -6,1);
-                    AIPieceBoard[i,j].transform.parent = AIBoardParent.transform;
+                    CopiedPieceBoard[i,j].transform.parent = AIBoardParent.transform;
                 }
                 else if(realPiece.isTorok)
                 {
                     PlacePieceTorok(i,j,(int)realPiece.type,1);
-                    Piece AIPiece = AIPieceBoard[i, j].GetComponent<Piece>();
+                    Piece AIPiece = CopiedPieceBoard[i, j].GetComponent<Piece>();
                     AIPiece.isTough = realPiece.isTough;
                     AIPiece.lastChance = realPiece.lastChance;
                     AIPiece.promote = realPiece.promote;
-                    AIPieceBoard[i,j].transform.parent = AIBoardParent.transform;
+                    CopiedPieceBoard[i,j].transform.parent = AIBoardParent.transform;
                     //add traits
                     ActivateTraitIcons(AIPiece);
                 }
                 else
                 {
                     PlacePiece(i,j,(int)realPiece.type,1);
-                    AIPieceBoard[i,j].transform.parent = AIBoardParent.transform;
+                    CopiedPieceBoard[i,j].transform.parent = AIBoardParent.transform;
                 }
                 }
             }
