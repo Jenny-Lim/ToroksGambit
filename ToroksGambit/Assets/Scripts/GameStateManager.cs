@@ -435,10 +435,12 @@ public class GameStateManager : MonoBehaviour
 
     public void EndTurn()
     {
-        Board.playerInCheck = false;
+        Board.playerInCheck = false;//these are redundant but i remember having an issue but dont remember if these solved it but it works some im keeping em
         Board.torokInCheck = false;
         Board.playerInCheck = Board.instance.IsKingInCheck(false);
         Board.torokInCheck = Board.instance.IsKingInCheck(true);
+
+        Inventory.instance.SetObjective();
 
         moveTimer = 0;
 
@@ -464,6 +466,7 @@ public class GameStateManager : MonoBehaviour
 
             SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.WinLevel]);
             ChangeGameState(GameState.win);
+            Board.instance.canMove = true;
             return;
             //reset this state
         }
@@ -484,7 +487,6 @@ public class GameStateManager : MonoBehaviour
         InterruptManager.instance.EnactInterrupts(InterruptManager.InterruptTrigger.AfterTurn);
         turnCount++;
         isPlayersTurn = !isPlayersTurn;
-        Inventory.instance.SetObjective();
         //print("Current Board Score " + BoardAnalyzer.instance.Analyze(Board.pieceBoard));
         //check win condition
 

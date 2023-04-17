@@ -1038,7 +1038,7 @@ public class Board : MonoBehaviour
         }
         // print("move not valid");
         GameStateManager.lastValidateCheck = false;
-        canMove = true;
+        
 
         float currBoardScore = BoardAnalyzer.instance.Analyze(pieceBoard, GameStateManager.turnCount);
         if (currBoardScore - lastAnalyzedBoardScore > goodBadMoveThreshold)
@@ -1050,7 +1050,8 @@ public class Board : MonoBehaviour
             TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.MakesBadMove);//      -> might need to be swapped with ^
         }
         lastAnalyzedBoardScore = currBoardScore;
-        yield break;
+        canMove = true;
+        //yield break;
 
     }
     //old move validator (not coroutine)

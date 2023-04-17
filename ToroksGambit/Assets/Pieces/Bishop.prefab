@@ -68,6 +68,7 @@ MonoBehaviour:
   promoteIcon: {fileID: 259762943629450592}
   toughIcon: {fileID: 3268578072781371395}
   lastChanceIcon: {fileID: 142412892404933400}
+  traitCount: 0
 --- !u!65 &8599715277449467109
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -79,8 +80,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.42530215, y: 0.9992095, z: 0.42223978}
-  m_Center: {x: 0, y: 0.50443786, z: 0.0016915798}
+  m_Size: {x: 0.27540445, y: 0.84647167, z: 0.068535805}
+  m_Center: {x: -0.011320353, y: 0.42806894, z: 0.02062273}
 --- !u!1 &6421039718102586662
 GameObject:
   m_ObjectHideFlags: 0
