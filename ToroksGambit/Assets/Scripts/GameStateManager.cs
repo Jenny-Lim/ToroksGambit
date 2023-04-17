@@ -139,9 +139,10 @@ public class GameStateManager : MonoBehaviour
                             else
                             {
                                 EndTurn();
+                                Board.instance.canMove = true;
                             }
                             moveTimer = 0;
-                            //Board.instance.canMove = false;
+                            //Board.instance.canMove = true;
                         }
                     }
 
