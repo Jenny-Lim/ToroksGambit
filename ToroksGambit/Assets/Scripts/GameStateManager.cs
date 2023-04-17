@@ -141,7 +141,7 @@ public class GameStateManager : MonoBehaviour
                                 EndTurn();
                             }
                             moveTimer = 0;
-                            Board.instance.canMove = false;
+                            //Board.instance.canMove = false;
                         }
                     }
 
