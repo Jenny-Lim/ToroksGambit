@@ -826,6 +826,7 @@ public class Board : MonoBehaviour
             for (int j = 0; j < boardSize; j++)
             {
                 hitBoxBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
+                SwappedHitBoxBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
                 winSpotBoard[i, j].transform.GetChild(1).gameObject.SetActive(true);
             }
            
@@ -2014,7 +2015,7 @@ public class Board : MonoBehaviour
             for(int j=0;j<boardSize;j++)
             {
                 Destroy(CopiedPieceBoard[i,j]);
-                SwappedHitBoxBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
+                //SwappedHitBoxBoard[i, j].GetComponent<MeshRenderer>().enabled = true;
                 CopiedPieceBoard[i,j] = null;
             }
         }
