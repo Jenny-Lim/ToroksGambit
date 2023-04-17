@@ -46,7 +46,7 @@ public class PhysicalShop : MonoBehaviour
     [SerializeField] private TextMeshPro leaveSignText;
     private Coroutine activeCoRo;
 
-    private int queenLevelOpen = 1;
+    private int queenLevelOpen = 2;
 
     public AudioClip[] shopAudioClips;
 
