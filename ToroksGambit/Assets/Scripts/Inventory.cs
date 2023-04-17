@@ -75,7 +75,7 @@ public class Inventory : MonoBehaviour
     private int deployPointCount = 0;
     private int deployPieceCount = 0;
 
-    private int[] deployValues = {1, 3, 3, 5, 9};
+    private int[] deployValues = {1, 2, 2, 4, 5};
 
     [SerializeField] private GameObject deployUIObject;
 
