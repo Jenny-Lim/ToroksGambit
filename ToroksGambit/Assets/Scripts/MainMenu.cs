@@ -118,6 +118,7 @@ public class MainMenu : MonoBehaviour
     {
         SoundObjectPool.instance.GetPoolObject().Play(buttonAudioClip);
         SaveManager.instance.LoadSave();
+        Inventory.instance.updateCountText();
         GameStateManager.instance.SetNextLevel(); // bug possibly here
         Board.instance.ClearMoveTiles();
         
