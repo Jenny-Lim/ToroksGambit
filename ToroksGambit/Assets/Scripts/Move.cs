@@ -30,6 +30,9 @@ public class Move
     public bool movingLastChance;
     public bool takenLastChance;
 
+    public bool movingPawnPromote;
+    public bool takenPawnPromote;
+
     public bool setFirstMove;
     public bool takenPieceSetFirstMove;
 
@@ -40,7 +43,7 @@ public class Move
     public bool pawnPromote;
         
 
-    public Move(int x1, int y1, int x2, int y2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck, bool mPro, bool tPro, bool mTough, bool tTough, bool mLC, bool tLC, bool moveCheck, bool takenMoveCheck, bool pawnPromoted)
+    public Move(int x1, int y1, int x2, int y2, int pieceIdMoving, int pieceIdTaken, bool promoteCheck, bool movingTorokCheck, bool takingTorokCheck, bool mPro, bool tPro, bool mTough, bool tTough, bool mLC, bool tLC, bool moveCheck, bool takenMoveCheck, bool pawnPromoted, bool mPP, bool tPP)
     {
         startX = x1;
         startY = y1;
@@ -65,6 +68,9 @@ public class Move
         takenPieceSetFirstMove = takenMoveCheck;
 
         pawnPromote = pawnPromoted;
+
+        movingPawnPromote = mPP;
+        takenPawnPromote = tPP;
 
     }
 

@@ -390,10 +390,10 @@ public class Board : MonoBehaviour
         }
         }
 
-        //if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
-        //{
-        //    UndoMove();
-        //}
+        if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
+        {
+            UndoMove();
+        }
 
         if (clickedPiece != null)//added by jordan to indicate what piece is clicked
         {
@@ -1177,6 +1177,9 @@ public class Board : MonoBehaviour
         bool movingLastChance = false;
         bool takenLastChance = false;
 
+        bool movingPawnPromote = false;
+        bool takenPawnPromote = false;
+
         bool takenPieceMoved = false;
 
         int pieceIdMoving = 0;
@@ -1195,6 +1198,7 @@ public class Board : MonoBehaviour
         movingTough = piece.isTough;
         movingPromote = piece.promote;
         movingLastChance = piece.lastChance;
+        movingPawnPromote = piece.pawnPromote;
 
         pieceIdMoving = (int)(piece.type) + 1;
         if(piece.isTorok)
@@ -1213,6 +1217,7 @@ public class Board : MonoBehaviour
             takenTough = pieceForCaptureId.isTough;
             takenPromote = pieceForCaptureId.promote;
             takenLastChance = pieceForCaptureId.lastChance;
+            takenPawnPromote = pieceForCaptureId.pawnPromote;
 
             takenPieceMoved = pieceForCaptureId.moved;
 
@@ -1250,6 +1255,7 @@ public class Board : MonoBehaviour
         bool oldIsTorok = piece.isTorok;
         bool oldIsTough = piece.isTough;
         bool oldLastChance = piece.lastChance;
+        bool oldPawnPromote = piece.pawnPromote;
         //bool oldPromote = piece.promote;
 
         bool pawnWillPromote = false;
@@ -1294,10 +1300,11 @@ public class Board : MonoBehaviour
         if(playerPawnPromote || torokPawnPromote)
         {
             pawnWillPromote = true;
+            movingPawnPromote = true;
         }
 
 
-            moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, lastChanceCheck, piece.moved, takenPieceMoved, pawnWillPromote)); // moveList is a list of the moves done
+            moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, lastChanceCheck, piece.moved, takenPieceMoved, pawnWillPromote, movingPawnPromote, takenPawnPromote)); // moveList is a list of the moves done
 
         if(willPromote && !lastChanceCheck)//if this piece captured another piece and has promotion
         {
@@ -1321,6 +1328,7 @@ public class Board : MonoBehaviour
                 endPiece.isTough = oldIsTough;
                 //endPiece.promote = willPromote;
                 endPiece.lastChance = oldLastChance;
+                endPiece.pawnPromote = oldPawnPromote;
 
                 //ActivateTraitIcons(endPiece); // this is ok
 
@@ -1366,10 +1374,13 @@ public class Board : MonoBehaviour
         {
             //PlacePiece(endX, endY, 4);
             //Debug.Log("PLAYER PAWN REACHED END");
+
             Destroy(pieceBoard[endX, endY]);
             pieceBoard[endX, endY] = null;
             PlacePiece(endX, endY, 4,0);
 
+            Piece newPiece = pieceBoard[endX, endY].GetComponent<Piece>();
+            newPiece.pawnPromote = true;
             //piece.pawnPromote = true;
             //PlacePiece(endX, endY, 4);
 
@@ -1392,6 +1403,7 @@ public class Board : MonoBehaviour
             newPiece.isTough = newTough;
             newPiece.promote = newPromote;
             newPiece.lastChance = newLC;
+            newPiece.pawnPromote = true;
             //Debug.Log("newpiece promote; " + newPiece.promote);
             ActivateTraitIcons(newPiece);
         }
@@ -1484,7 +1496,12 @@ public class Board : MonoBehaviour
                 oldPiece.promote = moveList[moveList.Count - 1].movingPromote;
                 //ActivateTraitIcons(oldPiece);
             }
-            PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0,0);
+            else
+            {
+                PlacePiece(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, 0,0);
+                Piece oldPiece = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY].GetComponent<Piece>();
+                oldPiece.pawnPromote = true;
+            }
 
             MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
             pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]; // come back here
@@ -1526,6 +1543,7 @@ public class Board : MonoBehaviour
             endScript.isTough = moveList[moveList.Count -1].takenTough;
             endScript.promote = moveList[moveList.Count -1].takenPromote;
             endScript.lastChance = moveList[moveList.Count -1].takenLastChance;
+            endScript.pawnPromote = moveList[moveList.Count -1].takenPawnPromote;;
 
             //ActivateTraitIcons(endScript);
 
@@ -1539,6 +1557,7 @@ public class Board : MonoBehaviour
             startPosPiece.isTough = moveList[moveList.Count -1].movingTough;
             startPosPiece.promote = moveList[moveList.Count -1].movingPromote;
             startPosPiece.lastChance = moveList[moveList.Count -1].movingLastChance;
+            startPosPiece.pawnPromote = moveList[moveList.Count -1].movingPawnPromote;;
             //ActivateTraitIcons(startPosPiece);
         }
         //else
@@ -1853,9 +1872,17 @@ public class Board : MonoBehaviour
             {
                 if(pieceBoard[i,j])
                 {
-                    if(!pieceBoard[i,j].GetComponent<Piece>().isTorok && (int)pieceBoard[i,j].GetComponent<Piece>().type < 5)
+                    Piece invPiece = pieceBoard[i,j].GetComponent<Piece>();
+                    if(!invPiece.isTorok && (int)invPiece.type < 5)
                     {
-                        Inventory.instance.AlterPiece((Inventory.InventoryPieces)pieceBoard[i,j].GetComponent<Piece>().type, 1);
+                        if(invPiece.pawnPromote)
+                        {
+                            Inventory.instance.AlterPiece((Inventory.InventoryPieces)0, 1);
+                        }
+                        else
+                        {
+                            Inventory.instance.AlterPiece((Inventory.InventoryPieces)pieceBoard[i,j].GetComponent<Piece>().type, 1);
+                        }
                     }
                 }
             }
