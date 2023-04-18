@@ -9926,6 +9926,13 @@ MonoBehaviour:
   - testingwallmove2
   - Level3Official..
   - TraitLevel1V2
+  - Level1V2
+  - TraitLevel1V3
+  - TraitLevel1V4
+  - TraitLevel1V5
+  - Level1V3
+  - TraitMax
+  - QueenBossV2
 --- !u!4 &269598401
 Transform:
   m_ObjectHideFlags: 0
@@ -48767,11 +48774,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNames:
+  - Level1V3
   - Level1Official.
-  - Level2Official..
   - Level3Official..
-  - KOTH_Next
-  - TraitLevel1V2
+  - TraitMax
+  - TraitLevel1V3
+  - QueenBossV2
   currentLevelNumber: 0
   winCondition: {fileID: 11400000, guid: 89e29c72f47f1d847983930dab73a923, type: 2}
   currentState: 0
