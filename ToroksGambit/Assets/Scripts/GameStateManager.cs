@@ -447,28 +447,6 @@ public class GameStateManager : MonoBehaviour
 
         isPlayersTurn = !isPlayersTurn;
 
-        //stalemate check
-        if (isPlayersTurn)
-        {
-            List<Move> playerMoves = Board.instance.GetAllMoves(false);
-            if (playerMoves.Count < 1)//players turn and cannot go, stalemate
-            {
-                Debug.Log("stalemate on players turn");
-                ChangeGameState(GameState.lose);
-                return;
-            }
-        }
-        else
-        {
-            List<Move> torokMoves = Board.instance.GetAllMoves(true);
-            if (torokMoves.Count < 1)//toroks turn and cannot go, stalemate
-            {
-                Debug.Log("stalemate on toroks turn");
-                ChangeGameState(GameState.lose);
-                return;
-            }
-        }
-
         //win condition checks
         if (winCondition != null)
         {
@@ -501,6 +479,28 @@ public class GameStateManager : MonoBehaviour
             return;
             //Debug.Log("Torok has won.");
             //lose logic
+        }
+
+        //stalemate check
+        if (isPlayersTurn)
+        {
+            List<Move> playerMoves = Board.instance.GetAllMoves(false);
+            if (playerMoves.Count < 1)//players turn and cannot go, stalemate
+            {
+                Debug.Log("stalemate on players turn");
+                ChangeGameState(GameState.lose);
+                return;
+            }
+        }
+        else
+        {
+            List<Move> torokMoves = Board.instance.GetAllMoves(true);
+            if (torokMoves.Count < 1)//toroks turn and cannot go, stalemate
+            {
+                Debug.Log("stalemate on toroks turn");
+                ChangeGameState(GameState.lose);
+                return;
+            }
         }
 
         if (Board.playerInCheck || Board.torokInCheck)
