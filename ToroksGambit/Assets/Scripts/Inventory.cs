@@ -156,7 +156,13 @@ public class Inventory : MonoBehaviour
 
         if (Input.GetKeyUp("l"))
         {
-            GameStateManager.instance.ChangeGameState(GameStateManager.GameState.win);
+            if(GameStateManager.instance.currentLevelNumber == GameStateManager.instance.LevelNames.Count - 1 && GameStateManager.instance.GetGameState() != GameStateManager.GameState.winWholeGame)
+            {
+                GameStateManager.instance.ChangeGameState(GameStateManager.GameState.winWholeGame);
+            }
+            else if (GameStateManager.instance.GetGameState() != GameStateManager.GameState.win) {
+                GameStateManager.instance.ChangeGameState(GameStateManager.GameState.win);
+            }
         }
 
         objectiveArea.SetActive(CameraHeadMovements.instance.menuDone);
