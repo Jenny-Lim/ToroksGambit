@@ -1311,7 +1311,7 @@ public class Board : MonoBehaviour
 
             moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, lastChanceCheck, piece.moved, takenPieceMoved, pawnWillPromote, movingPawnPromote, takenPawnPromote)); // moveList is a list of the moves done
 
-        if(willPromote && !lastChanceCheck)//if this piece captured another piece and has promotion
+        if(willPromote && !lastChanceCheck && piece.type != Piece.PieceType.queen)//if this piece captured another piece and has promotion
         {
             //Debug.Log("PROMOTE PIECE");
             if(piece.type != Piece.PieceType.queen)
@@ -1326,7 +1326,7 @@ public class Board : MonoBehaviour
                 //}
                 //else
                 //{
-                    //endPiece.promote = willPromote;
+                endPiece.promote = willPromote;
                 //}
 
                 endPiece.isTorok = oldIsTorok;
@@ -1356,10 +1356,10 @@ public class Board : MonoBehaviour
 
             Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>();//get piece script of object that moved
                 
-            endPiece.promote = willPromote;
-            endPiece.isTorok = oldIsTorok;
-            endPiece.isTough = oldIsTough;
-            endPiece.lastChance = oldLastChance;
+            //endPiece.promote = willPromote;
+            //endPiece.isTorok = oldIsTorok;
+            //endPiece.isTough = oldIsTough;
+            //endPiece.lastChance = oldLastChance;
 
             //ActivateTraitIcons(endPiece);
 
@@ -1587,7 +1587,7 @@ public class Board : MonoBehaviour
         //p.promote = oldPromote;
         //p.lastChance = oldLastChance;
         //ActivateTraitIcons(p);
-
+        ActivateTraitIconsAllPieces();
         moveList.RemoveAt(moveList.Count -1);
 
         //undoCounter--;
