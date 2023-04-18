@@ -928,6 +928,8 @@ public class Board : MonoBehaviour
         //find type of piece
         Piece pieceScript = pieceBoard[pieceX, pieceY].GetComponent<Piece>();
 
+        ActivateTraitIcons(pieceScript);
+
         pieceScript.pieceX = pieceX;
         pieceScript.pieceY = pieceY;
 
@@ -956,6 +958,7 @@ public class Board : MonoBehaviour
                 //canMove = true;
                 //MovePieceVisualTeleport(pieceX, pieceY, endX, endY);
                 MovePiece(pieceX, pieceY, endX, endY);
+                ActivateTraitIconsAllPieces();
 
                 //sound effect of torok taking a piece
                 if (pieceAtEndLocation)
@@ -1300,6 +1303,7 @@ public class Board : MonoBehaviour
         else if (((piece.isTorok && endY == 0 && piece.type == Piece.PieceType.pawn)))
         { 
             torokPawnPromote = true;
+            willPromote = false;
         }
 
         if(playerPawnPromote || torokPawnPromote)

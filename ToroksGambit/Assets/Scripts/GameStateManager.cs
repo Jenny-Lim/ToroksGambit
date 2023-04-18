@@ -119,8 +119,8 @@ public class GameStateManager : MonoBehaviour
                     if (!TorokIsMoving)
                     {
                         resultingMove = new DataHolder<Move>();
-                        MinMax.instance.GetMinMaxMoveIter(resultingMove);
                         Board.instance.SwapBoard();
+                        MinMax.instance.GetMinMaxMoveIter(resultingMove);
                         TorokIsMoving = true;
                     }
                     else
@@ -129,8 +129,8 @@ public class GameStateManager : MonoBehaviour
                         if (MinMax.instance.finishedSearch == true && Board.instance.canMove & moveTimer >= waitTimeToMove)//finished search and can make move
                         {
                             //setting board visually
-                            Board.instance.SwapBoard();
                             Board.instance.ActivateTraitIconsAllPieces();
+                            Board.instance.SwapBoard();
                             //end of visual setting
                             if (resultingMove.data != null)
                             {
@@ -139,6 +139,7 @@ public class GameStateManager : MonoBehaviour
                             else
                             {
                                 EndTurn();
+                                Board.instance.ActivateTraitIconsAllPieces();
                                 Board.instance.canMove = true;
                             }
                             moveTimer = 0;
