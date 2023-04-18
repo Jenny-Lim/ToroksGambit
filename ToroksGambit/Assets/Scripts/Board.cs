@@ -1587,7 +1587,7 @@ public class Board : MonoBehaviour
         //p.promote = oldPromote;
         //p.lastChance = oldLastChance;
         //ActivateTraitIcons(p);
-        ActivateTraitIconsAllPieces();
+        //ActivateTraitIconsAllPieces();
         moveList.RemoveAt(moveList.Count -1);
 
         //undoCounter--;
