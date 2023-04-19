@@ -970,9 +970,11 @@ public class Board : MonoBehaviour
                     float rand = Random.Range(0, 1);
                     if (!pieceScript.isTorok)//the piece moving is not torok, ie torok is being taken
                     {
-                        if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LosesPiece, rand))
-                        {
-                            TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LosesPiece);
+                        if (GameStateManager.mostRecentWinCheckResult == BaseCondition.Condition.Player) {
+                            if (TorokPersonalityAI.instance.ShouldPlay(SoundLibrary.Categories.LosesPiece, rand))
+                            {
+                                TorokPersonalityAI.instance.PlayAnimationAndSound(SoundLibrary.Categories.LosesPiece);
+                            }
                         }
                     }
                     else//piece being taken is players piece
