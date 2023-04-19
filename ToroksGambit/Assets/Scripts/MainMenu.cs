@@ -48,10 +48,10 @@ public class MainMenu : MonoBehaviour
 
     void OnEnable()
     {
-        TorokPersonalityAI.instance.ResetGameAnimationParameter();
-        TorokPersonalityAI.instance.anim.SetBool("InTitle", true); // just for torok
         startButton.interactable = false;
         continueButton.interactable = false;
+        TorokPersonalityAI.instance.ResetGameAnimationParameter();
+        TorokPersonalityAI.instance.anim.SetBool("InTitle", true); // just for torok
         //print("yeye");
         Invoke("GoBackToTitle", 1.0f); // it was some shit with execution order
         //GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
@@ -60,10 +60,13 @@ public class MainMenu : MonoBehaviour
 
     void GoBackToTitle()
     {
-        startButton.interactable = true; //sometimes intro doesnt play -- if you press play when not in the title coro. so heres a bandaid fix
-        if (SaveManager.instance.hasSaveGame)
+        if (TorokPersonalityAI.instance.anim.GetBool("InTitle"))
         {
-            continueButton.interactable = true;
+            startButton.interactable = true; //sometimes intro doesnt play -- if you press play when not in the title coro. so heres a bandaid fix
+            if (SaveManager.instance.hasSaveGame)
+            {
+                continueButton.interactable = true;
+            }
         }
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
     }
