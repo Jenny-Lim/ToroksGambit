@@ -12,11 +12,11 @@ public class CheckmateWinCondition : BaseCondition
     }
     public override Condition IsWinCondition()
     {
-        if (Board.instance.InCheckMate(true))//is torok in checkmate
+        if (Board.instance.IsKingInCheck(true) && Board.instance.GetAllMoves(true).Count < 1 && !GameStateManager.instance.GetIsPlayersTurn())//is torok in checkmate
         {
             return Condition.Player;
         }
-        else if (Board.instance.InCheckMate(false))
+        else if (Board.instance.IsKingInCheck(false) && Board.instance.GetAllMoves(false).Count < 1 && GameStateManager.instance.GetIsPlayersTurn())
         {
             return Condition.Player;
         }
