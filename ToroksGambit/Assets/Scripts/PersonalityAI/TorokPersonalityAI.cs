@@ -94,6 +94,7 @@ public class TorokPersonalityAI : MonoBehaviour
         }
         else if (category == SoundLibrary.Categories.WinWholeGame)
         {
+            anim.CrossFade("Death", 0.1f, 0);
             anim.SetBool("PlayAnim", true);
             anim.SetInteger("SelectedAnimCategory", 5);
             anim.SetInteger("SelectedAnimation", 1);
