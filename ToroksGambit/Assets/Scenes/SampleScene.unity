@@ -8574,7 +8574,7 @@ MonoBehaviour:
   numGeneralAnimsGame: 2
   numInterruptAnimsGame: 1
   numWinAnimsGame: 1
-  numLoseAnimsGame: 2
+  numLoseAnimsGame: 4
   currentAngerLevel: 1
   dialogLikelyhoodByCategory:
   - 1
