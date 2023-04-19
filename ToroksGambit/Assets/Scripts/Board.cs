@@ -160,11 +160,14 @@ public class Board : MonoBehaviour
     {
         if (Input.GetKeyUp("l") && GameStateManager.instance.GetGameState() != GameStateManager.GameState.win)
         {
-            if(GameStateManager.instance.currentLevelNumber == GameStateManager.instance.LevelNames.Count - 1 && GameStateManager.instance.GetGameState() != GameStateManager.GameState.winWholeGame)
+            if (GameStateManager.instance.currentLevelNumber == GameStateManager.instance.LevelNames.Count - 1 && GameStateManager.instance.GetGameState() != GameStateManager.GameState.winWholeGame)
             {
                 GameStateManager.instance.ChangeGameState(GameStateManager.GameState.winWholeGame);
             }
-            GameStateManager.instance.ChangeGameState(GameStateManager.GameState.win);
+            else
+            {
+                GameStateManager.instance.ChangeGameState(GameStateManager.GameState.win);
+            }
         }
 
         //print("in bvoard update");
