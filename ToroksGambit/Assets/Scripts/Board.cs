@@ -1044,6 +1044,7 @@ public class Board : MonoBehaviour
                 
                 GameStateManager.lastValidateCheck = true;
                 canMove = true;
+                CopyBoard();
                 GameStateManager.instance.EndTurn();
                 yield break;
             }
