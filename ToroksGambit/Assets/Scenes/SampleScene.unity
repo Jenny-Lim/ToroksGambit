@@ -34453,10 +34453,17 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Left Mouse - Place
 
+
     Right Mouse - Return Piece
 
-    Scroll Wheel -
-    Camera Control'
+
+    Scroll Wheel
+    - Camera Control
+
+
+    Mouse over pieces for Piece Names
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 644aefd6ec5255b45aef655a8b3c4047, type: 2}
   m_sharedMaterial: {fileID: 422849378958971441, guid: 644aefd6ec5255b45aef655a8b3c4047, type: 2}

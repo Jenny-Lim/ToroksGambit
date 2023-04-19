@@ -323,6 +323,8 @@ public class GameStateManager : MonoBehaviour
         Inventory.instance.objectiveArea.SetActive(false);
         Inventory.instance.DisableDeployUI();
 
+        PhysicalShop.instance.pieceDescriptionObject.SetActive(false);
+
         yield return CameraHeadMovements.instance.LookAtTorokExclusively();
         yield return TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.LoseGame);
         yield return CameraHeadMovements.instance.LookAtBoardExclusively();
@@ -366,6 +368,7 @@ public class GameStateManager : MonoBehaviour
     public IEnumerator LoseCoRo()
     {
         //show some type of defeat text or something
+        PhysicalShop.instance.pieceDescriptionObject.SetActive(false);
         CameraHeadMovements.canScroll = false;
         yield return CameraHeadMovements.instance.StartCoroutine(CameraHeadMovements.instance.LookAtTorokExclusively());
         yield return TorokPersonalityAI.instance.StartCoroutine(TorokPersonalityAI.instance.PlayAnimationAndSoundCoRo(SoundLibrary.Categories.WinGame));//meaning torok won
@@ -387,6 +390,7 @@ public class GameStateManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         activeCoRo = null;
         ChangeGameState(GameState.title);
+        PhysicalShop.instance.pieceDescriptionObject.SetActive(false);
         SaveManager.instance.StartNew();
         PauseMenu.instance.ReturnToMainMenu();
     }
@@ -438,6 +442,8 @@ public class GameStateManager : MonoBehaviour
 
     public void EndTurn()
     {
+        PhysicalShop.instance.pieceDescriptionObject.SetActive(false);
+
         Board.playerInCheck = false;//these are redundant but i remember having an issue but dont remember if these solved it but it works some im keeping em
         Board.torokInCheck = false;
         Board.playerInCheck = Board.instance.IsKingInCheck(false);
@@ -544,6 +550,7 @@ public class GameStateManager : MonoBehaviour
             MinMax.instance.SetNewDepth(1);
         }
         Board.instance.CopyBoard();
+        
         if (torokPieceCount < 0 && winCondition.conditionType != 2)
         {
             isPlayersTurn = true;

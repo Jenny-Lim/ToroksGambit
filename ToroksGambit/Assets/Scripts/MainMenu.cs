@@ -69,6 +69,7 @@ public class MainMenu : MonoBehaviour
             }
         }
         GameStateManager.instance.ChangeGameState(GameStateManager.GameState.title);
+        PhysicalShop.instance.pieceDescriptionObject.SetActive(false);
     }
 
     public void NewGame() // have yet to test fully

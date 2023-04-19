@@ -158,6 +158,9 @@ public class Board : MonoBehaviour
 
     public void BoardUpdate()
     {
+
+        PhysicalShop.instance.SetTextPosition();
+
         if (Input.GetKeyUp("l") && GameStateManager.instance.GetGameState() != GameStateManager.GameState.win)
         {
             if (GameStateManager.instance.currentLevelNumber == GameStateManager.instance.LevelNames.Count - 1 && GameStateManager.instance.GetGameState() != GameStateManager.GameState.winWholeGame)
@@ -209,6 +212,29 @@ public class Board : MonoBehaviour
 
         RaycastHit hit;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
+
+        if(Physics.Raycast(ray, out hit))
+        {
+            if(hit.transform.CompareTag("Chess Piece"))
+            {
+                Piece hitPiece = hit.transform.GetComponent<Piece>();
+
+                PhysicalShop.instance.pieceDescription.text = hitPiece.type.ToString();
+
+                PhysicalShop.instance.pieceDescriptionObject.SetActive(true);
+                Debug.Log("hitpiece");
+            }
+            else
+            {
+                PhysicalShop.instance.pieceDescriptionObject.SetActive(false);
+                Debug.Log("HIt not piece");
+            }
+        }
+        else
+        {
+            PhysicalShop.instance.pieceDescriptionObject.SetActive(false);
+            Debug.Log("HIt not piece");
+        }
 
         if (Input.GetMouseButtonDown(0))//left click mouse to move pieces
         {
@@ -397,10 +423,10 @@ public class Board : MonoBehaviour
         }
         }
 
-        if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
-        {
-            UndoMove();
-        }
+        //if (Input.GetMouseButtonDown(1))//right click mouse to undo moves
+        //{
+        //    UndoMove();
+        //}
 
         if (clickedPiece != null)//added by jordan to indicate what piece is clicked
         {
