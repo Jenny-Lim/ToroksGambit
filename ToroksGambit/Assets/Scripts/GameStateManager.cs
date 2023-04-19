@@ -113,6 +113,36 @@ public class GameStateManager : MonoBehaviour
                 }
                 else
                 {
+
+                    //piece text
+                    PhysicalShop.instance.SetTextPosition();
+
+                    RaycastHit hit;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//shoot ray using mouse from camera
+                    
+                    if(Physics.Raycast(ray, out hit))
+                    {
+                        if(hit.transform.CompareTag("Chess Piece"))
+                        {
+                            Piece hitPiece = hit.transform.GetComponent<Piece>();
+
+                            PhysicalShop.instance.pieceDescription.text = hitPiece.type.ToString();
+
+                            PhysicalShop.instance.pieceDescriptionObject.SetActive(true);
+                            Debug.Log("hitpiece");
+                        }
+                        else
+                        {
+                            PhysicalShop.instance.pieceDescriptionObject.SetActive(false);
+                            Debug.Log("HIt not piece");
+                        }
+                    }
+                    else
+                    {
+                        PhysicalShop.instance.pieceDescriptionObject.SetActive(false);
+                        Debug.Log("HIt not piece");
+                    }
+
                     //BEHOLD MY GRAVEYARD OF MOVE STUTTER FIXES
 
                     //**THIS IS THE ONE WHERE THE ITERATIVE VERSION IS USED FOR MULTIPLE FRAMES**
