@@ -544,7 +544,7 @@ public class GameStateManager : MonoBehaviour
             MinMax.instance.SetNewDepth(1);
         }
         Board.instance.CopyBoard();
-        if (torokPieceCount < 0)
+        if (torokPieceCount < 0 && winCondition.conditionType != 2)
         {
             isPlayersTurn = true;
         }
