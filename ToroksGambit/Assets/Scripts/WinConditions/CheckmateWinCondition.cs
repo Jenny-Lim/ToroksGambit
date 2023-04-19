@@ -18,7 +18,7 @@ public class CheckmateWinCondition : BaseCondition
         }
         else if (Board.instance.IsKingInCheck(false) && Board.instance.GetAllMoves(false).Count < 1 && GameStateManager.instance.GetIsPlayersTurn())
         {
-            return Condition.Player;
+            return Condition.Torok;
         }
 
         if (PlayerLoseCheck())
