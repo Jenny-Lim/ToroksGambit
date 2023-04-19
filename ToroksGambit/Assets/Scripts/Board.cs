@@ -1312,14 +1312,11 @@ public class Board : MonoBehaviour
             movingPawnPromote = true;
         }
 
-
-            moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, lastChanceCheck, piece.moved, takenPieceMoved, pawnWillPromote, movingPawnPromote, takenPawnPromote)); // moveList is a list of the moves done
+            moveList.Add(new Move(startX, startY, endX, endY, pieceIdMoving, pieceIdTaken, willPromote, movingTorok, takingTorok, movingPromote, takenPromote, movingTough, takenTough, movingLastChance, takenLastChance, piece.moved, takenPieceMoved, pawnWillPromote, movingPawnPromote, takenPawnPromote)); // moveList is a list of the moves done
 
         if(willPromote && !lastChanceCheck && piece.type != Piece.PieceType.queen)//if this piece captured another piece and has promotion
         {
             //Debug.Log("PROMOTE PIECE");
-            if(piece.type != Piece.PieceType.queen)
-            {
                 PlacePieceTorok(endX,endY,pieceIdMoving,0);
 
                 Piece endPiece = pieceBoard[endX,endY].GetComponent<Piece>(); //get piece script of object that moved
@@ -1348,7 +1345,6 @@ public class Board : MonoBehaviour
                 Destroy(pieceBoard[startX, startY]);
                 pieceBoard[startX, startY] = null;
 
-            }
         }
         else if(!lastChanceCheck)//regular ass move
         {
@@ -1476,7 +1472,7 @@ public class Board : MonoBehaviour
         //bool oldTough = oldPiece.isTough;
 
 
-        if (moveList[moveList.Count - 1].takenLastChance)
+        if (moveList[moveList.Count - 1].takenLastChance && moveList[moveList.Count - 1].pieceMoving <= moveList[moveList.Count - 1].pieceTaken)
         {
             PlacePiece(moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY, moveList[moveList.Count - 1].pieceMoving - 1,0);
 
@@ -1485,15 +1481,15 @@ public class Board : MonoBehaviour
         {
             Destroy(pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY]);
             pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
-            PlacePieceTorok(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].pieceMoving - 1,0);
-            Piece oldPiece = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY].GetComponent<Piece>();
+            PlacePieceTorok(moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY, moveList[moveList.Count - 1].pieceMoving - 1,0);
+            Piece oldPiece = pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY].GetComponent<Piece>();
             oldPiece.isTough = moveList[moveList.Count - 1].movingTough;
             oldPiece.lastChance = moveList[moveList.Count - 1].movingLastChance;
             oldPiece.promote = moveList[moveList.Count - 1].movingPromote;
             //ActivateTraitIcons(oldPiece);
-            MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
-            pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
-            pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
+            //MovePieceVisualTeleport(moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY, moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY);
+            //pieceBoard[moveList[moveList.Count - 1].startX, moveList[moveList.Count - 1].startY] = pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY];
+            //pieceBoard[moveList[moveList.Count - 1].endX, moveList[moveList.Count - 1].endY] = null;
         }
         else if (moveList[moveList.Count - 1].pawnPromote)
         {
@@ -2136,10 +2132,10 @@ public class Board : MonoBehaviour
         if (p.lastChance)
         {
             p.traitCount++;
-            p.lastChanceIcon.transform.localPosition = new Vector3(0.35f, p.traitCount * p.lastChanceIcon.transform.localPosition.y * 0.75f, 0);
+            p.lastChanceIcon.transform.localPosition = new Vector3(0.35f, 0.75f, 0);
             if (p.traitCount == 1)
             {
-                p.lastChanceIcon.transform.localScale = p.lastChanceIcon.transform.localScale * 0.75f;
+                p.lastChanceIcon.transform.localScale = new Vector3(0.5625f, 0.5625f, 0.5625f);
             }
             p.lastChanceIcon.SetActive(true);
         }
