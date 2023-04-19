@@ -171,6 +171,7 @@ public class InterruptCoroutineHolder : MonoBehaviour
         if (InterruptManager.instance.transform.childCount <= 1)
         {
             CameraHeadMovements.canScroll = true;
+            MainMenu.instance.pauseFxn.enabled = true;
         }
     }
 }

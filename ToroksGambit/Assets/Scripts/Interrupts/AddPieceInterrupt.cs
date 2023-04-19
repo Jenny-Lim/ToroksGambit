@@ -14,6 +14,7 @@ public class AddPieceInterrupt : BaseInterrupt
             return;
         }*/
         CameraHeadMovements.canScroll= false;
+        MainMenu.instance.pauseFxn.enabled = false;
         if (coroutineHolder != null) { Destroy(coroutineHolder); }
         coroutineHolder = InterruptManager.instance.CreateCoRoHolder();
         InterruptCoroutineHolder holder = coroutineHolder.AddComponent<InterruptCoroutineHolder>();
