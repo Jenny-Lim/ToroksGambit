@@ -162,7 +162,7 @@ public class TorokPersonalityAI : MonoBehaviour
 
     public IEnumerator PlayAnimationAndSoundCoRo(SoundLibrary.Categories category)
     {
-        Debug.Log("in coro");
+        Debug.Log("in coro: " + category);
         isPlaying = true;
         if (category >= SoundLibrary.Categories.ShopEnter)
         {

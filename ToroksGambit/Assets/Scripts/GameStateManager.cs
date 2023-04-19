@@ -23,7 +23,7 @@ public class GameStateManager : MonoBehaviour
     }
 
     public BaseCondition winCondition;
-    private static BaseCondition.Condition mostRecentWinCheckResult = BaseCondition.Condition.None;
+    public static BaseCondition.Condition mostRecentWinCheckResult = BaseCondition.Condition.None;
 
     private static bool isPlayersTurn = true;
     [SerializeField] public static int turnCount = 1;//the amount of moves/turns that have happened in the current game
@@ -463,16 +463,19 @@ public class GameStateManager : MonoBehaviour
 
         if (mostRecentWinCheckResult == BaseCondition.Condition.Player)
         {
-            if (currentLevelNumber == LevelNames.Count-1) // max number of levels
+            if (currentLevelNumber == LevelNames.Count - 1) // max number of levels
             {
                 ChangeGameState(GameState.winWholeGame); // if player wins bring them to this game state instead
                 return;
             }
 
-            SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.WinLevel]);
-            ChangeGameState(GameState.win);
-            Board.instance.canMove = true;
-            return;
+            else
+            {
+                SoundObjectPool.instance.GetPoolObject().Play(Board.instance.boardAudioClips[(int)BoardSounds.WinLevel]);
+                ChangeGameState(GameState.win);
+                Board.instance.canMove = true;
+                return;
+            }
             //reset this state
         }
         else if (mostRecentWinCheckResult == BaseCondition.Condition.Torok)
