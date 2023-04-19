@@ -27,9 +27,9 @@ public class LegendUI : MonoBehaviour
 
     public void ActivateLegendObject()
     {
-        LegendObject.SetActive(true);
         if (GameStateManager.instance.currentLevelNumber < Tutorial.Length)
         {
+            LegendObject.SetActive(true);
             Tutorial[GameStateManager.instance.currentLevelNumber].SetActive(true);
         }
     }

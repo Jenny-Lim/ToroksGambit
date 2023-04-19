@@ -84,10 +84,10 @@ public class MainMenu : MonoBehaviour
         GameStateManager.instance.SetNextLevel(); // bug possibly here
 
         // reset inventory
-        Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)0, 4); // pawns
+        Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)0, 1); // pawns
         for (int i = 1; i < 3; i++)
         {
-            Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)i, 1); // bishop + knight
+            Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)i, 0); // bishop + knight
         } // no king / queen / rook
         Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)3, 0); // bishop + knight
         Inventory.instance.SetPieceAmount((Inventory.InventoryPieces)4, 0); // bishop + knight
