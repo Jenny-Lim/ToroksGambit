@@ -92,6 +92,7 @@ public class CaptureTheFlagWinCondition : BaseCondition
             {
                 Piece piece = Board.pieceBoard[location.x, location.y].GetComponent<Piece>();
 
+                if (piece.isTorok) continue; 
                 //turn that piece invuln
                 piece.isInvulnerable = true;
                 //probably apply some type of effect to symbolize invuln
